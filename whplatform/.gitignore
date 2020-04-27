@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 node_modules
 /dist
@@ -19,3 +20,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+=======
+node_modules/
+>>>>>>> f4fcade01e2a9f19f7b03ba8fae9ec9dfde3a087
