@@ -1,0 +1,39 @@
+
+/*头部样式*/
+.header-top{
+    background:#3d3938;
+    color: #fefefe;
+    font-size: 12px;
+    line-height:30px;
+    a{
+        color: #fefefe;
+        padding:0 9px;
+    }
+}
+
+.country{
+    float:right;
+}
+
+
+
+.logo{
+    display: block;
+    img{
+        height:35px;
+    }
+}
+.header-nav{
+    padding:13px 0;
+}
+.nav{
+    ul{
+        float: left;
+        li{
+            float: left;
+            a{
+                color:#3D3938;
+            }
+        }
+    }
+}

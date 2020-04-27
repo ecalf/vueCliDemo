@@ -1,18 +1,18 @@
 <template>
   <div id="app">
    <Head />
-  <Footer/>
    </div>
-   
 </template>
 <script>
 import Head from './components/Head';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 export default {
   components:{
-    Head,Footer
+    Head
+  },
+  components:{
+    Head
   }
-
 }
 </script>
 

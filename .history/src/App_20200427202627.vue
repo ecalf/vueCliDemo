@@ -1,9 +1,8 @@
 <template>
   <div id="app">
    <Head />
-  <Footer/>
+   <Footer/>
    </div>
-   
 </template>
 <script>
 import Head from './components/Head';
@@ -12,7 +11,6 @@ export default {
   components:{
     Head,Footer
   }
-
 }
 </script>
 
