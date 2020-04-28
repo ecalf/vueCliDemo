@@ -8,7 +8,7 @@
         </div>
         <p>
           欢迎来到万合优采
-          <a href="javascript:;">请登录</a>
+          <router-link to="/login">请登录</router-link>
           <a href="javascript:;">免费注册</a>
         </p>
       </div>

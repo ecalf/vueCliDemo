@@ -2,10 +2,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import './assets/css/A-reset-pc.scss';
-import './assets/css/member.scss';
+import './assets/css/common.scss';
+import './assets/font/iconfont.css';
 import VueI18n from 'vue-i18n'//语言包
 Vue.use(VueI18n) // 通过插件的形式挂载
+import VCharts from 'v-charts'//图表
+Vue.use(VCharts)
 
 const i18n = new VueI18n({
   locale: 'zh-CN',    // 语言标识
@@ -19,8 +21,6 @@ const i18n = new VueI18n({
 })
 Vue.config.productionTip = false
 
-
-Vue.config.productionTip = false;
 
 new Vue({
   router,

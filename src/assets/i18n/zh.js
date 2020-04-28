@@ -1,5 +1,5 @@
 export const m = {
-    welcome: '欢迎来到北京',
+    welcome: '国家',
     today: '今天是',
     week: {
     sun: '星期日',
