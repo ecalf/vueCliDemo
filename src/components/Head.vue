@@ -4,7 +4,7 @@
     <div class="header-top">
       <div class="commonweb">
         <div class="country">
-          <span>国家</span>
+          <span>{{$t('m.welcome')}}</span>
         </div>
         <p>
           欢迎来到万合优采
