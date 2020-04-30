@@ -40,7 +40,7 @@ const routes = [
     }
   },
   {
-    path: "/ucenter/Register",//注册
+    path: "/ucenter/register",//注册
     name: "Register",
     component: Register,
     meta: {
