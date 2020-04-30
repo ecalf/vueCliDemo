@@ -1,7 +1,7 @@
 <template>
   <div class="errormsg">
     <p>
-      <img src="../assets/images/error.png" alt />
+      <img src="@assets/images/error.png" alt />
     </p>
     <p>抱歉 Sorry！~ 没有找到符合条件的商品</p>
   </div>

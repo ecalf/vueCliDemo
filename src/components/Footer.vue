@@ -10,11 +10,11 @@
       </div>
       <div class="footer-middle fl">
         <p class="code-list">
-          <img src="../assets/images/codeimg.jpg" alt />
+          <img src="@assets/images/codeimg.jpg" alt />
           <span>扫码关注二维码</span>
         </p>
         <p class="code-list">
-          <img src="../assets/images/codeimg.jpg" alt />
+          <img src="@assets/images/codeimg.jpg" alt />
           <span>扫码关注二维码</span>
         </p>
       </div>
