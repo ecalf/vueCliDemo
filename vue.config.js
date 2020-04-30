@@ -53,7 +53,7 @@ function getPagesConfig(pagesInfo){
           entry: pagesInfo[pageName].path, 
           template: "./public/index.html", 
           filename: `${pageName}.html`, 
-          title: 'TEST PAGE',
+          title: '万和采购平台',
           chunks: ["chunk-vendors", "chunk-common",  pagesInfo[pageName].chunkName]
       }
   }

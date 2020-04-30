@@ -28,7 +28,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 --api   服务器接口
 --assets 样式和图片资源
 --components 全站公用组件
---lang  语言包
+--i18n  语言包
 --pages 多页面模块
 --utils 通用函数
 
@@ -40,3 +40,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 --每个模块在 pages 内新建一个文件夹
 --vue 文件首字母大写, js 文件首字母小写
 --store 使用strict module 模式
+
+## Vue 从 utils/enhanceVue 内导出,不要直接使用框架提供的 Vue
+## VueRouter 从 utils/enhanceRouter 内导出,不要直接使用框架提供的 VueRouter
