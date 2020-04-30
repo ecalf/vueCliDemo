@@ -22,7 +22,7 @@
                 <div class="password-login" v-show="show===0">
                   <ul>
                     <li class="login-bd">
-                      <input type="text" class="m-input" placeholder="手机号/邮箱/用户名" />
+                      <input type="text" class="m-input" placeholder="手机号/用户名" />
                     </li>
                     <li class="login-bd">
                       <input type="text" class="m-input" placeholder="密码" />
@@ -157,6 +157,8 @@ export default {
   },
   created() {
     this.ScrollUp();
+   this.$emit('header', false);
+   this.$emit('footer', false);
   },
   methods: {
     toggle: function() {

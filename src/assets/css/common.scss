@@ -283,6 +283,10 @@ $ac:#44a78d;
   margin-bottom: 20px;
 }
 
+body {
+  background: #f2f2f2;
+}
+
 .header {
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
   border-bottom: solid 1px #e6e6e6;
@@ -621,6 +625,40 @@ $ac:#44a78d;
   padding-top: 60px;
 }
 
+/*注册登录公用*/
+.m-input {
+  width: 100%;
+  height: 38px;
+  background-color: #eaeced;
+  border-radius: 3px;
+  color: #4e5a65;
+  padding-left: 10px;
+
+  // 使用webkit内核的浏览器
+  &::-webkit-input-placeholder {
+    color: #4e5a65;
+  }
+
+  // Firefox版本4-18
+  &:-moz-placeholder {
+    color: #4e5a65;
+  }
+
+  // Firefox版本19+
+  &::-moz-placeholder {
+    color: #4e5a65;
+  }
+
+  // IE浏览器
+  &:-ms-input-placeholder {
+    color: #4e5a65;
+  }
+}
+
+.bgcolor-white {
+  background: #fff;
+}
+
 /*公共样式 end*/
 /*个人中心|我要采购-采购订单*/
 .memcommon-title {
@@ -745,6 +783,7 @@ $ac:#44a78d;
 
     &.active {
       font-weight: bold;
+
       &:before {
         opacity: 0.68;
       }
@@ -752,23 +791,128 @@ $ac:#44a78d;
   }
 }
 
-.reg-country{
-  margin:35px 0 20px;  
-  .country-title{
+.m-pb52 {
+  padding-bottom: 52px;
+}
+
+.register-form-wrap {
+  width: 430px;
+  margin: 0 auto;
+}
+
+.reg-country {
+  margin: 35px 0 15px;
+  position: relative;
+
+  &:before {
+    content: "";
+    width: 276px;
+    height: 1px;
+    position: absolute;
+    top: 18px;
+    left: 65px;
+    background: #a6acb1;
+  }
+
+  .country-title {
+    display: inline-block;
     color: #4e5a65;
     font-weight: bold;
-    padding-top:7px;
+    padding-top: 8px;
   }
-  .country-select{
-    float:right;
+
+  .country-select {
+    float: right;
     width: 84px;
     height: 32px;
-	background-image: linear-gradient(0deg, 
-		#f2f4f5 0%, 
-		#d8dcdf 100%);
-  border-radius: 3px;
+    background-color: #d8dcdf;
+    background-image: linear-gradient(0deg,
+        #D9DDE0 0%,
+        #F2F4F5 100%);
+    border-radius: 3px;
+    color: #4e5a65;
+    font-weight: bold;
+    padding: 0 10px;
+  }
+}
+
+.register-cell {
+  .register-cell-hd {
+    margin-bottom: 10px;
+  }
+}
+
+.register-code-input {
+  display: inline-block;
+  width: 70%;
+  margin-right: 2%;
+}
+
+.register-code-button {
+  display: inline-block;
+  width: 34-6%;
+  padding-left: 0;
+}
+
+.read-checkbox {
+  position: relative;
+  font-size: 12px;
+
+  span {
+    display: inline-block;
+    border: 1px solid #4e5a65;
+    border-radius: 3px;
+    margin-right: 3px;
+    font-size: 12px;
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    -o-transform: scale(0.7);
+
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  a {
+    color: #44a78d;
+  }
+}
+
+.read-checkbox input {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+
+  &:checked+span {
+    &:before {
+      opacity: 1;
+    }
+  }
+}
+
+.register-cell-btn {
+  margin-top:50px;
+  .btn-large {
+    width:100%;
+    display: block;
+    height: 36px;
+    background-color: #44a78d;
+    border-radius: 3px;
+    color: #fefefe;
+    text-align: center;
+    font-size: 16px;
+  }
+}
+.register-footer{
   color: #4e5a65;
-  font-weight: bold;
-  padding:0 10px;
+  text-align: center;
+  padding:13px 0;
+  h1{
+    font-size:14px;
+    margin:0;
   }
 }
