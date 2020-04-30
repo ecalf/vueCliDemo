@@ -186,7 +186,8 @@ export default {
       show: 0, //判断切换注册方式
       countryShow:true,
       selectItem:'中国',
-      items: [{name:"中国" }, {name:"国外" }]
+      items: [{name:"中国" }, {name:"国外" }],
+     
     };
   },
   created() {
@@ -198,7 +199,8 @@ export default {
       console.log(e);
       console.log(e.target.selectedIndex); // 选择项的index索引
       console.log(e.target.value); // 选择项的value
-      this.countryShow=!countryShow;
+     
+      
     }
   }
 };

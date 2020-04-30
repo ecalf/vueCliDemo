@@ -10,7 +10,6 @@ import router from "./router";
 import store from "./store";
 
 
-
 const i18n = new VueI18n({ 
  locale: getLang(), // 定义默认语言为中文 
  messages: {   
@@ -24,5 +23,8 @@ new Vue({
     i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mouted(){
+    console.log('account2');
+  }
 }).$mount("#app");
