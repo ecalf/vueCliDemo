@@ -18,12 +18,25 @@
 </template>
 
 <style lang="scss">
+
+@import "~@assets/css/variables.scss";
+
+$align:center; /* 变量 */
+.setopacity{
+  opacity: 0.8;
+  margin:30px auto 30px;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+  text-align: $align;
+  color: $green; /*變量*/
+  @include bigFont; /*混入*/
+  @extend .setopacity;/*繼承*/
 }
 
 #nav {

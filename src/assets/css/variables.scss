@@ -1,0 +1,13 @@
+/*预定义全站  sass 变量及混入*/
+
+
+$green:blue; /*變量*/
+@mixin bigFont { /*混入*/
+    background-color:#f5f5f5;
+    font: {
+      family: Helvetica, sans-serif;
+      size: 24px;
+      weight: bold;
+    }
+}
+
