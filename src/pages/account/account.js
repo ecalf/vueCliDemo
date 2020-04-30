@@ -24,5 +24,8 @@ new Vue({
     i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted(){
+    console.log('account mounted');
+  }
 }).$mount("#app");
