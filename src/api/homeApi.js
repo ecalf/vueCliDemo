@@ -1,4 +1,4 @@
-import axios from "@src/utils/axiosInstance";
+import axios from "@src/utils/enhanceAxios";
 
 console.log('axios>>>',axios);
 
