@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{ txt }},{{p}}</h1>
+    <h1>test component in folder @component</h1>
+    <h3>{{ txt }},{{p}}</h3>
   </div>
 </template>
 

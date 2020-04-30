@@ -7,6 +7,6 @@
 
 
 
-export {
-
+export default {
+    AA:123
 }

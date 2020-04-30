@@ -53,7 +53,7 @@ function getPagesConfig(pagesInfo){
           entry: pagesInfo[pageName].path, 
           template: "./public/index.html", 
           filename: `${pageName}.html`, 
-          title: 'TEST PAGE',
+          title: '万和采购平台',
           chunks: ["chunk-vendors", "chunk-common",  pagesInfo[pageName].chunkName]
       }
   }
@@ -115,10 +115,12 @@ module.exports = {
 
   
   devServer: {
-    overlay: { // 让浏览器 overlay 同时显示警告和错误
+    /*overlay: { // 让浏览器 overlay 同时显示警告和错误
       warnings: true,
       errors: true
-    }//,
+    }//,*/
+
+    
     //host: "localhost",
     //port: 8080, // 端口号
     //https: false, // https:{type:Boolean}

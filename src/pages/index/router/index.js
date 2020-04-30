@@ -1,8 +1,8 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import RouterCreator from '@src/utils/enhanceRouter';
 import Home from "../views/Home.vue";
 
-Vue.use(VueRouter);
+
+console.log('INDEX ROUTER,RouterCreator>>>',RouterCreator);
 
 const routes = [
   {
@@ -10,7 +10,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: '万和首页'
+      title: '万合首页'
     }
   },
   {
@@ -23,24 +23,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
 
     meta: {
-      title: '万和accout'
+      title: '万合Account'
     }
   }
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes
-});
 
-
-router.beforeEach((to, from, next) => {
-  /* 路由发生变化修改页面title */
-  if (to.meta.title) {
-    document.title = to.meta.title
-  }
-  next()
-});
+const router = RouterCreator.create(routes);
 
 export default router;
