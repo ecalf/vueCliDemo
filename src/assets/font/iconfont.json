@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "933623",
+      "name": "分销",
+      "font_class": "fenxiao",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "6155666",
+      "name": "Sale-销售-1",
+      "font_class": "xiaoshou",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "14033558",
+      "name": "提现",
+      "font_class": "tixian",
+      "unicode": "e7a7",
+      "unicode_decimal": 59303
+    },
+    {
       "icon_id": "700862",
       "name": "qq",
       "font_class": "qq",

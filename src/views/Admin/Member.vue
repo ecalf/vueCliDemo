@@ -27,7 +27,7 @@
               </p>
               <span class="person-name">
                 张某某
-                <i class="iconfont iconyuangongliebiao"></i>
+                <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
           </div>
@@ -410,9 +410,10 @@ export default {
 
 .person-name {
   i {
-    margin-left: 14px;
-    font-size: 20px;
+    margin-left: 5px;
+    font-size: 24px;
     line-height: 20px;
+    vertical-align:middle;
   }
 }
 
@@ -559,7 +560,9 @@ export default {
     }
   }
 }
-
+.mshow-box{
+  margin-bottom:28px;
+}
 .mshow-nav {
   margin-bottom: 15px;
   &:before {
@@ -585,7 +588,7 @@ export default {
 
 .mshow-wrap {
   background: #ffffff;
-  padding: 15px;
+  padding: 15px 15px 30px;
 }
 
 .mshow-list {
@@ -596,6 +599,8 @@ export default {
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   cursor: pointer;
+  background:#FBFBFB;
+  margin-bottom:2px;
   &:hover {
     background-color: #eaeced;
   }
@@ -699,33 +704,6 @@ export default {
   }
 }
 
-.kicon {
-  display: inline-block;
-  vertical-align: top;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  color: #fff;
-  font-style: normal;
-  font-size: 12px;
-  text-align: center;
-}
-
-.iconannoyed {
-  background-color: #f23a3b;
-}
-
-.icontop {
-  background-color: #05544a;
-}
-
-.iconcompany {
-  background-color: #4e5a65;
-}
-
-.iconorder {
-  background-color: #ca3f81;
-}
 
 .pro-date {
   color: #3d3938;
@@ -746,12 +724,6 @@ export default {
   margin: 0 auto;
 }
 
-.medical-use {
-  color: #f23a3b;
-}
 
-.civil-use {
-  color: #44a78d;
-}
 </style>
 

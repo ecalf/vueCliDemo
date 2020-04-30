@@ -1,11 +1,11 @@
 <template>
         <!-- 会员左侧导航 -->
         <div class="member-nav">
-          <h3>个人主页</h3>
+          <h3><i class="iconfont iconzhuye"></i>个人主页</h3>
           <ul class="membernav-list">
             <li>
               <h4>
-                <a href>我要采购</a>
+                <a href><i class="iconfont iconcaigou"></i>我要采购</a>
               </h4>
               <div class="member-subnav">
                 <a href>发布采购</a>
@@ -18,7 +18,7 @@
             </li>
             <li>
               <h4>
-                <a href>我要销售</a>
+                <a href><i class="iconfont iconxiaoshou"></i>我要销售</a>
               </h4>
               <div class="member-subnav">
                 <a href>发布商品</a>
@@ -31,7 +31,7 @@
             </li>
             <li>
               <h4>
-                <a href>分销管理</a>
+                <a href><i class="iconfont iconfenxiao"></i>分销管理</a>
               </h4>
               <div class="member-subnav">
                 <a href>订单列表</a>
@@ -43,7 +43,7 @@
             </li>
              <li>
               <h4>
-                <a href>账户管理</a>
+                <a href><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
               </h4>
               <div class="member-subnav">
                 <a href>我的账户</a>
@@ -68,6 +68,7 @@ export default {
     font-size: 16px;
     color: #707070;
     background:#fff;
+    margin-right:20px;
     a{
         color: #707070;
     }
@@ -78,17 +79,27 @@ export default {
         line-height:48px;
         text-align: center;
         background-color: #479e84;
-        border-radius: 5px 5px 0px 0px;
+        border-radius: 3px 5px 0px 0px;
+        i{
+          margin-right:10px;
+          font-size:24px;
+          vertical-align:middle;
+        }
     }
     .membernav-list{
         padding:8px 0 30px;
         h4{
             font-size: 16px;
-            padding:10px 0 8px;
-            text-align: center;
+            padding:10px 0 8px 24px;
+
             a{
                 display: block;
-            
+             i{
+               color:#479e84;
+          margin-right:10px;
+          font-size:24px;
+          vertical-align:middle;
+        }
             }
         }
     }
