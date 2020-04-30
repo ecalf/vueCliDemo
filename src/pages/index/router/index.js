@@ -10,7 +10,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: '万和首页'
+      title: '万合首页'
     }
   },
   {
