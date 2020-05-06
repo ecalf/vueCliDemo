@@ -35,7 +35,6 @@ $align:center; /* 变量 */
 
   text-align: $align;
   color: $green; /*變量*/
-  @include bigFont; /*混入*/
   @extend .setopacity;/*繼承*/
 }
 
