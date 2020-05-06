@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14457421",
+      "name": "组 306",
+      "font_class": "zu306",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "14457422",
+      "name": "组 305",
+      "font_class": "zu305",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "14457418",
+      "name": "zhuangshi",
+      "font_class": "zu304",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "9413356",
+      "name": "√",
+      "font_class": "icon-test",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "1984281",
+      "name": "人员信息",
+      "font_class": "renyuanxinxi",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
       "icon_id": "933623",
       "name": "分销",
       "font_class": "fenxiao",

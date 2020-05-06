@@ -27,14 +27,14 @@
           <div class="reg-country clearfix">
             <span class="country-title">国家选择</span>
             <select class="country-select" v-model="selectItem" @change="selectFn($event)">
-              <option v-for="item in items" :key="item.id"> {{ item.name}}</option>
+              <option v-for="(item) in items" :key="item.id"> {{ item.name}}</option>
             </select>
           </div>
           <!--个人注册-->
-          <div class="register-cell" v-show="show===0">
+          <div class="register-cell" v-show="show==0">
             <form class="personal-form">
               <!--中国注册-->
-              <div class="china-register" v-show="countryShow">
+              <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="手机号码" class="m-input" />
                 </div>
@@ -54,7 +54,7 @@
                 <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register" v-if="countryShow">
+              <div class="foreign-register" v-show="num==1">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="用户名" class="m-input" />
                 </div>
@@ -72,10 +72,10 @@
             </form>
           </div>
           <!--机构注册-->
-          <div class="register-cell" v-show="show===1">
+          <div class="register-cell" v-show="show==1">
             <form class="personal-form">
               <!--中国注册-->
-              <div class="china-register">
+              <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="账号" class="m-input" />
                 </div>
@@ -95,7 +95,7 @@
                 <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register">
+              <div class="foreign-register" v-show="num==1">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="机构名称" class="m-input" />
                 </div>
@@ -116,10 +116,10 @@
             </form>
           </div>
           <!--企业注册-->
-          <div class="register-cell" v-show="show===2">
+          <div class="register-cell" v-show="show==2">
             <form class="personal-form">
               <!--中国注册-->
-              <div class="china-register">
+              <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="公司名称" class="m-input" />
                 </div>
@@ -145,7 +145,7 @@
                 <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register">
+              <div class="foreign-register" v-show="num==1">
                 <div class="register-cell-hd">
                   <input type="text" placeholder="企业名称" class="m-input" />
                 </div>
@@ -184,7 +184,7 @@ export default {
   data() {
     return {
       show: 0, //判断切换注册方式
-      countryShow:true,
+      num:0,
       selectItem:'中国',
       items: [{name:"中国" }, {name:"国外" }],
      
@@ -196,11 +196,7 @@ export default {
   },
   methods: {
     selectFn(e) {
-      console.log(e);
-      console.log(e.target.selectedIndex); // 选择项的index索引
-      console.log(e.target.value); // 选择项的value
-     
-      
+      this.num=e.target.selectedIndex;         
     }
   }
 };

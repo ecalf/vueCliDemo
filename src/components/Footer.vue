@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <!-- <div class="footer">
     <div class="commonweb clearfix">
       <div class="footer-left fl">
         <h2 class="fcompany-title fs24">万合供应链(深圳)有限公司</h2>
@@ -10,11 +10,11 @@
       </div>
       <div class="footer-middle fl">
         <p class="code-list">
-          <img src="@assets/images/codeimg.jpg" alt />
+          <img src="@assets/images/@assets/images/codeimg.jpg" alt />
           <span>扫码关注二维码</span>
         </p>
         <p class="code-list">
-          <img src="@assets/images/codeimg.jpg" alt />
+          <img src="@assets/images/@assets/images/codeimg.jpg" alt />
           <span>扫码关注二维码</span>
         </p>
       </div>
@@ -27,14 +27,133 @@
         <p>地址：深圳市福田区杭钢富春商务大厦909</p>
       </div>
     </div>
-  </div>
+  </div>-->
+  <footer>
+    <div class="footer-top">
+      <div class="commonweb">
+        <div class="footer-logo">
+          <img src="@assets/images/footerlogo.png" alt />
+          <div class="footer-company">
+            <h2>深圳迈万和优采股份有限公司</h2>
+            <h3>Shenzhen maiwanhe Youcai Co., Ltd</h3>
+          </div>
+        </div>
+        <div class="footer-share">
+          <a href>
+            <img src="@assets/images/inicon5.png" alt />
+          </a>
+          <a href>
+            <img src="@assets/images/inicon4.png" alt />
+          </a>
+          <a href>
+            <img src="@assets/images/inicon6.png" alt />
+          </a>
+          <a href>
+            <img src="@assets/images/inicon7.png" alt />
+          </a>
+          <a href>
+            <img src="@assets/images/inicon8.png" alt />
+          </a>
+          <a href>
+            <img src="@assets/images/inicon9.png" alt />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-midddle">
+      <div class="commonweb">
+        <span>联系我们</span>
+        <span>电话：0755-5555 555</span>
+        <span>地址：深圳市福田区杭钢富春大厦909</span>
+        <span class="friend">友情链接</span>
+        <a href>交易大厅</a>
+        <a href>我要采购</a>
+        <a href>委托采购</a>
+        <a href>供应商中心</a>
+        <a href>资讯中心</a>
+        <a href>个人中心</a>
+      </div>
+    </div>
+    <div class="commonweb">
+      <p>京ICP备11017824号-4 / 京ICP证130164号 北京市公安局朝阳分局备案编号:110105000501</p>
+      <p>Copyright © 2006-2018 ZCOOL 中文 English</p>
+    </div>
+  </footer>
 </template>
 
 <script>
 export default {
-    name:'Footer'
+  name: "Footer"
 };
 </script>
+<style lang="scss" scoped>
+/*footer*/
+footer {
+  background: #4e5a65;
+  padding: 45px 0 20px;
+  color: #a6acb1;
+  text-align: center;
+  font-size: 12px;
+  a {
+    color: #a6acb1;
+  }
+}
+.footer-midddle {
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  margin-bottom: 17px;
+  a,
+  span {
+    padding: 0 10px;
+  }
+  .friend {
+    margin-left: 30px;
+  }
+}
+.footer-top {
+  padding-bottom: 26px;
+}
+.footer-logo {
+  padding-right: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  border-right: solid 1px #a6acb1;
+  img {
+    height: 35px;
+    margin-right: 20px;
+  }
+  .footer-company {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    h2 {
+      font-size: 14px;
+    }
+    h3 {
+      font-size: 12px;
+    }
+  }
+}
 
-<style>
+.footer-share {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 35px;
+  a {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    border: solid 2px #a6acb1;
+    margin: 0 5px;
+    vertical-align: middle;
+    border-radius: 50%;
+    line-height: 22px;
+    img {
+      height: 20px;
+      vertical-align: middle;
+    }
+  }
+}
 </style>

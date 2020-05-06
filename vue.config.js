@@ -1,4 +1,4 @@
-const glob      = require('glob');
+const glob = require('glob');
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const debug = process.env.NODE_ENV !== "production";
@@ -13,62 +13,62 @@ function resolve(dir) {
 
 
 //生成项目模块
-const getPages = () => {    
-    const prefix = 'src/pages/';
-    const pages  = {};
+const getPages = () => {
+  const prefix = 'src/pages/';
+  const pages = {};
 
-    let res;
-    try{
-      res = glob(prefix+'/*', {
-        sync: true
-      });
-    }catch(err){
-      console.log('getPages error>>>',err);
+  let res;
+  try {
+    res = glob(prefix + '/*', {
+      sync: true
+    });
+  } catch (err) {
+    console.log('getPages error>>>', err);
+  }
+
+  res.forEach(dict => {
+    const name = dict.replace(prefix, '');
+    if (name.indexOf('components') > -1) {
+      return this;
     }
 
-    res.forEach(dict => {
-        const name = dict.replace(prefix, '');
-        if (name.indexOf('components') > -1) {
-            return this;
-        }
+    pages[name] = {
+      pageName: name,
+      chunkName: `pages/${name}`,
+      path: path.join(__dirname, dict, name + '.js')
+    }
+  });
 
-        pages[name] = {
-          pageName:name,
-          chunkName:`pages/${name}`,
-          path:path.join(__dirname, dict, name+'.js')
-        }
-    });
-
-    return pages;
+  return pages;
 }
 
-function getPagesConfig(pagesInfo){
+function getPagesConfig(pagesInfo) {
   const pages = {};
   const entry = {};
 
-  for(let pageName in pagesInfo){
-    entry[pagesInfo[pageName].chunkName] =  pagesInfo[pageName].path;
+  for (let pageName in pagesInfo) {
+    entry[pagesInfo[pageName].chunkName] = pagesInfo[pageName].path;
 
     pages[pageName] = {
-          entry: pagesInfo[pageName].path, 
-          template: "./public/index.html", 
-          filename: `${pageName}.html`, 
-          title: '万和采购平台',
-          chunks: ["chunk-vendors", "chunk-common",  pagesInfo[pageName].chunkName]
-      }
+      entry: pagesInfo[pageName].path,
+      template: "./public/index.html",
+      filename: `${pageName}.html`,
+      title: '万和采购平台',
+      chunks: ["chunk-vendors", "chunk-common", pagesInfo[pageName].chunkName]
+    }
   }
 
-  return {pages,entry};
+  return { pages, entry };
 }
 
 const pagesInfo = getPages();
 const pageConfig = getPagesConfig(pagesInfo);
 
-console.log('pageConfig>>>',pageConfig);
+console.log('pageConfig>>>', pageConfig);
 
 module.exports = {
   lintOnSave: true,
-  pages:pageConfig.pages,
+  pages: pageConfig.pages,
 
   /*pages: {
     index: {
@@ -99,7 +99,13 @@ module.exports = {
       .set("@api", resolve("src/api"))
 
   },
-
+  css: {
+    loaderOptions: {
+      scss: { // 全局引入 variables.scss 
+        prependData: `@import "@/assets/css/variables.scss";`
+      }
+    }
+  },
   configureWebpack: config => {
     // 修改脚手架默认webpack配置，值位对象时会合并配置，为方法时会改写配置
     if (debug) {
@@ -113,31 +119,31 @@ module.exports = {
 
   },
 
-  
+
   devServer: {
     /*overlay: { // 让浏览器 overlay 同时显示警告和错误
       warnings: true,
       errors: true
     }//,*/
 
-    
+
     //host: "localhost",
     //port: 8080, // 端口号
     //https: false, // https:{type:Boolean}
     //open: false, //配置自动启动浏览器
     //hotOnly: true, // 热更新
     // proxy: 'http://localhost:8080'   // 配置跨域处理,只有一个代理
-  /*  proxy: { //配置多个跨域
-      "/api": {
-          target: "http://172.11.11.11:7071",
-          changeOrigin: true,
-          // ws: true,//websocket支持
-          secure: false,
-          pathRewrite: {
-              "^/api": "/"
-          }
-      }
-    }*/
+    /*  proxy: { //配置多个跨域
+        "/api": {
+            target: "http://172.11.11.11:7071",
+            changeOrigin: true,
+            // ws: true,//websocket支持
+            secure: false,
+            pathRewrite: {
+                "^/api": "/"
+            }
+        }
+      }*/
   }
 
 };
