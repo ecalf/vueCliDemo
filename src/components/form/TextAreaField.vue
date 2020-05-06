@@ -4,17 +4,17 @@
             <span class="input-required" v-if="required">*</span>{{label}}:
         </label>
         <div class="input-field" v-bind:style="inputStyle">
-            <input 
+            <textarea
                 class="input-text"
-                v-bind:type="type" 
                 v-bind:name="filedName" 
                 v-bind:placeholder="placeholder"
 
 
                 @input="onInput()"
                 @change="onChange()"
-                v-model="text"
-             />
+                v-model="text">
+
+            </textarea> 
 
             <div class="input-suffix" v-if="suffix">{{text.length}}/30</div>
         </div>
@@ -26,7 +26,7 @@
     .input-wrap{
         display:flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: flex-start;
         font-size:16px;
     }
     .input-label{
@@ -43,19 +43,20 @@
     .input-field{
         display:flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: flex-end;
+        flex-direction: column;
         width:1020px;
-        height:40px;
+        height:100px;
         line-height: 40px;
         border:1px solid #EAECED;
         border-radius:3px;
     }
     .input-text{
         flex:1;
+        width: 100%;
         padding:0 10px;
     }
     .input-suffix{
-        width:30px;
         line-height: 40px;
         font-size:14px;
         font-weight:300;
@@ -79,7 +80,6 @@
             placeholder:String,
 
             label:String,
-            type:String,
             filedName:String,
             width:String,
             height:String

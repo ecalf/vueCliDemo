@@ -26,6 +26,20 @@
                     />
             </FormRow>
 
+            <FormRow>
+                <TextAreaField 
+                    v-bind:required="true" 
+                    v-bind:suffix="true"
+                    v-bind:max-length="30"
+                    placeholder="最多输入100个字符"
+
+                    type="textArea"
+                    label="描述" 
+                    filed-name="content" 
+                    width="1020"
+                    />
+            </FormRow>
+
         </FormContainer>
 
         <FormContainer  title="图片上传">
@@ -63,6 +77,7 @@ import FormContainer from "@components/form/FormContainer";
 import SearchBar from "@components/form/SearchBar";
 import FormRow from "@components/form/FormRow";
 import InputField from "@components/form/InputField";
+import TextAreaField from "@components/form/TextAreaField";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -77,7 +92,8 @@ export default {
         SearchBar,
         SelectCascade,
         FormRow,
-        InputField
+        InputField,
+        TextAreaField
     },
     data(){
 
