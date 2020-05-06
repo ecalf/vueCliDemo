@@ -48,7 +48,7 @@
                 color:#4E5A65;
                 font-weight: normal;
                 cursor:pointer;
-                @include text-overflow;
+                @include ol;
 
                 &:hover{
                     color:#44A78D;

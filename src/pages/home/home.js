@@ -5,10 +5,17 @@ import zh from '@src/i18n/zh';
 import en from '@src/i18n/en';
 import {getLang,setLang} from '@src/utils/common';
 
-import App from "./Account.vue";
+import '@assets/css/common.scss';
+import '@assets/font/iconfont.css';
+import 'swiper/css/swiper.css'
+
+import App from "./home.vue";
 import router from "./router";
 import store from "./store";
 
+// global swiper
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+Vue.use(VueAwesomeSwiper);
 
 const i18n = new VueI18n({ 
  locale: getLang(), // 定义默认语言为中文 
@@ -24,7 +31,4 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  mouted(){
-    console.log('account2');
-  }
 }).$mount("#app");

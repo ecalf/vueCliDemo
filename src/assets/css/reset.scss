@@ -1,55 +1,3 @@
-// 单行文本省略  -- 单行文本优先使用，无兼容问题；
-@mixin ol() {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-@mixin olh($lh) {
-  height: $lh;
-  line-height: $lh;
-}
-
-// 多行文本省略 -- !!! 注意： display: -webkit-box;的兼容 a，span，等行内元素，需要先 display:block/inline-block
-// -- 推荐左右图文，单列，max-height只是兼容辅助
-@mixin mlmax($lh, $line) {
-  max-height: $lh*$line;
-  line-height: $lh;
-  display: -webkit-box;
-  // word-break: break-all; 英文版的多行文本异常，去掉
-  text-overflow: ellipsis;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line;
-}
-
-// -- 推荐等高列表使用，依靠高度实现布局的
-@mixin ml($lh, $line) {
-  // display:block;  // 注意：行内元素时，-webkit-box, height不生效
-
-  display: -webkit-box;
-  height: $lh*$line;
-  line-height: $lh;
-  // word-break: break-all; 英文版的多行文本异常，去掉
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-@mixin mlh($lh, $line) {
-  height: $lh*$line;
-  line-height: $lh;
-  -webkit-line-clamp: $line;
-}
-
-.ellipsis {
-  height: 24px;
-  line-height: 24px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -211,3 +159,5 @@ button:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
+
+
