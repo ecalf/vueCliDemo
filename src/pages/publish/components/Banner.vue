@@ -1,6 +1,6 @@
 <template>
-    <ul>
-        <li v-for="item in list">
+    <ul class="banner-wrap">
+        <li v-for="item in list" class="banner-item">
             {{item.id}}:{{item.title}}
         </li>
        
@@ -8,8 +8,26 @@
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
+    .banner-wrap{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        margin: 30px auto 28px;
+
+        .banner-item{
+            display: block;
+            width: 280px;
+            height: 100px;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+    }
+
     
+
 </style>
 
 <script>

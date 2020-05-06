@@ -11,3 +11,9 @@ $green:blue; /*變量*/
     }
 }
 
+
+@mixin text-overflow {/*文本溢出,宽度另外定义*/
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
