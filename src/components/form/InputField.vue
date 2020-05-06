@@ -3,20 +3,20 @@
         <label class="input-label">
             <span class="input-required" if-show="required">*</span>{{label}}:
         </label>
-        <div class="input-field">
+        <div class="input-field" v-bind:style="inputStyle">
             <input 
                 class="input-text"
                 v-bind:type="type" 
                 v-bind:name="filedName" 
                 v-bind:placeholder="placeholder"
-                
+
 
                 @input="onInput()"
                 @change="onChange()"
                 v-model="text"
              />
 
-            <div class="input-suffix">{{text.length}}/30</div>
+            <div class="input-suffix" if-show="suffix">{{text.length}}/30</div>
         </div>
     </div>
 </template>
@@ -74,7 +74,6 @@
         components:{},
         props:{
             required:Boolean,
-            prefix:Boolean,
             suffix:Boolean,
             maxLength:Number,
             placeholder:String,
@@ -90,7 +89,11 @@
             }
         },
         computed:{
-
+            inputStyle(){
+                return {
+                    width:this.width=='auto'?'auto':(this.width+'px')
+                }
+            }
         },
         methods:{
             onInput(){

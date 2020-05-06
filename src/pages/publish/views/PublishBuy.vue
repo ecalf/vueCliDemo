@@ -15,7 +15,6 @@
             <FormRow>
                 <InputField 
                     v-bind:required="true" 
-                    v-bind:prefix="true"
                     v-bind:suffix="true"
                     v-bind:max-length="30"
                     placeholder="最多输入30个字符"
@@ -23,7 +22,7 @@
                     type="text"
                     label="标题" 
                     filed-name="title" 
-                    width="auto"
+                    width="1020"
                     />
             </FormRow>
 
@@ -58,11 +57,12 @@
 
 <script>
 import Banner from "../components/Banner";
-import FormContainer from "../components/FormContainer";
-import SearchBar from "../components/SearchBar";
 import SelectCascade from "../components/SelectCascade";
-import FormRow from "../components/FormRow";
-import InputField from "../components/InputField";
+
+import FormContainer from "@components/form/FormContainer";
+import SearchBar from "@components/form/SearchBar";
+import FormRow from "@components/form/FormRow";
+import InputField from "@components/form/InputField";
 
 //测试数据
 import categoryData from "../store/categoryData";
