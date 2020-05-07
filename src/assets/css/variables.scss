@@ -127,3 +127,13 @@ $bgwhite:#ffffff;
       width: 1%;
   }
 }
+
+
+
+
+
+
+//容器边框圆角
+@mixin default-radius{
+    border-radius:3px;
+}

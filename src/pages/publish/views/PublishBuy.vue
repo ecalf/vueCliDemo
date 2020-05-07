@@ -18,11 +18,13 @@
                     v-bind:suffix="true"
                     v-bind:max-length="30"
                     placeholder="最多输入30个字符"
+                    defaultvalue=""
 
                     type="text"
                     label="标题" 
                     filed-name="title" 
                     width="1020"
+                    height="40"
                     />
             </FormRow>
 
@@ -30,14 +32,20 @@
                 <TextAreaField 
                     v-bind:required="true" 
                     v-bind:suffix="true"
-                    v-bind:max-length="30"
+                    v-bind:max-length="100"
                     placeholder="最多输入100个字符"
+                    defaultvalue=""
 
-                    type="textArea"
+                    type="textarea"
                     label="描述" 
                     filed-name="content" 
                     width="1020"
+                    height="100"
                     />
+            </FormRow>
+
+            <FormRow>
+                <DropList v-bind:prefix="true" v-bind:list="dropList" />
             </FormRow>
 
         </FormContainer>
@@ -78,6 +86,7 @@ import SearchBar from "@components/form/SearchBar";
 import FormRow from "@components/form/FormRow";
 import InputField from "@components/form/InputField";
 import TextAreaField from "@components/form/TextAreaField";
+import DropList from "@components/form/DropList";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -93,18 +102,24 @@ export default {
         SelectCascade,
         FormRow,
         InputField,
-        TextAreaField
+        TextAreaField,
+        DropList
     },
     data(){
 
         return{
             bannerList:[//todo:fetch list data
-                {title:'Buybanner',id:1},
-                {title:'Buybanner',id:2},
-                {title:'Buybanner',id:3},
-                {title:'Buybanner',id:4}
+                {text:'Buybanner',id:1},
+                {text:'Buybanner',id:2},
+                {text:'Buybanner',id:3},
+                {text:'Buybanner',id:4}
             ],
-            categoryData:categoryData
+            categoryData:categoryData,
+            dropList:[//todo:fetch list data
+                {text:'认证1',id:1,icon:"@assets/inicon11.png"},
+                {text:'认证2',id:2,icon:"@assets/inicon12.png"},
+                {text:'认证3',id:3,icon:"@assets/inicon13.png"}
+            ]
         }
     },
     computed:{

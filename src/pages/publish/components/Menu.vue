@@ -3,8 +3,10 @@
         <div class="menu-split" v-show="hasSplit"></div>
         <ul class="menu" v-bind:style="menuStyle" v-show="list.length">
             <li class="menu-item" v-for="item in list" v-bind:key="item.id">
-                <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">{{item.name}}</span>
-                <span class="item-sub"></span>
+                <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">
+                    {{item.text}}
+                </span>
+                <span class="arrow-right"></span>
             </li>
         </ul>
     </div>
@@ -32,6 +34,19 @@
         overflow-y:auto; 
         padding:10px 15px 18px 15px;
 
+        &::-webkit-scrollbar {
+            width: 6px;     /*宽:对应竖滚动条尺寸*/
+        }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+             -webkit-box-shadow: inset 0 0 5px #A6ACB1;
+            background: #535353;
+        }
+        &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px #EAECED;
+            background: #EDEDED;
+        }
+
+
         .menu-item{
             display:flex;
             justify-content: space-between;
@@ -58,7 +73,7 @@
                     font-weight: bold;
                 }
             }
-            .item-sub{
+            .arrow-right{
                 margin-right:10px;
                 display: inline-block;
                 width:10px;
