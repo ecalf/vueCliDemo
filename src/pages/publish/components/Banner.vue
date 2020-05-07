@@ -1,7 +1,7 @@
 <template>
     <ul class="banner-wrap">
         <li v-for="item in list" class="banner-item">
-            {{item.id}}:{{item.title}}
+            {{item.id}}:{{item.text}}
         </li>
        
     </ul>

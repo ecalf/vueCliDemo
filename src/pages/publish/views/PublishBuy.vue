@@ -18,11 +18,13 @@
                     v-bind:suffix="true"
                     v-bind:max-length="30"
                     placeholder="最多输入30个字符"
+                    defaultvalue=""
 
                     type="text"
                     label="标题" 
                     filed-name="title" 
                     width="1020"
+                    height="40"
                     />
             </FormRow>
 
@@ -30,14 +32,124 @@
                 <TextAreaField 
                     v-bind:required="true" 
                     v-bind:suffix="true"
-                    v-bind:max-length="30"
+                    v-bind:max-length="100"
                     placeholder="最多输入100个字符"
+                    defaultvalue=""
 
-                    type="textArea"
+                    type="textarea"
                     label="描述" 
                     filed-name="content" 
                     width="1020"
+                    height="100"
                     />
+            </FormRow>
+
+            <FormRow>
+                <DropListField
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="true"
+                    v-bind:list="dropList" 
+                    label="品牌" 
+                    filed-name="brand" 
+                    height="40"
+                    width="200"
+
+                    />
+
+                <InputField 
+                    v-bind:required="false" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="其他品牌" 
+                    filed-name="otherBrand" 
+                    width="200"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="出口国" 
+                    filed-name="cuntry" 
+                    width="200"
+                    height="40"
+                    />
+
+            </FormRow>
+
+            <FormRow>
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="供应商价" 
+                    filed-name="originPrice" 
+                    width="100"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="市场价" 
+                    filed-name="realPrice" 
+                    width="100"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="数量" 
+                    filed-name="quantity" 
+                    width="100"
+                    height="40"
+                    />
+
+
+                 <DropListField
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="false"
+                    v-bind:list="unitList" 
+                    label="单位" 
+                    filed-name="unit" 
+                    height="40"
+                    width="100"
+
+                    />
+
+
+                <CheckBoxField
+                    v-bind:required="false" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="false"
+                    v-bind:list="checkboxGroup"
+                    label="用途" 
+                    filed-name="use" 
+                    height="40"
+                    width="100"
+                    />
+
             </FormRow>
 
         </FormContainer>
@@ -78,6 +190,8 @@ import SearchBar from "@components/form/SearchBar";
 import FormRow from "@components/form/FormRow";
 import InputField from "@components/form/InputField";
 import TextAreaField from "@components/form/TextAreaField";
+import DropListField from "@components/form/DropListField";
+import CheckBoxField from "@components/form/CheckBoxField";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -93,18 +207,34 @@ export default {
         SelectCascade,
         FormRow,
         InputField,
-        TextAreaField
+        TextAreaField,
+        DropListField,
+        CheckBoxField
     },
     data(){
 
         return{
             bannerList:[//todo:fetch list data
-                {title:'Buybanner',id:1},
-                {title:'Buybanner',id:2},
-                {title:'Buybanner',id:3},
-                {title:'Buybanner',id:4}
+                {text:'Buybanner',id:1},
+                {text:'Buybanner',id:2},
+                {text:'Buybanner',id:3},
+                {text:'Buybanner',id:4}
             ],
-            categoryData:categoryData
+            categoryData:categoryData,
+            dropList:[//todo:fetch list data
+                {text:'认证1',id:1,icon:"@assets/images/inicon11.png"},
+                {text:'认证2',id:2,icon:"@assets/images/inicon12.png"},
+                {text:'认证3',id:3,icon:"@assets/images/inicon13.png"}
+            ],
+            unitList:[
+                {text:'个',id:1},
+                {text:'箱',id:2},
+                {text:'吨',id:3},
+            ],
+            checkboxGroup:[
+                {text:'医用',id:1,checked:true},
+                {text:'民用',id:2}
+            ]
         }
     },
     computed:{

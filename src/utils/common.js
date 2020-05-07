@@ -8,12 +8,13 @@ function dateTimeFormat(date,formatStr,frag){
     }else{
         date = date*1;
     }
-    var date = new Date(date);
+    
+    date = new Date(date);
     if(!date){
         return date+'';
     }
 
-    var parseInfo = {
+    let parseInfo = {
         y:date.getFullYear(),
         m:date.getMonth(),
         d:date.getDate(),
@@ -29,7 +30,7 @@ function dateTimeFormat(date,formatStr,frag){
     frag = !!frag||true;//默认两位数日期数字
 
     return formatStr.replace(/%([ymdwhiscz])/gi,function(m,c){
-        var n = parseInfo[c];
+        let n = parseInfo[c];
         if(c=='m'){//月份
             n = n+1;
         }else if(('mdhis').indexOf(c)>-1){//两位格式
@@ -59,10 +60,62 @@ function setLang(component,lang){
     component.$i18n.locale = lang;
 }
 
+/**
+ * 按全角计算文字的长度,2个半全角算1个长度
+ * @param 输入文字
+ * @return 文字长度
+ */
+function getFullWidthLength(str) {
+    str = ''+str;
+    if(!str){ return 0; }
 
+    let len        = str.length;
+    let charCode   = -1;
+    let realLength = 0;
+    
+    for ( let i = 0; i < len; i++) {
+        charCode = str.charCodeAt(i);
+
+        if (charCode >= 0 && charCode <= 254) {
+            // 0-255中的全角文字，依次对应下面的字符
+            // ¢ , £ , § , ¨ , « , ¬ , ¯ , ° , ± , ´ , µ , ¶ , · , ¸ , » , × , ÷
+            if (charCode == 162
+                    || charCode == 163
+                    || charCode == 167
+                    || charCode == 168
+                    || charCode == 171
+                    || charCode == 172
+                    || charCode == 175
+                    || charCode == 176
+                    || charCode == 177
+                    || charCode == 180
+                    || charCode == 181
+                    || charCode == 182
+                    || charCode == 183
+                    || charCode == 184
+                    || charCode == 187
+                    || charCode == 215
+                    || charCode == 247) {
+                realLength += 2;
+            } else {
+                realLength += 1;
+            }
+        } else if (charCode >= 65377 && charCode <= 65439) {
+            if (charCode == 65381) { // '･'该字符的长度为两个字节
+                realLength += 2;
+            } else {
+                realLength += 1;
+            }
+        } else {
+            realLength += 2;
+        }
+    }
+    return realLength;
+}
 
 export {
     getLang,
     setLang,
-    dateTimeFormat
+    dateTimeFormat,
+    getFullWidthLength
 }
