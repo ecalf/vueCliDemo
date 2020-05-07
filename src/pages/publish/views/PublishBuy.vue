@@ -276,7 +276,7 @@
                     height="400"
                     >
 
-                    <textarea height="400"></textarea>
+                    <Editor />
                     
 
                 </FieldWrap>
@@ -376,6 +376,7 @@ import CheckBoxField from "@components/form/CheckBoxField";
 import DropList from  "@components/form/DropList.vue";
 import FileUploadImage from  "@components/form/FileUploadImage.vue";
 import FileUploadVideo from  "@components/form/FileUploadVideo.vue";
+import Editor from  "@components/form/Editor.vue";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -397,7 +398,8 @@ export default {
         CheckBoxField,
         DropList,
         FileUploadImage,
-        FileUploadVideo
+        FileUploadVideo,
+        Editor
     },
     data(){
 

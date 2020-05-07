@@ -152,8 +152,8 @@ module.exports = {
     //   errors: true
     // },
     // open: true, // 是否打开浏览器
-    host: "localhost",
-    port: "8080", // 代理端口
+    //host: "localhost",
+    //port: "8080", // 代理端口
     // https: false,
     // hotOnly: false, // 热更新
     proxy: {
