@@ -45,7 +45,99 @@
             </FormRow>
 
             <FormRow>
-                <DropList v-bind:prefix="true" v-bind:list="dropList" />
+                <DropListField
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="true"
+                    v-bind:list="dropList" 
+                    label="品牌" 
+                    filed-name="brand" 
+                    height="40"
+                    width="200"
+
+                    />
+
+                <InputField 
+                    v-bind:required="false" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="其他品牌" 
+                    filed-name="otherBrand" 
+                    width="200"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="出口国" 
+                    filed-name="cuntry" 
+                    width="200"
+                    height="40"
+                    />
+
+            </FormRow>
+
+            <FormRow>
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="供应商价" 
+                    filed-name="originPrice" 
+                    width="100"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="市场价" 
+                    filed-name="realPrice" 
+                    width="100"
+                    height="40"
+                    />
+
+                <InputField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    placeholder=""
+                    defaultvalue=""
+
+                    type="text"
+                    label="数量" 
+                    filed-name="quantity" 
+                    width="100"
+                    height="40"
+                    />
+
+
+                 <DropListField
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="false"
+                    v-bind:list="unitList" 
+                    label="单位" 
+                    filed-name="unit" 
+                    height="40"
+                    width="100"
+
+                    />
+
             </FormRow>
 
         </FormContainer>
@@ -86,7 +178,7 @@ import SearchBar from "@components/form/SearchBar";
 import FormRow from "@components/form/FormRow";
 import InputField from "@components/form/InputField";
 import TextAreaField from "@components/form/TextAreaField";
-import DropList from "@components/form/DropList";
+import DropListField from "@components/form/DropListField";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -103,7 +195,7 @@ export default {
         FormRow,
         InputField,
         TextAreaField,
-        DropList
+        DropListField
     },
     data(){
 
@@ -119,6 +211,11 @@ export default {
                 {text:'认证1',id:1,icon:"@assets/inicon11.png"},
                 {text:'认证2',id:2,icon:"@assets/inicon12.png"},
                 {text:'认证3',id:3,icon:"@assets/inicon13.png"}
+            ],
+            unitList:[
+                {text:'个',id:1},
+                {text:'箱',id:2},
+                {text:'吨',id:3},
             ]
         }
     },

@@ -1,14 +1,21 @@
 <template>
     <div class="drop-wrap">
-        <div class="drop-value">
+        <div class="drop-value" @click="trigger()" v-bind:data-value="value">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-if="prefix"></span>
-                <span>{{value}}</span>
+                <span>{{text}}</span>
             </div>
             <span class="arrow-down"></span>
         </div>
-        <ul class="drop-menu">
-            <li v-for="(item,i) in list" v-bind:key="item.id" class="drop-menu-item drop-value">
+        <ul class="drop-menu" v-show="showMenu" @click="selected($event)">
+            <li v-for="(item,i) in list" 
+                v-bind:key="item.id"  
+                v-bind:data-index="i"
+                v-bind:data-value="item.id"
+                v-bind:data-text="item.text"
+                v-bind:data-icon="item.icon"
+
+                class="drop-menu-item drop-value">
                 <div class="drop-value-text">
                     <span class="drop-item-icon" v-if="prefix"></span>
                     <span>{{item.text}}</span>
@@ -70,6 +77,7 @@
             width: 100%;
             height:$dropHeight; 
             top:$dropHeight;
+            z-index: 1;
 
         }
 
@@ -87,18 +95,41 @@
         components:{},
         props:{
             prefix:Boolean,
-            list:Array
+            list:Array,
+            defaultValue:'',
+            defaultText:'',
+
         },
         data(){
             return {
-                value:'认证A'
+                value:'',
+                text:'认证A',
+                showMenu:false
             };
         },
         computed:{
 
         },
         methods:{
+            trigger(){
+                this.showMenu = !this.showMenu;
+            },
+            selected(e){
+                let target = e.target;
+                do{
+                    target = target.parentNode;
+                }while(target.tagName!='LI'&&target.tagName!='UL');
 
+                console.log(target.dataset);
+                this.text = target.dataset.text;
+                this.value = target.dataset.value;
+            
+                this.trigger();
+            }
+        },
+        created(){
+            this.value = this.list[0].value;
+            this.text = this.list[0].text;
         }
         
 
