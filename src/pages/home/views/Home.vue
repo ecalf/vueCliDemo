@@ -89,7 +89,18 @@
         </ul>
       </div>
       <!--业务精选-->
+         <div class="column-business oh">
+            <div class="column-title clearfix">
+                <div class="right-msg fr">
+                    <span>总业务数量：1200</span>
+                    <a href="" class="release-btn"><i></i>我要发布</a>
+                </div>
+                <h3 class="business-title fs-bule"><i class="iconfont iconzu304"
+                        style="background-color:#44A78D;"></i>业务精选<em>优选</em></h3>
+            </div>
+            
       <Business-Select />
+      </div>
       <!--产品列表-->
       <Product-List />
 

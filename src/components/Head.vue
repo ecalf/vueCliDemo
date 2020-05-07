@@ -34,10 +34,10 @@
           <a href="">委托采销</a>
         </li>
         <li>
-          <a href="">供应商中心</a>
+          <a href="/supplier">供应商中心</a>
         </li>
         <li>
-          <a href="">最新资讯</a>
+          <a href="/news">最新资讯</a>
         </li>
       </ul>
       <div class="search-box">
