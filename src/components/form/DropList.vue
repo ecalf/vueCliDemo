@@ -1,5 +1,5 @@
 <template>
-    <div class="drop-wrap">
+    <div class="drop-wrap" v-bind:style="wrapStyle">
         <div class="drop-value" @click="trigger()" v-bind:data-value="value">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
@@ -15,8 +15,8 @@
                 v-bind:data-text="item.text"
                 v-bind:data-icon="item.icon"
 
-                class="drop-menu-item drop-value">
-                <div class="drop-value-text">
+                class="drop-menu-item">
+                <div class="drop-item-text">
                     <span class="drop-item-icon" v-if="prefix"></span>
                     <span>{{item.text}}</span>
                 </div>
@@ -72,12 +72,42 @@
             }
         }
 
+
+
         .drop-menu{
             position: absolute;
             width: 100%;
-            height:$dropHeight; 
             top:$dropHeight;
             z-index: 1;
+            background-color: $bgwhite;
+            @include default-border;
+
+            
+
+            .drop-menu-item{
+                display:flex;
+                justify-content: flex-end;
+                align-items: center;
+                line-height: 30px;
+                height: 30px;
+                font-weight: 300;
+                border-bottom: 1px dotted $borderColor;
+                &:last-child{
+                    border:none;
+                }
+
+                .drop-item-text{
+                    display:flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    cursor: default;
+                    flex:1;
+                    padding: 10px;
+                }
+
+            }
+
+
 
         }
 
@@ -98,6 +128,8 @@
             list:Array,
             defaultvalue:String,
             defaulttext:String,
+            width:String,
+            height:String //todo: 暂未控制高度
 
         },
         data(){
@@ -109,6 +141,14 @@
             };
         },
         computed:{
+            wrapStyle(){
+                let styleMap = {};
+                if(this.width){
+                    styleMap.width = this.width=='auto'?'auto':(this.width+'px');
+                }
+
+                return styleMap;
+            },
             iconBg(){
                 return {
                     'background-image':'url('+this.icon+')'

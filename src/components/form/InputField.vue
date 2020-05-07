@@ -1,6 +1,6 @@
 <template>
     <FieldWrap 
-        v-bind:type="'text'" 
+        type="text" 
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -50,7 +50,6 @@
             defaultvalue:String,//默认值
 
             label:String, //标签名
-            type:String, //类型,主要用于区分 textarea 的 label排版
             filedName:String,//表单项名
             width:String,//宽度
             height:String//高度

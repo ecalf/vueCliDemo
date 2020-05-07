@@ -1,6 +1,6 @@
 <template>
     <FieldWrap 
-        v-bind:type="'text'" 
+        type="text" 
         v-bind:label="label"
         v-bind:required="required" 
   
@@ -19,11 +19,7 @@
 
 
 <style lang="scss" scoped>
-    .input-text{
-        flex:1;
-        padding:0 10px;
-    }
-
+   
 </style>
 
 

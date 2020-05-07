@@ -2,7 +2,7 @@
 
 <template>
     <FieldWrap 
-        v-bind:type="'textarea'" 
+        type="textarea" 
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"

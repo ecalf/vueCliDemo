@@ -60,7 +60,7 @@
     export default {
         components:{},
         props:{
-            type:String,
+            type:String, //类型,主要用于区分 textarea 的 label排版
             count:Number,
             required:Boolean,
             label:String,
@@ -76,22 +76,45 @@
             }
         },
         computed:{
-            wrapStyle(){
+            wrapStyle(){//主要是调整 label 对齐方式
                 const styleMap = {};
-                styleMap['align-items'] = (this.type=='textarea'?'flex-start':'center');
+                if(this.type=='textarea'){
+                    styleMap['align-items'] = 'flex-start';
+                }else if(this.type=='dropListGroup'){
+                    styleMap.display = 'flex';
+                }else if(this.type=="fileUploadGroup"){
+                    styleMap['align-items'] = 'flex-start';
+                }
+
 
                 return styleMap;
             },
             inputStyle(){
                 const styleMap = {};
-                styleMap.width = (this.width=='auto'?'auto':(this.width+'px'));
-                styleMap.height = (this.height=='auto'?'auto':(this.height+'px'));
-                styleMap['flex-direction'] = (this.type=='textarea'?'column':'row');
-                styleMap['align-items'] = (this.type=='textarea'?'flex-end':'center');
-                if(this.type=='checkGroup'){
-                    styleMap.border = 'none'
+                if(this.width*1>0){
+                    styleMap.width = this.width+'px';
+                }
+                if(this.height*1>1){
+                    styleMap.height = this.height+'px';
                 }
 
+                console.log(this.label, this.styleMap);
+                if(this.type=='textarea'){
+
+                    styleMap['flex-direction'] = 'column';
+                    styleMap['align-items'] = 'flex-end';
+                                    console.log(this.type)
+
+                    console.log('styleMap:' ,styleMap )
+                }else if(this.type=='checkGroup'){
+                    styleMap.border = 'none'
+                }else if(this.type=='dropListGroup'){
+                    styleMap['justify-content'] = 'space-between';
+                    styleMap.border = 'none';
+                }else if(this.type=="fileUploadGroup"){
+                    styleMap.border = 'none';
+
+                }
 
                 return styleMap;
             }

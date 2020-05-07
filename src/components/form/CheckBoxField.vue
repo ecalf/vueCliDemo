@@ -1,6 +1,6 @@
 <template>
     <FieldWrap
-        v-bind:type="'checkGroup'" 
+        type="checkGroup" 
         v-bind:label="label"
         v-bind:required="required" 
   
