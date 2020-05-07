@@ -63,8 +63,8 @@
           <span>2020.02.05-2020.04.06</span>
         </div>
         <div class="prodetail-btn">
-          <a href class="contact-btn">立即联系</a>
-          <a href class="buy-btn">委托购买</a>
+          <el-button type="text" @click="dialogVisible = true">立即联系</el-button>
+          <el-button type="text" @click="priceVisible = true">立即报价</el-button>
         </div>
       </div>
     </div>
@@ -80,11 +80,6 @@
       <div
         class="company-dec"
       >万合国际供应链投资（深圳）有限公司创立于20018年11月19日。自成立以来，万合专注于服务质量的提升，已积累国际供应链服务21年的行业经验，与2018年成立全流程服务的，凭借卓越的物流供应链服务和持续创新的技术应用，与诸多产业客户建立了长期深度合作...</div>
-      <p class="company-msg">
-        <span>联系人：张女士</span>
-        <span>电话：0755-8888 888</span>
-        <span>地址：深圳市福田区天安国际大厦6楼405号</span>
-      </p>
     </div>
     <div class="prodetatils-info clearfix">
       <div class="prodetatils-left">
@@ -141,12 +136,66 @@
         </ul>
       </div>
     </div>
+
+    <!--立即联系-->
+    <el-dialog title :visible.sync="dialogVisible" width="400px" :append-to-body="true">
+      <div class="company-msg">
+        <p>联系人：张女士</p>
+        <p>电话：0755-8888 888</p>
+        <p>地址：深圳市福田区天安国际大厦6楼405号</p>
+      </div>
+    </el-dialog>
+    <!--立即报价-->
+    <el-dialog class="price-box"
+      title="立即报价表"
+      :visible.sync="priceVisible"
+      width="600px"
+      :append-to-body="true"
+      center
+    >
+      <el-form :model="form">
+        <h3 class="prodetail-title form-protitle">
+          鱼跃呼吸机家
+          <i class="highcolor">医用</i>正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压
+        </h3>
+        <el-form-item label="手机号码" :label-width="formLabelWidth">
+          <el-input v-model="form.tel" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名/公司名称" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="价格" :label-width="formLabelWidth">
+          <el-input v-model="form.price" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="留言" :label-width="formLabelWidth">
+          <el-input type="textarea" v-model="form.message" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="priceVisible = false">取 消</el-button>
+        <el-button type="primary" @click="priceVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
+
 <script>
 export default {
-  components: {}
+  data() {
+    return {
+      dialogVisible: false,
+      priceVisible: false,
+      form: {
+        title: "",
+        tel: "",
+        name: "",
+        price: "",
+        message: ""
+      },
+      formLabelWidth: "100px"
+    };
+  }
 };
 </script>
 
@@ -295,6 +344,7 @@ export default {
 }
 .prodetail-btn {
   padding-top: 37px;
+  button,
   a {
     display: inline-block;
     width: 180px;
@@ -302,7 +352,6 @@ export default {
     border-radius: 3px;
     border: solid 1px #44a78d;
     margin-right: 10px;
-    line-height: 50px;
     font-size: 18px;
     text-align: center;
     background: rgba(68, 167, 141, 0.2);
@@ -346,8 +395,10 @@ export default {
   line-height: 16px;
 }
 .company-msg {
-  span {
-    margin-right: 10px;
+  margin-top: -20px;
+  font-size: 16px;
+  p {
+    padding-bottom: 5px;
   }
 }
 
@@ -376,7 +427,7 @@ export default {
   float: left;
   padding: 25px;
   background: #fff;
-  margin-right:14px;
+  margin-right: 14px;
 }
 .deatils-title {
   color: $ac;
@@ -396,7 +447,6 @@ export default {
 }
 /*产品列表*/
 .index-prolist {
- 
   ul {
     li {
       padding: 0 0 10px;
@@ -451,4 +501,11 @@ export default {
   padding-top: 0;
   overflow: hidden;
 }
+
+.form-protitle{
+  font-size:16px;
+  font-weight:normal;
+}
+
+
 </style>

@@ -7,18 +7,33 @@
         <h3>品类</h3>
         <ul class="sup-ul">
           <li v-for="(item,index) in items" :key="index">
-            <div class="category-one" :class="{'active':indexshow==index}" @click="subShow(index)">{{item.frist}}</div>
-            <div class="category-two"  v-show="index===indexshow"  v-for="(subitem,i) in item.sublist" :key="i">
-              <a
-                href="javascript:;"
-                class="sub-title" v-on:mouseover="showToggle(i)"
-            v-on:mouseout="handleHide">{{subitem.title}}</a>
-              <div class="category-three" v-show="i===isShow">
-                <a href="javascript:;" v-for="(threeitem,j) in subitem.threelist" :key="j">{{threeitem.thtitle}}</a>
+            <div
+              class="category-one"
+              :class="{'active':indexshow==index}"
+              @click="subShow(index)"
+            >{{item.frist}}</div>
+            <transition name="sub-comments">
+              <div class="ani-height">
+                <div
+                  class="category-two"
+                  v-show="index===indexshow"
+                  v-for="(subitem,i) in item.sublist"
+                  :key="i"
+                  v-on:mouseover="showToggle(i)"
+                  v-on:mouseout="handleHide"
+                >
+                  <a href="javascript:;" class="sub-title">{{subitem.title}}</a>
+                  <div class="category-three" v-show="i===isShow">
+                    <a
+                      href="javascript:;"
+                      v-for="(threeitem,j) in subitem.threelist"
+                      :key="j"
+                    >{{threeitem.thtitle}}</a>
+                  </div>
+                </div>
               </div>
-            </div>
+            </transition>
           </li>
-          
         </ul>
       </div>
     </div>
@@ -26,6 +41,24 @@
       <Product-Recommend />
       <!--业务精选-->
       <Business-Select />
+
+      <div class="other-condition">
+        <div class="condition-box">
+          <a href>综合排序</a>
+          <a href class="active">
+            剩余时间
+            <i></i>
+          </a>
+          <a href>
+            价格
+            <i></i>
+          </a>
+          <form class="condsearch-box">
+            <input type="text" placeholder />
+            <button>搜索</button>
+          </form>
+        </div>
+      </div>
       <!--产品列表-->
       <Product-List />
       <!--分页-->
@@ -81,10 +114,12 @@ export default {
             {
               title: "一般治疗及重型、危重型病例治疗药品",
               threelist: [
+                { thtitle: "α-干扰素" },
                 { thtitle: "洛匹那韦利托那韦片（盒）" },
                 { thtitle: "抗菌药物" },
                 { thtitle: "甲泼尼龙" },
-                { thtitle: "糖皮质激素等经卫生健康" }
+                { thtitle: "糖皮质激素等经卫生健康" },
+                { thtitle: "药监部门依程序确认治疗有效的药品和疫苗" }
               ]
             },
             {
@@ -126,14 +161,15 @@ export default {
         direction: "vertical",
         autoplay: true
       },
-      isShow:0,
-      indexshow:0
+      isShow: 0,
+      indexshow: 0
     };
   },
-  mounted: function () {
-      // 避免第一个渲染的显示
-      this.isShow = -1
-    },
+  mounted: function() {
+    // 避免第一个渲染的显示
+    this.isShow = -1;
+    this.indexshow = -1;
+  },
   methods: {
     showToggle: function(i) {
       this.isShow = i;
@@ -141,267 +177,113 @@ export default {
     handleHide: function() {
       this.isShow = !this.isShow;
     },
-    subShow:function(index){
-     this.indexshow = index;
+    subShow: function(index) {
+      this.indexshow = index;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../assets/css/variables.scss";
-/*首页新闻板块*/
-.indexnews-wrap {
-  background: #fff;
-  padding: 10px 0;
-  line-height: 30px;
-}
-
-.news-slider {
+/*分类*/
+.supplier {
   position: relative;
-  overflow: hidden;
-  font-size: 16px;
-  height: 30px;
-  .swiper-slide {
-    padding-right: 60px;
-    position: relative;
-    width: 1097px;
-  }
-  .title {
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    @include ol();
-
-    &:hover {
-      color: $ac;
-    }
-  }
-
-  .more {
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    color: $ac;
-
-    &:before {
-      content: "";
-      width: 1px;
-      height: 20px;
-      background: $ac;
-      display: inline-block;
-      margin-right: 12px;
-      vertical-align: middle;
-    }
-  }
 }
-
-.news-title {
-  display: block;
-  font-size: 22px;
-  color: $ac;
-  margin-right: 15px;
-}
-
-/*国内疫情*/
-.epidemic-box {
-  margin: 30px auto;
-}
-
-.epidemic-status {
-  display: table;
-  width: 100%;
-  background-color: $bgwhite;
-  padding: 25px 0;
-
-  li {
-    display: table-cell;
-    width: 1%;
-    vertical-align: middle;
-    text-align: center;
+.sup-category {
+  position: absolute;
+  width: 258px;
+  left: 50%;
+  margin-left: -600px;
+  top: 0;
+  height: 100%;
+  background: #27303e;
+  z-index: 99;
+  color: #fefefe;
+  padding: 15px 0;
+  h3 {
     font-size: 16px;
-    border-right: 1px solid #f2f2f2;
-
-    &:last-child {
-      border-right: 0;
-    }
-
-    em {
-      font-style: normal;
-    }
-
-    strong {
-      display: block;
-      font-size: 32px;
-      line-height: 1.4;
-    }
-  }
-}
-
-.epidemic-title {
-  color: #fff;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 25px;
-  background: $ac;
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 25px;
-  background: url(~@assets/images/home_titlbg.png) 0 0 no-repeat;
-  img {
-    height: 20px;
-    margin-right: 6px;
-  }
-
-  .abroad-title {
-    color: $ac;
-    img {
-      margin-left: 5px;
-    }
-  }
-}
-
-.color-red {
-  em,
-  strong {
-    color: #cc1e1e;
-  }
-}
-
-.color-green {
-  em,
-  strong {
-    color: #178b50;
-  }
-}
-
-.color-gary {
-  em,
-  strong {
-    color: #4e5a65;
-  }
-}
-
-.color-shorange {
-  em,
-  strong {
-    color: #f23a3b;
-  }
-}
-
-.color-violet {
-  em,
-  strong {
-    color: #ca3f81;
-  }
-}
-
-.color-orange {
-  em,
-  strong {
-    color: #f05926;
-  }
-}
-
-/*业务精选-标题*/
-.right-msg {
-  font-size: 16px;
-  padding-top: 18px;
-  .release-btn {
-    margin-left: 20px;
     font-weight: bold;
-    i {
-      display: inline-block;
-      width: 17px;
-      height: 17px;
-      background-color: #3d3938;
-      vertical-align: -2px;
-      border-radius: 50%;
-      margin-right: 5px;
+    padding: 0 20px 14px;
+  }
+}
+.sup-ul {
+  li {
+    .category-one {
+      padding: 8px 20px;
+      cursor: pointer;
       position: relative;
-      &:before,
       &:after {
         content: "";
-        width: 1px;
-        height: 10px;
-        background: #fff;
+        display: block;
         position: absolute;
-        left: 8px;
-        top: 4px;
+        top: 10px;
+        right: 15px;
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid #fefefe;
+        border-right: 1px solid #fefefe;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
       }
-      &:after {
-        -webkit-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        transform: rotate(90deg);
+      &.active {
+        &:after {
+          top: 15px;
+          transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+          -o-transform: rotate(-45deg);
+        }
       }
     }
+    .sub-title {
+      display: block;
+      color: #fefefe;
+      padding: 0 10px 0 30px;
+      height: 32px;
+      line-height: 32px;
+      @include ol();
+    }
+  }
+}
+.category-two {
+  position: relative;
+  font-size: 12px;
+  &:hover {
+    .sub-title {
+      color: $ac;
+      background: #fff;
+    }
+  }
+}
+.category-three {
+  position: absolute;
+  top: 0;
+  left: 258px;
+  width: 512px;
+  background: #fff;
+  color: #4e5a65;
+  padding: 12px 20px;
+  a {
+    display: inline-block;
+    padding: 4px 5px;
     &:hover {
       color: $ac;
-
-      i {
-        background-color: $ac;
-      }
-    }
-  }
-}
-.column-title {
-  margin-bottom: 16px;
-  h3 {
-    font-size: 30px;
-    font-weight: bold;
-    color: #4e5a65;
-    i {
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      display: inline-block;
-      border-radius: 50%;
-      vertical-align: 4px;
-      margin-right: 5px;
-      color: #fff;
-      text-align: center;
-    }
-    em {
-      display: inline-block;
-      vertical-align: 18px;
-      margin-left: 4px;
-      font-size: 13px;
-      font-style: normal;
-      width: 38px;
-      text-align: center;
-      line-height: 20px;
-      height: 21px;
-      color: #fff;
-      background: url(~@assets/images/inicon3.png) 0 0 no-repeat;
     }
   }
 }
 
-/*业务精选-标题 end*/
-
-.adver-area {
-  a {
-    display: block;
-  }
-  img {
-    display: block;
-    width: 100%;
-  }
+.sub-comments-leave-active,
+.sub-comments-enter-active {
+  transition: max-height 0.5s linear;
 }
-/*采购订单*/
-.m-column-box {
-  margin: 30px 0;
-  padding: 25px;
-  background: #fff;
+.sub-comments-enter,
+.sub-comments-leave-to {
+  max-height: 0;
+  opacity: 0;
 }
-.purchase-more {
-  display: block;
-  margin-top: 12px;
-  text-align: right;
-  color: #3d3938;
-  font-size: 16px;
+.condition-box{
+  background:#fff;
+  padding:10px;
 }
 </style>

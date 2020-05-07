@@ -102,7 +102,7 @@ $bgwhite:#ffffff;
 
 // ###  常用的放大效果
 // html: .thumb(:hover) > img
-@mixin imgscale ($scale:1.03,$time:.7s) {
+@mixin imgscale ($scale:1.05,$time:.7s) {
   overflow: hidden;
   &:hover {
       img {

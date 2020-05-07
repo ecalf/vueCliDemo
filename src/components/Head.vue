@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="header-nav commonweb clearfix">
-      <a href class="logo">
+      <a href="/home" class="logo">
         <img src="@assets/images/logo.png" alt />
       </a>
       <ul class="nav clearfix">

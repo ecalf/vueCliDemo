@@ -31,9 +31,8 @@
                   <div class="other-link">
                     <a href class="fr">免费注册</a>
                     <a href>忘记密码？</a>
-                    <a href>忘记用户名</a>
                   </div>
-                  <a class="login-button">登录</a>
+                  
                 </div>
                 <!--密码登录 end-->
                 <!--手机登录-->
@@ -50,9 +49,9 @@
                   </ul>
                   <div class="other-link">
                     <a href class="fr">免费注册</a>
-                  </div>
-                  <a class="login-button">登录</a>
+                  </div>                 
                 </div>
+                 <a class="login-button">登录</a>
               </form>
             </div>
           </div>

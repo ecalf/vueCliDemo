@@ -12,18 +12,10 @@
           </div>
           <h3>采购订单</h3>
         </div>
-        <div class="buy-order-nav">
-          订单状态：
-          <p class="order-nav-navbar">
-            <a href>全部</a>
-            <a href>待发货</a>
-            <a href>待评价</a>
-            <a href>交易成功</a>
-            <a href>已取消</a>
-            <a href>问题订单</a>
-          </p>
-        </div>
-         <Errormsg />
+        <bar-nav :navlist="navlist" />
+        <order-show />
+        <!--搜索判断-->
+        <!-- <Errormsg /> -->
       </div>
     </div>
   </div>
@@ -32,11 +24,26 @@
 <script>
 import Mleftnav from "@components/Mleftnav";
 import Errormsg from "@components/Errormsg";
+import BarNav from "../../components/BarNav";
+import OrderShow from "../../components/OrderShow";
 export default {
   components: {
-    Mleftnav,Errormsg
+    Mleftnav,
+    Errormsg,
+    BarNav,
+    OrderShow
+  },
+  data() {
+    return {
+      navlist: [
+        { title: "全部" },
+        { title: "上架" },
+        { title: "下架" },
+        { title: "已截止" }
+      ]
+    };
   }
 };
 </script>
-<style>
+<style lang="scss" scoped>
 </style>

@@ -8,18 +8,14 @@
         <div class="news-box">
           <span class="news-title fl">最新资讯</span>
           <swiper class="news-slider" :options="newswiper">
-              <swiper-slide>
-                <a href
-                  class="title"
-                >深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为最新公告为最新最新最</a>
-                <a href class="more">查看</a>
-              </swiper-slide> 
-               <swiper-slide>
-                <a href
-                  class="title"
-                >深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为最新公告为最新最新最</a>
-                <a href class="more">查看</a>
-              </swiper-slide> 
+            <swiper-slide>
+              <a href class="title">深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为最新公告为最新最新最</a>
+              <a href class="more">查看</a>
+            </swiper-slide>
+            <swiper-slide>
+              <a href class="title">深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为深圳企业最新公告为最新公告为最新最新最</a>
+              <a href class="more">查看</a>
+            </swiper-slide>
           </swiper>
         </div>
       </div>
@@ -37,13 +33,13 @@
             <img src="@assets/images/inicon1.png" />国内疫情
           </span>
         </div>
-        <ul class="epidemic-status">
+        <ul class="epidemic-status" v-for="(item,index) in list" :key="index">
           <li class="color-red">
             <p>
               较上日
               <em>+39</em>
             </p>
-            <strong>84289</strong>
+            <strong>{{list.desc}}</strong>
             <p>累计确诊</p>
           </li>
           <li class="color-green">
@@ -89,17 +85,21 @@
         </ul>
       </div>
       <!--业务精选-->
-         <div class="column-business oh">
-            <div class="column-title clearfix">
-                <div class="right-msg fr">
-                    <span>总业务数量：1200</span>
-                    <a href="" class="release-btn"><i></i>我要发布</a>
-                </div>
-                <h3 class="business-title fs-bule"><i class="iconfont iconzu304"
-                        style="background-color:#44A78D;"></i>业务精选<em>优选</em></h3>
-            </div>
-            
-      <Business-Select />
+      <div class="column-business oh">
+        <div class="column-title clearfix">
+          <div class="right-msg fr">
+            <span>总业务数量：1200</span>
+            <a href class="release-btn">
+              <i></i>我要发布
+            </a>
+          </div>
+          <h3 class="business-title fs-bule">
+            <i class="iconfont iconzu304" style="background-color:#44A78D;"></i>业务精选
+            <em>优选</em>
+          </h3>
+        </div>
+
+        <Business-Select />
       </div>
       <!--产品列表-->
       <Product-List />
@@ -185,6 +185,7 @@ import SuccessOrder from "@components/SuccessOrder";
 import Partner from "../components/Partner";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import { epidemicList } from "@api/api";
 export default {
   components: {
     Banner,
@@ -193,7 +194,7 @@ export default {
     OrderList,
     SuccessOrder,
     Partner,
-     Swiper,
+    Swiper,
     SwiperSlide
   },
   data() {
@@ -203,16 +204,32 @@ export default {
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
       ],
-       newswiper: {
-          direction: 'vertical',
-            autoplay:true,
-      }
+      newswiper: {
+        direction: "vertical",
+        autoplay: true
+      },
+      list: []
     };
+  },
+  methods: {
+    getEpidemic() {
+      epidemicList({}).then(res => {
+       
+        if (res.code === 200) {
+          this.list = res.newslist;
+          console.log(this.list);
+        } else {
+          this.list = [];
+        }
+      });
+    }
+  },
+  mounted: function() {
+    this.getEpidemic();
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../assets/css/variables.scss";
 /*首页新闻板块*/
 .indexnews-wrap {
   background: #fff;
@@ -225,43 +242,41 @@ export default {
   overflow: hidden;
   font-size: 16px;
   height: 30px;
-    .swiper-slide {
-      padding-right: 60px;
-      position: relative;
-      width: 1097px;
-      
+  .swiper-slide {
+    padding-right: 60px;
+    position: relative;
+    width: 1097px;
+  }
+  .title {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    @include ol();
+
+    &:hover {
+      color: $ac;
     }
-.title {
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        @include ol();
+  }
 
-        &:hover {
-          color: $ac;
-        }
-      }
+  .more {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    color: $ac;
 
-      .more {
-        position: absolute;
-        right: 0;
-        top: 0;
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        color: $ac;
-
-        &:before {
-          content: "";
-          width: 1px;
-          height: 20px;
-          background: $ac;
-          display: inline-block;
-          margin-right: 12px;
-          vertical-align: middle;
-        }
-      }
-  
+    &:before {
+      content: "";
+      width: 1px;
+      height: 20px;
+      background: $ac;
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+  }
 }
 
 .news-title {

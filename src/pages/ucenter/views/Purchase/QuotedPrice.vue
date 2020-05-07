@@ -1,0 +1,44 @@
+<template>
+  <div class="membermg">
+    <div class="member-web commonweb clearfix">
+      <Mleftnav />
+      <div class="member-right common-slide">
+        <div class="memcommon-title clearfix">
+          <div class="order-search">
+            <form>
+              <input type="text" placeholder="搜索" />
+              <button class="iconfont iconsousuo"></button>
+            </form>
+          </div>
+          <h3>报价管理</h3>
+        </div>
+        <bar-nav :navlist="navlist" />
+        <price-list />
+        <!--搜索判断-->
+        <!-- <Errormsg /> -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Mleftnav from "@components/Mleftnav";
+import Errormsg from "@components/Errormsg";
+import BarNav from "../../components/BarNav";
+import PriceList from "../../components/PriceList";
+export default {
+  components: {
+    Mleftnav,
+    Errormsg,
+    BarNav,
+    PriceList
+  },
+  data() {
+    return {
+      navlist: [{ title: "已报价" }, { title: "未报价" }]
+    };
+  }
+};
+</script>
+<style lang="scss" scoped>
+</style>

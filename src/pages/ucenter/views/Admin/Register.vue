@@ -24,15 +24,16 @@
       </ul>
       <div class="register-form-wrap">
         <div class="register-cell-form">
-          <div class="reg-country clearfix">
-            <span class="country-title">国家选择</span>
-            <select class="country-select" v-model="selectItem" @change="selectFn($event)">
-              <option v-for="(item) in items" :key="item.id"> {{ item.name}}</option>
-            </select>
-          </div>
-          <!--个人注册-->
-          <div class="register-cell" v-show="show==0">
-            <form class="personal-form">
+          <form>
+            <div class="reg-country clearfix">
+              <span class="country-title">国家选择</span>
+              <select class="country-select" v-model="selectItem" @change="selectFn($event)">
+                <option v-for="(item) in items" :key="item.id">{{ item.name}}</option>
+              </select>
+            </div>
+            <!--个人注册-->
+
+            <div class="register-cell" v-show="show==0">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
@@ -51,7 +52,6 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="邀请码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
@@ -67,13 +67,10 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="确认密码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
-            </form>
-          </div>
-          <!--机构注册-->
-          <div class="register-cell" v-show="show==1">
-            <form class="personal-form">
+            </div>
+            <!--机构注册-->
+            <div class="register-cell" v-show="show==1">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
@@ -92,7 +89,6 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="确认密码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
@@ -111,13 +107,10 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="确认密码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
-            </form>
-          </div>
-          <!--企业注册-->
-          <div class="register-cell" v-show="show==2">
-            <form class="personal-form">
+            </div>
+            <!--企业注册-->
+            <div class="register-cell" v-show="show==2">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
                 <div class="register-cell-hd">
@@ -142,7 +135,6 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="邀请码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
@@ -161,10 +153,10 @@
                 <div class="register-cell-hd">
                   <input type="text" placeholder="确认密码" class="m-input" />
                 </div>
-                <ResgisterBtn resbtn="立即注册" />
               </div>
-            </form>
-          </div>
+            </div>
+            <ResgisterBtn resbtn="立即注册" />
+          </form>
         </div>
       </div>
     </div>
@@ -184,10 +176,9 @@ export default {
   data() {
     return {
       show: 0, //判断切换注册方式
-      num:0,
-      selectItem:'中国',
-      items: [{name:"中国" }, {name:"国外" }],
-     
+      num: 0,
+      selectItem: "中国",
+      items: [{ name: "中国" }, { name: "国外" }]
     };
   },
   created() {
@@ -196,7 +187,7 @@ export default {
   },
   methods: {
     selectFn(e) {
-      this.num=e.target.selectedIndex;         
+      this.num = e.target.selectedIndex;
     }
   }
 };
@@ -225,7 +216,7 @@ export default {
 }
 
 .register-header {
-  padding: 70px 35px;
+  padding: 70px 0 40px;
 }
 
 .register-nav {
@@ -342,4 +333,64 @@ export default {
     margin: 0;
   }
 }
+
+
+
+.read-checkbox {
+  position: relative;
+  font-size: 12px;
+
+  span {
+    display: inline-block;
+    border: 1px solid #4e5a65;
+    border-radius: 3px;
+    margin-right: 3px;
+    font-size: 12px;
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    -o-transform: scale(0.7);
+
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  a {
+    color: #44a78d;
+  }
+}
+
+.read-checkbox input {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+
+  &:checked+span {
+    &:before {
+      opacity: 1;
+    }
+  }
+}
+
+.register-cell-btn {
+  margin-top:50px;
+    cursor: pointer;
+  .btn-large {
+    width:100%;
+    display: block;
+    height: 36px;
+    background-color: #44a78d;
+    border-radius: 3px;
+    color: #fefefe;
+    text-align: center;
+    font-size: 16px;
+  
+  }
+}
+
+
 </style>

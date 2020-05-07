@@ -93,6 +93,7 @@ body {
 .header {
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
   border-bottom: solid 1px #e6e6e6;
+  background:#fff;
 }
 
 .header-top {
@@ -126,6 +127,7 @@ body {
 
 .header-nav {
   padding: 11px 0;
+  background:#fff;
 }
 
 .nav {
@@ -358,7 +360,7 @@ body {
 
 .kicon {
   display: inline-block;
-  vertical-align: top;
+  vertical-align:middle;
   width: 16px;
   height: 16px;
   line-height: 16px;
@@ -464,262 +466,8 @@ body {
 }
 
 /*公共样式 end*/
-/*个人中心|我要采购-采购订单*/
-.memcommon-title {
-  padding-bottom: 13px;
-  border-bottom: 1px solid #cccccc;
 
-  .order-search {
-    float: right;
-    width: 220px;
-    height: 30px;
-    background-color: #ffffff;
-    border-radius: 3px;
-    border: solid 1px #cccccc;
-    position: relative;
 
-    input {
-      width: 100%;
-      color: #707070;
-      padding-left: 10px;
-      line-height: 30px;
-    }
-
-    button {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: #479e84;
-      border-radius: 3px;
-      right: 0;
-      top: 0;
-      color: #fff;
-    }
-  }
-}
-
-.buy-order-nav {
-  margin-top: 6px;
-  background-color: #f4f4f4;
-  padding: 9px 18px;
-  color: #707070;
-}
-
-.order-nav-navbar {
-  display: inline-block;
-
-  a {
-    color: #707070;
-    display: inline-block;
-    padding: 5px 20px;
-
-    &:hover,
-    &.active {
-      background-color: #479e84;
-      border-radius: 5px;
-      color: #fff;
-    }
-  }
-}
-
-/*注册*/
-.register-web {
-  width: 900px;
-}
-
-.register-tip {
-  padding-top: 15px;
-
-  a {
-    color: #4e5a65;
-    padding: 0 10px;
-
-    &.account-login {
-      padding-left: 0;
-
-    }
-
-    &:hover {
-      color: #44a78d;
-    }
-  }
-}
-
-.register-header {
-  padding: 70px 35px;
-}
-
-.register-nav {
-  font-size: 0;
-  border-radius: 3px;
-
-  li {
-    display: inline-block;
-    vertical-align: middle;
-    width: 33.3%;
-    height: 75px;
-    background-color: #44a78d;
-    line-height: 75px;
-    font-size: 18px;
-    color: #fefefe;
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-
-    &:before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(0deg,
-          #43a78d 0%,
-          #34e9ee 100%);
-      opacity: 0;
-    }
-
-    span {
-      position: relative;
-      z-index: 1;
-    }
-
-    &.active {
-      font-weight: bold;
-
-      &:before {
-        opacity: 0.68;
-      }
-    }
-  }
-}
-
-.m-pb52 {
-  padding-bottom: 52px;
-}
-
-.register-form-wrap {
-  width: 430px;
-  margin: 0 auto;
-}
-
-.reg-country {
-  margin: 35px 0 15px;
-  position: relative;
-
-  &:before {
-    content: "";
-    width: 276px;
-    height: 1px;
-    position: absolute;
-    top: 18px;
-    left: 65px;
-    background: #a6acb1;
-  }
-
-  .country-title {
-    display: inline-block;
-    color: #4e5a65;
-    font-weight: bold;
-    padding-top: 8px;
-  }
-
-  .country-select {
-    float: right;
-    width: 84px;
-    height: 32px;
-    background-color: #d8dcdf;
-    background-image: linear-gradient(0deg,
-        #D9DDE0 0%,
-        #F2F4F5 100%);
-    border-radius: 3px;
-    color: #4e5a65;
-    font-weight: bold;
-    padding: 0 10px;
-  }
-}
-
-.register-cell {
-  .register-cell-hd {
-    margin-bottom: 10px;
-  }
-}
-
-.register-code-input {
-  display: inline-block;
-  width: 70%;
-  margin-right: 2%;
-}
-
-.register-code-button {
-  display: inline-block;
-  width: 34-6%;
-  padding-left: 0;
-}
-
-.read-checkbox {
-  position: relative;
-  font-size: 12px;
-
-  span {
-    display: inline-block;
-    border: 1px solid #4e5a65;
-    border-radius: 3px;
-    margin-right: 3px;
-    font-size: 12px;
-    transform: scale(0.7);
-    -webkit-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    -o-transform: scale(0.7);
-
-    &:before {
-      opacity: 0;
-    }
-  }
-
-  a {
-    color: #44a78d;
-  }
-}
-
-.read-checkbox input {
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 2;
-
-  &:checked+span {
-    &:before {
-      opacity: 1;
-    }
-  }
-}
-
-.register-cell-btn {
-  margin-top:50px;
-  .btn-large {
-    width:100%;
-    display: block;
-    height: 36px;
-    background-color: #44a78d;
-    border-radius: 3px;
-    color: #fefefe;
-    text-align: center;
-    font-size: 16px;
-  }
-}
-.register-footer{
-  color: #4e5a65;
-  text-align: center;
-  padding:13px 0;
-  h1{
-    font-size:14px;
-    margin:0;
-  }
-}
 
 /*轮播点*/
 .iban-pages {
@@ -790,83 +538,107 @@ body {
  
 }
 
-.supplier{
-  position: relative;
-}
-.sup-category{
-  position: absolute;
-  width:258px;
-  left:50%;
-  margin-left:-600px;
-  top:0;
-  height:100%;
-  background:#27303E;
-  z-index:99;
-  color: #fefefe;
-  padding:15px 0;
-  h3{
-    font-size: 16px;
-    font-weight: bold;
-    padding:0 20px 14px;
-  }
-}
-.sup-ul{
-  li{
-    .category-one{
-      padding:8px 20px;
-      cursor: pointer;
-      position: relative;
-      &:after{
-        content:"";
-        display: block;
-        position: absolute;
-        top:10px;
-        right:15px;
-        width:8px;
-        height:8px;
-        border-top:1px solid #fefefe;
-        border-right:1px solid #fefefe;
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        -o-transform: rotate(45deg);
-      }
-      &.active{
-        &:after{
-          top:15px;
-          transform: rotate(-45deg);
-          -webkit-transform: rotate(-45deg);
-          -ms-transform: rotate(-45deg);
-          -o-transform: rotate(-45deg);
-        }
-      }
-    }
-    .sub-title{
-      display: block;
-      color: #fefefe;
-      padding:0 10px 0 30px;
-      height:32px;
-      line-height:32px;
-      @include ol();
-      &:hover{
-        color:$ac;
-        background:#fff;
-      }
-    }
-  }
-}
-.category-two{position: relative;font-size:12px;}
-.category-three{
-  position: absolute;
-  top:0;
-  left:258px;
-  width:512px;
-  background:#fff;
-  color: #4e5a65;
-  padding:12px;
-  a{
+/*分类管理*/
+.other-condition {
+  padding-top: 14px;
+  a {
+    background-color: #eaeced;
+    border-radius: 3px;
+    padding: 0 6px;
     display: inline-block;
-    padding:4px 5px;
+    vertical-align: top;
+    line-height: 24px;
+    margin: 0 2px;
+    i {
+      display: inline-block;
+      vertical-align: 3px;
+      margin-left: 5px;
+      width: 8px;
+      height: 8px;
+      border-left: 1px solid #707070;
+      border-bottom: 1px solid #707070;
+      transform: rotate(-45deg);
+    }
+    &.active {
+      color: $ac;
+      i {
+        transform: rotate(135deg);
+        vertical-align: -1px;
+        border-color: $ac;
+      }
+    }
   }
 }
 
+.condsearch-box {
+  line-height: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #e6e6e6;
+  margin-left:10px;
+  input {
+    width: 120px;
+    padding-left: 10px;
+    background: url(~@assets/images/inicon10.png) 10px 2px no-repeat;
+    background-size: 14px;
+  }
+  button {
+    width: 40px;
+    height: 24px;
+    background-color: #eaeced;
+    border-radius: 0px 3px 3px;
+    color: #4e5a65;
+  }
+}
+/*弹窗居中*/
+.el-dialog{
+  display: flex;
+  flex-direction: column;
+  margin:0 !important;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  max-height:calc(100% - 30px);
+  max-width:calc(100% - 30px);
+}
+.el-dialog .el-dialog__body{
+  flex:1;
+  overflow: auto;
+}
+
+
+/*个人中心|我要采购-采购订单*/
+.memcommon-title {
+  padding-bottom: 13px;
+  border-bottom: 1px solid #cccccc;
+
+  .order-search {
+    float: right;
+    width: 220px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: solid 1px #cccccc;
+    position: relative;
+
+    input {
+      width: 100%;
+      color: #707070;
+      padding-left: 10px;
+      line-height: 30px;
+    }
+
+    button {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #479e84;
+      border-radius: 3px;
+      right: 0;
+      top: 0;
+      color: #fff;
+    }
+  }
+}
