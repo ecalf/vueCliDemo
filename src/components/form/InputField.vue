@@ -1,5 +1,5 @@
 <template>
-    <InputFieldWrap 
+    <FieldWrap 
         v-bind:type="'text'" 
         v-bind:label="label"
         v-bind:required="required" 
@@ -20,7 +20,7 @@
                 @change="onChange()"
                 v-model="value"
              />
-    </InputFieldWrap>
+    </FieldWrap>
 
 </template>
 
@@ -35,12 +35,12 @@
 
 
 <script>
-    import InputFieldWrap from  "./FieldWrap.vue";
+    import FieldWrap from  "./FieldWrap.vue";
 
 
     export default {
         components:{
-            InputFieldWrap
+            FieldWrap
         },
         props:{
             required:Boolean, //是否带必填标记

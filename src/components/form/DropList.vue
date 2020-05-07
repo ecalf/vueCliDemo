@@ -2,7 +2,7 @@
     <div class="drop-wrap">
         <div class="drop-value" @click="trigger()" v-bind:data-value="value">
             <div class="drop-value-text">
-                <span class="drop-item-icon" v-if="prefix"></span>
+                <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
                 <span>{{text}}</span>
             </div>
             <span class="arrow-down"></span>
@@ -66,7 +66,7 @@
                 display:flex;
                 justify-content: flex-start;
                 align-items: center;
-
+                cursor: default;
                 flex:1;
                 padding: 10px;
             }
@@ -94,21 +94,26 @@
     export default {
         components:{},
         props:{
-            prefix:Boolean,
+            prefix:Boolean,//选项带有前缀小图标
             list:Array,
-            defaultValue:'',
-            defaultText:'',
+            defaultvalue:String,
+            defaulttext:String,
 
         },
         data(){
             return {
                 value:'',
-                text:'认证A',
+                text:'',
+                icon:'',
                 showMenu:false
             };
         },
         computed:{
-
+            iconBg(){
+                return {
+                    'background-image':'url('+this.icon+')'
+                }
+            }
         },
         methods:{
             trigger(){
@@ -120,16 +125,25 @@
                     target = target.parentNode;
                 }while(target.tagName!='LI'&&target.tagName!='UL');
 
-                console.log(target.dataset);
                 this.text = target.dataset.text;
                 this.value = target.dataset.value;
+                if(this.prefix){
+                    this.icon = target.dataset.icon;
+                }
+                
             
                 this.trigger();
             }
         },
         created(){
-            this.value = this.list[0].value;
-            this.text = this.list[0].text;
+            if(!this.defaulttext){
+                this.value = this.defaultvalue;
+                this.text = this.defaulttext;
+            }else{
+                this.value=this.list[0].value;
+                this.text=this.list[0].text;
+            }
+            
         }
         
 

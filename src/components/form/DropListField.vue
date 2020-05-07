@@ -1,5 +1,5 @@
 <template>
-    <InputFieldWrap 
+    <FieldWrap 
         v-bind:type="'text'" 
         v-bind:label="label"
         v-bind:required="required" 
@@ -13,7 +13,7 @@
 
             />
 
-    </InputFieldWrap>
+    </FieldWrap>
 
 </template>
 
@@ -28,13 +28,13 @@
 
 
 <script>
-    import InputFieldWrap from  "./FieldWrap.vue";
+    import FieldWrap from  "./FieldWrap.vue";
     import DropList from  "./DropList.vue";
 
 
     export default {
         components:{
-            InputFieldWrap,
+            FieldWrap,
             DropList
         },
         props:{

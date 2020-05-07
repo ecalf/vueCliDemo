@@ -1,7 +1,7 @@
 
 
 <template>
-    <InputFieldWrap 
+    <FieldWrap 
         v-bind:type="'textarea'" 
         v-bind:label="label"
         v-bind:required="required" 
@@ -24,7 +24,7 @@
                 v-model="value">
 
             </textarea> 
-    </InputFieldWrap>
+    </FieldWrap>
 </template>
 
 
@@ -41,11 +41,11 @@
 
 
 <script>
-    import InputFieldWrap from  "./FieldWrap.vue";
+    import FieldWrap from  "./FieldWrap.vue";
 
     export default {
         components:{
-            InputFieldWrap
+            FieldWrap
         },
         props:{
             required:Boolean,

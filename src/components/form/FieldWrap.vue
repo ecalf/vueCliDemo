@@ -88,6 +88,9 @@
                 styleMap.height = (this.height=='auto'?'auto':(this.height+'px'));
                 styleMap['flex-direction'] = (this.type=='textarea'?'column':'row');
                 styleMap['align-items'] = (this.type=='textarea'?'flex-end':'center');
+                if(this.type=='checkGroup'){
+                    styleMap.border = 'none'
+                }
 
 
                 return styleMap;
