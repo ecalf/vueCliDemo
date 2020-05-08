@@ -98,14 +98,9 @@
                     styleMap.height = this.height+'px';
                 }
 
-                console.log(this.label, this.styleMap);
                 if(this.type=='textarea'){
-
                     styleMap['flex-direction'] = 'column';
                     styleMap['align-items'] = 'flex-end';
-                                    console.log(this.type)
-
-                    console.log('styleMap:' ,styleMap )
                 }else if(this.type=='checkGroup'){
                     styleMap.border = 'none'
                 }else if(this.type=='dropListGroup'){

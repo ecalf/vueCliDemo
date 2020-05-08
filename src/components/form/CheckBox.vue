@@ -1,21 +1,19 @@
 <template>
-    <div class="check-box" v-bind:class="{'checked': checked }" @click="onCheck($event)">
-        <span class="icon"></span>
-        <span class="text">{{text}}</span>
+    <div class="check-box clearfix" v-bind:class="{'checked': checked }" @click="onCheck($event)">
+        <div class="icon"></div>
+        <div class="text">{{text}}</div>
     </div>
 </template>
 
 
 <style lang="scss" scoped>
     .check-box{
-        display: inline-flex;
-        justify-content: flex-start;
-        align-items: center;
+        display:inline-block;
         margin:5px;
         cursor: default;
 
         .icon{
-            display: inline-block;
+            float:left;
             width:15px;
             height:15px;
             margin:5px;
@@ -25,9 +23,9 @@
         }
 
         .text{
-            width:32px;
-            height:20px;
-            line-height: 20px;
+            float:left;
+            height:25px;
+            line-height: 25px;
             font-size:16px;
             font-weight:300;
             color:$fontColor;

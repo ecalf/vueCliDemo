@@ -144,7 +144,7 @@
                     label="用途" 
                     filed-name="use" 
                     height="40"
-                    width="120"
+                    width="140"
                     />
 
             </FormRow>
@@ -330,11 +330,27 @@
                     label="增值服务" 
                     filed-name="use" 
                     height="40"
-                    width="120"
+                    width="230"
                     />
 
 
             </FormRow>
+
+            <FormRow>
+                <DatePickerField 
+                    v-bind:required="true" 
+                    v-bind:suffix="false"
+                    v-bind:prefix="false"
+                    v-bind:list="serviceGroup"
+                    label="截止日期" 
+                    filed-name="use" 
+                    height="40"
+                    width="230"
+                    />
+
+            </FormRow>
+
+            
 
         </FormContainer>
     </section>
@@ -377,6 +393,7 @@ import DropList from  "@components/form/DropList.vue";
 import FileUploadImage from  "@components/form/FileUploadImage.vue";
 import FileUploadVideo from  "@components/form/FileUploadVideo.vue";
 import Editor from  "@components/form/Editor.vue";
+import DatePickerField from  "@components/form/DatePickerField.vue";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -399,7 +416,8 @@ export default {
         DropList,
         FileUploadImage,
         FileUploadVideo,
-        Editor
+        Editor,
+        DatePickerField
     },
     data(){
 
@@ -443,6 +461,9 @@ export default {
     },
     methods:{
 
+    },
+    ready() {
+      console.log('publish/Buy ready');
     }
 
 }
