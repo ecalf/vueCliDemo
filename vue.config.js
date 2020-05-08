@@ -157,6 +157,15 @@ module.exports = {
     // https: false,
     // hotOnly: false, // 热更新
     proxy: {
+      '/api2': {
+        target: 'http://api.tianapi.com',
+        // secure: false,
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/api2': '/'
+        }
+      },
       '/api': {
         target: 'http://api.tianapi.com',
         // secure: false,

@@ -25,13 +25,13 @@
           <a href="/tradhall">交易大厅</a>
         </li>
         <li>
-          <a href="">我要采购</a>
+          <a href="/publish/buy">我要采购</a>
         </li>
         <li>
-          <a href="">我要销售</a>
+          <a href="/publish/sell">我要销售</a>
         </li>
         <li>
-          <a href="">委托采销</a>
+          <a href="/publish/entrust">委托采销</a>
         </li>
         <li>
           <a href="/supplier">供应商中心</a>
