@@ -71,6 +71,13 @@
                 } 
                 reader.readAsText(file); 
 
+            },
+            async upload(key,file){
+                const formdata = new FormData();
+                formdata.append(key||'file',file);
+                
+                
+
             }
         },
         created(){
