@@ -1,6 +1,6 @@
 <template>
     <div class="check-box clearfix" v-bind:class="{'checked': checked }" @click="onCheck($event)">
-        <div class="icon">✔</div>
+        <div class="icon"></div>
         <div class="text">{{text}}</div>
     </div>
 </template>
@@ -19,6 +19,10 @@
             background-color:$bgwhite;
             @include default-border;
             @include default-radius;
+
+            &::after{
+
+            }
         }
 
         .text{
@@ -28,6 +32,10 @@
             font-size:16px;
             font-weight:300;
             color:$fontColor;
+        }
+
+        &:hover{
+            border-color:$ac;
         }
 
         &.checked{
@@ -59,6 +67,8 @@
         methods:{
             onCheck(e){
                 this.checked = !this.checked;
+
+                //this.$emit();
 
             }
         },

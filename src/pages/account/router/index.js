@@ -1,4 +1,3 @@
-import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
 import Account from "../views/Account.vue";
 
@@ -10,7 +9,7 @@ const routes = [
     component: Account
   },
   {
-    path: "/modify",
+    path: "/account/modify",
     name: "Modify",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
