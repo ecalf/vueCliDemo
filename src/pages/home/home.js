@@ -12,11 +12,7 @@ import 'swiper/css/swiper.css'
 import App from "./home.vue";
 import router from "./router";
 import store from "./store";
-import axios from 'axios'
 
-Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://api.tianapi.com';
-Vue.prototype.$http = axios;
 
 // global swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
