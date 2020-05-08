@@ -1,4 +1,4 @@
-import axios,{post} from "@utils/enhanceAxios";
+import axios,{post} from './http';
 
 //发送短信验证码
 export async function bindPhoneCode  (params){

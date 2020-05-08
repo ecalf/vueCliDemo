@@ -1,4 +1,4 @@
-import axios from "@src/utils/enhanceAxios";
+import axios,{post} from './http';
 
 console.log('axios>>>',axios);
 
