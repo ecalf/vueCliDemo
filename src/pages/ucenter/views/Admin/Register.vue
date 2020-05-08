@@ -239,7 +239,7 @@
 </template>
 <script>
 import ResgisterBtn from "@components/Register/ResgisterBtn";
-import { bindPhoneCode } from "@api/useApi";
+import { bindPhoneCode } from "@api/userApi";
 export default {
   components: {
     ResgisterBtn
@@ -321,7 +321,7 @@ export default {
         re_password: [
           { required: true, validator: validatePass2, trigger: "blur" }
         ],
-        email: [{ validator: checkEmail, trigger: "blur" }],
+       
         checkbox: [
           {
             required: true,
@@ -350,7 +350,7 @@ export default {
       this.$refs.registerForm.resetFields();
     },
     // 发送短信验证码
-    sendCode() {
+   async sendCode() {
       if (this.registerForm.mobile !== "") {
         this.get_code = false;
         this.isgetcode = true;
@@ -369,15 +369,26 @@ export default {
           type: "error"
         });
       }
-      bindPhoneCode({
-        data: {
+      // bindPhoneCode({
+      //   data: {
+      //     mobile: this.registerForm.mobile,
+      //     type: 2
+      //   }
+      // }).then(res => {
+      //   console.log(res);
+      // });
+
+     const data = await bindPhoneCode({
+        data:{
           mobile: this.registerForm.mobile,
           type: 2
         }
-      }).then(res => {
-        console.log(res);
-      });
+     });
+     console.log(data);
     },
+
+    
+
     submitForm() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
