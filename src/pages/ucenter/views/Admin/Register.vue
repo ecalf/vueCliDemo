@@ -12,8 +12,13 @@
     </div>
     <div class="bgcolor-white m-pb52">
       <ul class="register-nav">
-        <li v-for="(navitem,index) in navlist" :key="index" @click="navclick(index)" :class="{'active':show===index}">
-           <span>{{navitem.name}}</span>
+        <li
+          v-for="(navitem,index) in navlist"
+          :key="index"
+          @click="navclick(index)"
+          :class="{'active':show===index}"
+        >
+          <span>{{navitem.name}}</span>
         </li>
       </ul>
       <div class="register-form-wrap">
@@ -27,9 +32,9 @@
             </div>
             <!--个人注册-->
 
-            <div class="register-cell" v-show="show==0">
+            <div class="register-cell" v-if="show==0">
               <!--中国注册-->
-              <div class="china-register" v-show="num==0">
+              <div class="china-register" v-if="num">
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
                 </el-form-item>
@@ -39,7 +44,12 @@
                     placeholder="验证码"
                     class="m-input register-code-input"
                   ></el-input>
-                  <button class="register-code-button m-input">发送验证码</button>
+                  <span
+                    class="register-code-button m-input"
+                    @click.stop="sendCode()"
+                    v-if="get_code"
+                  >发送验证码</span>
+                  <span class="register-code-button m-input" v-else>{{count}}秒后重新获取</span>
                 </el-form-item>
                 <el-form-item label prop="password" class="register-cell-hd">
                   <el-input
@@ -59,7 +69,7 @@
                 </el-form-item>
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register" v-show="num==1">
+              <div class="foreign-register" v-else>
                 <el-form-item label prop="user_name" class="register-cell-hd">
                   <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
                 </el-form-item>
@@ -82,7 +92,7 @@
               </div>
             </div>
             <!--机构注册-->
-            <div class="register-cell" v-show="show==1">
+            <div class="register-cell" v-else-if="show==1">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
                 <el-form-item label prop="organ_name" class="register-cell-hd">
@@ -141,9 +151,9 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </div>
+            </div> 
             <!--企业注册-->
-            <div class="register-cell" v-show="show==2">
+            <div class="register-cell" v-else>
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
                 <el-form-item label prop="organ_name" class="register-cell-hd">
@@ -205,10 +215,10 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </div>
+            </div> 
             <div class="resgister-btn">
               <el-form-item class="register-cell-hd read-checkbox" prop="checkbox">
-                <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox>我已阅读并接受
+                <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox> 我已阅读并接受
                 <a href>用户协议</a> 和
                 <a href>隐私政策</a>
               </el-form-item>
@@ -229,6 +239,7 @@
 </template>
 <script>
 import ResgisterBtn from "@components/Register/ResgisterBtn";
+import { bindPhoneCode } from "@api/useApi";
 export default {
   components: {
     ResgisterBtn
@@ -266,24 +277,18 @@ export default {
         callback();
       }
     };
-    var checkEmail = (rule, value, callback) => {
-      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-      if (!value) {
-        return callback(new Error("邮箱不能为空"));
-      }
-      setTimeout(() => {
-        if (mailReg.test(value)) {
-          callback();
-        } else {
-          callback(new Error("请输入正确的邮箱格式"));
-        }
-      }, 100);
-    };
     return {
-      show: 0, //判断切换注册方式
-      num: 0,
+      show:0, //判断切换注册方式
+      num: true,
+      get_code: true,
+      isgetcode: false, // 是否获取过code
+      count: 60,
       selectItem: "中国",
-      navlist:[{name:"个人注册"},{name:"机构注册"},{name:"企业注册"}],
+      navlist: [
+        { name: "个人注册" },
+        { name: "机构注册" },
+        { name: "企业注册" }
+      ],
       items: [
         { name: "中国", country: "China" },
         { name: "国外", country: "America" }
@@ -295,7 +300,7 @@ export default {
         re_password: "",
         porncode: "",
         checkbox: "",
-        email: ""
+        user_name:"",
       },
       rules: {
         mobile: [
@@ -332,18 +337,51 @@ export default {
     this.$emit("footer", false); //移移底部
   },
   methods: {
-    navclick(index){
-      this.show=index;
+    navclick(index) {
+      this.show = index;
       this.$refs.registerForm.resetFields();
     },
-    selectFn(e) {
-      this.num = e.target.selectedIndex;
+    selectFn(e) {  
+       if(e.target.selectedIndex==0){
+           this.num=true;
+       }else{
+          this.num=false;
+       }
       this.$refs.registerForm.resetFields();
+    },
+    // 发送短信验证码
+    sendCode() {
+      if (this.registerForm.mobile !== "") {
+        this.get_code = false;
+        this.isgetcode = true;
+        let interval = setInterval(() => {
+          this.count--;
+          if (this.count < 1) {
+            this.get_code = true;
+            this.count = 60;
+            clearInterval(interval);
+          }
+        }, 1000);
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入手机号",
+          type: "error"
+        });
+      }
+      bindPhoneCode({
+        data: {
+          mobile: this.registerForm.mobile,
+          type: 2
+        }
+      }).then(res => {
+        console.log(res);
+      });
     },
     submitForm() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
-          
+          console.log("submit")
         } else {
           console.log("error submit!!");
           return false;
@@ -483,6 +521,9 @@ export default {
   display: inline-block;
   width: 34-6%;
   padding-left: 0;
+  vertical-align: top;
+  text-align: center;
+  line-height: 38px;
 }
 
 .register-footer {
