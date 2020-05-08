@@ -369,22 +369,30 @@ export default {
           type: "error"
         });
       }
-      // bindPhoneCode({
-      //   data: {
-      //     mobile: this.registerForm.mobile,
-      //     type: 2
-      //   }
-      // }).then(res => {
-      //   console.log(res);
-      // });
 
-     const data = await bindPhoneCode({
+
+      bindPhoneCode({
+        data: {
+          mobile: this.registerForm.mobile,
+          type: 2
+        }
+      }).then(res => {
+        console.log(res);
+      });
+
+  /*    
+  const data = await bindPhoneCode({
         data:{
           mobile: this.registerForm.mobile,
           type: 2
         }
      });
      console.log(data);
+
+     */
+
+
+     
     },
 
     
