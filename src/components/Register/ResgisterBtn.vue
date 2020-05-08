@@ -7,7 +7,7 @@
       <a href>隐私政策</a>
     </div>
     <div class="register-cell-btn">
-      <button class="btn-large">{{ resbtn }}</button>
+      <button class="btn-large" @click="registersubmit">{{ resbtn }}</button>
     </div>
   </div>
 </template>
@@ -18,6 +18,11 @@ export default {
   props: {
     resbtn: String
   },
+  methods:{
+    registersubmit(){
+      this.$emit('registerHeadsubmit');
+    }
+  }
 };
 </script>
 

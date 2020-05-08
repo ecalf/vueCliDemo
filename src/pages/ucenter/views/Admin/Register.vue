@@ -12,23 +12,17 @@
     </div>
     <div class="bgcolor-white m-pb52">
       <ul class="register-nav">
-        <li @click="show=0" :class="{'active':show===0}">
-          <span>个人注册</span>
-        </li>
-        <li @click="show=1" :class="{'active':show===1}">
-          <span>机构注册</span>
-        </li>
-        <li @click="show=2" :class="{'active':show===2}">
-          <span>企业注册</span>
+        <li v-for="(navitem,index) in navlist" :key="index" @click="navclick(index)" :class="{'active':show===index}">
+           <span>{{navitem.name}}</span>
         </li>
       </ul>
       <div class="register-form-wrap">
         <div class="register-cell-form">
-          <form>
+          <el-form :model="registerForm" :rules="rules" ref="registerForm">
             <div class="reg-country clearfix">
               <span class="country-title">国家选择</span>
               <select class="country-select" v-model="selectItem" @change="selectFn($event)">
-                <option v-for="(item) in items" :key="item.id">{{ item.name}}</option>
+                <option v-for="(item) in items" :key="item.id" :data="item.country">{{ item.name}}</option>
               </select>
             </div>
             <!--个人注册-->
@@ -36,127 +30,193 @@
             <div class="register-cell" v-show="show==0">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="手机号码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="验证码" class="m-input register-code-input" />
+                <el-form-item label prop="mobile" class="register-cell-hd">
+                  <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="state_code" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.state_code"
+                    placeholder="验证码"
+                    class="m-input register-code-input"
+                  ></el-input>
                   <button class="register-code-button m-input">发送验证码</button>
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="邀请码" class="m-input" />
-                </div>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="用户名" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="邮箱" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
+                <el-form-item label prop="user_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
             </div>
             <!--机构注册-->
             <div class="register-cell" v-show="show==1">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="账号" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="手机号码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="验证码" class="m-input register-code-input" />
+                <el-form-item label prop="organ_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.organ_name" placeholder="机构名称" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="mobile" class="register-cell-hd">
+                  <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="state_code" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.state_code"
+                    placeholder="验证码"
+                    class="m-input register-code-input"
+                  ></el-input>
                   <button class="register-code-button m-input">发送验证码</button>
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="机构名称" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="用户名" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="邮箱" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
+                <el-form-item label prop="organ_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.organ_name" placeholder="机构名称" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="user_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
             </div>
             <!--企业注册-->
             <div class="register-cell" v-show="show==2">
               <!--中国注册-->
               <div class="china-register" v-show="num==0">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="公司名称" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="联系人" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="手机号码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="验证码" class="m-input register-code-input" />
+                <el-form-item label prop="organ_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.organ_name" placeholder="企业名称" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="contact_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.contact_name" placeholder="用户名" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="mobile" class="register-cell-hd">
+                  <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="state_code" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.state_code"
+                    placeholder="验证码"
+                    class="m-input register-code-input"
+                  ></el-input>
                   <button class="register-code-button m-input">发送验证码</button>
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="邀请码" class="m-input" />
-                </div>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
               <!-- 国外注册 -->
               <div class="foreign-register" v-show="num==1">
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="企业名称" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="用户名" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="邮箱" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="设置密码" class="m-input" />
-                </div>
-                <div class="register-cell-hd">
-                  <input type="text" placeholder="确认密码" class="m-input" />
-                </div>
+                <el-form-item label prop="organ_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.organ_name" placeholder="企业名称" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="user_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
+                </el-form-item>
+                <el-form-item label prop="password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.password"
+                    type="password"
+                    placeholder="设置密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label prop="re_password" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.re_password"
+                    type="password"
+                    placeholder="确认密码"
+                    class="m-input"
+                  ></el-input>
+                </el-form-item>
               </div>
             </div>
-            <ResgisterBtn resbtn="立即注册" />
-          </form>
+            <div class="resgister-btn">
+              <el-form-item class="register-cell-hd read-checkbox" prop="checkbox">
+                <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox>我已阅读并接受
+                <a href>用户协议</a> 和
+                <a href>隐私政策</a>
+              </el-form-item>
+              <el-form-item class="register-cell-btn">
+                <el-button class="btn-large" type="primary" @click="submitForm()">立即注册</el-button>
+              </el-form-item>
+            </div>
+          </el-form>
         </div>
       </div>
     </div>
@@ -174,20 +234,121 @@ export default {
     ResgisterBtn
   },
   data() {
+    var validatetelnumber = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入手机号"));
+      } else {
+        if (value !== "") {
+          let reg = /^1[3456789]\d{9}$/;
+          if (!reg.test(value)) {
+            callback(new Error("请输入正确的手机号！"));
+          }
+        }
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.registerForm.re_password !== "") {
+          this.$refs.registerForm.validateField("re_password");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.registerForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+    var checkEmail = (rule, value, callback) => {
+      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+      if (!value) {
+        return callback(new Error("邮箱不能为空"));
+      }
+      setTimeout(() => {
+        if (mailReg.test(value)) {
+          callback();
+        } else {
+          callback(new Error("请输入正确的邮箱格式"));
+        }
+      }, 100);
+    };
     return {
       show: 0, //判断切换注册方式
       num: 0,
       selectItem: "中国",
-      items: [{ name: "中国" }, { name: "国外" }]
+      navlist:[{name:"个人注册"},{name:"机构注册"},{name:"企业注册"}],
+      items: [
+        { name: "中国", country: "China" },
+        { name: "国外", country: "America" }
+      ],
+      registerForm: {
+        mobile: "",
+        state_code: "",
+        password: "",
+        re_password: "",
+        porncode: "",
+        checkbox: "",
+        email: ""
+      },
+      rules: {
+        mobile: [
+          { required: true, validator: validatetelnumber, trigger: "blur" }
+        ],
+        state_code: [
+          {
+            required: true,
+            min: 4,
+            max: 4,
+            trigger: "blur",
+            message: "请输入正确验证码"
+          }
+        ],
+        password: [
+          { required: true, validator: validatePass, trigger: "blur" }
+        ],
+        re_password: [
+          { required: true, validator: validatePass2, trigger: "blur" }
+        ],
+        email: [{ validator: checkEmail, trigger: "blur" }],
+        checkbox: [
+          {
+            required: true,
+            message: "您未勾选同意我们的相关注册协议",
+            trigger: "change"
+          }
+        ]
+      }
     };
   },
   created() {
-    this.$emit("header", false);
-    this.$emit("footer", false);
+    this.$emit("header", false); //移除头部
+    this.$emit("footer", false); //移移底部
   },
   methods: {
+    navclick(index){
+      this.show=index;
+      this.$refs.registerForm.resetFields();
+    },
     selectFn(e) {
       this.num = e.target.selectedIndex;
+      this.$refs.registerForm.resetFields();
+    },
+    submitForm() {
+      this.$refs.registerForm.validate(valid => {
+        if (valid) {
+          
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
   }
 };
@@ -308,7 +469,7 @@ export default {
 
 .register-cell {
   .register-cell-hd {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 }
 
@@ -334,27 +495,9 @@ export default {
   }
 }
 
-
-
 .read-checkbox {
   position: relative;
   font-size: 12px;
-
-  span {
-    display: inline-block;
-    border: 1px solid #4e5a65;
-    border-radius: 3px;
-    margin-right: 3px;
-    font-size: 12px;
-    transform: scale(0.7);
-    -webkit-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    -o-transform: scale(0.7);
-
-    &:before {
-      opacity: 0;
-    }
-  }
 
   a {
     color: #44a78d;
@@ -369,7 +512,7 @@ export default {
   cursor: pointer;
   z-index: 2;
 
-  &:checked+span {
+  &:checked + span {
     &:before {
       opacity: 1;
     }
@@ -377,20 +520,19 @@ export default {
 }
 
 .register-cell-btn {
-  margin-top:50px;
-    cursor: pointer;
+  margin-top: 50px;
+  cursor: pointer;
   .btn-large {
-    width:100%;
+    width: 100%;
     display: block;
     height: 36px;
+    line-height: 36px;
     background-color: #44a78d;
     border-radius: 3px;
     color: #fefefe;
     text-align: center;
     font-size: 16px;
-  
+    padding: 0;
   }
 }
-
-
 </style>

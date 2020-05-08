@@ -642,3 +642,12 @@ body {
     }
   }
 }
+
+/*表单样式重置*/
+.m-input{padding-left:0;}
+.m-input input{background:none;padding:0;height:38px;line-height:38px;padding-left:10px;border-color:transparent;
+@include ph(#4E5A65);
+&:hover{border-color:transparent;}
+}
+.el-form-item__error{padding:0;transform:scale(0.8); letter-spacing:2px;left:-6px;}
+.register-cell-hd .el-form-item__content{line-height:24px;}

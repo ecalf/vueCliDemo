@@ -25,15 +25,15 @@
       <!--疫情数据-->
       <div class="epidemic-box">
         <div class="epidemic-title">
-          <span class="abroad-title fr">
+          <span class="abroad-title fr" @click="show=1">
             国外疫情
             <img src="@assets/images/inicon2.png" />
           </span>
-          <span>
+          <span @click="show=0">
             <img src="@assets/images/inicon1.png" />国内疫情
           </span>
         </div>
-        <ul class="epidemic-status">
+        <ul class="epidemic-status" v-show="show===0">
           <li class="color-red">
             <p>
               较上日
@@ -81,6 +81,40 @@
             </p>
             <strong>84289</strong>
             <p>境外输入</p>
+          </li>
+        </ul>
+         <ul class="epidemic-status" v-show="show===1">
+          <li class="color-red">
+            <p>
+              较上日
+              <em>{{items.confirmedIncr}}</em>
+            </p>
+            <strong>{{items.confirmedCount}}</strong>
+            <p>累计确诊</p>
+          </li>
+          <li class="color-green">
+            <p>
+              较上日
+              <em>{{items.curedIncr}}</em>
+            </p>
+            <strong>{{items.curedCount}}</strong>
+            <p>累计治愈</p>
+          </li>
+          <li class="color-gary">
+            <p>
+              较上日
+              <em>{{items.deadIncr}}</em>
+            </p>
+            <strong>{{items.deadCount}}</strong>
+            <p>累计死亡</p>
+          </li>
+          <li class="color-shorange">
+            <p>
+              较上日
+              <em>{{items.currentConfirmedIncr}}</em>
+            </p>
+            <strong>{{items.currentConfirmedCount}}</strong>
+            <p>现有确诊</p>
           </li>
         </ul>
       </div>
@@ -185,7 +219,7 @@ import SuccessOrder from "@components/SuccessOrder";
 import Partner from "../components/Partner";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-import { epidemicList } from "@api/api";
+import { epidemicList,abroadList } from "@api/api";
 export default {
   components: {
     Banner,
@@ -205,17 +239,21 @@ export default {
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
       ],
      items:[],
+     abroadsItems:[],
       newswiper: {
         direction: "vertical",
         autoplay: true
       }, 
+      show:0,
     };
   },
   methods: {
     getEpidemic() {
-      epidemicList({}).then(res => {
+      epidemicList({}).then(res => {//国内
         this.items=res.newslist[0].desc;
-      console.log(this.items);
+      });
+       abroadList({}).then(res => {//海外
+        //this.abroadsItems=res.newslist[0].desc;
       });
     }
   },
