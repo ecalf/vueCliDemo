@@ -161,18 +161,18 @@ module.exports = {
         target: 'http://api.tianapi.com',
         // secure: false,
         changeOrigin: true,
-        ws: true,
+        ws: false,
         pathRewrite: {
           '^/api2': '/'
         }
       },
       '/api': {
-        target: 'http://api.tianapi.com',
+        target: 'http://api.scm.yiminshijie.com',
         // secure: false,
         changeOrigin: true,
-        ws: true,
+        ws: false,
         pathRewrite: {
-          '^/api': '/'
+          '^/api': '/api.php'
         }
       }
     }
