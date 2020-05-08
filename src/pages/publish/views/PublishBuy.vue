@@ -1,366 +1,371 @@
 <template>
-    <section class="commonweb container">
-        <Banner v-bind:list="bannerList" />
-        <FormContainer  title="品类" v-bind:baseline="false">
-            <div class="form-section">
-                <SearchBar width="690" />
-            </div>
-            <div class="form-section">
-                <SelectCascade v-bind:data="categoryData" />
-            </div>
-        </FormContainer>
+    <section>
+        <section class="commonweb container">
+            <Banner v-bind:list="bannerList" />
+            <FormContainer  title="品类" v-bind:baseline="false">
+                <div class="form-section">
+                    <SearchBar width="690" />
+                </div>
+                <div class="form-section">
+                    <SelectCascade v-bind:data="categoryData" />
+                </div>
+            </FormContainer>
 
-        <FormContainer  title="发布信息" v-bind:baseline="true">
-            <FormRow>
-                <InputField 
-                    v-bind:required="true" 
-                    v-bind:suffix="true"
-                    v-bind:max-length="30"
-                    placeholder="最多输入30个字符"
-                    defaultvalue=""
+            <FormContainer  title="发布信息" v-bind:baseline="true">
+                <FormRow>
+                    <InputField 
+                        v-bind:required="true" 
+                        v-bind:suffix="true"
+                        v-bind:max-length="30"
+                        placeholder="最多输入30个字符"
+                        defaultvalue=""
 
-                    type="text"
-                    label="标题" 
-                    filed-name="title" 
-                    width="1020"
-                    height="40"
-                    />
-            </FormRow>
+                        type="text"
+                        label="标题" 
+                        filed-name="title" 
+                        width="1020"
+                        height="40"
+                        />
+                </FormRow>
 
-            <FormRow>
-                <TextAreaField 
-                    v-bind:required="true" 
-                    v-bind:suffix="true"
-                    v-bind:max-length="100"
-                    placeholder="最多输入100个字符"
-                    defaultvalue=""
-                    label="描述" 
-                    filed-name="content" 
-                    width="1020"
-                    height="100"
-                    />
-            </FormRow>
+                <FormRow>
+                    <TextAreaField 
+                        v-bind:required="true" 
+                        v-bind:suffix="true"
+                        v-bind:max-length="100"
+                        placeholder="最多输入100个字符"
+                        defaultvalue=""
+                        label="描述" 
+                        filed-name="content" 
+                        width="1020"
+                        height="100"
+                        />
+                </FormRow>
 
-            <FormRow>
-                <DropListField
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    v-bind:prefix="true"
-                    v-bind:list="dropList" 
-                    label="品牌" 
-                    filed-name="brand" 
-                    height="40"
-                    width="200"
-
-                    />
-
-                <InputField 
-                    v-bind:required="false" 
-                    v-bind:suffix="false"
-                    placeholder=""
-                    defaultvalue=""
-
-                    type="text"
-                    label="其他品牌" 
-                    filed-name="otherBrand" 
-                    width="200"
-                    height="40"
-                    />
-
-                <InputField 
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    placeholder=""
-                    defaultvalue=""
-
-                    type="text"
-                    label="出口国" 
-                    filed-name="cuntry" 
-                    width="200"
-                    height="40"
-                    />
-
-            </FormRow>
-
-            <FormRow>
-                <InputField 
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    placeholder=""
-                    defaultvalue=""
-
-                    type="text"
-                    label="供应商价" 
-                    filed-name="originPrice" 
-                    width="100"
-                    height="40"
-                    />
-
-                <InputField 
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    placeholder=""
-                    defaultvalue=""
-
-                    type="text"
-                    label="市场价" 
-                    filed-name="realPrice" 
-                    width="100"
-                    height="40"
-                    />
-
-                <InputField 
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    placeholder=""
-                    defaultvalue=""
-
-                    type="text"
-                    label="数量" 
-                    filed-name="quantity" 
-                    width="100"
-                    height="40"
-                    />
-
-
-                 <DropListField
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    v-bind:prefix="false"
-                    v-bind:list="unitList" 
-                    label="单位" 
-                    filed-name="unit" 
-                    height="40"
-                    width="100"
-
-                    />
-
-
-                <CheckBoxField
-                    v-bind:required="false" 
-                    v-bind:suffix="false"
-                    v-bind:prefix="false"
-                    v-bind:list="checkboxGroup"
-                    label="用途" 
-                    filed-name="use" 
-                    height="40"
-                    width="140"
-                    />
-
-            </FormRow>
-
-
-            <FormRow>
-                <FieldWrap 
-                    type="dropListGroup" 
-                    v-bind:label="'资质要求'"
-                    v-bind:required="false" 
-                    height="40"
-                    >
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                        <div class="drop-list-wrap">
-                            <DropList
-                                v-bind:prefix="true"
-                                v-bind:list="zizhiList"
-                                width="110"
-
-                            />
-                        </div>
-
-                </FieldWrap>
-
-
-            </FormRow>
-
-        </FormContainer>
-
-        <FormContainer  title="图片信息" v-bind:baseline="true">
-            <FormRow>
-                <FieldWrap 
-                    type="fileUploadGroup" 
-                    v-bind:label="'上传图片'"
-                    v-bind:required="true" 
-                    height="150"
-                    >
-
-                    <FileUploadImage title="增加技术参数图片" />
-                    <FileUploadImage title="上传产品图"/>
-                    <FileUploadImage title="上传企业图"/>
-                    <FileUploadImage title="其他"/>
-
-                </FieldWrap>
-            </FormRow>  
-
-            <FormRow>
-                <FieldWrap 
-                    type="fileUploadGroup" 
-                    label="上传视频"
-                    v-bind:required="false" 
-                    height="150"
-                    >
-
-                    <FileUploadVideo title="选择视频" />
-                    
-
-                </FieldWrap>
-            </FormRow> 
-
-
-            <FormRow>
-                <FieldWrap 
-                    type="textarea"
-                    label="电脑端描述"
-                    v-bind:required="true" 
-                    height="400"
-                    >
-
-                    <Editor />
-                    
-
-                </FieldWrap>
-            </FormRow>
-
-
-            <FormRow>
-                <FieldWrap 
-                    type="dropListGroup" 
-                    label="截止日期"
-                    v-bind:required="false" 
-                    height="40"
-                    >
-                    <div class="drop-list-wrap">
-                        <DropList
-                            v-bind:prefix="true"
-                            v-bind:list="zizhiList"
-                            width="110"
+                <FormRow>
+                    <DropListField
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        v-bind:prefix="true"
+                        v-bind:list="dropList" 
+                        label="品牌" 
+                        filed-name="brand" 
+                        height="40"
+                        width="200"
 
                         />
-                    </div>
 
-                    <div class="drop-list-wrap">
-                        <DropList
-                            v-bind:prefix="true"
-                            v-bind:list="zizhiList"
-                            width="110"
+                    <InputField 
+                        v-bind:required="false" 
+                        v-bind:suffix="false"
+                        placeholder=""
+                        defaultvalue=""
+
+                        type="text"
+                        label="其他品牌" 
+                        filed-name="otherBrand" 
+                        width="200"
+                        height="40"
+                        />
+
+                    <InputField 
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        placeholder=""
+                        defaultvalue=""
+
+                        type="text"
+                        label="出口国" 
+                        filed-name="cuntry" 
+                        width="200"
+                        height="40"
+                        />
+
+                </FormRow>
+
+                <FormRow>
+                    <InputField 
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        placeholder=""
+                        defaultvalue=""
+
+                        type="text"
+                        label="供应商价" 
+                        filed-name="originPrice" 
+                        width="100"
+                        height="40"
+                        />
+
+                    <InputField 
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        placeholder=""
+                        defaultvalue=""
+
+                        type="text"
+                        label="市场价" 
+                        filed-name="realPrice" 
+                        width="100"
+                        height="40"
+                        />
+
+                    <InputField 
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        placeholder=""
+                        defaultvalue=""
+
+                        type="text"
+                        label="数量" 
+                        filed-name="quantity" 
+                        width="100"
+                        height="40"
+                        />
+
+
+                     <DropListField
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        v-bind:prefix="false"
+                        v-bind:list="unitList" 
+                        label="单位" 
+                        filed-name="unit" 
+                        height="40"
+                        width="100"
 
                         />
-                    </div>
 
-                    <div class="drop-list-wrap">
-                        <DropList
-                            v-bind:prefix="true"
-                            v-bind:list="zizhiList"
-                            width="110"
 
+                    <CheckBoxField
+                        v-bind:required="false" 
+                        v-bind:suffix="false"
+                        v-bind:prefix="false"
+                        v-bind:list="checkboxGroup"
+                        label="用途" 
+                        filed-name="use" 
+                        height="40"
+                        width="140"
                         />
-                    </div>
-                </FieldWrap>
-            </FormRow>
+
+                </FormRow>
 
 
-            <FormRow>
+                <FormRow>
+                    <FieldWrap 
+                        type="dropListGroup" 
+                        v-bind:label="'资质要求'"
+                        v-bind:required="false" 
+                        height="40"
+                        >
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
 
-                <CheckBoxField
-                    v-bind:required="false" 
-                    v-bind:suffix="false"
-                    v-bind:prefix="false"
-                    v-bind:list="serviceGroup"
-                    label="增值服务" 
-                    filed-name="use" 
-                    height="40"
-                    width="230"
-                    />
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                            <div class="drop-list-wrap">
+                                <DropList
+                                    v-bind:prefix="true"
+                                    v-bind:list="zizhiList"
+                                    width="110"
+
+                                />
+                            </div>
+
+                    </FieldWrap>
 
 
-            </FormRow>
+                </FormRow>
 
-            <FormRow>
-                <DatePickerField 
-                    v-bind:required="true" 
-                    v-bind:suffix="false"
-                    v-bind:prefix="false"
-                    v-bind:list="serviceGroup"
-                    label="截止日期" 
-                    filed-name="use" 
-                    height="40"
-                    width="230"
-                    />
+            </FormContainer>
 
-            </FormRow>
+            <FormContainer  title="图片信息" v-bind:baseline="true">
+                <FormRow>
+                    <FieldWrap 
+                        type="fileUploadGroup" 
+                        v-bind:label="'上传图片'"
+                        v-bind:required="true" 
+                        height="150"
+                        >
 
-            
+                        <FileUploadImage title="增加技术参数图片" />
+                        <FileUploadImage title="上传产品图"/>
+                        <FileUploadImage title="上传企业图"/>
+                        <FileUploadImage title="其他"/>
 
-        </FormContainer>
+                    </FieldWrap>
+                </FormRow>  
+
+                <FormRow>
+                    <FieldWrap 
+                        type="fileUploadGroup" 
+                        label="上传视频"
+                        v-bind:required="false" 
+                        height="150"
+                        >
+
+                        <FileUploadVideo title="选择视频" />
+                        
+
+                    </FieldWrap>
+                </FormRow> 
+
+
+                <FormRow>
+                    <FieldWrap 
+                        type="textarea"
+                        label="电脑端描述"
+                        v-bind:required="true" 
+                        height="400"
+                        >
+
+                        <Editor />
+                        
+
+                    </FieldWrap>
+                </FormRow>
+
+
+                <FormRow>
+                    <FieldWrap 
+                        type="dropListGroup" 
+                        label="截止日期"
+                        v-bind:required="false" 
+                        height="40"
+                        >
+                        <div class="drop-list-wrap">
+                            <DropList
+                                v-bind:prefix="true"
+                                v-bind:list="zizhiList"
+                                width="110"
+
+                            />
+                        </div>
+
+                        <div class="drop-list-wrap">
+                            <DropList
+                                v-bind:prefix="true"
+                                v-bind:list="zizhiList"
+                                width="110"
+
+                            />
+                        </div>
+
+                        <div class="drop-list-wrap">
+                            <DropList
+                                v-bind:prefix="true"
+                                v-bind:list="zizhiList"
+                                width="110"
+
+                            />
+                        </div>
+                    </FieldWrap>
+                </FormRow>
+
+
+                <FormRow>
+
+                    <CheckBoxField
+                        v-bind:required="false" 
+                        v-bind:suffix="false"
+                        v-bind:prefix="false"
+                        v-bind:list="serviceGroup"
+                        label="增值服务" 
+                        filed-name="use" 
+                        height="40"
+                        width="230"
+                        />
+
+
+                </FormRow>
+
+                <FormRow>
+                    <DatePickerField 
+                        v-bind:required="true" 
+                        v-bind:suffix="false"
+                        v-bind:prefix="false"
+                        v-bind:list="serviceGroup"
+                        label="截止日期" 
+                        filed-name="use" 
+                        height="40"
+                        width="230"
+                        />
+
+                </FormRow>
+
+                
+
+            </FormContainer>
+        </section>
+
+        <SubmitBar text="立即发布" />
     </section>
 
+    
 </template>
 
 
 <style lang="scss" scoped>
     .container{
-        margin-bottom:15px;
+        margin-bottom: 220px;
     }
 
     .form-section{
@@ -389,11 +394,12 @@ import InputField from "@components/form/InputField";
 import TextAreaField from "@components/form/TextAreaField";
 import DropListField from "@components/form/DropListField";
 import CheckBoxField from "@components/form/CheckBoxField";
-import DropList from  "@components/form/DropList.vue";
-import FileUploadImage from  "@components/form/FileUploadImage.vue";
-import FileUploadVideo from  "@components/form/FileUploadVideo.vue";
-import Editor from  "@components/form/Editor.vue";
-import DatePickerField from  "@components/form/DatePickerField.vue";
+import DropList from  "@components/form/DropList";
+import FileUploadImage from  "@components/form/FileUploadImage";
+import FileUploadVideo from  "@components/form/FileUploadVideo";
+import Editor from  "@components/form/Editor";
+import DatePickerField from  "@components/form/DatePickerField";
+import SubmitBar from  "../components/SubmitBar";
 
 //测试数据
 import categoryData from "../store/categoryData";
@@ -403,6 +409,7 @@ import categoryData from "../store/categoryData";
 export default {
     name: "PublishBuy",
     components:{
+        SubmitBar,
         Banner,
         FormContainer,
         SearchBar,

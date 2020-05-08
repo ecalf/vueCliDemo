@@ -2,16 +2,21 @@ import axios from "axios";
 
 
 const instance = axios.create({
-  timeout: 5000,
-  headers: {'X-Requested-With': 'XMLHttpRequest','Token':''}
+  baseURL: '/api',
+  timeout: 10000,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type' : 'application/x-www=form-urlencoded',
+    'Token':''
+  }
 });
 
 
 //请求拦截器
 instance.interceptors.request.use(
   function (config) {
-      console.log('before request');
-      config.headers.TOKEN = 'KUHLIKKG65MHGK77KLN';
+      //console.log('before request');
+      //config.headers.TOKEN = 'KUHLIKKG65MHGK77KLN';
       return config;
   },
   function (error) {
@@ -23,7 +28,7 @@ instance.interceptors.request.use(
 //响应拦截器
 instance.interceptors.response.use(
   function (config) {
-      console.log('after request');
+      //console.log('after request');
       return config;
   },
   function (error) {
@@ -33,6 +38,15 @@ instance.interceptors.response.use(
 );
 
 
+export async function get(path,params){
+  const res = await instance.get(path,params);
+  return res.data;
+}
+
+export async function post(path,params){
+  const res = await instance.post(path,params);
+  return res.data;
+}
 
 
 export default instance;

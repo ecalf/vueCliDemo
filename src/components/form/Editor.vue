@@ -39,6 +39,9 @@
                     serverUrl: '/api/web/upload/ueditor',
                     // 你的UEditor资源存放的路径,相对于打包后的index.html
                     UEDITOR_HOME_URL: UEDITOR_HOME_URL,
+
+                    // 容器不在viewport内时编辑器不自动漂浮
+                    autoFloatEnabled:false,
                     // 编辑器不自动被内容撑高
                     autoHeightEnabled: false,
                     // 初始容器高度
