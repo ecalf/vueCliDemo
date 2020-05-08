@@ -33,37 +33,37 @@
             <img src="@assets/images/inicon1.png" />国内疫情
           </span>
         </div>
-        <ul class="epidemic-status" v-for="(item,index) in list" :key="index">
+        <ul class="epidemic-status">
           <li class="color-red">
             <p>
               较上日
-              <em>+39</em>
+              <em>{{items.confirmedIncr}}</em>
             </p>
-            <strong>{{list.desc}}</strong>
+            <strong>{{items.confirmedCount}}</strong>
             <p>累计确诊</p>
           </li>
           <li class="color-green">
             <p>
               较上日
-              <em>+39</em>
+              <em>{{items.curedIncr}}</em>
             </p>
-            <strong>84289</strong>
+            <strong>{{items.curedCount}}</strong>
             <p>累计治愈</p>
           </li>
           <li class="color-gary">
             <p>
               较上日
-              <em>+39</em>
+              <em>{{items.deadIncr}}</em>
             </p>
-            <strong>84289</strong>
+            <strong>{{items.deadCount}}</strong>
             <p>累计死亡</p>
           </li>
           <li class="color-shorange">
             <p>
               较上日
-              <em>+39</em>
+              <em>{{items.currentConfirmedIncr}}</em>
             </p>
-            <strong>84289</strong>
+            <strong>{{items.currentConfirmedCount}}</strong>
             <p>现有确诊</p>
           </li>
           <li class="color-violet">
@@ -204,23 +204,18 @@ export default {
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
       ],
+     items:[],
       newswiper: {
         direction: "vertical",
         autoplay: true
-      },
-      list: []
+      }, 
     };
   },
   methods: {
     getEpidemic() {
       epidemicList({}).then(res => {
-       
-        if (res.code === 200) {
-          this.list = res.newslist;
-          console.log(this.list);
-        } else {
-          this.list = [];
-        }
+        this.items=res.newslist[0].desc;
+      console.log(this.items);
       });
     }
   },
@@ -331,6 +326,7 @@ export default {
   font-weight: bold;
   margin-bottom: 25px;
   background: url(~@assets/images/home_titlbg.png) 0 0 no-repeat;
+  cursor: pointer;
   img {
     height: 20px;
     margin-right: 6px;
@@ -338,6 +334,7 @@ export default {
 
   .abroad-title {
     color: $ac;
+    
     img {
       margin-left: 5px;
     }
