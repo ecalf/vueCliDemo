@@ -12,6 +12,7 @@
             v-bind:value="item.id+''" 
             v-bind:text="item.text"  
             v-bind:defaultchecked="!!item.checked"
+            v-bind:addition="item.addition"
             />
 
     </FieldWrap>

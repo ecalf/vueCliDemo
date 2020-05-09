@@ -270,7 +270,7 @@
 
                 <FormRow>
                     <FieldWrap 
-                        type="textarea"
+                        type="editor"
                         label="电脑端描述"
                         v-bind:required="true" 
                         height="400"
@@ -311,7 +311,7 @@
                         width="230"
                         />
 
-
+                    <span class="service-tip">*使用增值服务排名更靠前</span>
                 </FormRow>
 
                 
@@ -343,6 +343,13 @@
     .drop-list-wrap{
         display:inline-block;
         height: 40px;
+    }
+
+    .service-tip{
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 16px;
+        color: $fontColor;
     }
 
 </style>
@@ -409,7 +416,7 @@ export default {
                 {text:'民用',id:2}
             ],
             serviceGroup:[
-                {text:'加入VIP',id:1},
+                {text:'加入VIP',id:1,addition:{style:{ color:'#44A78D' }}},
                 {text:'置顶',id:2},
                 {text:'加急',id:3}
             ],
