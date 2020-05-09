@@ -6,11 +6,7 @@ const instance = axios.create({
   timeout: 10000,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
-<<<<<<< HEAD
-    'Content-Type' : 'application/x-www-form-urlencoded',
-=======
     'Content-Type' : 'application/json',
->>>>>>> 8ae24b99e2b36a60fccac28d088f9c0f69a8199f
     'Token':''
   }
 });
