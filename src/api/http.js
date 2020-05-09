@@ -1,4 +1,6 @@
 import axios from "axios";
+import {getToken} from "@utils/common";
+
 
 //只用于本站接口请求的实例
 const instance = axios.create({
@@ -16,7 +18,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
       //console.log('before request');
-      //config.headers.TOKEN = 'KUHLIKKG65MHGK77KLN';
+      config.headers.Authorization = getToken();
       return config;
   },
   function (error) {

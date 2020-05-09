@@ -122,17 +122,30 @@ function getFullWidthLength(str) {
 
 
 
-//存取token
-function userToken(token){
-    if(token){
-        localStorage.setItem('Token',token);
-    }else{
-        return localStorage.getItem('Token');
+//存token
+function setToken(token,client){
+    let clientToken = btoa('DATA '+client.uid+':'+client.user_name+':'+token);
+    localStorage.setItem('Token',token);
+
+    let profile = {
+        token:clientToken,
+        uid:client.uid,
+        user_name:client.user_name,
+        ...client.profiles
     }
+
+    return profile;
 }
 
+//取token
+function getToken(){
+    return localStorage.getItem('Token')||'';
+}
+
+
 export {
-    userToken,
+    setToken,
+    getToken,
     isInSite,
     getLang,
     setLang,

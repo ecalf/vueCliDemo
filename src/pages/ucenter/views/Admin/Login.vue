@@ -138,7 +138,7 @@
 
 <script>
 import { bindPhoneCode, submitLogin } from "@api/userApi";
-import { isInSite,userToken } from "@utils/common";
+import { isInSite,setToken } from "@utils/common";
 
 
 let orderList = [
@@ -337,18 +337,23 @@ export default {
 
           //console.log('signupForm: ',params);
           
-          let data = await submitLogin(params);
-          if(data.code!==200){
+          let res = await submitLogin(params);
+          if(res.code!==200){
             this.$message({
               showClose: true,
-              message: data.message,
+              message: res.message,
               type: "error"
             });
+
           }else{
-            userToken(data.token);
-            const profile = data.client.profiles;
+            //console.log('data:',res.data);
+
+            const profile = setToken(res.data.token,res.data.client);
+            //console.log('profile: ',profile);
+
 
             //this.$store.commit()
+
 
             if(isInSite()){
               location.href=document.referrer;

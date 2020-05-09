@@ -286,6 +286,9 @@
 <script>
 import ResgisterBtn from "@components/Register/ResgisterBtn";
 import { bindPhoneCode, submitRegister } from "@api/userApi";
+import { setToken } from "@utils/common";
+
+
 export default {
   components: {
     ResgisterBtn
@@ -472,20 +475,20 @@ export default {
 
           //console.log('submitRegister params: ',params);
 
-          let data = await submitRegister(params);
+          let res = await submitRegister(params);
           //console.log("submitRegister res: ",data);
 
-          if(data.code!==200){
+          if(res.code!==200){
             this.$message({
               showClose: true,
-              message: data.message,
+              message: res.message,
               type: "error"
             });
+
           }else{
-            userToken(data.token);
-            const profile = data.client.profiles;
-            
+            const profile = setToken(res.data.token,res.data.client);
             location.href='/';
+
           }
           
 
