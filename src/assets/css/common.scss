@@ -651,3 +651,16 @@ body {
 }
 .el-form-item__error{padding:0;transform:scale(0.8); letter-spacing:2px;left:-6px;}
 .register-cell-hd .el-form-item__content{line-height:24px;}
+.country-select .el-form-item__content{height:32px;
+  .el-input__inner{background-color: #d8dcdf;
+    background-image: linear-gradient(0deg, #d9dde0 0%, #f2f4f5 100%);
+    border-radius: 3px;
+    color: #4e5a65;
+    font-weight: bold;
+    padding: 0 10px;height:32px;height:32px;border:0;
+    @include ph(#4E5A65);
+  }
+  .el-select .el-input .el-select__caret{
+    color: #4e5a65;
+  }
+}
