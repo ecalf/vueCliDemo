@@ -4,7 +4,7 @@
     <div id="nav">
       <a href="/test"> test</a> |
       <a href="/test/about"> about</a> |
-      <a href="/account"> Account</a> 
+      <a href="/account/home"> Account</a> 
 
     </div>
     

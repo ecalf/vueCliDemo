@@ -4,7 +4,7 @@ import Account from "../views/Account.vue";
 
 const routes = [
   {
-    path: "/account",
+    path: "/account/home",
     name: "Account",
     component: Account
   },

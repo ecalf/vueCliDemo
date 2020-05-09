@@ -9,4 +9,8 @@ export async function bindPhoneCode (params){
 export async function submitRegister (params){
     return post('/v1/user/register',params);
 }
+//登录
+export async function submitLogin(params){
+    return post('/v1/user/login',params);
+}
 

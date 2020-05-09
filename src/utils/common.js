@@ -2,6 +2,13 @@
 * 通用函数
 */
 
+
+//判断是从站内跳转到本页
+function isInSite(){
+    let reg = new RegExp("^"+location.protocol+'//'+location.host);
+    return reg.test(document.referrer);
+}
+
 function dateTimeFormat(date,formatStr,frag){
     if(typeof(date)=='string'){
         date = date.replace(/\-/g,'/');
@@ -113,7 +120,20 @@ function getFullWidthLength(str) {
     return realLength;
 }
 
+
+
+//存取token
+function userToken(token){
+    if(token){
+        localStorage.setItem('Token',token);
+    }else{
+        return localStorage.getItem('Token');
+    }
+}
+
 export {
+    userToken,
+    isInSite,
     getLang,
     setLang,
     dateTimeFormat,

@@ -1,8 +1,8 @@
-import Vue from "vue";
+//import Vue from "vue";
 import Vuex from "vuex";
 import homeApi from "@src/api/homeApi";
 import about from "./modules/about";
-Vue.use(Vuex);
+//Vue.use(Vuex);
 
 
 export default new Vuex.Store({

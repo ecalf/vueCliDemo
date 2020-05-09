@@ -17,16 +17,9 @@ import router from "./router";
 import store from "./store";
 
 
-// import axios from 'axios'
-
-
 Vue.use(VCharts)
 Vue.use(ElementUI);
-// Vue.use(axios);
 
-// Vue.config.productionTip = false
-// axios.defaults.baseURL = 'http://api.scm.yiminshijie.com';
-// Vue.prototype.$http = axios;
 
 const i18n = new VueI18n({
   locale: getLang(), // 定义默认语言为中文 

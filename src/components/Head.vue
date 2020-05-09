@@ -4,11 +4,11 @@
     <div class="header-top">
       <div class="commonweb">
         <div class="country">
-          <span>{{$t('m.welcome')}}</span>
+          <span>{{$t('time.welcome')}}</span>
         </div>
         <p>
           欢迎来到万合优采
-          <a href="/ucenter/login">免费注册</a>
+          <a href="/ucenter/login">请登录</a>
           <a href="/ucenter/register">免费注册</a>
         </p>
       </div>
