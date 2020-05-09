@@ -125,7 +125,7 @@ function getFullWidthLength(str) {
 //存token
 function setToken(token,client){
     let clientToken = btoa('DATA '+client.uid+':'+client.user_name+':'+token);
-    localStorage.setItem('Token',token);
+    localStorage.setItem('Token',clientToken);
 
     let profile = {
         token:clientToken,
