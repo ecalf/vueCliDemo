@@ -1,6 +1,6 @@
 import axios from "axios";
 
-
+//只用于本站接口请求的实例
 const instance = axios.create({
   baseURL: '/api',
   timeout: 10000,

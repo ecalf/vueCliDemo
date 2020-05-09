@@ -1,55 +1,35 @@
 import axios from "axios";
 
-
-const instance2 = axios.create({
+const configBase = {
   baseURL: '/api2',
-  timeout: 10000,
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type' : 'application/x-www-form-urlencoded',
-    'Token':''
-  }
-});
+}
+
+function getConfig(path,params,option){
+  return Object.assign(configBase,option,{
+      url: path,
+      data: params
+    });
+}
 
 
-//请求拦截器
-instance2.interceptors.request.use(
-  function (config) {
-      //console.log('before request');
-      //config.headers.TOKEN = 'KUHLIKKG65MHGK77KLN';
-      return config;
-  },
-  function (error) {
-      console.log('request error>>>',error);
-      return Promise.reject(error);
-  }
-);
 
-//响应拦截器
-instance2.interceptors.response.use(
-  function (config) {
-      //console.log('after request');
-      return config;
-  },
-  function (error) {
-      console.log('response error>>>',error);
-      return Promise.reject(error);
-  }
-);
+export async function get(path,params,option={}){
+  const config = getConfig(path,params,option);
+  config.method = 'get';
 
-
-export async function get(path,params){
-  const res = await instance2.get(path,params);
+  const res = await axios(config);
   return res.data;
 }
 
-export async function post(path,params){
-  const res = await instance2.post(path,params);
+export async function post(path,params,option={}){
+  const config = getConfig(path,params,option);
+  config.method = 'post';
+
+  const res = await axios(config);
   return res.data;
 }
 
 
-export default instance2;
 
 //首页
 // export const epidemicList = p => post('/txapi/ncov/index?key=38e1c194ac8a375278a6cc447a7933e5', p); //国内疫情数据
@@ -57,4 +37,9 @@ export default instance2;
 
 export async function epidemicList(params){
     return post('txapi/ncov/index?key=38e1c194ac8a375278a6cc447a7933e5',params); 
+} 
+
+
+export async function abroadList(params){
+    return post('/txapi/ncovabroad/index?key=38e1c194ac8a375278a6cc447a7933e5',params); 
 } 

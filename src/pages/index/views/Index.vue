@@ -248,20 +248,15 @@ export default {
     };
   },
   methods: {
-    getEpidemic() {
-      epidemicList().then(res => {
-        //国内
-        console.log(res);
-        this.items = res.newslist[0].desc;
-      });
-      //  const data = await epidemicList();
-      //  console.log(data);
-      // this.items=data.newslist[0].desc;
+    async getEpidemic() {
+      let epidemic = await epidemicList();
+      this.items = epidemic.newslist[0].desc;
 
-      abroadList({}).then(res => {
-        //海外
-        //this.abroadsItems=res.newslist[0].desc;
-      });
+      let abroad = await abroadList();
+      this.abroadsItems = abroad.newslist[0].desc;
+
+
+    
     }
   },
   mounted: function() {

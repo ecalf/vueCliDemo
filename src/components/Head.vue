@@ -8,8 +8,8 @@
         </div>
         <p>
           欢迎来到万合优采
-          <router-link to="/login">请登录</router-link>
-          <a href="javascript:;">免费注册</a>
+          <a href="/ucenter/login">免费注册</a>
+          <a href="/ucenter/register">免费注册</a>
         </p>
       </div>
     </div>
