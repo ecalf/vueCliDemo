@@ -3,8 +3,8 @@
     <div class="register-header clearfix">
       <p class="register-tip fr">
         已有帐号，
-        <a href class="account-login">马上登录</a>|
-        <a href>返回首页</a>
+        <a href="/ucenter/login" class="account-login">马上登录</a>|
+        <a href="/">返回首页</a>
       </p>
       <a href class="login-logo">
         <img src="@assets/images/logo.png" alt />
@@ -17,7 +17,7 @@
           :key="index"
           @click="navclick(index)"
           :class="{'active':show===index}"
-        >
+        :value="index+1" >
           <span>{{navitem.name}}</span>
         </li>
       </ul>
@@ -26,9 +26,21 @@
           <el-form :model="registerForm" :rules="rules" ref="registerForm">
             <div class="reg-country clearfix">
               <span class="country-title">国家选择</span>
-              <select class="country-select" v-model="selectItem" @change="selectFn($event)">
-                <option v-for="(item) in items" :key="item.id" :data="item.country">{{ item.name}}</option>
-              </select>
+
+              <el-form-item label class="country-select">
+                <el-select
+                  v-model="registerForm.country"
+                  placeholder="中国"
+                  @change="selectFn($event)"
+                >
+                  <el-option
+                    v-for="(item) in items"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.country"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </div>
             <!--个人注册-->
 
@@ -94,9 +106,13 @@
             <!--机构注册-->
             <div class="register-cell" v-else-if="show==1">
               <!--中国注册-->
-              <div class="china-register" v-show="num==0">
-                <el-form-item label prop="organ_name" class="register-cell-hd">
-                  <el-input v-model="registerForm.organ_name" placeholder="机构名称" class="m-input"></el-input>
+              <div class="china-register" v-if="num">
+                <el-form-item label prop="organization_name" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.organization_name"
+                    placeholder="机构名称"
+                    class="m-input"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
@@ -127,9 +143,13 @@
                 </el-form-item>
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register" v-show="num==1">
-                <el-form-item label prop="organ_name" class="register-cell-hd">
-                  <el-input v-model="registerForm.organ_name" placeholder="机构名称" class="m-input"></el-input>
+              <div class="foreign-register" v-else>
+                <el-form-item label prop="organization_name" class="register-cell-hd">
+                  <el-input
+                    v-model="registerForm.organization_name"
+                    placeholder="机构名称"
+                    class="m-input"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item label prop="user_name" class="register-cell-hd">
                   <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
@@ -151,16 +171,16 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </div> 
+            </div>
             <!--企业注册-->
             <div class="register-cell" v-else>
               <!--中国注册-->
-              <div class="china-register" v-show="num==0">
-                <el-form-item label prop="organ_name" class="register-cell-hd">
-                  <el-input v-model="registerForm.organ_name" placeholder="企业名称" class="m-input"></el-input>
+              <div class="china-register" v-if="num">
+                <el-form-item label prop="company_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.company_name" placeholder="企业名称" class="m-input"></el-input>
                 </el-form-item>
                 <el-form-item label prop="contact_name" class="register-cell-hd">
-                  <el-input v-model="registerForm.contact_name" placeholder="用户名" class="m-input"></el-input>
+                  <el-input v-model="registerForm.contact_name" placeholder="联系人" class="m-input"></el-input>
                 </el-form-item>
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
@@ -191,9 +211,9 @@
                 </el-form-item>
               </div>
               <!-- 国外注册 -->
-              <div class="foreign-register" v-show="num==1">
-                <el-form-item label prop="organ_name" class="register-cell-hd">
-                  <el-input v-model="registerForm.organ_name" placeholder="企业名称" class="m-input"></el-input>
+              <div class="foreign-register" v-else>
+                <el-form-item label prop="company_name" class="register-cell-hd">
+                  <el-input v-model="registerForm.company_name" placeholder="企业名称" class="m-input"></el-input>
                 </el-form-item>
                 <el-form-item label prop="user_name" class="register-cell-hd">
                   <el-input v-model="registerForm.user_name" placeholder="用户名" class="m-input"></el-input>
@@ -215,10 +235,10 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </div> 
+            </div>
             <div class="resgister-btn">
               <el-form-item class="register-cell-hd read-checkbox" prop="checkbox">
-                <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox> 我已阅读并接受
+                <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox>&nbsp;&nbsp;我已阅读并接受
                 <a href>用户协议</a> 和
                 <a href>隐私政策</a>
               </el-form-item>
@@ -239,7 +259,7 @@
 </template>
 <script>
 import ResgisterBtn from "@components/Register/ResgisterBtn";
-import { bindPhoneCode } from "@api/userApi";
+import { bindPhoneCode, submitRegister } from "@api/userApi";
 export default {
   components: {
     ResgisterBtn
@@ -278,20 +298,21 @@ export default {
       }
     };
     return {
-      show:0, //判断切换注册方式
+      show: 0, //判断切换注册方式
       num: true,
       get_code: true,
       isgetcode: false, // 是否获取过code
       count: 60,
       selectItem: "中国",
+      type:1,
       navlist: [
         { name: "个人注册" },
         { name: "机构注册" },
         { name: "企业注册" }
       ],
       items: [
-        { name: "中国", country: "China" },
-        { name: "国外", country: "America" }
+        { id: 0, name: "中国", country: "China" },
+        { id: 1, name: "国外", country: "America" }
       ],
       registerForm: {
         mobile: "",
@@ -300,7 +321,11 @@ export default {
         re_password: "",
         porncode: "",
         checkbox: "",
-        user_name:"",
+        user_name: "",
+        company_name: "",
+        contact_name: "",
+        organization_name: "",
+        country: ""
       },
       rules: {
         mobile: [
@@ -309,8 +334,8 @@ export default {
         state_code: [
           {
             required: true,
-            min: 4,
-            max: 4,
+            min: 6,
+            max: 6,
             trigger: "blur",
             message: "请输入正确验证码"
           }
@@ -321,7 +346,18 @@ export default {
         re_password: [
           { required: true, validator: validatePass2, trigger: "blur" }
         ],
-       
+        user_name: [
+          { required: true, trigger: "blur", message: "请输入用户名" }
+        ],
+        company_name: [
+          { required: true, trigger: "blur", message: "请输入企业名称" }
+        ],
+        contact_name: [
+          { required: true, trigger: "blur", message: "请输入联系人" }
+        ],
+        organization_name: [
+          { required: true, trigger: "blur", message: "请输入机构名称" }
+        ],
         checkbox: [
           {
             required: true,
@@ -340,17 +376,18 @@ export default {
     navclick(index) {
       this.show = index;
       this.$refs.registerForm.resetFields();
+    
     },
-    selectFn(e) {  
-       if(e.target.selectedIndex==0){
-           this.num=true;
-       }else{
-          this.num=false;
-       }
+    selectFn(e) {
+      if (e == 'China') {
+        this.num = true;
+      } else {
+        this.num = false;
+      }
       this.$refs.registerForm.resetFields();
     },
     // 发送短信验证码
-   async sendCode() {
+    async sendCode() {
       if (this.registerForm.mobile !== "") {
         this.get_code = false;
         this.isgetcode = true;
@@ -369,6 +406,15 @@ export default {
           type: "error"
         });
       }
+<<<<<<< HEAD
+      let params = {
+        data: {
+          mobile: this.registerForm.mobile,
+          type: 2
+        }
+      };
+      const data = await bindPhoneCode(params);
+=======
 
 
       bindPhoneCode({
@@ -393,20 +439,41 @@ export default {
 
 
      
+>>>>>>> 8ae24b99e2b36a60fccac28d088f9c0f69a8199f
     },
 
-    
-
     submitForm() {
+      
       this.$refs.registerForm.validate(valid => {
         if (valid) {
-          console.log("submit")
+         console.log(this.registerForm.country);
+          submitRegister({
+            data:{
+            mobile: this.registerForm.mobile,
+            state_code: this.registerForm.state_code,
+            password: this.registerForm.password,
+            re_password: this.registerForm.re_password,
+            porncode: this.registerForm.porncode,
+            checkbox: this.registerForm.checkbox,
+            user_name: this.registerForm.user_name,
+            company_name: this.registerForm.company_name,
+            contact_name: this.registerForm.contact_name,
+            organization_name: this.registerForm.organization_name,
+            country: this.registerForm.country,
+            type:1,
+            }
+          }).then(res => {
+            console.log(res);
+          });
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     }
+  },
+  mounted() {
+    
   }
 };
 </script>
@@ -520,7 +587,7 @@ export default {
     border-radius: 3px;
     color: #4e5a65;
     font-weight: bold;
-    padding: 0 10px;
+    padding: 0;
   }
 }
 

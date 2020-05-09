@@ -83,7 +83,7 @@
             <p>境外输入</p>
           </li>
         </ul>
-         <ul class="epidemic-status" v-show="show===1">
+        <ul class="epidemic-status" v-show="show===1">
           <li class="color-red">
             <p>
               较上日
@@ -219,7 +219,7 @@ import SuccessOrder from "@components/SuccessOrder";
 import Partner from "../components/Partner";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-import { epidemicList,abroadList } from "@api/api";
+import { epidemicList, abroadList } from "@api/api";
 export default {
   components: {
     Banner,
@@ -238,21 +238,28 @@ export default {
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
       ],
-     items:[],
-     abroadsItems:[],
+      items: [],
+      abroadsItems: [],
       newswiper: {
         direction: "vertical",
         autoplay: true
-      }, 
-      show:0,
+      },
+      show: 0
     };
   },
   methods: {
     getEpidemic() {
-      epidemicList({}).then(res => {//国内
-        this.items=res.newslist[0].desc;
+      epidemicList().then(res => {
+        //国内
+        console.log(res);
+        this.items = res.newslist[0].desc;
       });
-       abroadList({}).then(res => {//海外
+      //  const data = await epidemicList();
+      //  console.log(data);
+      // this.items=data.newslist[0].desc;
+
+      abroadList({}).then(res => {
+        //海外
         //this.abroadsItems=res.newslist[0].desc;
       });
     }
@@ -372,7 +379,7 @@ export default {
 
   .abroad-title {
     color: $ac;
-    
+
     img {
       margin-left: 5px;
     }

@@ -17,17 +17,15 @@
               <button @click="show=1" :class="{'active':show===1}">手机登录</button>
             </div>
             <div class="signup-wrap">
-              <form class="signup-form">
+                 <el-form :model="signupForm" :rules="rules" ref="signupForm" class="signup-form">
                 <!--密码登录-->
-                <div class="password-login" v-show="show===0">
-                  <ul>
-                    <li class="login-bd">
-                      <input type="text" class="m-input" placeholder="手机号/用户名" />
-                    </li>
-                    <li class="login-bd">
-                      <input type="text" class="m-input" placeholder="密码" />
-                    </li>
-                  </ul>
+                <div class="password-login" v-if="show==0">  
+                     <el-form-item class="login-bd" label prop="mobile">
+                      <el-input v-model="signupForm.mobile" placeholder="手机号/用户名" class="m-input"></el-input>
+                      </el-form-item>
+                     <el-form-item class="login-bd" label prop="password">
+                      <el-input v-model="signupForm.password" type="password" placeholder="设置密码" class="m-input"></el-input>
+                      </el-form-item>
                   <div class="other-link">
                     <a href class="fr">免费注册</a>
                     <a href>忘记密码？</a>
@@ -36,7 +34,7 @@
                 </div>
                 <!--密码登录 end-->
                 <!--手机登录-->
-                <div class="mobile-login" v-show="show===1">
+                <div class="mobile-login" v-else>
                   <ul>
                     <li class="login-bd">
                       <span class="area-code">+86</span>
@@ -52,7 +50,7 @@
                   </div>                 
                 </div>
                  <a class="login-button">登录</a>
-              </form>
+               </el-form>
             </div>
           </div>
           <!--手机扫码登录-->
@@ -120,6 +118,15 @@ export default {
       ifshow: true,
       animate: false,
       intNum: false,
+      signupForm:{
+        mobile:'',
+        password:''
+      },
+      rules:{
+          mobile:[],
+          password:[],
+      },
+      
       items: [
         {
           name: "呼吸机呼吸机",
@@ -294,7 +301,7 @@ body {
 .signup-form {
   padding-top: 48px;
 
-  li {
+  .login-bd {
     margin-bottom: 15px;
     position: relative;
   }
