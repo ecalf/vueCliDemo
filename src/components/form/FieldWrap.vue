@@ -80,8 +80,8 @@
                 const styleMap = {};
                 if(this.type=='textarea'){
                     styleMap['align-items'] = 'flex-start';
-                }else if(this.type=='dropListGroup'){
-                    styleMap.display = 'flex';
+                }else if(this.type=='editor'){
+                    styleMap['align-items'] = 'flex-start';
                 }else if(this.type=="fileUploadGroup"){
                     styleMap['align-items'] = 'flex-start';
                 }
@@ -101,6 +101,10 @@
                 if(this.type=='textarea'){
                     styleMap['flex-direction'] = 'column';
                     styleMap['align-items'] = 'flex-end';
+                }else if(this.type=='editor'){
+                    styleMap['flex-direction'] = 'column';
+                    styleMap.border = 'none'
+
                 }else if(this.type=='checkGroup'){
                     styleMap.border = 'none'
                 }else if(this.type=='dropListGroup'){

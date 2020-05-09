@@ -6,7 +6,7 @@
                 <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">
                     {{item.text}}
                 </span>
-                <span class="arrow-right"></span>
+                <span class="arrow-right" v-if="item.child&&item.child.length"></span>
             </li>
         </ul>
     </div>

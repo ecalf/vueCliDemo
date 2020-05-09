@@ -8,8 +8,11 @@
 
 <style lang="scss" scoped>
     .submitBar{
-        position: absolute;
-        bottom:227px;
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+
         display:flex;
         justify-content:center;
         align-items: center;
@@ -44,14 +47,13 @@
         },
         data(){
             return {
-                footerPosTop:0
+                footerInView:0
             }
         },
         computed:{
             mapStyle(){
                 return {
-                    position:this.footerPosTop>0?'fixed':'absolute',
-                    bottom:this.footerPosTop>0?0:227+'px'
+                    bottom:Math.max(this.footerInView,0)+'px'
                 }
             }
         },
@@ -85,17 +87,24 @@
                     }
                 }
 
+
+
                 const data = await publish(params);
                 console.log('data>>>',data)
 
+            },
+            getFooterPosition(){
+                const rect = document.querySelector('#app>footer').getBoundingClientRect();
+                this.footerInView = window.innerHeight-rect.top;
             }
         },
+        
         mounted(){
             const self = this;
-            window.onscroll = function(){
-
-                const rect = document.querySelector('#app>footer').getBoundingClientRect();
-                self.footerPosTop = rect.top - window.innerHeight;
+            this.getFooterPosition();
+            
+            window.onscroll = ()=>{
+                this.getFooterPosition();
             }
         }
 

@@ -406,6 +406,7 @@ export default {
           type: "error"
         });
       }
+<<<<<<< HEAD
       let params = {
         data: {
           mobile: this.registerForm.mobile,
@@ -413,6 +414,32 @@ export default {
         }
       };
       const data = await bindPhoneCode(params);
+=======
+
+
+      bindPhoneCode({
+        data: {
+          mobile: this.registerForm.mobile,
+          type: 2
+        }
+      }).then(res => {
+        console.log(res);
+      });
+
+  /*    
+  const data = await bindPhoneCode({
+        data:{
+          mobile: this.registerForm.mobile,
+          type: 2
+        }
+     });
+     console.log(data);
+
+     */
+
+
+     
+>>>>>>> 8ae24b99e2b36a60fccac28d088f9c0f69a8199f
     },
 
     submitForm() {

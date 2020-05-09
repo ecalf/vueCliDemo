@@ -14,12 +14,12 @@
       </div>
     </div>
     <div class="header-nav commonweb clearfix">
-      <a href="/home" class="logo">
+      <a href="/" class="logo">
         <img src="@assets/images/logo.png" alt />
       </a>
       <ul class="nav clearfix">
         <li>
-          <a href="/home">首页</a>
+          <a href="/">首页</a>
         </li>
         <li>
           <a href="/tradhall">交易大厅</a>

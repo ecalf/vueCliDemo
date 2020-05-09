@@ -1,32 +1,43 @@
 <template>
-    <Banner v-bind:list="bannerList" />
-
+    <section class="commonweb">
+        <Banner v-bind:list="bannerList" />
+        <FormPublish type="购买" />
+    </section>
 </template>
 
-<div>
-    
-</div>
 
-<style>
+<style lang="scss" scoped>
+
 
 </style>
 
 <script>
 import Banner from "../components/Banner";
+import FormPublish from "../components/FormPublish";
+
+
+
 
 export default {
     name: "PublishBuy",
     components:{
-        Banner
+        Banner,
+        FormPublish
+       
+    },
+    props:{
+        type:String
     },
     data(){
-        
+
         return{
             bannerList:[//todo:fetch list data
-                {title:'Entrustbanner',id:1},
-                {title:'Entrustbanner',id:2},
-                {title:'Entrustbanner',id:3}
+                {text:'Buybanner',id:1},
+                {text:'Buybanner',id:2},
+                {text:'Buybanner',id:3},
+                {text:'Buybanner',id:4}
             ]
+           
         }
     },
     computed:{
@@ -35,6 +46,7 @@ export default {
     methods:{
 
     }
+    
 
 }
 </script>

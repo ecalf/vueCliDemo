@@ -1,13 +1,13 @@
 import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
-import Home from "../views/Home.vue";
+import Index from "../views/Index.vue";
 
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Index",
+    component: Index,
     meta: {
       title: '首页'
     }
