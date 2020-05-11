@@ -17,7 +17,7 @@
             <img class="personalimg" src="@assets/images/personnel.png" alt />
             <div class="personal-msg">
               <p class="company-msg">
-                <strong>比亚迪口罩</strong>
+                <strong>{{profile.company_name||profile.organization_name||'比亚迪口罩厂'}}</strong>
                 <span>
                   <img src="@assets/images/VIP.png" alt />
                 </span>
@@ -26,7 +26,7 @@
                 </span>
               </p>
               <span class="person-name">
-                <span class="person-name-text">张某某</span>
+                <span class="person-name-text">{{profile.full_name||'张某某'}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>

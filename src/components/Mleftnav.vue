@@ -9,7 +9,7 @@
               </h4>
               <div class="member-subnav">
                 <a href="/publish/buy">发布采购</a>
-                <a href="javascript:;">求购管理</a>
+                <a href="/ucenetr/QuotedPrice">报价管理</a>
                 <a href="javascript:;">采购订单</a>
                 <a href="javascript:;">供应商库</a>
                 <a href="javascript:;">委托采购</a>

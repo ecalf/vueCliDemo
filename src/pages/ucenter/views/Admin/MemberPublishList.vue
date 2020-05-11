@@ -60,7 +60,7 @@
 <script>
     import OrderList from "@components/OrderList";
     import Pagination from "@components/Pagination";
-    import {getNeeds} from "@api/userApi";
+    import {getMyNeeds} from "@api/userApi";
 
 
     export default {
@@ -80,9 +80,7 @@
             }
         },
         computed:{
-            profile(){
-               return this.$store.state.profile;
-            }
+            
 
         },
         methods:{
@@ -96,13 +94,12 @@
             },
             async getNeeds(){
                 let params = {
-                    uid:this.profile.uid,
                     page_size:this.page_size,
                     page_index:this.page_index,
                     type:this.type 
                 }
 
-                let res =  await getNeeds(params);
+                let res =  await getMyNeeds(params);
                 if(res.code!=200){
                     this.$message({
                       showClose: true,

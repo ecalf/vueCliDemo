@@ -234,9 +234,9 @@ export default {
   data() {
     return {
       bannerList: [
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
+        { imgUrl: "/img/banner.jpg", href: "/ucenter/login" },
+        { imgUrl: "/img/banner.jpg", href: "/ucenter/login" },
+        { imgUrl: "/img/banner.jpg", href: "/ucenter/login" }
       ],
       items: [],
       abroadsItems: [],
