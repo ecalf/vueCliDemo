@@ -12,6 +12,7 @@
     <!--分页 v-if="total>page_size" -->
     <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
             <Pagination
+                v-bind:inputAllowed="true"
                 v-bind:total="total"
                 v-bind:size="page_size"
                 v-bind:curent="page_index" 
@@ -71,7 +72,7 @@
         props:{},
         data(){
             return {
-                total:30,
+                total:35,
                 page_size:5,
                 page_index:1,
                 type:1,//1 采购,2 销售,3 委托
