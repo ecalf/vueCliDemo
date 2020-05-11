@@ -1,4 +1,5 @@
 import {getProfile} from "@api/userApi";
+import {delToken} from "@utils/common";
 
 export default {
     namespaced: true,//必须通过命名空间访问子模块的 action、mutation 和 getter
@@ -26,9 +27,13 @@ export default {
         //模块外使用： dispatch('moduleName/actionName',data)
         //模块内使用: dispatch('actionName',data)
         async getProfile({state,commit, rootState}){
-            console.log('action getProfile');
-            const profile =  await getProfile();
-            commit('updateProfile',profile);
+            const res =  await getProfile();
+            if(res.code==200){
+                commit('updateProfile',res.data);
+            }else{
+                commit('updateProfile',{});
+                delToken();
+            }            
 
         }
 

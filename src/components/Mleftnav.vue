@@ -9,10 +9,10 @@
               </h4>
               <div class="member-subnav">
                 <a href="/publish/buy">发布采购</a>
-                <a href="/ucenetr/QuotedPrice">报价管理</a>
-                <a href="javascript:;">采购订单</a>
+                <a href="/ucenter/quotedprice">报价管理</a>
+                <a href="/ucenter/buyorder">采购订单</a>
                 <a href="javascript:;">供应商库</a>
-                <a href="javascript:;">委托采购</a>
+                <a href="/publish/entrust">委托采购</a>
                 <a href="javascript:;">合同管理</a>
               </div>
             </li>
@@ -22,14 +22,15 @@
               </h4>
               <div class="member-subnav">
                 <a href="/publish/sell">发布商品</a>
-                <a href="javascript:;">管理商品</a>
-                <a href="javascript:;">店铺管理</a>
-                <a href="javascript:;">订单管理</a>
+                <a href="/ucenter/buyorder">销售管理</a><!--类 /ucenter/buyorder-->
+                <a href="javascript:;">主页管理</a>
                 <a href="javascript:;">合同管理</a>
-                <a href="javascript:;">委托销售</a>
+                <a href="/publish/entrust">委托销售</a>
               </div>
             </li>
-            <li>
+
+            <!--  分销管理延后
+            <li v-if="false">
               <h4>
                 <a href="javascript:;"><i class="iconfont iconfenxiao"></i>分销管理</a>
               </h4>
@@ -41,13 +42,18 @@
                 <a href="javascript:;">邀请码</a>
               </div>
             </li>
+          -->
+
              <li>
               <h4>
                 <a href="javascript:;"><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
               </h4>
               <div class="member-subnav">
                 <a href="javascript:;">我的账户</a>
+                 <!--
                 <a href="javascript:;">发票管理</a>
+                -->
+                <a href="javascript:;">认证中心</a>
               </div>
             </li>
           </ul>

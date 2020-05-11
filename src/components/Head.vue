@@ -41,10 +41,15 @@
           <a href="/news">最新资讯</a>
         </li>
       </ul>
+
+      <!-- 搜索延后 -->
+      <!--
       <div class="search-box">
         <input type="text" />
         <button>搜索</button>
       </div>
+      -->
+
     </div>
   </div>
 </template>

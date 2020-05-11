@@ -1,6 +1,10 @@
 <template>
   <!--订单列表-->
   <div class="mshow-box">
+    <div>
+      
+    </div>
+
     <ul class="mshow-list">
       <li class="item item1">
         <i class="iconannoyed kicon">急</i>
@@ -44,55 +48,16 @@
         <a href class="click-more">点击查看</a>
       </li>
     </ul>
-    <ul class="mshow-list">
+
+
+
+
+    <ul class="mshow-list" v-for="(item,index) of list" v-bind:key="index">
       <li class="item item1">
         <i class="iconannoyed kicon">急</i>
-        <h2>呼吸机...</h2>
-        <span>飞利浦企业</span>
-        <span>出口国：中国</span>
-      </li>
-      <li class="item item2">
-        <a href>
-          <h3 class="title">
-            <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
-          </h3>
-          <p class="dec">
-            医用的达到欧盟欧盟欧盟欧标准医用的达到医
-            医用的达到医用的达到医用的达到医用的达到...
-          </p>
-        </a>
-      </li>
-      <li class="item item3">
-        <span class="number">1500/个</span>
-      </li>
-      <li class="item item4">
-        <span class="price">￥200,000</span>
-      </li>
-      <li class="item item5">
-        <p>
-          <span class="iconannoyed kicon">急</span>
-          <span class="icontop kicon">顶</span>
-          <span class="iconcompany kicon">企</span>
-          <span class="iconorder kicon">订</span>
-        </p>
-        <p>
-          <img src="@assets/images/icon1.png" alt />
-          <img src="@assets/images/icon2.png" alt />
-          <img src="@assets/images/icon3.png" alt />
-          <img src="@assets/images/icon4.png" alt />
-        </p>
-      </li>
-      <li class="item item6">
-        <p class="pro-date"><i>10</i>天<i>5</i>时<i>1</i>分<i>10</i>秒</p>
-        <a href class="click-more">点击查看</a>
-      </li>
-    </ul>
-    <ul class="mshow-list">
-      <li class="item item1">
-        <i class="iconannoyed kicon">急</i>
-        <h2>呼吸机...</h2>
-        <span>飞利浦企业</span>
-        <span>出口国：中国</span>
+        <h2>{{item.product_category_cnname}}</h2>
+        <span>{{item.product_brand_cnname}}</span>
+        <span>出口国：{{item.exit_country}}</span>
       </li>
       <li class="item item2">
         <a href>
@@ -130,98 +95,25 @@
         <a href class="click-more">点击查看</a>
       </li>
     </ul>
-    <ul class="mshow-list">
-      <li class="item item1">
-        <i class="iconannoyed kicon">急</i>
-        <h2>呼吸机...</h2>
-        <span>飞利浦企业</span>
-        <span>出口国：中国</span>
-      </li>
-      <li class="item item2">
-        <a href>
-          <h3 class="title">
-            <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
-          </h3>
-          <p class="dec">
-            医用的达到欧盟欧盟欧盟欧标准医用的达到医
-            医用的达到医用的达到医用的达到医用的达到...
-          </p>
-        </a>
-      </li>
-      <li class="item item3">
-        <span class="number">1500/个</span>
-      </li>
-      <li class="item item4">
-        <span class="price">￥200,000</span>
-      </li>
-      <li class="item item5">
-        <p>
-          <span class="iconannoyed kicon">急</span>
-          <span class="icontop kicon">顶</span>
-          <span class="iconcompany kicon">企</span>
-          <span class="iconorder kicon">订</span>
-        </p>
-        <p>
-          <img src="@assets/images/icon1.png" alt />
-          <img src="@assets/images/icon2.png" alt />
-          <img src="@assets/images/icon3.png" alt />
-          <img src="@assets/images/icon4.png" alt />
-        </p>
-      </li>
-      <li class="item item6">
-       <p class="pro-date"><i>10</i>天<i>5</i>时<i>1</i>分<i>10</i>秒</p>
-        <a href class="click-more">点击查看</a>
-      </li>
-    </ul>
-    <ul class="mshow-list">
-      <li class="item item1">
-        <i class="iconannoyed kicon">急</i>
-        <h2>呼吸机...</h2>
-        <span>飞利浦企业</span>
-        <span>出口国：中国</span>
-      </li>
-      <li class="item item2">
-        <a href>
-          <h3 class="title">
-            <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
-          </h3>
-          <p class="dec">
-            医用的达到欧盟欧盟欧盟欧标准医用的达到医
-            医用的达到医用的达到医用的达到医用的达到...
-          </p>
-        </a>
-      </li>
-      <li class="item item3">
-        <span class="number">1500/个</span>
-      </li>
-      <li class="item item4">
-        <span class="price">￥200,000</span>
-      </li>
-      <li class="item item5">
-        <p>
-          <span class="iconannoyed kicon">急</span>
-          <span class="icontop kicon">顶</span>
-          <span class="iconcompany kicon">企</span>
-          <span class="iconorder kicon">订</span>
-        </p>
-        <p>
-          <img src="@assets/images/icon1.png" alt />
-          <img src="@assets/images/icon2.png" alt />
-          <img src="@assets/images/icon3.png" alt />
-          <img src="@assets/images/icon4.png" alt />
-        </p>
-      </li>
-      <li class="item item6">
-       <p class="pro-date"><i>10</i>天<i>5</i>时<i>1</i>分<i>10</i>秒</p>
-        <a href class="click-more">点击查看</a>
-      </li>
-    </ul>
+
   </div>
 </template>
 
+
 <script>
-export default {};
+export default {
+  props:{
+    list:Array,
+  },
+  data(){
+    return {}
+  }
+
+}
+
 </script>
+
+
 
 <style lang="scss" scoped>
 .mshow-list {
@@ -245,12 +137,12 @@ export default {};
     text-align: center;
 
     &.item1 {
-      width: 140px;
       text-align: left;
       position: relative;
       padding-left: 10px;
 
       h2 {
+        width: 140px;
         font-weight: bold;
         font-size: 20px;
         white-space: nowrap;

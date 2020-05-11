@@ -6,8 +6,8 @@
         <div class="memcommon-title clearfix">
           <div class="order-search">
             <form>
+              <button class="iconfont iconsousuo fr"></button>
               <input type="text" placeholder="搜索" />
-              <button class="iconfont iconsousuo"></button>
             </form>
           </div>
           <h3>报价管理</h3>
@@ -40,5 +40,6 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
 </style>

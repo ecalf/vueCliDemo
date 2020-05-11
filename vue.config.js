@@ -168,7 +168,8 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'http://api.scm.yiminshijie.com',
+        //target: 'http://api.scm.yiminshijie.com',
+        target: 'http://192.168.1.14:8005',
         // secure: false,
         changeOrigin: true,
         ws: false,

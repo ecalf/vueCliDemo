@@ -124,7 +124,7 @@ function getFullWidthLength(str) {
 
 //存token
 function setToken(token,client){
-    let clientToken = btoa('DATA '+client.uid+':'+client.user_name+':'+token);
+    let clientToken = 'DATA '+btoa(client.uid+':'+client.user_name+':'+token);
     localStorage.setItem('Token',clientToken);
 
     let profile = {
@@ -143,15 +143,15 @@ function getToken(){
 }
 
 //退出登录,清除用户信息
-function logout(store){
+function delToken(){
     localStorage.removeItem('Token');
-    store.commit('profile/updateProfile',{});
 }
 
 
 export {
     setToken,
     getToken,
+    delToken,
     isInSite,
     getLang,
     setLang,

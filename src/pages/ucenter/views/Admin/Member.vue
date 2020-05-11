@@ -32,8 +32,9 @@
             </div>
           </div>
         </div>
+
         <!--待办提醒-->
-        <div class="reminder-wrap mb20 clearfix">
+        <div class="reminder-wrap mb20 clearfix" v-if="false">
           <div class="reminder-left commonl-box fl">
             <h4 class="mcommon-title">待办提醒</h4>
             <ul>
@@ -65,8 +66,10 @@
             </a>
           </div>
         </div>
+
+
         <!--采购趋势分析-->
-        <div class="mb20 clearfix">
+        <div class="mb20 clearfix" v-if="false">
           <div class="fl commonl-box">
             <h4 class="mcommon-title">采购趋势分析</h4>
             <div class="analysis-table"></div>
