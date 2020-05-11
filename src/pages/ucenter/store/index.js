@@ -7,7 +7,7 @@ export default new Vuex.Store({
         profile
     },
     state: {},
+    getters:{},
     mutations: {},
-    actions: {},
-    modules: {}
+    actions: {}
 });

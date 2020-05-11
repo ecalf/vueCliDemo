@@ -21,7 +21,7 @@ export default {
        }
     },
     actions: {
-        //action.method(context,data) 根节点状态则为 context.rootState
+        //actionMethod(context,data) 根节点状态则为 context.rootState
 
         //模块外使用： dispatch('moduleName/modifyNameOfAbout',newName)
         //模块内使用: dispatch('modifyNameOfAbout',newName)

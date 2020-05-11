@@ -1,5 +1,5 @@
 export default { 
-    welcome: '国家',
+    welcome: '中国',
     today: '今天是',
     week: {
         sun: '星期日',

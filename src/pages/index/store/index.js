@@ -1,13 +1,11 @@
-import Vue from "vue";
 import Vuex from "vuex";
+import profile from "@pages/ucenter/store/profile";
 
-Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    msg: "hello world"
-  },
-  mutations: {},
-  actions: {},
-  modules: {}
+    modules: {profile},
+    state: {},
+    mutations: {},
+    actions: {}
+  
 });

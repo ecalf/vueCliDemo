@@ -4,10 +4,11 @@
     <div class="header-top">
       <div class="commonweb">
         <div class="country">
+          <!-- todo: list 按国家切换语言 -->
           <span>{{$t('time.welcome')}}</span>
         </div>
         <p>
-          欢迎来到万合优采
+          欢迎来到万合优采 {{profile.user_name}}
           <a href="/ucenter/login">请登录</a>
           <a href="/ucenter/register">免费注册</a>
         </p>
@@ -51,6 +52,18 @@
 <script>
 export default {
   name:'Head',
+  data(){
+    return {
+    }
+  },
+  computed:{
+    profile(){
+       let profile = this.$store.state.profile;
+       console.log('header $store.state.profile',profile);
+
+       return profile;
+    }
+  }
 };
 </script>
 

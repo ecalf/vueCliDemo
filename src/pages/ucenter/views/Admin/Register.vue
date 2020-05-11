@@ -3,7 +3,7 @@
     <div class="register-header clearfix">
       <p class="register-tip fr">
         已有帐号，
-        <a href="/ucenter/login" class="account-login">马上登录</a>|
+        <router-link class="account-login" to="/ucenter/login">马上登录</router-link>|
         <a href="/">返回首页</a>
       </p>
       <a href class="login-logo">
@@ -487,8 +487,8 @@ export default {
 
           }else{
             const profile = setToken(res.data.token,res.data.client);
+            this.$store.commit('profile/updateProfile',profile);
             location.href='/';
-
           }
           
 

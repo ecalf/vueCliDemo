@@ -6,10 +6,10 @@
         <!--主页信息-->
         <div class="member-topmsg mb20">
           <div class="buy-button fr">
-            <a href>
+            <a href="/publish/buy">
               <i class="iconfont iconcaigou"></i>我要采购
             </a>
-            <a href>
+            <a href="/publish/sell">
               <i class="iconfont iconRectangleCopy1"></i>我要销售
             </a>
           </div>
@@ -26,7 +26,7 @@
                 </span>
               </p>
               <span class="person-name">
-                张某某
+                <span class="person-name-text">张某某</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
@@ -102,46 +102,41 @@
           </div>
         </div>
         <!--list-->
-        <div class="mshow-wrap mb20">
-          <div class="mshow-nav">
-            <a href class="active">我的发布</a>
-            <a href>我的采购</a>
-            <a href>我的销售</a>
-          </div>
-          <!--订单-->
-          <Order-list />
-          <!--分页-->
-          <div class="layui-box">
-            <div class="layui-laypage">
-              <a href="javascript:;" class="layui-laypage-prev">上一页</a>
-              <span class="layui-laypage-curr">
-                <em>1</em>
-              </span>
-              <a href="javascript:;">2</a>
-              <a href="javascript:;">3</a>
-              <a href="javascript:;">4</a>
-              <a href="javascript:;">5</a>
-              <span>…</span>
-              <a href="javascript:;" class="layui-laypage-next">下一页</a>
-              <span class="layui-laypage-total">
-                到第
-                <input type="number" /> 页
-                <button type="button" class="layui-laypage-btn">确定</button>
-              </span>
-            </div>
-          </div>
-        </div>
+
+        <MemberPublishList />
+
       </div>
     </div>
   </div>
 </template>
+
+
+
 <script>
 import Mleftnav from "@components/Mleftnav";
-import OrderList from "@components/OrderList";
+import MemberPublishList from "./MemberPublishList";
+
+
+
 export default {
   components: {
     Mleftnav,
-    OrderList
+    MemberPublishList
+  },
+  data(){
+    return {}
+  },
+  computed:{
+    profile(){
+       return this.$store.state.profile;
+    }
+  },
+  methods:{
+
+  },
+  created(){
+    this.$emit("header", true);
+    this.$emit("footer", true);
   }
 };
 </script>
@@ -196,8 +191,11 @@ export default {
 }
 
 .person-name {
+  .person-name-text{
+    margin-right:5px;
+  }
   i {
-    margin-left: 5px;
+    margin-left: 0;
     font-size: 24px;
     line-height: 20px;
     vertical-align: middle;
@@ -347,35 +345,6 @@ export default {
     }
   }
 }
-.mshow-box {
-  margin-bottom: 28px;
-}
-.mshow-nav {
-  margin-bottom: 15px;
-  &:before {
-    content: "";
-    display: inline-block;
-    width: 3px;
-    height: 20px;
-    background-color: #479e84;
-    margin-right: 10px;
-    vertical-align: -4px;
-  }
 
-  a {
-    color: #707070;
-    font-size: 16px;
-    padding-right: 35px;
-    &:hover,
-    &.active {
-      color: #44a78d;
-    }
-  }
-}
-
-.mshow-wrap {
-  background: #ffffff;
-  padding: 15px 15px 30px;
-}
 </style>
 

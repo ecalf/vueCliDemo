@@ -15,6 +15,8 @@ import '@assets/font/iconfont.css';
 import App from "./Ucenter.vue";
 import router from "./router";
 import store from "./store";
+import profileMixin from "@utils/mixin";
+
 
 
 Vue.use(VCharts)
@@ -36,6 +38,7 @@ const i18n = new VueI18n({
 })
 
 new Vue({
+  mixins:[profileMixin],
   router,
   store,
   i18n,

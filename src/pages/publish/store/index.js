@@ -1,8 +1,11 @@
 import Vuex from "vuex";
+import profile from "@pages/ucenter/store/profile";
+
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+    modules: {profile},
+    state: {},
+    mutations: {},
+    actions: {}
+  
 });

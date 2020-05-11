@@ -92,6 +92,7 @@ module.exports = {
     // 添加别名
     config.resolve.alias
       .set("@src", resolve("src"))
+      .set("@pages",resolve("src/pages"))
       .set("@assets", resolve("src/assets"))
       .set("@components", resolve("src/components"))
       .set("@utils", resolve("src/utils"))

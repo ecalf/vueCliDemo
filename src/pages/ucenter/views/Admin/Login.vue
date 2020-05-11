@@ -32,7 +32,7 @@
                   </el-form-item>
 
                     <div class="other-link">
-                      <a href="/ucenter/register" class="fr">免费注册</a>
+                      <router-link class="fr" to="/ucenter/register">免费注册</router-link>
                       <a href='javascript:;'>忘记密码？</a>
                     </div>
                 </div>
@@ -349,17 +349,17 @@ export default {
             //console.log('data:',res.data);
 
             const profile = setToken(res.data.token,res.data.client);
-            //console.log('profile: ',profile);
+            this.$store.commit('profile/updateProfile',profile);
+            console.log('getters getProfile ',this.$store.getters['profile/profile'])
+            
+            this.$router.push('/ucenter/member');
 
-
-            //this.$store.commit()
-
-
-            if(isInSite()){
+            
+            /*if(isInSite()&&document.referrer.indexOf('ucenter/login')==-1){
               location.href=document.referrer;
             }else{
               location.href='/';  
-            }
+            }*/
             
           }
           

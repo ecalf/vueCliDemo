@@ -142,6 +142,12 @@ function getToken(){
     return localStorage.getItem('Token')||'';
 }
 
+//退出登录,清除用户信息
+function logout(store){
+    localStorage.removeItem('Token');
+    store.commit('profile/updateProfile',{});
+}
+
 
 export {
     setToken,

@@ -1,5 +1,5 @@
 export default { 
-    welcome: 'Welcome to Beijing.',
+    welcome: 'China',
     today: 'Today is ',
     week: {
     sun: 'Sunday',

@@ -12,6 +12,7 @@ import 'swiper/css/swiper.css'
 import App from "./Index.vue";
 import router from "./router";
 import store from "./store";
+import profileMixin from "@utils/mixin";
 
 
 // global swiper
@@ -28,6 +29,7 @@ const i18n = new VueI18n({ 
 
 
 new Vue({
+    mixins:[profileMixin],
     i18n,
   router,
   store,
