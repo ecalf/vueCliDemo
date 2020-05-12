@@ -1,3 +1,4 @@
+import Vue from "vue";
 import {getProfile} from "@api/userApi";
 import {delToken} from "@utils/common";
 
@@ -18,7 +19,8 @@ export default {
         updateProfile(state,profile){
             console.log('mutation updateProfile', profile);
             for(let key in profile){
-                state[key] = profile[key]||'';
+                //为state新增key需要使用Vue.set方法,使该属性成为可监控属性
+                Vue.set(state,key,profile[key]||'');
             }
         }
     },
@@ -28,9 +30,9 @@ export default {
         //模块内使用: dispatch('actionName',data)
         async getProfile({state,commit, rootState}){
 
-            //const res =  await getProfile();
-            console.log('test data of profile');
-
+            const res =  await getProfile();
+            
+           /* console.log('test data of profile');
             const res = {
                 code:200,
                 data:{
@@ -56,7 +58,7 @@ export default {
                         "full_name": "小明"//姓名
                     }
                 }
-            }
+            }*/
 
 
 

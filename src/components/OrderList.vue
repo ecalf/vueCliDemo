@@ -90,8 +90,9 @@
         </p>
       </li>
       <li class="item item6">
-        <p class="pro-date" v-bind:deadtime="item.dead_time">
-          <i>10</i>天<i>5</i>时<i>1</i>分<i>10</i>秒
+        <p class="pro-date" v-bind:data-deadtime="item.dead_time" v-interval="{handler:intervalFn,time:1000}">
+          <span v-show="new Date(item.dead_time)>Date.now()"><i>0</i>天<i>0</i>时<i>0</i>分<i>0</i>秒</span>
+          <span v-show="new Date(item.dead_time)<=Date.now()"><i>已截止</i></span>
         </p>
         <a href class="click-more" @click="detail(item.id)">点击查看</a>
       </li>
@@ -190,28 +191,69 @@ export default {
             });
         }
       },
-
       detail(id){
 
+      },
+
+      intervalFn(elm,value){
+        let deadtime = elm.dataset.deadtime;
+        let leftTime = new Date(deadtime)*1-Date.now();
+        let nodes = elm.getElementsByTagName('i');
+
+
+        if(!leftTime||leftTime<=0){
+          //console.log('------已截止----');
+          nodes[0].textContent = 0;
+          nodes[1].textContent = 0;
+          nodes[2].textContent = 0;
+          nodes[3].textContent = 0;
+          return false;
+        }else{
+          //left time
+          let d = (leftTime/(24*3600*1000))>>0;
+          let h = (leftTime%(24*3600*1000)/(3600*1000))>>0;
+          let min = (leftTime%(3600*1000)/(60*1000))>>>0;
+          let s = ((leftTime%(60*1000))/1000)>>>0;
+
+          nodes[0].textContent = d;
+          nodes[1].textContent = h;
+          nodes[2].textContent = min;
+          nodes[3].textContent = s;
+        }
+        nodes = null;
+        
       }
+
+      
+  },
+  directives: {
+    interval: {//定时循环指令
+      //为避免反复创建定时器,只在bind创建一次
+      bind: function (elm,binding) {
+        //v-interval 指令,handler 返回false表示可以终止定时器
+        let handler = binding.value.handler;
+        let time = binding.value.time;
+
+        let timer = setInterval(function(){
+          let ifClear = handler(elm,binding.value);
+          /*表单会更新数据,不要终止定时器
+          if(ifClear===false){
+            clearInterval(timer);
+            console.log('clearInterval');
+          }
+          */
+        },time);
+      }
+    }
   },
   created(){
       this.getCountrylist();
-      this.getQualification();
-      this.getProductCategory();
+      //this.getQualification();
+      //this.getProductCategory();
       
   },
   mounted(){
-    setTimeout(()=>{
-      setInterval(()=>{
-        let elmArr = document.querySelectorAll('.mshow-list .pro-date');
-        elmArr.forEach(function(elm){ 
-            let deadTime = elm.dataset.deadtime;
-            
-        });
 
-      },1000);
-    },1000);
   }
 
 }

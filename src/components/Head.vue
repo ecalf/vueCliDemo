@@ -9,8 +9,8 @@
         </div>
         <p>
           <span>欢迎来到万合优采 {{profile.user_name||'uid:'+profile.uid}}</span>
-          <a href="/ucenter/login" v-if="profile.uid*1>0">请登录</a>
-          <a href="/ucenter/register" v-if="profile.uid*1>0">免费注册</a>
+          <a href="/ucenter/login" v-if="!(profile.uid*1>0)">请登录</a>
+          <a href="/ucenter/register" v-if="!(profile.uid*1>0)">免费注册</a>
         </p>
       </div>
     </div>
@@ -39,6 +39,9 @@
         </li>
         <li>
           <a href="/news">最新资讯</a>
+        </li>
+        <li>
+          <a href="/ucenter/member">个人主页</a>
         </li>
       </ul>
 

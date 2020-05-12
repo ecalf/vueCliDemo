@@ -87,7 +87,7 @@
                 "images": "54", //图片
                 "video": null,
                 "info": "54", //富文本详情
-                "dead_time": "2020-01-21 10:32:32", //截至日期
+                "dead_time": "2020-04-21 10:32:32", //截至日期
                 "service_id": null, //服务id
                 "status": null, //状态
                 "files": null, //附件
@@ -119,7 +119,7 @@
                 "images": "54",
                 "video": null,
                 "info": "54",
-                "dead_time": "2020-01-21 10:32:32",
+                "dead_time": "2020-06-11 10:32:32",
                 "service_id": null,
                 "status": null,
                 "files": null,
@@ -151,7 +151,7 @@
                 "images": "54",
                 "video": null,
                 "info": "54",
-                "dead_time": "2020-01-21 10:32:32",//截止时间
+                "dead_time": "2020-06-01 10:32:32",//截止时间
                 "service_id": null,
                 "status": null,
                 "files": null,
@@ -183,7 +183,7 @@
                 "images": "54",
                 "video": null,
                 "info": "54",
-                "dead_time": "2020-01-21 10:32:32",
+                "dead_time": "2020-05-21 10:32:32",
                 "service_id": null,
                 "status": null,
                 "files": null,
@@ -233,6 +233,13 @@
                     type:this.type 
                 }
                 
+                //test
+                /*console.log('test getMyNeeds data list');
+                this.list = list;
+                list.reverse();
+                return;*/
+
+
                 let res =  await getMyNeeds({data:params});
                 if(res.code!=200){
                     this.$message({
@@ -243,7 +250,7 @@
                 }else{
                     let data = res.data;
                     this.total = data.total;
-                    this.list = data.list.length?data.list:list;
+                    this.list = data.list;
 
                 }
                 

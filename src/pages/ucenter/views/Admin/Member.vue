@@ -21,12 +21,12 @@
                 <span>
                   <img src="@assets/images/VIP.png" alt />
                 </span>
-                <span>
+                <span v-if="profile.type==3">
                   <img src="@assets/images/qiyerenzheng.png" alt />
                 </span>
               </p>
               <span class="person-name">
-                <span class="person-name-text">{{profile.contact_name}}</span>
+                <span class="person-name-text">{{contact_name}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
@@ -127,11 +127,14 @@ export default {
     MemberPublishList
   },
   data(){
-    return {
-        profile:this.$store.state.profile
+    return { 
+
     }
   },
   computed:{
+    profile(){
+      return this.$store.state.profile;
+    },
     company(){
       return (type)=>{
         //type '注册类型：1个人 2 机构 3企业'
@@ -143,6 +146,9 @@ export default {
           return this.profile.company_name;
         }
       }
+    },
+    contact_name(){
+      return this.$store.state.profile.contact_name
     }
   },
   methods:{

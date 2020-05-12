@@ -57,11 +57,11 @@
           if(max<1+this.numCtrl*2){
             max = 1+this.numCtrl*2;
           }
-          this.min = min;
-          this.max = max;
+          this.min = Math.max(1,min);
+          this.max = Math.min(this.pagecount,max);
 
 
-          for(let i=min;i<=max;i++){
+          for(let i=this.min;i<=this.max;i++){
             arr.push(i);
           }
 
