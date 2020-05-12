@@ -9,7 +9,7 @@
                 -->
 
                 <div class="form-section">
-                    <SelectCascade v-bind:data="categoryData" />
+                    <SelectCascade v-bind:list="categoryList" v-bind:deep="2" @update-value="selected()" />
                 </div>
             </FormContainer>
 
@@ -358,8 +358,6 @@
 </style>
 
 <script>
-
-
 import FormContainer from "@components/form/FormContainer";
 import SearchBar from "@components/form/SearchBar";
 import FormRow from "@components/form/FormRow";
@@ -376,8 +374,23 @@ import DatePickerField from  "@components/form/DatePickerField";
 import SelectCascade from "./SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
+import {getQualification,getProductCategory,getBrandList} from "@api/commonApi";
+
+
 //测试数据
-import categoryData from "../store/categoryData";
+//import categoryData from "../store/categoryData";
+
+function formatMenuData(listData){
+    listData = listData.map(function(item){
+        item.text = item.cn_name;
+        if(item.child&&item.child.length){
+            item.child = formatMenuData(item.child);
+        }
+        return item;
+    });
+
+    return listData;
+}
 
 
 
@@ -402,8 +415,10 @@ export default {
     data(){
 
         return{
-           
-            categoryData:categoryData,
+            brandList:[],
+            categoryList:[],
+            qualificationList:[],
+
             dropList:[//todo:fetch list data
                 {text:'认证1',id:1,icon:"../../assets/images/inicon11.png"},
                 {text:'认证2',id:2,icon:"../../assets/images/inicon12.png"},
@@ -432,9 +447,57 @@ export default {
         }
     },
     computed:{
-
+        
     },
     methods:{
+        async getQualification(){
+            let res =  await getQualification();
+
+          if(res.code==200){
+              this.qualificationList = res.data;
+
+          }else{
+              this.$message({
+                showClose: true,
+                message: res.message,
+                type: "error"
+              });
+          }
+        },
+
+        async getProductCategory(){
+            let res = await getProductCategory();
+
+
+            if(res.code==200){
+                this.categoryList = formatMenuData(res.data);
+
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+        },
+        async getBrandList(){
+            let res = await getBrandList();
+            if(res.code==200){
+                this.brandList = res.data;
+
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+        }
+    },
+    created(){
+        this.getQualification();
+        this.getProductCategory();
+        this.getBrandList();
 
     }
 

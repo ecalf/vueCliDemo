@@ -1,11 +1,20 @@
 <template>
     <div class="menu-container">
-        <Menu v-bind:list="data" v-bind:has-split="false" />
-        <Menu v-bind:list="data[0].child" v-bind:has-split="true" />
+        <Menu 
+            v-for="i of this.deep"
+            v-bind:has-split="i!=1" 
+            v-bind:data-level="i"
+            v-bind:key="i"
+            v-bind:level="i"
+            v-bind:list="menuData['list_'+i]" 
+            v-show="menuData['list_'+i].length>0"
+            
+            @update-value="updateValue" 
+            />
+
     </div>
 
 </template>
-
 
 <style lang="scss" scoped>
     .menu-container{
@@ -29,19 +38,42 @@
             Menu
         },
         data(){
-            return {};
+            let obj = {
+                value:{},
+                menuData:{}
+            };
+
+            for(let i=1;i<=this.deep;i++){
+                obj.menuData['list_'+i] = [];
+            }
+            obj.menuData.list_1 = this.list;
+
+            return obj;
         },
         props:{
-            data:Array
+            list:Array,
+            deep:Number
         },
         computed:{
 
         },
         methods:{
+            updateValue(item,level){
+                if(level==1){
+                    this.menuData['list_'+(level+1)] = item.child||[]
+                }
 
-        },
-        mouted(){
-            console.log('data>>>',this.data);
+
+                this.value['level_'+level] = item;
+                for(let i=level+1;i<=this.deep;i++){
+                    this.value['level_'+i] = null;
+                }
+
+                console.log('this.value>>>',this.value);
+                this.$emit('update-value',this.value);
+            }
+
+
         }
     }
 

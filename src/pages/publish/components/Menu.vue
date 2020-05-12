@@ -2,7 +2,7 @@
     <div class="menu-wrap">
         <div class="menu-split" v-show="hasSplit"></div>
         <ul class="menu" v-bind:style="menuStyle" v-show="list.length">
-            <li class="menu-item" v-for="item in list" v-bind:key="item.id">
+            <li class="menu-item" v-for="item in list" v-bind:key="item.id" @click="selected($event,item)">
                 <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">
                     {{item.text}}
                 </span>
@@ -62,7 +62,7 @@
                 font-weight: normal;
                 cursor:pointer;
                 flex: 1;
-                
+
                 @include ol;
 
                 &:hover{
@@ -100,7 +100,8 @@ export default {
         width:String,
         height:String,
         hasSplit:Boolean,
-        list:Array
+        list:Array,
+        level:Number
     },
     computed:{
         menuStyle(){
@@ -120,10 +121,9 @@ export default {
 
     },
     methods:{
-
-    },
-    mouted(){
-        console.log('menu this.hasSplit>>>',this.hasSplit);
+        selected(e,item){
+            this.$emit('update-value',item,this.level);
+        }
     }
 }
 
