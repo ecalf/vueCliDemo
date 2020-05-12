@@ -63,14 +63,15 @@
     import {getMyNeeds} from "@api/userApi";
 
 
+
     //test
     let list  =  [
             {
                 "id": 6,
                 "user_id": 10,
                 "type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售',
-                "title": "我要采购", //标题
-                "desc": "fasdte", //描述
+                "title": "我要采购XXXXXXXX", //标题
+                "desc": "描述fasdte", //描述
                 "cate_id": 3, //品类id
                 "band_id": 1, //品牌id
                 "other_band": null,//其他品牌
@@ -93,7 +94,7 @@
                 "created_at": "2020-05-06 12:08:30",//创建时间
                 "updated_at": "2020-05-06 12:08:30",
                 "product_category_cnname": "消杀用品及其主要原料、包装材料", //品类名称 （中文）
-                "cproduct_category_enname": "Killing products and their main raw materials and packaging materials",//品类名称 （英文）
+                "product_category_enname": "Killing products and their main raw materials and packaging materials",//品类名称 （英文）
                 "product_brand_cnname": "北京同仁堂",//品牌名称（中文)
                 "product_brand_enname": "Beijing Tongrentang" //品牌名称（英文）
             },
@@ -101,8 +102,8 @@
                 "id": 8,
                 "user_id": 10,
                 "type": 2,
-                "title": "我要销售",
-                "desc": "fasdte",
+                "title": "我要销售xxxxxx",
+                "desc": "描述fasdte",
                 "cate_id": 3,
                 "band_id": 1,
                 "other_band": null,
@@ -125,7 +126,7 @@
                 "created_at": "2020-05-06 12:17:32",
                 "updated_at": "2020-05-06 12:17:32",
                 "product_category_cnname": "消杀用品及其主要原料、包装材料",
-                "cproduct_category_enname": "Killing products and their main raw materials and packaging materials",
+                "product_category_enname": "Killing products and their main raw materials and packaging materials",
                 "product_brand_cnname": "北京同仁堂",
                 "product_brand_enname": "Beijing Tongrentang"
             },
@@ -133,15 +134,15 @@
                 "id": 10,
                 "user_id": 10,
                 "type": 3,
-                "title": "我要委托",
-                "desc": "fasdte",
+                "title": "我要委托xxxxxx",
+                "desc": "描述fasdte",
                 "cate_id": 3,
                 "band_id": 1,
                 "other_band": null,
-                "price": 52,
-                "market_price": 646.4,
-                "supplier_price": 6436,
-                "benefit_price": null,
+                "price": 52,//单价
+                "market_price": 646.4,//市场价
+                "supplier_price": 6436,//供应价
+                "benefit_price": null,//优惠价
                 "is_discuss": 0,
                 "num": 35,
                 "use_way": 1,
@@ -150,14 +151,14 @@
                 "images": "54",
                 "video": null,
                 "info": "54",
-                "dead_time": "2020-01-21 10:32:32",
+                "dead_time": "2020-01-21 10:32:32",//截止时间
                 "service_id": null,
                 "status": null,
                 "files": null,
                 "created_at": "2020-05-06 12:29:05",
                 "updated_at": "2020-05-06 12:29:05",
                 "product_category_cnname": "消杀用品及其主要原料、包装材料",
-                "cproduct_category_enname": "Killing products and their main raw materials and packaging materials",
+                "product_category_enname": "Killing products and their main raw materials and packaging materials",
                 "product_brand_cnname": "北京同仁堂",
                 "product_brand_enname": "Beijing Tongrentang"
             },
@@ -165,8 +166,8 @@
                 "id": 11,
                 "user_id": 10,
                 "type": 3,
-                "title": "我要委托3",
-                "desc": "fasdte",
+                "title": "我要委托3xxxxxx",
+                "desc": "描述fasdte",
                 "cate_id": 3,
                 "band_id": 1,
                 "other_band": null,
@@ -189,7 +190,7 @@
                 "created_at": "2020-05-07 21:46:14",
                 "updated_at": "2020-05-07 21:46:14",
                 "product_category_cnname": "消杀用品及其主要原料、包装材料",
-                "cproduct_category_enname": "Killing products and their main raw materials and packaging materials",
+                "product_category_enname": "Killing products and their main raw materials and packaging materials",
                 "product_brand_cnname": "北京同仁堂",
                 "product_brand_enname": "Beijing Tongrentang"
             }
@@ -242,14 +243,16 @@
                 }else{
                     let data = res.data;
                     this.total = data.total;
-                    this.list = list //data.list;
+                    this.list = data.list.length?data.list:list;
 
                 }
                 
             }
+
         },
         created(){
             this.getNeeds();
+            
         }
 
     }

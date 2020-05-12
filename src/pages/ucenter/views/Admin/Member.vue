@@ -17,7 +17,7 @@
             <img class="personalimg" src="@assets/images/personnel.png" alt />
             <div class="personal-msg">
               <p class="company-msg">
-                <strong>{{profile.company_name||profile.organization_name||'比亚迪口罩厂'}}</strong>
+                <strong>{{company(profile.type)}}</strong>
                 <span>
                   <img src="@assets/images/VIP.png" alt />
                 </span>
@@ -26,7 +26,7 @@
                 </span>
               </p>
               <span class="person-name">
-                <span class="person-name-text">{{profile.full_name||'张某某'}}</span>
+                <span class="person-name-text">{{profile.contact_name}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
@@ -127,11 +127,22 @@ export default {
     MemberPublishList
   },
   data(){
-    return {}
+    return {
+        profile:this.$store.state.profile
+    }
   },
   computed:{
-    profile(){
-       return this.$store.state.profile;
+    company(){
+      return (type)=>{
+        //type '注册类型：1个人 2 机构 3企业'
+        if(type==1){
+          return this.profile.user_name;
+        }else if(type==2){
+          return this.profile.organization_name;
+        }else if(type==3){
+          return this.profile.company_name;
+        }
+      }
     }
   },
   methods:{

@@ -147,6 +147,13 @@ function delToken(){
     localStorage.removeItem('Token');
 }
 
+//格式化价格千分位
+function formatPrice(n){
+    n = n.toString().split('.');
+    n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
+    return n.join('.');
+}
+
 
 export {
     setToken,
@@ -156,5 +163,6 @@ export {
     getLang,
     setLang,
     dateTimeFormat,
-    getFullWidthLength
+    getFullWidthLength,
+    formatPrice
 }

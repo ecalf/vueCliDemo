@@ -15,7 +15,12 @@ export async function getCountrylist (){
     return post('/v1/user/countrylist');
 }
 
-//获取类目
-export async function getCategory(params){
-    return post('/v1/category/getlist',params);
+//获取产品类目
+export async function getProductCategory(params){
+    return post('/v1/category/get-product-cate-list',params);
+}
+
+//资质类别
+export async function getQualification (){
+    return post('/v1/category/get-qualification-cate-list');
 }
