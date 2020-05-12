@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import {routeTo} from "@utils/enhanceRouter";
 import { bindPhoneCode, submitLogin } from "@api/userApi";
 import { isInSite,setToken } from "@utils/common";
 
@@ -350,9 +351,8 @@ export default {
 
             const profile = setToken(res.data.token,res.data.client);
             this.$store.commit('profile/updateProfile',profile);
-            console.log('getters getProfile ',this.$store.getters['profile/profile'])
-            
             this.$router.push('/ucenter/member');
+
 
             
             /*if(isInSite()&&document.referrer.indexOf('ucenter/login')==-1){

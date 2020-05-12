@@ -2,9 +2,12 @@
     <section>
         <section class="commonweb container">
             <FormContainer  title="品类" v-bind:baseline="false">
+                <!--
                 <div class="form-section">
                     <SearchBar width="690" />
                 </div>
+                -->
+
                 <div class="form-section">
                     <SelectCascade v-bind:data="categoryData" />
                 </div>
@@ -335,7 +338,7 @@
 
     .form-section{
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         margin-top:20px;
     }
 

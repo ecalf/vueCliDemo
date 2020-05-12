@@ -284,6 +284,7 @@
   </div>
 </template>
 <script>
+import {routeTo} from "@utils/enhanceRouter";
 import ResgisterBtn from "@components/Register/ResgisterBtn";
 import { bindPhoneCode, submitRegister } from "@api/userApi";
 import { setToken } from "@utils/common";
@@ -486,9 +487,7 @@ export default {
             });
 
           }else{
-            const profile = setToken(res.data.token,res.data.client);
-            this.$store.commit('profile/updateProfile',profile);
-            location.href='/';
+            this.$routeTo('/ucenter/login');
           }
           
 

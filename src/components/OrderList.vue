@@ -192,7 +192,7 @@ export default {
         }
       },
       detail(id){
-
+        location.href="/product/detail?id="+id;
       },
 
       intervalFn(elm,value){

@@ -1,13 +1,7 @@
-/*
-* 通用函数
-*/
+/*********************
+**** 通用函数 *********
+*********************/
 
-
-//判断是从站内跳转到本页
-function isInSite(){
-    let reg = new RegExp("^"+location.protocol+'//'+location.host);
-    return reg.test(document.referrer);
-}
 
 function dateTimeFormat(date,formatStr,frag){
     if(typeof(date)=='string'){
@@ -52,20 +46,6 @@ function dateTimeFormat(date,formatStr,frag){
     });
 }
 
-function getLang(){
-    let langList = ['zh-CN','en-US'];
-    let lang = localStorage.getItem('lang')||navigator.language;
-    if(langList.indexOf(lang)==-1){
-        lang = 'zh-CN';
-    }
-
-    return lang;
-}
-
-function setLang(component,lang){
-    localStorage.setItem('lang',lang||'zh-CN');
-    component.$i18n.locale = lang;
-}
 
 /**
  * 按全角计算文字的长度,2个半全角算1个长度
@@ -147,12 +127,35 @@ function delToken(){
     localStorage.removeItem('Token');
 }
 
+//判断是从站内跳转到本页
+function isInSite(){
+    let reg = new RegExp("^"+location.protocol+'//'+location.host);
+    return reg.test(document.referrer);
+}
+
+//客户端语言
+function getLang(){
+    let langList = ['zh-CN','en-US'];
+    let lang = localStorage.getItem('lang')||navigator.language;
+    if(langList.indexOf(lang)==-1){
+        lang = 'zh-CN';
+    }
+
+    return lang;
+}
+function setLang(component,lang){
+    localStorage.setItem('lang',lang||'zh-CN');
+    component.$i18n.locale = lang;
+}
+
 //格式化价格千分位
 function formatPrice(n){
     n = n.toString().split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
     return n.join('.');
 }
+
+
 
 
 export {

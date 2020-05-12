@@ -24,3 +24,8 @@ export async function getProductCategory(params){
 export async function getQualification (){
     return post('/v1/category/get-qualification-cate-list');
 }
+
+//单位
+export async function getUnit(){
+    return post('/v1/category/get-unit-category');
+}

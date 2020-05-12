@@ -7,6 +7,19 @@ import Vuex from "vuex";
 import VueI18n from 'vue-i18n';
 import VueRouter from "vue-router";
 
+function routeTo(toPath){
+    toPath = toPath||'/';
+    let fromModule = location.pathname.split('/')[1]||'';
+    let toModule = toPath.split('/')[1]||'';
+
+    if(fromModule==toModule){
+        this.$router.push(toPath);
+    }else{
+        location.href = toPath;
+    }
+}
+
+
 const plugins =  {
     usePlugin(Vue){
         Vue.use(Vuex);
@@ -17,23 +30,12 @@ const plugins =  {
     install (Vue,options){
         this.usePlugin(Vue);
 
-
-        //console.log('EnhanceVue install');
-        if(typeof options=='object'){
-            for(let key in options){
-                if(typeof options[key]=='function'){
-                    //function(Vue){ }
-                    options[key](Vue);
-                }else{
-                    Vue.prototype[key] = options[key];    
-                }
-            }
-        }
-        
         Vue.config.productionTip = false;
         Vue.prototype.GLOBAL = Object.assign(CONST,{
             debug:process.env.NODE_ENV !== "production"
         });
+
+        Vue.prototype.$routeTo = routeTo;
 
         return Vue;
     }

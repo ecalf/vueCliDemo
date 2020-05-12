@@ -29,7 +29,7 @@
     }
     .menu{
         box-sizing:border-box;
-        width:290px;
+        width:400px;
         height:320px;
         overflow-y:auto; 
         padding:10px 15px 18px 15px;
@@ -55,13 +55,14 @@
 
             .item-text{
                 display: inline-block;
-                width: 220px;
                 font-size:14px;
                 font-weight:400;
                 line-height:20px;
                 color:#4E5A65;
                 font-weight: normal;
                 cursor:pointer;
+                flex: 1;
+                
                 @include ol;
 
                 &:hover{
