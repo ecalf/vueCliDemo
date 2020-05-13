@@ -1,13 +1,13 @@
 <template>
-    <div class="drop-wrap" v-bind:style="wrapStyle">
+    <div class="drop-wrap" v-bind:style="widthStyle">
         <div class="drop-value" @click="trigger()" v-bind:data-value="value">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
-                <span>{{text}}</span>
+                <span class="drop-item-text" v-bind:style="widthStyle">{{text}}</span>
             </div>
             <span class="arrow-down"></span>
         </div>
-        <ul class="drop-menu" v-show="showMenu">
+        <ul class="drop-menu" v-show="showMenu&&list.length>0">
             <li v-for="(item,i) in list" 
                 v-bind:key="item.id"  
                 v-bind:data-index="i"
@@ -18,8 +18,8 @@
                 @click="onselect(item)"
             >
                 <div class="drop-item-text">
-                    <span class="drop-item-icon" v-if="prefix"></span>
-                    <span>{{item.text}}</span>
+                    <span class="drop-item-icon" v-bind:style="item.icon|listIconBg" v-if="prefix"></span>
+                    <span class="drop-item-text" v-bind:style="widthStyle">{{item.text}}</span>
                 </div>
             </li>
         </ul>
@@ -43,14 +43,18 @@
         width:20px;
         height: 20px;
         margin-right: 5px;
-        
-        background-color: black;
+        background-size: contain;
+        background-position: center;
+        background-repeat:no-repeat;
 
+    }
+    .drop-item-text{
+        @include ol;
     }
     .drop-wrap{
         position: relative;
         display: inline-block;
-        width:205px;
+        width:auto;
         height:$dropHeight;
         border:1px solid #EAECED;
         @include default-radius;
@@ -141,7 +145,7 @@
             };
         },
         computed:{
-            wrapStyle(){
+            widthStyle(){
                 let styleMap = {};
                 if(this.width){
                     styleMap.width = this.width=='auto'?'auto':(this.width+'px');
@@ -153,7 +157,18 @@
                 return {
                     'background-image':'url('+this.icon+')'
                 }
+            },
+    
+            listIconBg(iconUrl){
+                
             }
+        },
+        filters: {
+          listIconBg: function (iconUrl) {
+            return {
+                'background-image':'url('+iconUrl+')'
+            } 
+          }
         },
         methods:{
             trigger(){
@@ -169,14 +184,26 @@
             }
         },
         created(){
-            if(!this.defaulttext){
+            if(!(this.list instanceof Array)){
+                this.list = [];
+                console.log('error,list for DropList.vue is not an array');
+            }
+
+            if(this.defaulttext){
                 this.value = this.defaultvalue;
                 this.text = this.defaulttext;
-            }else{
+            }else if(this.list.length){
                 this.value=this.list[0].value;
                 this.text=this.list[0].text;
+                this.icon = this.list[0].icon;
+                console.log(this.name,this.list);
             }
+
+            console.log('created',this.name,this.list);
             
+        },
+        updated(){
+            console.log('updated',this.name,this.value,this.text,this.list);
         }
         
 

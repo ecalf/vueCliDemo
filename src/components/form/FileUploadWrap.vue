@@ -4,8 +4,6 @@
         <slot name="default" v-bind:uploadedurl="uploadedurl"/>
         <input type="file" ref="uploadField" class="upload-field" @change="handleFiles($event)">
     </div>
-
-
 </template>
 
 
@@ -40,14 +38,13 @@
     export default {
         components:{},
         props:{
-            name:String,
             title:String,
             maxsize:Number, //最大上传容量,单位KB
             types:String //文件类型限制
         },
         data(){
             return {
-                defaultMaxSize:1024*2,
+                defaultMaxSize:1024*2,//单位KB
                 defaultTypes:['image/png','image/jpeg'],
                 uploadedurl:'' //上传后的图片路劲
             }
@@ -57,6 +54,11 @@
                 this.$refs.uploadField.click();
             },
             handleFiles(e){
+                if(e.target.files.length==0){
+                    return false;
+                }
+
+
                 let file = e.target.files[0];
                 let maxsize = this.maxsize||this.defaultMaxSize;
                 let types = this.types||this.defaultTypes;  
@@ -85,7 +87,7 @@
                 */
 
 
-                if(file.size>maxsize){
+                if(file.size>maxsize*1024){
                     this.$message({
                         showClose: true,
                         message: "图片大小请限制在2MB以内",

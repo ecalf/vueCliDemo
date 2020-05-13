@@ -53,13 +53,13 @@
                 <FormRow>
                     <DropListField
                         v-bind:required="true" 
-                        v-bind:suffix="false"
                         v-bind:prefix="true"
-                        v-bind:list="dropList" 
+                        v-bind:list="brandList" 
                         label="品牌" 
                         name="brand" 
                         height="40"
                         width="200"
+                        defaulttext="请选择品牌"
                         @update-value="updateValue"
 
                         />
@@ -140,7 +140,6 @@
 
                      <DropListField
                         v-bind:required="true" 
-                        v-bind:suffix="false"
                         v-bind:prefix="false"
                         v-bind:list="unitList" 
                         label="单位" 
@@ -155,7 +154,7 @@
                         v-bind:required="false" 
                         v-bind:suffix="false"
                         v-bind:prefix="false"
-                        v-bind:list="checkboxGroup"
+                        v-bind:list="useGroup"
                         label="用途" 
                         name="use" 
                         height="40"
@@ -173,90 +172,15 @@
                         v-bind:required="false" 
                         height="40"
                         >
-                            <div class="drop-list-wrap">
+                            <div v-for="(item,index) of qualificationList" v-bind:key="index" class="drop-list-wrap">
                                 <DropList
-                                    name="qualification1"
+                                    v-bind:name="'qualification_'+index"
                                     v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
+                                    v-bind:list="item.child||[]"
+                                    v-bind:defaulttext="item.text"
+                                    
                                     @update-value="updateValue"
 
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification2"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification3"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification4"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification5"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification6"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification7"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                            <div class="drop-list-wrap">
-                                <DropList
-                                    name="qualification8"
-                                    v-bind:prefix="true"
-                                    v-bind:list="zizhiList"
-                                    width="110"
-                                    @update-value="updateValue"
                                 />
                             </div>
 
@@ -284,6 +208,7 @@
                     </FieldWrap>
                 </FormRow>  
 
+               <!--
                 <FormRow>
                     <FieldWrap 
                         type="fileUploadGroup" 
@@ -297,6 +222,7 @@
 
                     </FieldWrap>
                 </FormRow> 
+            -->
 
 
                 <FormRow>
@@ -404,16 +330,30 @@ import DatePickerField from  "@components/form/DatePickerField";
 import SelectCascade from "./SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
-import {getQualification,getProductCategory,getBrandList} from "@api/common";
+import {
+    getQualification,
+    getProductCategory,
+    getBrandList,
+    getUnitList
+} from "@api/common";
 
 
 
-function formatMenuData(listData){
+function formatListData(listData){
+    if(!(listData instanceof Array)){
+        console.log('formatListData error,param listData is not an array');
+        return [];
+    }
+
     listData = listData.map(function(item){
-        item.text = item.cn_name;
+        item.id = item.id||item.value||'';
+        item.text = item.cn_name;//todo：按中英文选择cn_name en_name
+        item.icon = item.icon||item.img||'';
+
         if(item.child&&item.child.length){
-            item.child = formatMenuData(item.child);
+            item.child = formatListData(item.child);
         }
+
         return item;
     });
 
@@ -443,22 +383,25 @@ export default {
     data(){
 
         return{
-            updatetime:Date.now(),
+            params:{},
             brandList:[],
             categoryList:[],
             qualificationList:[],
+            unitList:[],
 
+
+            //test data
             dropList:[//todo:fetch list data
                 {text:'认证1',id:1,icon:"../../assets/images/inicon11.png"},
                 {text:'认证2',id:2,icon:"../../assets/images/inicon12.png"},
                 {text:'认证3',id:3,icon:"../../assets/images/inicon13.png"}
             ],
-            unitList:[
+           /* unitList:[
                 {text:'个',id:1},
                 {text:'箱',id:2},
                 {text:'吨',id:3},
-            ],
-            checkboxGroup:[
+            ],*/
+            useGroup:[
                 {text:'医用',id:1,checked:true},
                 {text:'民用',id:2}
             ],
@@ -478,15 +421,23 @@ export default {
     computed:{
 
     },
+    watch:{
+        params(newParams,oldParams){
+            console.log('params change:',newParams,oldParams);
+        }
+    },
     methods:{
         updateValue(name,value){
-            console.log('selectedCategory>>>',name,value);
+            console.log('form updateValue>>>',name,value);
+
+            this.params[name] = value;
+
         },
         async getQualification(){
             let res =  await getQualification();
 
           if(res.code==200){
-              this.qualificationList = res.data;
+              this.qualificationList = formatListData(res.data);
 
           }else{
               this.$message({
@@ -502,7 +453,7 @@ export default {
 
 
             if(res.code==200){
-                this.categoryList = formatMenuData(res.data);
+                this.categoryList = formatListData(res.data);
             }else{
                 this.$message({
                     showClose: true,
@@ -512,9 +463,14 @@ export default {
             }
         },
         async getBrandList(){
-            let res = await getBrandList();
+            let res = await getBrandList({
+                    data:{
+                        cate_id:3//this.this.params.cate_id
+                    }
+                });
+
             if(res.code==200){
-                this.brandList = res.data;
+                this.brandList = formatListData(res.data);
 
             }else{
                 this.$message({
@@ -523,12 +479,28 @@ export default {
                     type: "error"
                 });
             }
-        }
+        },
+        
+        async getUnitList(){
+            let res = await getUnitList();
+            if(res.code==200){
+                this.unitList = formatListData(res.data);
+
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+        },
+
     },
     created(){
         this.getQualification();
         this.getProductCategory();
         this.getBrandList();
+        this.getUnitList();
 
     }
 

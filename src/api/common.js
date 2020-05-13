@@ -6,8 +6,8 @@ export async function uploadFile(formData,option){
 }
 
 //获取品牌种类
-export async function getBrandList(){
-    return post('/v1/category/get-brand-list');
+export async function getBrandList(params){
+    return post('/v1/category/get-brand-list',params);
 }
 
 //获取国家列表
@@ -26,6 +26,6 @@ export async function getQualification (){
 }
 
 //单位
-export async function getUnit(){
+export async function getUnitList(){
     return post('/v1/category/get-unit-category');
 }
