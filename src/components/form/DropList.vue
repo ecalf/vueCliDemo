@@ -7,15 +7,16 @@
             </div>
             <span class="arrow-down"></span>
         </div>
-        <ul class="drop-menu" v-show="showMenu" @click="selected($event)">
+        <ul class="drop-menu" v-show="showMenu">
             <li v-for="(item,i) in list" 
                 v-bind:key="item.id"  
                 v-bind:data-index="i"
                 v-bind:data-value="item.id"
                 v-bind:data-text="item.text"
                 v-bind:data-icon="item.icon"
-
-                class="drop-menu-item">
+                class="drop-menu-item"
+                @click="onselect(item)"
+            >
                 <div class="drop-item-text">
                     <span class="drop-item-icon" v-if="prefix"></span>
                     <span>{{item.text}}</span>
@@ -82,8 +83,6 @@
             background-color: $bgwhite;
             @include default-border;
 
-            
-
             .drop-menu-item{
                 display:flex;
                 justify-content: flex-end;
@@ -128,6 +127,7 @@
             list:Array,
             defaultvalue:String,
             defaulttext:String,
+            name:String,
             width:String,
             height:String //todo: 暂未控制高度
 
@@ -159,20 +159,13 @@
             trigger(){
                 this.showMenu = !this.showMenu;
             },
-            selected(e){
-                let target = e.target;
-                do{
-                    target = target.parentNode;
-                }while(target.tagName!='LI'&&target.tagName!='UL');
+            onselect(item){
+                this.text = item.text;
+                this.value = item.value;
+                this.icon = item.icon;
 
-                this.text = target.dataset.text;
-                this.value = target.dataset.value;
-                if(this.prefix){
-                    this.icon = target.dataset.icon;
-                }
-                
-            
                 this.trigger();
+                this.$emit('update-value',this.name,item);
             }
         },
         created(){

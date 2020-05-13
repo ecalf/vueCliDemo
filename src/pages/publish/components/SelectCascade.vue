@@ -1,5 +1,6 @@
 <template>
-    <div class="menu-container">
+    <!-- data-count 直接绑定使用prop的 list 数据,防止父组件更新list数据组件不刷新-->
+    <div class="menu-container" v-bind:data-count="list.length">
         <Menu 
             v-for="i of this.deep"
             v-bind:has-split="i!=1" 
@@ -8,7 +9,7 @@
             v-bind:level="i"
             v-bind:list="menuData['list_'+i]" 
             v-show="menuData['list_'+i].length>0"
-            
+
             @update-value="updateValue" 
             />
 
@@ -39,41 +40,39 @@
         },
         data(){
             let obj = {
-                value:{},
+                value:[],//[level1,level2,level3]
                 menuData:{}
             };
 
             for(let i=1;i<=this.deep;i++){
                 obj.menuData['list_'+i] = [];
             }
-            obj.menuData.list_1 = this.list;
-
             return obj;
         },
         props:{
             list:Array,
-            deep:Number
+            deep:Number,
+            name:String
         },
         computed:{
 
         },
         methods:{
             updateValue(item,level){
-                if(level==1){
+                //展开子菜单
+                if(level<this.deep){
                     this.menuData['list_'+(level+1)] = item.child||[]
                 }
 
-
-                this.value['level_'+level] = item;
-                for(let i=level+1;i<=this.deep;i++){
-                    this.value['level_'+i] = null;
-                }
-
-                console.log('this.value>>>',this.value);
-                this.$emit('update-value',this.value);
+                //清除当前level之以上菜单选中的值
+                this.value = [].concat(this.value.slice(0,level-1),item);
+                this.$emit('update-value',this.name,this.value);
             }
 
-
+        },
+        created(){ },
+        updated(){
+            this.menuData.list_1 = this.list;
         }
     }
 

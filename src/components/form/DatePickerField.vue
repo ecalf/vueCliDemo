@@ -9,9 +9,11 @@
         >
 
       <el-date-picker
-        v-model="value1"
+        v-bind:editable="false"
+        v-model="value"
         type="date"
         placeholder="选择日期"
+        @change="pickDate"
        />
         
 
@@ -65,6 +67,7 @@ export default {
       },
       props:{
           required:Boolean,
+          name:String,
           label:String,
           width:String,
           height:String,
@@ -74,12 +77,12 @@ export default {
         return {
           pickerOptions: {
             disabledDate(time) {
-            return time.getTime() > Date.now();
+                return time.getTime() <= Date.now();
             },
             shortcuts: [{
               text: '今天',
               onClick(picker) {
-                picker.$emit('pick', new Date());
+                  picker.$emit('pick', new Date());
               }
             }, {
               text: '昨天',
@@ -97,12 +100,13 @@ export default {
               }
             }]
           },
-          value1: '',
-          value2: '',
+          value: '',
         };
     },
     methods:{
-
+      pickDate(date){
+        this.$emit('update-value',this.name,date)
+      }
     }
 
 };

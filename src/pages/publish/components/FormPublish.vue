@@ -9,7 +9,11 @@
                 -->
 
                 <div class="form-section">
-                    <SelectCascade v-bind:list="categoryList" v-bind:deep="2" @update-value="selected()" />
+                    <SelectCascade
+                        name="category"
+                        v-bind:list="categoryList"
+                        v-bind:deep="2"
+                        @update-value="updateValue" />
                 </div>
             </FormContainer>
 
@@ -24,9 +28,10 @@
 
                         type="text"
                         label="标题" 
-                        filed-name="title" 
+                        name="title" 
                         width="1020"
                         height="40"
+                        @update-value="updateValue"
                         />
                 </FormRow>
 
@@ -38,9 +43,10 @@
                         placeholder="最多输入100个字符"
                         defaultvalue=""
                         label="描述" 
-                        filed-name="content" 
+                        name="content" 
                         width="1020"
                         height="100"
+                        @update-value="updateValue"
                         />
                 </FormRow>
 
@@ -51,9 +57,10 @@
                         v-bind:prefix="true"
                         v-bind:list="dropList" 
                         label="品牌" 
-                        filed-name="brand" 
+                        name="brand" 
                         height="40"
                         width="200"
+                        @update-value="updateValue"
 
                         />
 
@@ -65,9 +72,10 @@
 
                         type="text"
                         label="其他品牌" 
-                        filed-name="otherBrand" 
+                        name="otherBrand" 
                         width="200"
                         height="40"
+                        @update-value="updateValue"
                         />
 
                     <InputField 
@@ -78,9 +86,10 @@
 
                         type="text"
                         label="出口国" 
-                        filed-name="cuntry" 
+                        name="cuntry" 
                         width="200"
                         height="40"
+                        @update-value="updateValue"
                         />
 
                 </FormRow>
@@ -94,9 +103,10 @@
 
                         type="text"
                         label="供应商价" 
-                        filed-name="originPrice" 
+                        name="originPrice" 
                         width="100"
                         height="40"
+                        @update-value="updateValue"
                         />
 
                     <InputField 
@@ -107,9 +117,10 @@
 
                         type="text"
                         label="市场价" 
-                        filed-name="realPrice" 
+                        name="marketPrice" 
                         width="100"
                         height="40"
+                        @update-value="updateValue"
                         />
 
                     <InputField 
@@ -120,9 +131,10 @@
 
                         type="text"
                         label="数量" 
-                        filed-name="quantity" 
+                        name="quantity" 
                         width="100"
                         height="40"
+                        @update-value="updateValue"
                         />
 
 
@@ -132,10 +144,10 @@
                         v-bind:prefix="false"
                         v-bind:list="unitList" 
                         label="单位" 
-                        filed-name="unit" 
+                        name="unit" 
                         height="40"
                         width="100"
-
+                        @update-value="updateValue"
                         />
 
 
@@ -145,9 +157,10 @@
                         v-bind:prefix="false"
                         v-bind:list="checkboxGroup"
                         label="用途" 
-                        filed-name="use" 
+                        name="use" 
                         height="40"
                         width="140"
+                        @update-value="updateValue"
                         />
 
                 </FormRow>
@@ -162,73 +175,88 @@
                         >
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification1"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification2"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification3"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification4"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification5"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification6"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification7"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
+                                    @update-value="updateValue"
 
                                 />
                             </div>
 
                             <div class="drop-list-wrap">
                                 <DropList
+                                    name="qualification8"
                                     v-bind:prefix="true"
                                     v-bind:list="zizhiList"
                                     width="110"
-
+                                    @update-value="updateValue"
                                 />
                             </div>
 
@@ -293,9 +321,10 @@
                         v-bind:prefix="false"
                         v-bind:list="serviceGroup"
                         label="截止日期" 
-                        filed-name="use" 
+                        name="deadtime" 
                         height="40"
                         width="230"
+                        @update-value="updateValue"
                         />
 
                 </FormRow>
@@ -309,9 +338,10 @@
                         v-bind:prefix="false"
                         v-bind:list="serviceGroup"
                         label="增值服务" 
-                        filed-name="use" 
+                        name="service" 
                         height="40"
                         width="230"
+                        @update-value="updateValue"
                         />
 
                     <span class="service-tip">*使用增值服务排名更靠前</span>
@@ -377,8 +407,6 @@ import SubmitBar from  "./SubmitBar";
 import {getQualification,getProductCategory,getBrandList} from "@api/commonApi";
 
 
-//测试数据
-//import categoryData from "../store/categoryData";
 
 function formatMenuData(listData){
     listData = listData.map(function(item){
@@ -415,6 +443,7 @@ export default {
     data(){
 
         return{
+            updatetime:Date.now(),
             brandList:[],
             categoryList:[],
             qualificationList:[],
@@ -447,9 +476,12 @@ export default {
         }
     },
     computed:{
-        
+
     },
     methods:{
+        updateValue(name,value){
+            console.log('selectedCategory>>>',name,value);
+        },
         async getQualification(){
             let res =  await getQualification();
 
@@ -471,7 +503,6 @@ export default {
 
             if(res.code==200){
                 this.categoryList = formatMenuData(res.data);
-
             }else{
                 this.$message({
                     showClose: true,

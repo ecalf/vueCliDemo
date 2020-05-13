@@ -1,5 +1,5 @@
 <template>
-    <div class="check-box clearfix" v-bind:class="{'checked': checked }" @click="onCheck($event)">
+    <div class="check-box clearfix" v-bind:class="{'checked': checked }" @click="oncheck($event)">
         <div class="icon"  v-bind:style="iconStyle"></div>
         <div class="text" v-bind:style="textStyle">{{text}}</div>
     </div>
@@ -70,6 +70,7 @@
     export default {
         components:{},
         props:{
+            name:String,
             value:String,
             text:String,
             defaultchecked:Boolean,
@@ -98,11 +99,15 @@
             }
         },
         methods:{
-            onCheck(e){
+            oncheck(e){
                 this.checked = !this.checked;
+                let value = {
+                    checked:this.checked,
+                    value:this.value,
+                    text:this.text
+                }
 
-                //this.$emit();
-
+                this.$emit('update-value',this.name,value);
             }
         },
         created(){

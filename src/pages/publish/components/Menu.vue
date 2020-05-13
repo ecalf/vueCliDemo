@@ -2,8 +2,8 @@
     <div class="menu-wrap">
         <div class="menu-split" v-show="hasSplit"></div>
         <ul class="menu" v-bind:style="menuStyle" v-show="list.length">
-            <li class="menu-item" v-for="item in list" v-bind:key="item.id" @click="selected($event,item)">
-                <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">
+            <li class="menu-item" v-for="item in list" v-bind:key="item.id" v-bind:class="{active:item.id==value}" @click="onselect($event,item)">
+                <span class="item-text" v-bind:style="menuItemStyle">
                     {{item.text}}
                 </span>
                 <span class="arrow-right" v-if="item.child&&item.child.length"></span>
@@ -52,6 +52,18 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom:20px;
+            &:hover{
+                .item-text{
+                    color:#44A78D;
+                }
+            }
+
+            &.active{
+                .item-text{
+                    color:#44A78D;
+                   font-weight: bold;
+                }
+            }
 
             .item-text{
                 display: inline-block;
@@ -64,15 +76,6 @@
                 flex: 1;
 
                 @include ol;
-
-                &:hover{
-                    color:#44A78D;
-                }
-
-                &.active{
-                    color:#44A78D;
-                    font-weight: bold;
-                }
             }
             .arrow-right{
                 margin-right:10px;
@@ -93,7 +96,7 @@
 export default {
     data(){
         return {
-            
+            value:''
         }
     },
     props:{
@@ -121,10 +124,12 @@ export default {
 
     },
     methods:{
-        selected(e,item){
+        onselect(e,item){
+            this.value=item.id;
             this.$emit('update-value',item,this.level);
         }
     }
+   
 }
 
 </script>

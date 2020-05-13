@@ -8,9 +8,10 @@
         v-bind:height="height"
         >
             <DropList
+                v-bind:name="name"
                 v-bind:prefix="true"
                 v-bind:list="list"
-
+                @update-value="onselect"
             />
 
     </FieldWrap>
@@ -37,6 +38,7 @@
             required:Boolean, //是否带必填标记
             defaultvalue:String,//默认值
             label:String, //标签名
+            name:String,
             width:String,//宽度
             height:String,//高度
             list:Array //下拉列表数据
@@ -49,10 +51,9 @@
         
 
         methods:{
-            onInput(){
-
+            onselect(name,value){
+                this.$emit('update-value',name,value);
             },
-            onChange(){},
 
         },
         created(){

@@ -11,7 +11,6 @@
         >
             <input 
                 class="input-text"
-                v-bind:name="filedName" 
                 v-bind:placeholder="placeholder"
                 v-bind:defaultvalue="defaultvalue" 
 
@@ -50,7 +49,7 @@
             defaultvalue:String,//默认值
 
             label:String, //标签名
-            filedName:String,//表单项名
+            name:String,//表单项名
             width:String,//宽度
             height:String//高度
         },
@@ -71,7 +70,9 @@
             onInput(){
 
             },
-            onChange(){},
+            onChange(){
+                this.$emit('update-value',this.name,this.value);
+            },
 
         },
         created(){

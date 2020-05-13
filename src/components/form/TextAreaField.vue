@@ -14,7 +14,6 @@
 
              <textarea
                 class="input-text"
-                v-bind:name="filedName" 
                 v-bind:placeholder="placeholder"
                 v-bind:defaultvalue="''" 
 
@@ -55,7 +54,7 @@
             defaultvalue:String,
 
             label:String,
-            filedName:String,
+            name:String,
             width:String,
             height:String
         },
@@ -85,7 +84,9 @@
             onInput(){
 
             },
-            onChange(){},
+            onChange(){
+                this.$emit('update-value',this.name,this.value);
+            },
 
         },
         created(){
