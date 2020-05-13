@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {getProfile} from "@api/userApi";
+import {getProfile} from "@api/user";
 import {delToken} from "@utils/common";
 
 export default {

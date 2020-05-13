@@ -1,11 +1,13 @@
 <template>
-    <FileUploadWrap>
-        <div class="upload-icon">
-            <span class="icon-img"></span>
-        </div>
-        <div class="upload-title">增加技术参数图片</div>
+    <FileUploadWrap v-bind:name="name" @after-upload="afterUpload">
+        <template v-slot:default="slotProps">
+            <div class="upload-icon" >
+                <span class="icon-img"></span>
+            </div>
+            <div class="upload-title">增加技术参数图片</div>
+            <p class="upload-url">test slotProps:{{slotProps.uploadedurl}}</p>
+        </template>
     </FileUploadWrap>
-
 </template>
 
 
@@ -37,6 +39,10 @@
             background:rgba(234,236,237,0.47);
         }
 
+        .upload-url{
+            display:none;
+        }
+
 </style>
 
 
@@ -48,14 +54,21 @@
             FileUploadWrap
         }, 
         props:{
+            name:String,
 
         },
         data(){
             return {}
         },
         methods:{
+            afterUpload(imgurl){    
+                console.log('fileuploadimage ',this.name,imgurl);
 
+                this.$emit('update-value',this.name,imgurl);
+
+            }
         }
+        
     }
 
 </script>

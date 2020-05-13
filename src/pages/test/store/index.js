@@ -1,6 +1,6 @@
 //import Vue from "vue";
 import Vuex from "vuex";
-import homeApi from "@src/api/homeApi";
+import home from "@src/api/home";
 import about from "./modules/about";
 //Vue.use(Vuex);
 
@@ -37,7 +37,7 @@ export default new Vuex.Store({
         //action.method(context,data) //context 具备与 store 对象相同的属性和方法，但不等同于 store
         async getNameList({commit}){
             //commit mutation,asycn codes allowed in action
-            let nameList = await homeApi.getNames({id:123456});
+            let nameList = await home.getNames({id:123456});
             console.log('async action getNameList>>>',nameList);
 
             commit('setNameList', nameList);

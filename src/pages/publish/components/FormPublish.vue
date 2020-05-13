@@ -276,7 +276,7 @@
                         height="150"
                         >
 
-                        <FileUploadImage title="增加技术参数图片" />
+                        <FileUploadImage title="增加技术参数图片" name="techImg" @update-value="updateValue"/>
                         <FileUploadImage title="上传产品图"/>
                         <FileUploadImage title="上传企业图"/>
                         <FileUploadImage title="其他"/>
@@ -307,7 +307,7 @@
                         height="400"
                         >
 
-                        <Editor />
+                        <Editor name="richDesc" defaultcontent="" @update-value="updateValue" />
                         
 
                     </FieldWrap>
@@ -404,7 +404,7 @@ import DatePickerField from  "@components/form/DatePickerField";
 import SelectCascade from "./SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
-import {getQualification,getProductCategory,getBrandList} from "@api/commonApi";
+import {getQualification,getProductCategory,getBrandList} from "@api/common";
 
 
 

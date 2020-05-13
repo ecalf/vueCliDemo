@@ -104,7 +104,7 @@
 
 <script>
 import {formatPrice} from "@utils/common";
-import {getCountrylist,getQualification,getProductCategory} from "@api/commonApi";
+import {getCountrylist,getQualification,getProductCategory} from "@api/common";
 
 
 export default {

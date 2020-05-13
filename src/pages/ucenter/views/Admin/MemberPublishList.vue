@@ -60,7 +60,7 @@
 <script>
     import OrderList from "@components/OrderList";
     import Pagination from "@components/Pagination";
-    import {getMyNeeds} from "@api/userApi";
+    import {getMyNeeds} from "@api/user";
 
 
 

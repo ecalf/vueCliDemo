@@ -38,7 +38,7 @@
 
 
 <script>
-    import {publish} from "@api/publishApi";
+    import {publish} from "@api/publish";
 
 
     export default {

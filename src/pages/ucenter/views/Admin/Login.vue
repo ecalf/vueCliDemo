@@ -138,7 +138,7 @@
 
 <script>
 import {routeTo} from "@utils/enhanceRouter";
-import { bindPhoneCode, submitLogin } from "@api/userApi";
+import { bindPhoneCode, submitLogin } from "@api/user";
 import { isInSite,setToken } from "@utils/common";
 
 
