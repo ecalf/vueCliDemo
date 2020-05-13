@@ -1,6 +1,6 @@
 <template>
     <div class="drop-wrap" v-bind:style="widthStyle">
-        <div class="drop-value" @click="trigger()" v-bind:data-value="value">
+        <div class="drop-value" @click="trigger()" v-bind:data-value="value" v-bind:data-defaulttext="defaulttext">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
                 <span class="drop-item-text" v-bind:style="widthStyle">{{text}}</span>
@@ -162,6 +162,13 @@
     
             listIconBg(iconUrl){
                 
+            },
+            defaultIndex(){
+                let n = this.defaultselected*1;
+                if(n>=this.list.length||!n){
+                    n = 0;
+                }
+                return n;
             }
         },
         filters: {
@@ -175,15 +182,17 @@
             trigger(){
                 this.showMenu = !this.showMenu;
             },
-            onselect(item){
+            renderValue(item){
                 this.selected = item;
                 this.text = item.text;
                 this.value = item.value;
                 this.icon = item.icon;
-
+            },
+            onselect(item){
                 this.trigger();
-                this.$emit('update-value',this.name,item);
+                this.renderValue(item);
             }
+
         },
         created(){
             if(!(this.list instanceof Array)){
@@ -194,13 +203,17 @@
             if(this.defaulttext){
                 this.text = this.defaulttext;
             }else if(this.list.length){
-                let n = this.defaultselected*1;
-                if(n>=this.list.length||!n){
-                    n = 0;
-                }
-                this.onselect(this.list[n]);
+                let item  = this.list[this.defaultIndex];
+                this.renderValue(item);
+                this.$emit('update-value',this.name,item);
             }
             
+        },
+        updated(){
+            console.log('todo:defaulttext unset, auto select index 0')
+            
+            let item  = this.list[this.defaultIndex];
+            this.$emit('update-value',this.name,item);
         }
 
     }

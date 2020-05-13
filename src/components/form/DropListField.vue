@@ -29,7 +29,7 @@
     import FieldWrap from  "./FieldWrap.vue";
     import DropList from  "./DropList.vue";
 
-
+    //todo: update 时未、设置 defaulttext 默认选中第一项
     export default {
         components:{
             FieldWrap,
