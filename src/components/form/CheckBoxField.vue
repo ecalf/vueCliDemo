@@ -10,9 +10,7 @@
 
         <CheckBox v-for="(item,i) in list" 
             v-bind:name="name"
-            v-bind:value="item.id+''" 
-            v-bind:text="item.text"  
-            v-bind:defaultchecked="!!item.checked"
+            v-bind:item="item"
             v-bind:addition="item.addition"
             @update-value="oncheck"
             />
@@ -51,14 +49,16 @@
         },
         methods:{
             oncheck(name,item){
+                console.log('checkGroup oncheck ',item,item.checked);
                 if(item.checked){
                     this.value.push(item);
                 }else{
                     this.value = this.value.filter((obj)=>{
-                        return obj.text!=item.text;
+                        return (obj.id!=obj.id)||(obj.text!=item.text);
                     });
                 }
 
+                console.log('checkGroup value ',this.value);
                 this.$emit('update-value',this.name,this.value);
             }
         }

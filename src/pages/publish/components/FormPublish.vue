@@ -58,7 +58,7 @@
                         label="品牌" 
                         name="brand" 
                         height="40"
-                        width="200"
+                        width="300"
                         defaulttext="请选择品牌"
                         @update-value="updateValue"
 
@@ -73,7 +73,7 @@
                         type="text"
                         label="其他品牌" 
                         name="otherBrand" 
-                        width="200"
+                        width="245"
                         height="40"
                         @update-value="updateValue"
                         />
@@ -87,7 +87,7 @@
                         type="text"
                         label="出口国" 
                         name="cuntry" 
-                        width="200"
+                        width="245"
                         height="40"
                         @update-value="updateValue"
                         />
@@ -145,7 +145,8 @@
                         label="单位" 
                         name="unit" 
                         height="40"
-                        width="100"
+                        width="130"
+                        defaulttext="请选择单位"
                         @update-value="updateValue"
                         />
 
@@ -402,19 +403,13 @@ export default {
                 {text:'吨',id:3},
             ],*/
             useGroup:[
-                {text:'医用',id:1,checked:true},
+                {text:'医用',id:1,checked:false},
                 {text:'民用',id:2}
             ],
             serviceGroup:[
                 {text:'加入VIP',id:1,addition:{style:{ color:'#44A78D' }}},
                 {text:'置顶',id:2},
                 {text:'加急',id:3}
-            ],
-            zizhiList:[
-                {text:'资质1',id:1,icon:"../../assets/images/inicon11.png"},
-                {text:'资质2',id:2,icon:"../../assets/images/inicon12.png"},
-                {text:'资质3',id:3,icon:"../../assets/images/inicon13.png"},
-                {text:'资质4',id:4,icon:"../../assets/images/inicon14.png"}
             ]
         }
     },

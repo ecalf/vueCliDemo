@@ -17,7 +17,7 @@
                 class="drop-menu-item"
                 @click="onselect(item)"
             >
-                <div class="drop-item-text">
+                <div class="drop-item-text" v-bind:title="item.text">
                     <span class="drop-item-icon" v-bind:style="item.icon|listIconBg" v-if="prefix"></span>
                     <span class="drop-item-text" v-bind:style="widthStyle">{{item.text}}</span>
                 </div>
@@ -54,7 +54,7 @@
     .drop-wrap{
         position: relative;
         display: inline-block;
-        width:auto;
+        width:100%;
         height:$dropHeight;
         border:1px solid #EAECED;
         @include default-radius;
@@ -95,6 +95,7 @@
                 height: 30px;
                 font-weight: 300;
                 border-bottom: 1px dotted $borderColor;
+                overflow: hidden;
                 &:last-child{
                     border:none;
                 }
@@ -129,8 +130,8 @@
         props:{
             prefix:Boolean,//选项带有前缀小图标
             list:Array,
-            defaultvalue:String,
             defaulttext:String,
+            defaultselected:Number,
             name:String,
             width:String,
             height:String //todo: 暂未控制高度
@@ -175,6 +176,7 @@
                 this.showMenu = !this.showMenu;
             },
             onselect(item){
+                this.selected = item;
                 this.text = item.text;
                 this.value = item.value;
                 this.icon = item.icon;
@@ -190,23 +192,16 @@
             }
 
             if(this.defaulttext){
-                this.value = this.defaultvalue;
                 this.text = this.defaulttext;
             }else if(this.list.length){
-                this.value=this.list[0].value;
-                this.text=this.list[0].text;
-                this.icon = this.list[0].icon;
-                console.log(this.name,this.list);
+                let n = this.defaultselected*1;
+                if(n>=this.list.length||!n){
+                    n = 0;
+                }
+                this.onselect(this.list[n]);
             }
-
-            console.log('created',this.name,this.list);
             
-        },
-        updated(){
-            console.log('updated',this.name,this.value,this.text,this.list);
         }
-        
-
 
     }
 

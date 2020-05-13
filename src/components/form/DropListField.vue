@@ -10,7 +10,7 @@
                 v-bind:name="name"
                 v-bind:prefix="prefix"
                 v-bind:list="list"
-                v-bind:defaultvalue="defaultvalue"
+                v-bind:defaultselected="defaultselected"
                 v-bind:defaulttext="defaulttext"
                 @update-value="onselect"
             />
@@ -38,8 +38,8 @@
         props:{
             prefix:Boolean,//是否带有前缀icon
             required:Boolean, //是否带必填标记
-            defaultvalue:String,//默认值
             defaulttext:String,//默认显示文字
+            defaultselected:Number,//默认选中第几项
             label:String, //标签名
             name:String,
             width:String,//宽度
@@ -58,9 +58,6 @@
                 this.$emit('update-value',name,value);
             },
 
-        },
-        created(){
-            this.value = this.defaultvalue;
         }
 
 

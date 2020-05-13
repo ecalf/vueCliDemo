@@ -1,7 +1,10 @@
 <template>
-    <div class="check-box clearfix" v-bind:class="{'checked': checked }" @click="oncheck($event)">
+    <div class="check-box clearfix"
+         v-bind:class="{'checked': checked }"
+         data-value="item.id" 
+         @click="oncheck()">
         <div class="icon"  v-bind:style="iconStyle"></div>
-        <div class="text" v-bind:style="textStyle">{{text}}</div>
+        <div class="text" v-bind:style="textStyle">{{item.text}}</div>
     </div>
 </template>
 
@@ -71,10 +74,8 @@
         components:{},
         props:{
             name:String,
-            value:String,
-            text:String,
-            defaultchecked:Boolean,
-            addition:Object
+            item:Object,//配置项对象
+            addition:Object //预留特殊处理
         },
         data(){
             return {
@@ -88,7 +89,6 @@
                     styleMap['color'] = this.addition.style.color;
                 }
                 return styleMap;
-                
             },
             iconStyle(){
                 let styleMap = {};
@@ -99,19 +99,20 @@
             }
         },
         methods:{
-            oncheck(e){
+            oncheck(){
                 this.checked = !this.checked;
-                let value = {
-                    checked:this.checked,
-                    value:this.value,
-                    text:this.text
-                }
-
-                this.$emit('update-value',this.name,value);
+                //this.$emit('update-value',this.name,{...this.item,checked:this.checked});
             }
         },
         created(){
-            this.checked = this.defaultchecked;
+            this.checked = !!this.item.checked;
+            console.log('check-box created',this.item,this.checked);
+            this.$emit('update-value',this.name,{...this.item,checked:this.checked});
+        },
+        updated(){
+            console.log('check-box updated',this.item,this.checked);
+            this.$emit('update-value',this.name,{...this.item,checked:this.checked});
+            
         }
         
 
