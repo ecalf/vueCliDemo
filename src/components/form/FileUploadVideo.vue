@@ -1,10 +1,22 @@
 <template>
     <div class="upload-container">
-        <FileUploadWrap>
-            <div class="upload-icon">
-                <span class="icon-img"></span>
-            </div>
-            <div class="upload-title">上传视频</div>
+        <FileUploadWrap @after-upload="afterUpload">
+            <template v-slot:default="slotProps">
+                <div class="upload-handler" v-show="!value">
+                    <div class="upload-icon" >
+                        <span class="icon-img"></span>
+                    </div>
+                  
+                    <div class="upload-title">{{title}}</div>
+                    <p class="upload-url">test slotProps:{{slotProps.uploadedurl}}</p>
+                </div>
+                <div class="upload-handler upload-showing" v-show="value">
+                    <div class="upload-icon">
+                        <video class="file-show" v-bind:src="value" controls="controls" @click.stop="play($event)" />
+                    </div>
+                    <div class="upload-title">{{title}}</div>
+                </div>
+            </template>
         </FileUploadWrap>
 
         <div class="upload-desc">
@@ -22,7 +34,18 @@
         align-items: center;
         justify-content: flex-start;
 
+        .upload-handler{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+        }
+
+
+
         .upload-icon{
+            position: relative;
             flex:1;
             display: flex;
             align-items: flex-end;
@@ -37,6 +60,24 @@
                 opacity: 0.47;
 
             }
+
+            .file-show{
+                position: absolute;
+                top:0;
+                max-width:144px;
+                max-height: 122px;
+                z-index:9;
+            }
+        }
+
+        .upload-showing{
+            .upload-icon{
+                margin-bottom: 0;
+            }
+            .upload-title{
+                height:26px;
+                line-height: 26px;
+            }
         }
 
         .upload-title{
@@ -46,6 +87,11 @@
             font-size: 12px;
             line-height: 20px;
             color:$fontColor;
+        }
+        
+
+        .upload-url{
+            display:none;
         }
 
         .upload-desc{
@@ -69,13 +115,24 @@
             FileUploadWrap
         }, 
         props:{
-
+            name:String,
+            title:String
         },
         data(){
-            return {}
+            return {
+                value:'https://www.w3school.com.cn/i/movie.ogg'
+            }
         },
         methods:{
+            play(e){
+                e.stopPropagation();
+                return false;
+            },
+            afterUpload(url){    
+                this.value = url;
+                this.$emit('update-value',this.name,url);
 
+            }
         }
     }
 

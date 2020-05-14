@@ -79,6 +79,7 @@
         },
         data(){
             return {
+                value:this.item,
                 checked:false
             };
         },
@@ -98,21 +99,18 @@
                 return styleMap;
             }
         },
+
         methods:{
             oncheck(){
                 this.checked = !this.checked;
-                //this.$emit('update-value',this.name,{...this.item,checked:this.checked});
+                this.value = {...this.item,checked:this.checked};
+                this.$emit('update-value',this.name,this.value);
             }
         },
         created(){
             this.checked = !!this.item.checked;
-            console.log('check-box created',this.item,this.checked);
+            console.log('check-box created,update-value default ',this.item,this.checked);
             this.$emit('update-value',this.name,{...this.item,checked:this.checked});
-        },
-        updated(){
-            console.log('check-box updated',this.item,this.checked);
-            this.$emit('update-value',this.name,{...this.item,checked:this.checked});
-            
         }
         
 

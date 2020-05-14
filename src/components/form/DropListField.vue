@@ -41,7 +41,7 @@
             defaulttext:String,//默认显示文字
             defaultselected:Number,//默认选中第几项
             label:String, //标签名
-            name:String,
+            name:String, //名称，用于表单field
             width:String,//宽度
             height:String,//高度
             list:Array //下拉列表数据

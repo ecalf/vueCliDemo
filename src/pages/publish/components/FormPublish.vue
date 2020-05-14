@@ -202,14 +202,14 @@
                         >
 
                         <FileUploadImage title="增加技术参数图片" name="techImg" @update-value="updateValue"/>
-                        <FileUploadImage title="上传产品图"/>
-                        <FileUploadImage title="上传企业图"/>
-                        <FileUploadImage title="其他"/>
+                        <FileUploadImage title="上传产品图" name="productImg" @update-value="updateValue"/>
+                        <FileUploadImage title="上传企业图" name="companyImg" @update-value="updateValue"/>
+                        <FileUploadImage title="其他" name="otherImg" @update-value="updateValue"/>
 
                     </FieldWrap>
                 </FormRow>  
 
-               <!--
+         
                 <FormRow>
                     <FieldWrap 
                         type="fileUploadGroup" 
@@ -218,12 +218,12 @@
                         height="150"
                         >
 
-                        <FileUploadVideo title="选择视频" />
+                        <FileUploadVideo title="选择视频" name="video" @update-value="updateValue" />
                         
 
                     </FieldWrap>
                 </FormRow> 
-            -->
+      
 
 
                 <FormRow>
@@ -403,7 +403,7 @@ export default {
                 {text:'吨',id:3},
             ],*/
             useGroup:[
-                {text:'医用',id:1,checked:false},
+                {text:'医用',id:1,checked:true},
                 {text:'民用',id:2}
             ],
             serviceGroup:[
@@ -416,11 +416,7 @@ export default {
     computed:{
 
     },
-    watch:{
-        params(newParams,oldParams){
-            console.log('params change:',newParams,oldParams);
-        }
-    },
+
     methods:{
         updateValue(name,value){
             console.log('form updateValue>>>',name,value);

@@ -1,7 +1,7 @@
 
 <template>
     <div class="upload-wrap" @click="openFold()">
-        <slot name="default" v-bind:uploadedurl="uploadedurl"/>
+        <slot name="default" v-bind:uploadedurl="value"/>
         <input type="file" ref="uploadField" class="upload-field" @change="handleFiles($event)">
     </div>
 </template>
@@ -46,7 +46,7 @@
             return {
                 defaultMaxSize:1024*2,//单位KB
                 defaultTypes:['image/png','image/jpeg'],
-                uploadedurl:'' //上传后的图片路劲
+                value:'' //上传后的图片路劲
             }
         },
         methods:{
@@ -117,7 +117,7 @@
 
                     this.$message({
                         showClose: true,
-                        message: "图片上传成功",
+                        message: "文件上传成功",
                         type: "success"
                     });
                 }else{
@@ -126,7 +126,7 @@
 
             },
             afterUpload(uploadedurl){
-                this.uploadedurl = uploadedurl;
+                this.value = uploadedurl;
                 this.$emit('after-upload',uploadedurl);
             }
         }

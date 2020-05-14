@@ -1,11 +1,11 @@
 <template>
     <FileUploadWrap @after-upload="afterUpload">
         <template v-slot:default="slotProps">
-            <div class="upload-icon" v-show="!imgurl">
+            <div class="upload-icon" v-show="!value">
                 <span class="icon-img"></span>
             </div>
-            <div class="upload-icon" v-show="imgurl">
-                <img class="img-show" v-bind:src="imgurl" />
+            <div class="upload-icon" v-show="value">
+                <img class="file-show" v-bind:src="value" />
             </div>
             <div class="upload-title">{{title}}</div>
             <p class="upload-url">test slotProps:{{slotProps.uploadedurl}}</p>
@@ -30,7 +30,7 @@
                 opacity: 0.47;
             }
 
-            .img-show{
+            .file-show{
                 max-width:144px;
                 max-height: 122px;
                 z-index:9;
@@ -71,12 +71,12 @@
         },
         data(){
             return {
-                imgurl:''
+                value:''
             }
         },
         methods:{
             afterUpload(imgurl){    
-                this.imgurl = imgurl;
+                this.value = imgurl;
                 this.$emit('update-value',this.name,imgurl);
 
             }

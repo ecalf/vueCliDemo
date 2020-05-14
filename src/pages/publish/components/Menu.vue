@@ -125,7 +125,7 @@ export default {
     },
     methods:{
         onselect(e,item){
-            this.value=item.id;
+            this.value=item;
             this.$emit('update-value',item,this.level);
         }
     }

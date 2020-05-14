@@ -130,16 +130,15 @@
         props:{
             prefix:Boolean,//选项带有前缀小图标
             list:Array,
-            defaulttext:String,
-            defaultselected:Number,
+            defaulttext:String, //组件初始化默认显示的文本
+            defaultselected:Number,//默认选中第几项，优先于defaulttext
             name:String,
             width:String,
-            height:String //todo: 暂未控制高度
-
+            height:String 
         },
         data(){
             return {
-                value:'',
+                value:'',//选中的项,暂时只处理单选
                 text:'',
                 icon:'',
                 showMenu:false
@@ -159,14 +158,11 @@
                     'background-image':'url('+this.icon+')'
                 }
             },
-    
-            listIconBg(iconUrl){
-                
-            },
+
             defaultIndex(){
-                let n = this.defaultselected*1;
-                if(n>=this.list.length||!n){
-                    n = 0;
+                let n = this.defaultselected*1>>0;
+                if(n>=this.list.length){
+                    n = this.list.length-1;
                 }
                 return n;
             }
@@ -179,20 +175,19 @@
           }
         },
         methods:{
-            trigger(){
+            trigger(frag){
                 this.showMenu = !this.showMenu;
-            },
-            renderValue(item){
-                this.selected = item;
-                this.text = item.text;
-                this.value = item.value;
-                this.icon = item.icon;
             },
             onselect(item){
                 this.trigger();
                 this.renderValue(item);
+            },
+            renderValue(item){
+                this.value = item;
+                this.text = item.text;
+                this.icon = item.icon;
+                this.$emit('update-value',this.name,item);
             }
-
         },
         created(){
             if(!(this.list instanceof Array)){
@@ -205,15 +200,16 @@
             }else if(this.list.length){
                 let item  = this.list[this.defaultIndex];
                 this.renderValue(item);
-                this.$emit('update-value',this.name,item);
             }
-            
         },
         updated(){
-            console.log('todo:defaulttext unset, auto select index 0')
-            
-            let item  = this.list[this.defaultIndex];
-            this.$emit('update-value',this.name,item);
+            if(!this.defaulttext&&!this.selected&&this.list.length){
+                //用于组件初始化没数据，更新列表数据时默认选中的情况
+                console.log('updated renderValue');
+                let item  = this.list[this.defaultIndex];
+                this.renderValue(item);
+
+            }
         }
 
     }

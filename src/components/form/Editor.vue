@@ -1,5 +1,5 @@
 <template>
-    <vue-neditor-wrap v-model="content" v-bind:config="myConfig" v-bind:destroy="false" />
+    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" />
 
 </template>
 
@@ -34,7 +34,7 @@
 
 
             return {
-                content: this.defaultcontent||'',
+                value: this.defaultcontent||'',
                 myConfig: {
                     //语言包
                     lang:lang,
@@ -165,7 +165,7 @@
             }
         },
         watch:{
-            content(newContent,oldContent){
+            value(newContent,oldContent){
                 this.$emit('update-value',this.name,newContent);
             }
         },

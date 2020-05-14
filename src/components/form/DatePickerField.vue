@@ -75,6 +75,7 @@ export default {
       },
       data() {
         return {
+          value:'',
           pickerOptions: {
             disabledDate(time) {
                 return time.getTime() <= Date.now();
@@ -105,6 +106,7 @@ export default {
     },
     methods:{
       pickDate(date){
+        this.value = date;
         this.$emit('update-value',this.name,date)
       }
     }
