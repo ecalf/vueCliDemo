@@ -1,7 +1,7 @@
 <template>
     <section class="commonweb">
         <Banner v-bind:list="bannerList" />
-        <FormPublish type="购买" />
+        <FormPublish v-bind:type="3" />
     </section>
 </template>
 

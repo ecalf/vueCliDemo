@@ -8,7 +8,9 @@
         v-bind:height="height"
         >
 
-        <CheckBox v-for="(item,i) in list" 
+        <CheckBoxRadio v-for="(item,i) in list" 
+            ref="childItem"
+            type="radio"
             v-bind:name="name"
             v-bind:item="item"
             v-bind:addition="item.addition"
@@ -27,12 +29,12 @@
 
 <script>
     import FieldWrap from  "./FieldWrap.vue";
-    import CheckBox from  "./CheckBox.vue";
+    import CheckBoxRadio from  "./CheckBoxRadio.vue";
 
     export default {
         components:{
             FieldWrap,
-            CheckBox
+            CheckBoxRadio
         },
         props:{
             required:Boolean,
@@ -44,21 +46,29 @@
         },
         data(){
             return {
-                value:[]
+                value:''
             }
         },
+
         methods:{
-            oncheck(name,item){
-                console.log('checkGroup oncheck ',item,item.checked);
-                if(item.checked){
-                    this.value.push(item);
-                }else{
-                    this.value = this.value.filter((obj)=>{
-                        return (obj.id!=obj.id)||(obj.text!=item.text);
+            updateCheckStatus(item){//取消其他选项的选中状态
+                console.log(this.$refs);
+                if(this.$refs.childItem&&this.$refs.childItem.length){
+                    this.$refs.childItem.forEach((com)=>{
+                        com.triggerCheckStatus(com.value.id==item.id?item.checked:!item.checked);
                     });
                 }
+            },
+            oncheck(name,item){
+                this.updateCheckStatus(item);
 
-                console.log('checkGroup value ',this.value);
+                if(item.checked){
+                    this.value = item;
+                }else{
+                    this.value = '';
+                }
+
+                console.log('radioGroup oncheck ',item,item.checked,this.value);
                 this.$emit('update-value',this.name,this.value);
             }
         }

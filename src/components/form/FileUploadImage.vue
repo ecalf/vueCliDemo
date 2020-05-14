@@ -4,7 +4,7 @@
             <div class="upload-icon" v-show="!value">
                 <span class="icon-img"></span>
             </div>
-            <div class="upload-icon" v-show="value">
+            <div class="upload-icon upload-icon-showing" v-show="value">
                 <img class="file-show" v-bind:src="value" />
             </div>
             <div class="upload-title">{{title}}</div>
@@ -34,6 +34,10 @@
                 max-width:144px;
                 max-height: 122px;
                 z-index:9;
+            }
+
+            &.upload-icon-showing{
+                align-items: flex-start;
             }
             
         }

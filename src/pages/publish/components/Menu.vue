@@ -2,7 +2,7 @@
     <div class="menu-wrap">
         <div class="menu-split" v-show="hasSplit"></div>
         <ul class="menu" v-bind:style="menuStyle" v-show="list.length">
-            <li class="menu-item" v-for="item in list" v-bind:key="item.id" v-bind:class="{active:item.id==value}" @click="onselect($event,item)">
+            <li class="menu-item" v-for="item in list" v-bind:key="item.id" v-bind:class="{active:item.id==value.id}" @click="onselect($event,item)">
                 <span class="item-text" v-bind:style="menuItemStyle">
                     {{item.text}}
                 </span>

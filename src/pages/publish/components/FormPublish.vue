@@ -4,7 +4,7 @@
             <FormContainer  title="品类" v-bind:baseline="false">
                 <!--
                 <div class="form-section">
-                    <SearchBar width="690" />
+                    <SearchBar name="search" width="690" @update-value="updateValue" />
                 </div>
                 -->
 
@@ -15,9 +15,28 @@
                         v-bind:deep="2"
                         @update-value="updateValue" />
                 </div>
+                <div class="form-section category-show">
+                    <template v-for="(item,i) of fieldData.category">
+                        <span >{{ item.text }}</span>
+                        <i class="arrow-right" v-show="i<fieldData.category.length-1"></i>
+                    </template>
+                </div>
             </FormContainer>
 
             <FormContainer  title="发布信息" v-bind:baseline="true">
+                
+                <FormRow v-if="type==3">
+                    <RadioGroupField
+                        v-bind:required="true" 
+                        v-bind:list="entrustGroup"
+                        label="委托目的" 
+                        name="entrustType" 
+                        height="40"
+                        width="140"
+                        @update-value="updateValue"
+                        />
+                </FormRow>
+
                 <FormRow>
                     <InputField 
                         v-bind:required="true" 
@@ -35,6 +54,9 @@
                         />
                 </FormRow>
 
+                
+
+
                 <FormRow>
                     <TextAreaField 
                         v-bind:required="true" 
@@ -43,7 +65,7 @@
                         placeholder="最多输入100个字符"
                         defaultvalue=""
                         label="描述" 
-                        name="content" 
+                        name="desc" 
                         width="1020"
                         height="100"
                         @update-value="updateValue"
@@ -79,14 +101,14 @@
                         />
 
                     <InputField 
-                        v-bind:required="true" 
+                        v-bind:required="false" 
                         v-bind:suffix="false"
                         placeholder=""
                         defaultvalue=""
 
                         type="text"
                         label="出口国" 
-                        name="cuntry" 
+                        name="country" 
                         width="245"
                         height="40"
                         @update-value="updateValue"
@@ -96,6 +118,7 @@
 
                 <FormRow>
                     <InputField 
+                        v-if="type==2" 
                         v-bind:required="true" 
                         v-bind:suffix="false"
                         placeholder=""
@@ -103,7 +126,7 @@
 
                         type="text"
                         label="供应商价" 
-                        name="originPrice" 
+                        name="supplierPrice" 
                         width="100"
                         height="40"
                         @update-value="updateValue"
@@ -117,7 +140,7 @@
 
                         type="text"
                         label="市场价" 
-                        name="marketPrice" 
+                        name="price" 
                         width="100"
                         height="40"
                         @update-value="updateValue"
@@ -151,13 +174,11 @@
                         />
 
 
-                    <CheckBoxField
-                        v-bind:required="false" 
-                        v-bind:suffix="false"
-                        v-bind:prefix="false"
+                    <CheckBoxGroupField
+                        v-bind:required="true" 
                         v-bind:list="useGroup"
                         label="用途" 
-                        name="use" 
+                        name="usage" 
                         height="40"
                         width="140"
                         @update-value="updateValue"
@@ -167,27 +188,16 @@
 
 
                 <FormRow>
-                    <FieldWrap 
-                        type="dropListGroup" 
-                        v-bind:label="'资质要求'"
+                    <DropListGroup 
                         v-bind:required="false" 
+                        v-bind:prefix="true"
+                        v-bind:list="qualificationList"
+                        label="资质要求"
+                        name="qualification" 
                         height="40"
-                        >
-                            <div v-for="(item,index) of qualificationList" v-bind:key="index" class="drop-list-wrap">
-                                <DropList
-                                    v-bind:name="'qualification_'+index"
-                                    v-bind:prefix="true"
-                                    v-bind:list="item.child||[]"
-                                    v-bind:defaulttext="item.text"
-                                    
-                                    @update-value="updateValue"
-
-                                />
-                            </div>
-
-                    </FieldWrap>
-
-
+                        @update-value="updateValue"
+                        />
+ 
                 </FormRow>
 
             </FormContainer>
@@ -259,10 +269,8 @@
 
                 <FormRow>
 
-                    <CheckBoxField
+                    <CheckBoxGroupField
                         v-bind:required="false" 
-                        v-bind:suffix="false"
-                        v-bind:prefix="false"
                         v-bind:list="serviceGroup"
                         label="增值服务" 
                         name="service" 
@@ -281,7 +289,7 @@
             </FormContainer>
         </section>
 
-        <SubmitBar text="立即发布" />
+        <SubmitBar text="立即发布" @on-submit="publish" />
     </section>
 
     
@@ -299,11 +307,27 @@
         margin-top:20px;
     }
 
+    .category-show{
+        align-items: center;
+        margin-left:115px;
+        font-size: 16px;
+        font-weight: bold;
+        height: 26px;
+        line-height: 26px;
+        color:$green;
 
-    .drop-list-wrap{
-        display:inline-block;
-        height: 40px;
+        .arrow-right{
+            margin:0 5px;
+            display: inline-block;
+            width:10px;
+            height:10px;
+            background-image: url(~@assets/images/icon/arrow-right.png);
+        }
+
     }
+
+    
+
 
     .service-tip{
         font-size: 12px;
@@ -321,9 +345,10 @@ import FormRow from "@components/form/FormRow";
 import FieldWrap from "@components/form/FieldWrap";
 import InputField from "@components/form/InputField";
 import TextAreaField from "@components/form/TextAreaField";
+import CheckBoxGroupField from "@components/form/CheckBoxGroupField";
+import RadioGroupField from "@components/form/RadioGroupField";
 import DropListField from "@components/form/DropListField";
-import CheckBoxField from "@components/form/CheckBoxField";
-import DropList from  "@components/form/DropList";
+import DropListGroup from "@components/form/DropListGroup";
 import FileUploadImage from  "@components/form/FileUploadImage";
 import FileUploadVideo from  "@components/form/FileUploadVideo";
 import Editor from  "@components/form/Editor";
@@ -331,6 +356,7 @@ import DatePickerField from  "@components/form/DatePickerField";
 import SelectCascade from "./SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
+import {publish} from "@api/publish";
 import {
     getQualification,
     getProductCategory,
@@ -373,18 +399,47 @@ export default {
         FieldWrap,
         InputField,
         TextAreaField,
+        CheckBoxGroupField,
+        RadioGroupField,
         DropListField,
-        CheckBoxField,
-        DropList,
+        DropListGroup,
         FileUploadImage,
         FileUploadVideo,
         Editor,
         DatePickerField
     },
+    props:{
+        //1 发布采购, 2 发布销售, 3 委托销售, 4 委托采购 
+        //此处值传入 1\2\3，委托类型在表单选择
+        type:Number 
+    },
     data(){
 
         return{
-            params:{},
+            fieldData:{
+                category:'', //产品类别
+                entrustType:'',//委托类型,仅委托表单可用
+                title:'',//标题
+                desc:'',//描述
+                brand:'',//品牌选择
+                otherBrand:'',//其他品牌,非必选
+                country:'',//出口国,非必填
+                supplierPrice:'',//供应商价格,仅发布销售可用
+                price:'',//市场价
+                quantity:'',//数量
+                unit:'',//单位
+                usage:'',//用途
+                qualification:'',//认证
+                techImg:'',//上传图片-技术
+                productImg:'',//上传图片-产品
+                companyImg:'',//上传图片-企业
+                otherImg:'',//上传图片-其他
+                video:'',//上传视频
+                richDesc:'',//富文本描述
+                deadtime:'',//截止时间
+                service:''//增值服务
+            },
+
             brandList:[],
             categoryList:[],
             qualificationList:[],
@@ -402,6 +457,10 @@ export default {
                 {text:'箱',id:2},
                 {text:'吨',id:3},
             ],*/
+            entrustGroup:[
+                {text:'销售',id:1,checked:true},
+                {text:'采购',id:2}
+            ],
             useGroup:[
                 {text:'医用',id:1,checked:true},
                 {text:'民用',id:2}
@@ -418,10 +477,50 @@ export default {
     },
 
     methods:{
+        checkedForm(){
+            this.$message({
+                showClose: true,
+                message: '表单未填写完毕',
+                type: "error"
+            });
+
+            return false;
+        },
+        async publish(){
+            const params = {
+                type:this.type,//发布类型 required, 1 发布采购 2 发布销售 3 委托销售 4 委托采购  
+
+                title:'',//''标题 required
+                desc:'', //描述 required
+                cate_id:0,//品类id required 
+                images:'',// 图片 required
+                info:'',// 详情 required  
+                use_way:0,//用途 1 医用 2 民用 required
+                exit_country:'',//出口国家 销售可出口国/采购进口国
+                qualification:'',//资质 ids required
+                dead_time:'',//截止日期 年-月-日 required
+                service_id:'',//增值服务 ids  
+
+                brand_id:0, //品牌id required
+                other_brand:'',//其他品牌 
+                price:0,//市场价格 required 发布采购/委托采购/委托销售/发布销售市场价
+                supplier_price:0,//发布销售：供应商价
+                num:0,// 数量 required
+                unit_cate_id:0//单位id  required
+            }
+
+            console.log(this.fieldData);
+
+            if(!this.checkedForm()){ return false; }
+
+            const res = await publish({data:params});
+            console.log('publish res ',res);
+
+        },
         updateValue(name,value){
             console.log('form updateValue>>>',name,value);
 
-            this.params[name] = value;
+            this.fieldData[name] = value;
 
         },
         async getQualification(){

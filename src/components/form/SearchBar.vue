@@ -1,7 +1,7 @@
 <template>
    <div class="search-wrap" v-bind:style="mapStyle">
-       <input type="text" name="search-field" class="search-field" placeholder="类目搜索可直接输入产品名称" />
-       <button class="search-button">搜索</button>
+       <input v-model="value" type="text" name="search-field" class="search-field" placeholder="类目搜索可直接输入产品名称" />
+       <button class="search-button" @click="search($event)">搜索</button>
    </div>
 </template>
 
@@ -43,8 +43,12 @@
 <script>
 export default {
     components:{},
+    props:{
+        name:String
+    },
     data(){
         return {
+            value:'',
             defaultWidth:690,
             mapStyle:{
                 width:(this.width||this.defaultWidth)+'px'
@@ -58,7 +62,13 @@ export default {
 
     },
     methods:{
+        search(e){
+            console.log('search keyword ',this.value);
 
+            //test,如果不在本空间显示搜索结果时约定以事件 update-value 传参...
+            let result = [];
+            this.$emit('update-value',this.name,{keyword:value,result:result});
+        }
     }
 
 }
