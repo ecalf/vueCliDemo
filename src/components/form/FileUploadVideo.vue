@@ -68,6 +68,8 @@
                 max-height: 122px;
                 z-index:9;
             }
+
+
         }
 
         .upload-showing{

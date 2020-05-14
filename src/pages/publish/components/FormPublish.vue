@@ -24,7 +24,7 @@
             </FormContainer>
 
             <FormContainer  title="发布信息" v-bind:baseline="true">
-                
+
                 <FormRow v-if="type==3">
                     <RadioGroupField
                         v-bind:required="true" 
@@ -220,6 +220,7 @@
                 </FormRow>  
 
          
+               <!--
                 <FormRow>
                     <FieldWrap 
                         type="fileUploadGroup" 
@@ -233,6 +234,7 @@
 
                     </FieldWrap>
                 </FormRow> 
+                -->
       
 
 
@@ -364,7 +366,7 @@ import {
     getUnitList
 } from "@api/common";
 
-
+import { dateTimeFormat } from '@utils/common';
 
 function formatListData(listData){
     if(!(listData instanceof Array)){
@@ -413,9 +415,45 @@ export default {
         //此处值传入 1\2\3，委托类型在表单选择
         type:Number 
     },
-    data(){
 
+    data(){
         return{
+            //组件初始化数据
+            brandList:[],
+            categoryList:[],
+            qualificationList:[],
+            unitList:[],
+
+
+           /* //test data
+            dropList:[//todo:fetch list data
+                {text:'认证1',id:1,icon:"../../assets/images/inicon11.png"},
+                {text:'认证2',id:2,icon:"../../assets/images/inicon12.png"},
+                {text:'认证3',id:3,icon:"../../assets/images/inicon13.png"}
+            ],
+            */
+
+           /* unitList:[
+                {text:'个',id:1},
+                {text:'箱',id:2},
+                {text:'吨',id:3},
+            ],*/
+            entrustGroup:[
+                //3 委托销售 4 委托采购
+                {text:'销售',id:3,checked:true},
+                {text:'采购',id:4}
+            ],
+            useGroup:[
+                {text:'医用',id:1,checked:true},
+                {text:'民用',id:2}
+            ],
+            serviceGroup:[
+                {text:'加入VIP',id:1,addition:{style:{ color:'#44A78D' }}},
+                {text:'置顶',id:2},
+                {text:'加急',id:3}
+            ],
+
+            //表单值
             fieldData:{
                 category:'', //产品类别
                 entrustType:'',//委托类型,仅委托表单可用
@@ -437,92 +475,225 @@ export default {
                 video:'',//上传视频
                 richDesc:'',//富文本描述
                 deadtime:'',//截止时间
-                service:''//增值服务
-            },
-
-            brandList:[],
-            categoryList:[],
-            qualificationList:[],
-            unitList:[],
-
-
-            //test data
-            dropList:[//todo:fetch list data
-                {text:'认证1',id:1,icon:"../../assets/images/inicon11.png"},
-                {text:'认证2',id:2,icon:"../../assets/images/inicon12.png"},
-                {text:'认证3',id:3,icon:"../../assets/images/inicon13.png"}
-            ],
-           /* unitList:[
-                {text:'个',id:1},
-                {text:'箱',id:2},
-                {text:'吨',id:3},
-            ],*/
-            entrustGroup:[
-                {text:'销售',id:1,checked:true},
-                {text:'采购',id:2}
-            ],
-            useGroup:[
-                {text:'医用',id:1,checked:true},
-                {text:'民用',id:2}
-            ],
-            serviceGroup:[
-                {text:'加入VIP',id:1,addition:{style:{ color:'#44A78D' }}},
-                {text:'置顶',id:2},
-                {text:'加急',id:3}
-            ]
+                service:''//增值服务,非必须选
+            }
         }
     },
-    computed:{
-
-    },
-
+    
     methods:{
-        checkedForm(){
-            this.$message({
-                showClose: true,
-                message: '表单未填写完毕',
-                type: "error"
-            });
-
-            return false;
-        },
-        async publish(){
-            const params = {
-                type:this.type,//发布类型 required, 1 发布采购 2 发布销售 3 委托销售 4 委托采购  
-
-                title:'',//''标题 required
-                desc:'', //描述 required
-                cate_id:0,//品类id required 
-                images:'',// 图片 required
-                info:'',// 详情 required  
-                use_way:0,//用途 1 医用 2 民用 required
-                exit_country:'',//出口国家 销售可出口国/采购进口国
-                qualification:'',//资质 ids required
-                dead_time:'',//截止日期 年-月-日 required
-                service_id:'',//增值服务 ids  
-
-                brand_id:0, //品牌id required
-                other_brand:'',//其他品牌 
-                price:0,//市场价格 required 发布采购/委托采购/委托销售/发布销售市场价
-                supplier_price:0,//发布销售：供应商价
-                num:0,// 数量 required
-                unit_cate_id:0//单位id  required
-            }
-
-            console.log(this.fieldData);
-
-            if(!this.checkedForm()){ return false; }
-
-            const res = await publish({data:params});
-            console.log('publish res ',res);
-
-        },
         updateValue(name,value){
             console.log('form updateValue>>>',name,value);
 
             this.fieldData[name] = value;
 
         },
+        checkedForm(){
+            let errMsg = '';
+            let fieldData = this.fieldData;
+
+            console.log('checkedForm fieldData ',fieldData);
+
+            const params = {};
+            const paramsConfig = {
+                type:{
+                    label:'发布类型',
+                    remark:'发布类型 required, 1 发布采购 2 发布销售 3 委托销售 4 委托采购  ',
+                    required:true,
+                    type:Number,
+                    value(){
+                        return fieldData.entrustType?fieldData.entrustType.id:this.type
+                    }    
+                },
+                cate_id:{
+                    label:'品类',
+                    remark:'品类id',
+                    required:true,
+                    type:Number,
+                    value(){
+                        return fieldData.category[fieldData.category.length-1].id;
+                    }
+                },
+                title:{
+                    label:'标题',
+                    remark:'标题,String',
+                    required:true,
+                    type:String,
+                    value:fieldData.title
+                },
+                desc:{
+                    label:'描述',
+                    remark:'描述',
+                    required:true,
+                    type:String,
+                    value:fieldData.desc
+                },
+                
+                
+                use_way:{
+                    label:'用途',
+                    remark:"用途id， 1 医用 2 民用,选中多个id用逗号隔开",
+                    required:true,
+                    type:String,
+                    value(){
+                        return fieldData.usage.map((item)=>{
+                            return item.id;
+                        }).join();
+                    }
+                },
+                exit_country:{
+                    label:'出口国家',
+                    remark:'出口国家 销售可出口国/采购进口国',
+                    required:false,
+                    type:String,
+                    value:fieldData.country
+                },
+
+                
+                
+                brand_id:{
+                    label:'品牌',
+                    remark:'选择的品牌ID',
+                    required:true,
+                    type:Number,
+                    value(){
+                        return fieldData.brand.id;
+                    }
+                },
+                other_brand:{
+                    label:'其他品牌',
+                    remark:'输入的其他品牌名称',
+                    required:false,
+                    type:String,
+                    value:fieldData.otherBrand
+                },
+                price:{
+                    label:'市场价',
+                    remark:'发布销售/发布采购/委托采购/委托销售 市场价',
+                    required:true,
+                    type:Number,
+                    value:fieldData.price
+                },
+                supplier_price:{
+                    label:'供应商价',
+                    remark:'供应商价，仅用于 发布销售',
+                    required:this.type==2,
+                    type:Number,
+                    value:fieldData.supplierPrice
+                },
+                num:{
+                    label:'数量',
+                    remark:'销售或采购的数量',
+                    required:true,
+                    type:Number,
+                    value:fieldData.quantity
+                },
+                unit_cate_id:{
+                    label:'单位',
+                    remark:'单位id',
+                    required:true,
+                    type:Number,
+                    value(){
+                        return fieldData.unit.id;
+                    }
+                },
+                qualification:{
+                    label:"资质要求",
+                    remark:'产品的相关认证种类id,多个认证种类用id逗号隔开',
+                    required:true,
+                    type:String,
+                    value(){
+                        return fieldData.qualification.map((item)=>{
+                            return item.id;
+                        }).join();
+                    }
+                },
+               
+                images:{
+                    label:'图片信息',
+                    remark:'上传的图片,技术、产品、企业、其他，多张图片路劲逗号隔开',
+                    required:true,
+                    type:String,
+                    value(){
+                        return [fieldData.techImg,fieldData.productImg,fieldData.companyImg,fieldData.otherImg].join(',')
+                    }
+                },
+                info:{
+                    label:"电脑端描述",
+                    remark:"用于PC端的富文本描述",
+                    required:true,
+                    type:String,
+                    value:fieldData.richDesc
+                },
+
+                dead_time:{
+                    label:'截止时间',
+                    remark:'该发布消息有效的截止时间,年/月/日',
+                    required:true,
+                    type:String,
+                    value(){
+                        return fieldData.deadtime?dateTimeFormat(fieldData.deadtime,'%y-%m-%d'):'';
+                    }
+                },
+                service_id:{
+                    label:'增值服务',
+                    remark:'选择的增值服务id,多个id用逗号隔开',
+                    required:false,
+                    type:String,
+                    value(){
+                        return fieldData.service.map((item)=>{
+                            return item.id;
+                        }).join()
+                    }
+                }
+            }
+
+
+
+            for(let key of Object.keys(paramsConfig)){
+                let required = paramsConfig[key].required;
+                let label = paramsConfig[key].label;
+                let value = paramsConfig[key].value;
+                let dataType = paramsConfig[key].type;
+
+                if(typeof(value)=='function'){
+                    try{
+                        value = value();
+                    }catch(error){ 
+                        value = new dataType().valueOf();
+                    }
+                }
+
+                if(required&&!value){
+                    errMsg = label+'必须填写';
+                    break;
+                }
+
+                params[key] = value;
+            }
+
+            if(errMsg){
+                this.$message({
+                    showClose: true,
+                    message: errMsg,
+                    type: "error"
+                });
+
+                return false;
+            }else{
+                return params;
+            }
+        },
+
+        async publish(){
+            const params = this.checkedForm();
+            if(!params){ return false; }
+
+            console.log('publish params ',params);
+            const res = await publish({data:params});
+            console.log('publish res ',res);
+
+        },
+        
         async getQualification(){
             let res =  await getQualification();
 
