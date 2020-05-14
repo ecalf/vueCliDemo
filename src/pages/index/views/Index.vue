@@ -219,7 +219,7 @@ import SuccessOrder from "@components/SuccessOrder";
 import Partner from "../components/Partner";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-import { epidemicList, abroadList } from "@api/api";
+import { epidemicList, abroadList } from "@api/outside";
 export default {
   components: {
     Banner,
