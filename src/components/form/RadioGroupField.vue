@@ -64,11 +64,11 @@
 
                 if(item.checked){
                     this.value = item;
-                }else{
+                }else if(this.value.id==item.id){
                     this.value = '';
                 }
 
-                console.log('radioGroup oncheck ',item,item.checked,this.value);
+                console.log('radioGroup oncheck ',item,item.checked,', value:',this.value);
                 this.$emit('update-value',this.name,this.value);
             }
         }

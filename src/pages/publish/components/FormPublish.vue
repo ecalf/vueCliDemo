@@ -8,7 +8,9 @@
                 </div>
                 -->
 
-                <div class="form-section">
+               
+
+                <div class="form-section category-menu-container">
                     <SelectCascade
                         name="category"
                         v-bind:list="categoryList"
@@ -30,7 +32,7 @@
                         v-bind:required="true" 
                         v-bind:list="entrustGroup"
                         label="委托目的" 
-                        name="entrustType" 
+                        name="entrust" 
                         height="40"
                         width="140"
                         @update-value="updateValue"
@@ -309,6 +311,10 @@
         margin-top:20px;
     }
 
+    .category-menu-container{
+        margin-left:115px;
+    }
+
     .category-show{
         align-items: center;
         margin-left:115px;
@@ -355,7 +361,7 @@ import FileUploadImage from  "@components/form/FileUploadImage";
 import FileUploadVideo from  "@components/form/FileUploadVideo";
 import Editor from  "@components/form/Editor";
 import DatePickerField from  "@components/form/DatePickerField";
-import SelectCascade from "./SelectCascade";
+import SelectCascade from "@components/form/SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
 import {publish} from "@api/publish";
@@ -456,7 +462,7 @@ export default {
             //表单值
             fieldData:{
                 category:'', //产品类别
-                entrustType:'',//委托类型,仅委托表单可用
+                entrust:'',//委托类型,仅委托表单可用
                 title:'',//标题
                 desc:'',//描述
                 brand:'',//品牌选择
@@ -482,7 +488,7 @@ export default {
     
     methods:{
         updateValue(name,value){
-            console.log('form updateValue>>>',name,value);
+            console.log('【publish form updateValue】',name,value);
 
             this.fieldData[name] = value;
 
@@ -491,17 +497,25 @@ export default {
             let errMsg = '';
             let fieldData = this.fieldData;
 
+            /*
+            //test
+            let pageType = this.type;
+            let entrustId = fieldData.entrust&&fieldData.entrust.id;
             console.log('checkedForm fieldData ',fieldData);
+            console.log('页面类型:',pageType);
+            console.log('委托类型:',entrustId,' ,fieldData.entrust：',fieldData.entrust);
+            console.log('表单类型:',entrustId||pageType,',computed:',fieldData.entrust&&fieldData.entrust.id||this.type);
+            */
 
             const params = {};
             const paramsConfig = {
                 type:{
-                    label:'发布类型',
+                    label:fieldData.entrust?'委托类型':'发布类型',
                     remark:'发布类型 required, 1 发布采购 2 发布销售 3 委托销售 4 委托采购  ',
                     required:true,
                     type:Number,
-                    value(){
-                        return fieldData.entrustType?fieldData.entrustType.id:this.type
+                    value:()=>{//使用箭头写法让 value 方法内可以通过 this 访问组件
+                        return fieldData.entrust&&fieldData.entrust.id||this.type;
                     }    
                 },
                 cate_id:{
@@ -509,7 +523,7 @@ export default {
                     remark:'品类id',
                     required:true,
                     type:Number,
-                    value(){
+                    value:()=>{
                         return fieldData.category[fieldData.category.length-1].id;
                     }
                 },
@@ -534,7 +548,7 @@ export default {
                     remark:"用途id， 1 医用 2 民用,选中多个id用逗号隔开",
                     required:true,
                     type:String,
-                    value(){
+                    value:()=>{
                         return fieldData.usage.map((item)=>{
                             return item.id;
                         }).join();
@@ -555,7 +569,7 @@ export default {
                     remark:'选择的品牌ID',
                     required:true,
                     type:Number,
-                    value(){
+                    value:()=>{
                         return fieldData.brand.id;
                     }
                 },
@@ -592,7 +606,7 @@ export default {
                     remark:'单位id',
                     required:true,
                     type:Number,
-                    value(){
+                    value:()=>{
                         return fieldData.unit.id;
                     }
                 },
@@ -601,7 +615,7 @@ export default {
                     remark:'产品的相关认证种类id,多个认证种类用id逗号隔开',
                     required:true,
                     type:String,
-                    value(){
+                    value:()=>{
                         return fieldData.qualification.map((item)=>{
                             return item.id;
                         }).join();
@@ -613,7 +627,7 @@ export default {
                     remark:'上传的图片,技术、产品、企业、其他，多张图片路劲逗号隔开',
                     required:true,
                     type:String,
-                    value(){
+                    value:()=>{
                         return [fieldData.techImg,fieldData.productImg,fieldData.companyImg,fieldData.otherImg].join(',')
                     }
                 },
@@ -630,7 +644,7 @@ export default {
                     remark:'该发布消息有效的截止时间,年/月/日',
                     required:true,
                     type:String,
-                    value(){
+                    value:()=>{
                         return fieldData.deadtime?dateTimeFormat(fieldData.deadtime,'%y-%m-%d'):'';
                     }
                 },
@@ -639,7 +653,7 @@ export default {
                     remark:'选择的增值服务id,多个id用逗号隔开',
                     required:false,
                     type:String,
-                    value(){
+                    value:()=>{
                         return fieldData.service.map((item)=>{
                             return item.id;
                         }).join()
@@ -664,6 +678,7 @@ export default {
                 }
 
                 if(required&&!value){
+                    console.log(label,'required ',required,value);
                     errMsg = label+'必须填写';
                     break;
                 }
@@ -692,6 +707,19 @@ export default {
             const res = await publish({data:params});
             console.log('publish res ',res);
 
+            if(res.code==200){
+                if(params.service_id){
+                    this.pay();
+                }
+            }else{
+
+            }
+
+        },
+
+        async pay(){
+
+            console.log('pay');
         },
         
         async getQualification(){

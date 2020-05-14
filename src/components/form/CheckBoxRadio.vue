@@ -105,6 +105,15 @@
 
 
 <script>
+
+    /*************************************
+    //组件数据配置格式
+    const list = [
+        {text:'销售',id:3,checked:true},
+        {text:'采购',id:4}
+    ]
+    ************************************/
+
     export default {
         components:{},
         props:{

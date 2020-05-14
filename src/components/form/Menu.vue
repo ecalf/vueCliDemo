@@ -91,8 +91,26 @@
 
 
 <script>
-    
-
+/***********************
+//菜单数据格式
+const list = [
+    {
+        id:1,
+        text:'惨菜单1',
+        child:[]
+    },
+    {
+        id:2,
+        text:'惨菜单2',
+        child:[]
+    },
+    {
+        id:3,
+        text:'惨菜单3',
+        child:[]
+    }
+]
+*************************/
 export default {
     data(){
         return {
