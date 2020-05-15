@@ -32,45 +32,8 @@ export default {
 
             const res =  await getProfile();
             
-           /* console.log('test data of profile');
-            const res = {
-                code:200,
-                data:{
-                    "uid": 10, //用户id
-                    "type": 1, //'注册类型：1个人 2 机构 3企业',
-                    "mobile": "test", //手机号
-                    "status": 0,
-                    "profiles": { //详情
-                        "user_name": "test", //用户
-                        "mobile": "test", //手机
-                        "company_name": "", //公司名称
-                        "organization_name": "", //组织名称
-                        "contact_name": null, //联系人
-                        "contact_phone": "", //联系人号码
-                        "email": "", //邮箱
-                        "country": "America", //国家
-                        "business_license": "http://img.dlitong.com/51771b85b103564e50c2134ffcc86109.jpg", //营业执照
-                        "business_license_code": "536236426", //营业执照号码
-                        "company_form": 1, // '企业形式 1 工厂 2 代理',
-                        "bank_branch_name": "深圳分行",//开户支行名称',
-                        "bank_name": "中国银行", //银行名称
-                        "bank_account": "53265262626",//银行卡号
-                        "full_name": "小明"//姓名
-                    }
-                }
-            }*/
-
-
-
             if(res.code==200){
-                const profile = {
-                    uid:res.data.uid,
-                    type:res.data.type,
-                    status:res.data.status,
-                    ...res.data.profiles
-                }
-
-                commit('updateProfile',profile);
+                commit('updateProfile',res.data.profiles);
             }else{
                 commit('updateProfile',{});
                 delToken();

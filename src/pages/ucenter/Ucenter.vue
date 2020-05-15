@@ -15,23 +15,22 @@ export default {
   },
   data() {
     return {
-      
-    };
-  },
-  computed:{
-    hideHeaderFooter(){
-      let coms = ['Login','Register'];
-      return coms.indexOf(this.$router.history.current.name)>-1
-      
+      comName:this.$router.history.current.name
     }
   },
-  methods:{
-     
+  computed:{
+    hideHeaderFooter(){//控制是否显示页头页脚
+      let coms = ['Login','Register'];
+      return coms.indexOf(this.comName)>-1
+    }
   },
-  created(){
-    console.log('hideHeaderFooter:',this.hideHeaderFooter);
-    console.log(this.$router.history.current.name);
+
+  watch:{
+    '$route.path':function (){
+      this.comName = this.$router.history.current.name;
+    }
   }
+
  
 };
 </script>

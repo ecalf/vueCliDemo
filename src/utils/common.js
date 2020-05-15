@@ -104,6 +104,7 @@ function getFullWidthLength(str) {
 
 //存token
 function setToken(token,client){
+    console.log('========TODO:目前登录返回的 profile 和 getProfile 借口返回的数据格式不一致=====');
     let clientToken = 'DATA '+btoa(client.uid+':'+client.user_name+':'+token);
     localStorage.setItem('Token',clientToken);
 
