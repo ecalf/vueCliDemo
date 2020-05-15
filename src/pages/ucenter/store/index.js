@@ -1,8 +1,13 @@
 import Vuex from "vuex";
+import profile from "./profile";
+
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+    modules:{
+        profile
+    },
+    state: {},
+    getters:{},
+    mutations: {},
+    actions: {}
 });

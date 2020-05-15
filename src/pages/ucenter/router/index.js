@@ -3,8 +3,8 @@ import RouterCreator from '@src/utils/enhanceRouter';
 import Login from "../views/Admin/Login.vue";
 import Register from "../views/Admin/Register.vue";
 import Member from "../views/Admin/Member.vue";
-import Buyorder from "../views/Buy/Buyorder.vue";
-import Release from "../views/Buy/Release.vue";
+import Buyorder from "../views/Purchase/Buyorder.vue";
+import QuotedPrice from "../views/Purchase/QuotedPrice";
 
 const routes = [
   {
@@ -16,6 +16,14 @@ const routes = [
     }
   },
   {
+    path: "/ucenter/register",//注册
+    name: "Register",
+    component: Register,
+    meta: {
+      title: '会员注册'
+    }
+  },
+  {
     path: "/ucenter/member",
     name: "Member",
     component: Member,
@@ -24,31 +32,26 @@ const routes = [
     }
   },
   {
-    path: "/ucenter/release",//会员我要采购
-    name: "release",
-    component: Release,
-    meta: {
-      title: '我要采购'
-    }
-  },
-  {
     path: "/ucenter/buyorder",//会员我要采购订单
     name: "buyorder",
     component: Buyorder,
     meta: {
-      title: '我要采购'
+      title: '采购订单'
     }
   },
   {
-    path: "/ucenter/Register",//注册
-    name: "Register",
-    component: Register,
+    path: "/ucenter/quotedprice",//会员采购-报价管理
+    name: "QuotedPrice",
+    component: QuotedPrice,
     meta: {
-      title: '会员注册'
+      title: '报价管理'
     }
-  }
+  },
+ 
 ];
 
+
 const router = RouterCreator.create(routes);
+
 
 export default router;

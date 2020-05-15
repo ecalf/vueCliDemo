@@ -5,49 +5,55 @@
           <ul class="membernav-list">
             <li>
               <h4>
-                <a href><i class="iconfont iconcaigou"></i>我要采购</a>
+                <a href="javascript:;"><i class="iconfont iconcaigou"></i>我要采购</a>
               </h4>
               <div class="member-subnav">
-                <a href>发布采购</a>
-                <a href>求购管理</a>
-                <a href>采购订单</a>
-                <a href>供应商库</a>
-                <a href>委托采购</a>
-                <a href>合同管理</a>
+                <a href="/publish/buy">发布采购</a>
+                <a href="/ucenter/quotedprice">报价管理</a>
+                <a href="/ucenter/buyorder">采购订单</a>
+                <a href="javascript:;">供应商库</a>
+                <a href="/publish/entrust">委托采购</a>
+                <a href="javascript:;">合同管理</a>
               </div>
             </li>
             <li>
               <h4>
-                <a href><i class="iconfont iconxiaoshou"></i>我要销售</a>
+                <a href="javascript:;"><i class="iconfont iconxiaoshou"></i>我要销售</a>
               </h4>
               <div class="member-subnav">
-                <a href>发布商品</a>
-                <a href>管理商品</a>
-                <a href>店铺管理</a>
-                <a href>订单管理</a>
-                <a href>合同管理</a>
-                <a href>委托销售</a>
+                <a href="/publish/sell">发布商品</a>
+                <a href="/ucenter/buyorder">销售管理</a><!--类 /ucenter/buyorder-->
+                <a href="javascript:;">主页管理</a>
+                <a href="javascript:;">合同管理</a>
+                <a href="/publish/entrust">委托销售</a>
               </div>
             </li>
-            <li>
+
+            <!--  分销管理延后
+            <li v-if="false">
               <h4>
-                <a href><i class="iconfont iconfenxiao"></i>分销管理</a>
+                <a href="javascript:;"><i class="iconfont iconfenxiao"></i>分销管理</a>
               </h4>
               <div class="member-subnav">
                 <a href>订单列表</a>
-                <a href>佣金</a>
-                <a href>推广的vip公司</a>
-                <a href>提现</a>
-                <a href>邀请码</a>
+                <a href="javascript:;">佣金</a>
+                <a href="javascript:;">推广的vip公司</a>
+                <a href="javascript:;">提现</a>
+                <a href="javascript:;">邀请码</a>
               </div>
             </li>
+          -->
+
              <li>
               <h4>
-                <a href><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
+                <a href="javascript:;"><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
               </h4>
               <div class="member-subnav">
-                <a href>我的账户</a>
-                <a href>发票管理</a>
+                <a href="javascript:;">我的账户</a>
+                 <!--
+                <a href="javascript:;">发票管理</a>
+                -->
+                <a href="javascript:;">认证中心</a>
               </div>
             </li>
           </ul>

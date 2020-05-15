@@ -15,7 +15,7 @@ const i18n = new VueI18n({ 
  locale: getLang(), // 定义默认语言为中文 
  messages: {   
     'zh-CN':{account:zh.account},   
-    'en-US': {account:en.account}
+    'en-US': {aaccount:en.aaccount}
   }
 });
 
@@ -24,5 +24,8 @@ new Vue({
     i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted(){
+    console.log('account mounted');
+  }
 }).$mount("#app");

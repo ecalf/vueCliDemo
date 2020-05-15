@@ -1,0 +1,181 @@
+<template>
+    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" />
+
+</template>
+
+<style lang="scss" scoped>
+    
+</style>
+
+<script>
+    import VueNeditorWrap from 'vue-neditor-wrap';
+    import {getLang,setLang} from '@src/utils/common';
+
+
+
+
+
+
+    export  default {
+        components:{
+            VueNeditorWrap
+        },
+        props:{
+            name:String,
+            defaultcontent:String
+        },
+        data () {
+            let lang = getLang().toLowerCase();
+            if(lang.indexOf('en')>-1){
+                lang = 'en';
+            }
+
+            let UEDITOR_HOME_URL = '/NEditor/';
+
+
+            return {
+                value: this.defaultcontent||'',
+                myConfig: {
+                    //语言包
+                    lang:lang,
+                    //语言包路径配置
+                    langPath:UEDITOR_HOME_URL +"i18n/",
+
+                    // 如果需要上传功能,找后端小伙伴要服务器接口地址
+                    serverUrl: '/api/web/upload/ueditor',
+                    // 你的UEditor资源存放的路径,相对于打包后的index.html
+                    UEDITOR_HOME_URL: UEDITOR_HOME_URL,
+
+                    // 容器不在viewport内时编辑器不自动漂浮
+                    autoFloatEnabled:false,
+                    // 编辑器不自动被内容撑高
+                    autoHeightEnabled: false,
+                    // 初始容器高度
+                    initialFrameHeight: 275,
+                    // 初始容器宽度
+                    initialFrameWidth: '100%',
+                    // 关闭自动保存
+                    enableAutoSave: false,
+                    charset:"utf-8",
+                    toolbars: [
+                        [
+                            "fullscreen",
+                            "source",
+                            "|",
+                            "undo",
+                            "redo",
+                            "|",
+                            "bold",
+                            "italic",
+                            "underline",
+                            "fontborder",
+                            "strikethrough",
+                            "superscript",
+                            "subscript",
+                            "removeformat",
+                            "formatmatch",
+                            "autotypeset",
+                            "blockquote",
+                            "pasteplain",
+                            "|",
+                            "forecolor",
+                            "backcolor",
+                            "insertorderedlist",
+                            "insertunorderedlist",
+                            "selectall",
+                            "cleardoc",
+                            "|",
+                            "rowspacingtop",
+                            "rowspacingbottom",
+                            "lineheight",
+                            "|",
+                            "customstyle",
+                            "paragraph",
+                            "fontfamily",
+                            "fontsize",
+                            "|",
+                            "directionalityltr",
+                            "directionalityrtl",
+                            "indent",
+                            "|",
+                            "justifyleft",
+                            "justifycenter",
+                            "justifyright",
+                            "justifyjustify",
+                            "|",
+                            "touppercase",
+                            "tolowercase",
+                            "|",
+                            "link",
+                            "unlink",
+                            "anchor",
+                            "|",
+                            "imagenone",
+                            "imageleft",
+                            "imageright",
+                            "imagecenter",
+                            "|",
+                            // "simpleupload",
+                            "insertimage",
+                            //"emotion",
+                            //"scrawl",
+                            //"insertvideo",
+                            //"music",
+                            //"attachment",
+                            //"map",
+                            //"gmap",
+                            //"insertframe",
+                            // "webapp",
+                            "pagebreak",
+                            "template",
+                            "background",
+                            "|",
+                            //"insertcode",
+                            "horizontal",
+                            "date",
+                            "time",
+                            "spechars",
+                            //"snapscreen",
+                            //"wordimage",
+                            "|",
+                            "inserttable",
+                            "deletetable",
+                            "insertparagraphbeforetable",
+                            "insertrow",
+                            "deleterow",
+                            "insertcol",
+                            "deletecol",
+                            "mergecells",
+                            "mergeright",
+                            "mergedown",
+                            "splittocells",
+                            "splittorows",
+                            "splittocols",
+                            "charts",
+                            "|",
+                            //"print",
+                            "preview",
+                            "searchreplace",
+                            //"drafts",
+                            //"help"
+                        ]
+                    ]
+                }
+                
+            }
+        },
+        watch:{
+            value(newContent,oldContent){
+                this.$emit('update-value',this.name,newContent);
+            }
+        },
+        methods:{
+           
+        },
+        mounted(){
+            console.log('vue-neditor-wrap mounted');
+        }
+    }
+
+
+</script>

@@ -13,49 +13,70 @@
           <span class="wei-toggle" :class="{ifshow}" @click="toggle"></span>
           <div v-show="ifshow">
             <div class="login-navbar">
-              <button @click="show=0" :class="{'active':show===0}">密码登录</button>
-              <button @click="show=1" :class="{'active':show===1}">手机登录</button>
+              <button @click="switchSignupType(0)" :class="{'active':show===0}">密码登录</button>
+              <button @click="switchSignupType(1)" :class="{'active':show===1}">手机登录</button>
             </div>
+
             <div class="signup-wrap">
-              <form class="signup-form">
+                <el-form :model="signupForm" :rules="rules" ref="signupForm" class="signup-form">
+
+
                 <!--密码登录-->
-                <div class="password-login" v-show="show===0">
-                  <ul>
-                    <li class="login-bd">
-                      <input type="text" class="m-input" placeholder="手机号/邮箱/用户名" />
-                    </li>
-                    <li class="login-bd">
-                      <input type="text" class="m-input" placeholder="密码" />
-                    </li>
-                  </ul>
-                  <div class="other-link">
-                    <a href class="fr">免费注册</a>
-                    <a href>忘记密码？</a>
-                    <a href>忘记用户名</a>
-                  </div>
-                  <a class="login-button">登录</a>
+                <div class="password-login" v-if="show==0">  
+                  <el-form-item class="login-bd" label prop="user_name">
+                    <el-input v-model="signupForm.user_name" placeholder="手机号/用户名" class="m-input"></el-input>
+                  </el-form-item>
+
+                  <el-form-item class="login-bd" label prop="password">
+                    <el-input v-model="signupForm.password" type="password" placeholder="设置密码" class="m-input"></el-input>
+                  </el-form-item>
+
+                    <div class="other-link">
+                      <router-link class="fr" to="/ucenter/register">免费注册</router-link>
+                      <a href='javascript:;'>忘记密码？</a>
+                    </div>
                 </div>
                 <!--密码登录 end-->
+
+
                 <!--手机登录-->
-                <div class="mobile-login" v-show="show===1">
-                  <ul>
-                    <li class="login-bd">
+                <div class="mobile-login" v-else>
+                     <el-form-item class="login-bd" label prop="mobile">
                       <span class="area-code">+86</span>
-                      <input type="text" class="m-input tel" placeholder="请输入手机号" />
-                    </li>
-                    <li class="login-bd">
-                      <input type="text" class="m-input code-input" placeholder="验证码" />
-                      <button class="code-botton">发送验证码</button>
-                    </li>
-                  </ul>
+                      <el-input placeholder="请输入手机号" v-model="signupForm.mobile" class="m-input area-code-mobile"></el-input>
+                    </el-form-item>
+           
+                    <el-form-item label prop="code" class="login-bd">
+                      <el-input
+                        v-model="signupForm.code"
+                        placeholder="请输入6位验证码"
+                        class="m-input code-input"
+                      ></el-input>
+
+                      <span
+                        class="code-button m-input"
+                        @click.stop="sendCode()"
+                        v-if="get_code"
+                        >发送验证码</span>
+
+                      <span class="code-button m-input" v-else>{{count}}秒后重新获取</span>
+                    </el-form-item>
+
                   <div class="other-link">
-                    <a href class="fr">免费注册</a>
-                  </div>
-                  <a class="login-button">登录</a>
+                    <a href="/ucenter/register" class="fr">免费注册</a>
+                  </div>                 
                 </div>
-              </form>
+                <!--手机登录 end-->
+
+
+                 <a class="login-button" @click="login()">登录</a>
+               </el-form>
             </div>
+
+
           </div>
+
+
           <!--手机扫码登录-->
           <div class="login-qrcode" v-if="!ifshow">
             <h3 class="qrcode-title">手机扫码安全登录</h3>
@@ -64,10 +85,12 @@
             </p>
             <p>打开 微信 扫一扫登录</p>
             <p class="enter-link">
-              <a href>密码登录</a>
-              <a href>免费注册</a>
+              <a href="javascript:;" @click="switchSignupType(0)">密码登录</a>
+              <a href="/ucenter/register">免费注册</a>
             </p>
           </div>
+
+
         </div>
       </div>
       <div class="close-order">
@@ -114,54 +137,134 @@
 </template>
 
 <script>
+import {routeTo} from "@utils/enhanceRouter";
+import { bindPhoneCode, submitLogin } from "@api/user";
+import { isInSite,setToken } from "@utils/common";
+
+
+let orderList = [
+    {
+      name: "呼吸机呼吸机",
+      title: "S9 VPAP ST主机 VPAP ST主机主1...",
+      num: "1500/个",
+      price: "￥200,000"
+    },
+    {
+      name: "呼吸机呼吸机",
+      title: "S9 VPAP ST主机 VPAP ST主机主2...",
+      num: "1500/个",
+      price: "￥200,000"
+    },
+    {
+      name: "呼吸机呼吸机",
+      title: "S9 VPAP ST主机 VPAP ST主机主3...",
+      num: "1500/个",
+      price: "￥200,000"
+    },
+    {
+      name: "呼吸机呼吸机",
+      title: "S9 VPAP ST主机 VPAP ST主机主1...",
+      num: "1500/个",
+      price: "￥200,000"
+    },
+    {
+      name: "呼吸机呼吸机",
+      title: "S9 VPAP ST主机 VPAP ST主机主2...",
+      num: "1500/个",
+      price: "￥200,000"
+    }
+  ];
+
 export default {
   data() {
+
+      var validatetelnumber = (rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入手机号"));
+        } else {
+          if (value !== "") {
+            let reg = /^1[3456789]\d{9}$/;
+            if (!reg.test(value)) {
+              callback(new Error("请输入正确的手机号！"));
+            }
+          }
+          callback();
+        }
+      };
+
+      var validatePass = (rule, value, callback) => {
+        if (value === "") {
+            callback(new Error("请输入密码"));
+        } else {
+          if(value.length<8){
+            callback(new Error("密码长度不能少于8位"));
+          }else if (this.signupForm.re_password !== "") {
+            this.$refs.signupForm.validateField("re_password");
+          }
+          callback();
+        }
+      };
+
     return {
       show: 0, //判断切换登录方式
-      ifshow: true,
+      ifshow: true,//账号密码登录,显示扫码登录图标
       animate: false,
       intNum: false,
-      items: [
-        {
-          name: "呼吸机呼吸机",
-          title: "S9 VPAP ST主机 VPAP ST主机主1...",
-          num: "1500/个",
-          price: "￥200,000"
-        },
-        {
-          name: "呼吸机呼吸机",
-          title: "S9 VPAP ST主机 VPAP ST主机主2...",
-          num: "1500/个",
-          price: "￥200,000"
-        },
-        {
-          name: "呼吸机呼吸机",
-          title: "S9 VPAP ST主机 VPAP ST主机主3...",
-          num: "1500/个",
-          price: "￥200,000"
-        },
-        {
-          name: "呼吸机呼吸机",
-          title: "S9 VPAP ST主机 VPAP ST主机主1...",
-          num: "1500/个",
-          price: "￥200,000"
-        },
-        {
-          name: "呼吸机呼吸机",
-          title: "S9 VPAP ST主机 VPAP ST主机主2...",
-          num: "1500/个",
-          price: "￥200,000"
-        }
-      ]
+
+      //手机验证码
+      get_code: true,
+      isgetcode: false, // 是否获取过code
+      count: 60,
+
+
+      signupForm:{
+        user_name:'',
+        mobile:'',
+        password:'',
+        code:''
+      },
+
+      rules: {
+        user_name:[
+          { required: true, trigger: "blur", message: "请输入用户名" }
+        ],
+        mobile: [
+          { required: true, validator: validatetelnumber, trigger: "blur" }
+        ],
+        code: [
+          {
+            required: true,
+            min: 6,
+            max: 6,
+            trigger: "blur",
+            message: "请输入正确的验证码"
+          }
+        ],
+        password: [
+          { required: true, validator: validatePass, trigger: "blur" }
+        ]
+      },
+
+
+      
+      items: orderList
     };
   },
   created() {
     this.ScrollUp();
+   
   },
   methods: {
-    toggle: function() {
+    switchSignupType(type){
+      this.$refs.signupForm.resetFields();
+      this.ifshow = true;
+      this.show = type;
+    },
+    toggle() {
+      this.$refs.signupForm.resetFields();
       this.ifshow = !this.ifshow;
     },
+
     ScrollUp() {
       this.intNum = setInterval(() => {
         this.animate = true; // 向上滚动的时候需要添加css3过渡动画
@@ -178,6 +281,94 @@ export default {
     },
     Up() {
       this.ScrollUp();
+    },
+
+
+    // 发送短信验证码
+    async sendCode() {
+      if (this.signupForm.mobile !== "") {
+        this.get_code = false;
+        this.isgetcode = true;
+
+        let interval = setInterval(() => {
+          this.count--;
+          if (this.count < 1) {
+            this.get_code = true;
+            this.count = 60;
+            clearInterval(interval);
+          }
+        }, 1000);
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入手机号",
+          type: "error"
+        });
+      }
+
+
+      let params = {
+        data: {
+          mobile: this.signupForm.mobile,
+          type: 1//1.login  2.register
+        }
+      };
+
+      const data = await bindPhoneCode(params);
+
+    },
+
+    async login(){
+      this.$refs.signupForm.validate(async valid => {
+        if (valid) {
+          let params = {
+            data:{
+              type: this.signupForm.mobile?'code_login':'pass_login', 
+              //账户登录
+              user_name: this.signupForm.user_name,
+              password: this.signupForm.password,
+              //手机登录
+              mobile:this.signupForm.mobile,
+              code: this.signupForm.code,//验证码
+              state_code:86//国家区号
+            }
+          }
+
+
+          //console.log('signupForm: ',params);
+          
+          let res = await submitLogin(params);
+          if(res.code!==200){
+            this.$message({
+              showClose: true,
+              message: res.message,
+              type: "error"
+            });
+
+          }else{
+            //console.log('data:',res.data);
+
+            const profile = setToken(res.data.token,res.data.client);
+            this.$store.commit('profile/updateProfile',profile);
+            this.$router.push('/ucenter/member');
+
+
+            
+            /*if(isInSite()&&document.referrer.indexOf('ucenter/login')==-1){
+              location.href=document.referrer;
+            }else{
+              location.href='/';  
+            }*/
+            
+          }
+          
+
+        } else {
+          console.log("register validate error!!");
+          return false;
+        }
+      });
+
     }
   }
 };
@@ -293,7 +484,7 @@ body {
 .signup-form {
   padding-top: 48px;
 
-  li {
+  .login-bd {
     margin-bottom: 15px;
     position: relative;
   }
@@ -323,6 +514,7 @@ body {
   line-height: 36px;
   text-align: center;
   margin-top: 58px;
+  cursor:default;
 }
 
 .mobile-login {
@@ -332,7 +524,8 @@ body {
     margin-right: 2%;
   }
 
-  .code-botton {
+  .code-button {
+    display: inline-block;
     width: 38%;
     height: 38px;
     background-color: #eaeced;
@@ -352,8 +545,22 @@ body {
 .area-code {
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 0;
+  padding-left: 10px;
+  z-index:1;
 }
+.area-code-mobile{
+  padding-left:45px;
+}
+
+.code-input {
+  display: inline-block;
+  width: 70%;
+  margin-right: 2%;
+}
+
+
+
 
 .wei-toggle {
   position: absolute;

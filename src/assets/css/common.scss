@@ -1,217 +1,4 @@
-// 单行文本省略  -- 单行文本优先使用，无兼容问题；
-@mixin ol() {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-@mixin olh($lh) {
-  height: $lh;
-  line-height: $lh;
-}
-
-// 多行文本省略 -- !!! 注意： display: -webkit-box;的兼容 a，span，等行内元素，需要先 display:block/inline-block
-// -- 推荐左右图文，单列，max-height只是兼容辅助
-@mixin mlmax($lh, $line) {
-  max-height: $lh*$line;
-  line-height: $lh;
-  display: -webkit-box;
-  // word-break: break-all; 英文版的多行文本异常，去掉
-  text-overflow: ellipsis;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line;
-}
-
-// -- 推荐等高列表使用，依靠高度实现布局的
-@mixin ml($lh, $line) {
-  // display:block;  // 注意：行内元素时，-webkit-box, height不生效
-
-  display: -webkit-box;
-  height: $lh*$line;
-  line-height: $lh;
-  // word-break: break-all; 英文版的多行文本异常，去掉
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-@mixin mlh($lh, $line) {
-  height: $lh*$line;
-  line-height: $lh;
-  -webkit-line-clamp: $line;
-}
-
-.ellipsis {
-  height: 24px;
-  line-height: 24px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  min-width: 1200px;
-  position: relative;
-  background-color: #fff;
-}
-
-body,
-form,
-img,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-p,
-tr,
-td,
-strong,
-span,
-pre {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-repeat: no-repeat;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-}
-
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-// 字体
-body,
-button,
-input,
-select,
-textarea {
-  font: 14px/1.5 Arial, 'Microsoft YaHei', 'PingFang SC', 'Microsoft JhengHei', sans-serif; // 适配 h1-h6 默认的字体行高；提高编辑器中字体还原度
-  color: #333;
-}
-
-img {
-  height: auto;
-  border-style: none;
-  vertical-align: middle;
-}
-
-ul,
-li {
-  list-style: none;
-}
-
-// em,i,b{ font-style:normal;} 编辑器不可用
-a {
-  text-decoration: none;
-  color: #333;
-}
-
-a:hover {
-  background-repeat: no-repeat;
-}
-
-a,
-area {
-  blr: expression(this.onFocus=this.blur())
-}
-
-input,
-button,
-select,
-textarea {
-  outline: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  resize: none;
-  background: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-label {
-  cursor: pointer;
-}
-
-*,
-:after,
-:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background-repeat: no-repeat;
-}
-
-// placeholder
-placeholder {
-  color: #999;
-}
-
-::-moz-placeholder {
-  color: #999;
-}
-
-::-webkit-input-placeholder {
-  color: #999;
-}
-
-// 表单
-button,
-input {
-  overflow: visible;
-}
-
-button,
-select {
-  text-transform: none;
-}
-
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-button {
-  -webkit-appearance: button;
-}
-
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-  border-style: none;
-  padding: 0;
-}
-
-button:-moz-focusring,
-[type="button"]:-moz-focusring,
-[type="reset"]:-moz-focusring,
-[type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-
+@import "./reset.scss";
 // 常用样式
 .commonweb {
   width: 1200px;
@@ -282,10 +69,31 @@ $ac:#44a78d;
 .mb20 {
   margin-bottom: 20px;
 }
+.mb30{
+  margin-bottom:30px;
+}
+.mb50{
+  margin-bottom:50px;
+}
+.oh{
+  overflow: hidden;
+}
+
+body {
+  background: #f2f2f2;
+}
+.ellipsis {
+  height: 24px;
+  line-height: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
 .header {
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
   border-bottom: solid 1px #e6e6e6;
+  background:#fff;
 }
 
 .header-top {
@@ -319,6 +127,7 @@ $ac:#44a78d;
 
 .header-nav {
   padding: 11px 0;
+  background:#fff;
 }
 
 .nav {
@@ -471,6 +280,7 @@ $ac:#44a78d;
   margin-left: 1px;
   border: none;
   font-weight: 400;
+  background-color:transparent;
 }
 
 .layui-laypage input {
@@ -550,7 +360,7 @@ $ac:#44a78d;
 
 .kicon {
   display: inline-block;
-  vertical-align: top;
+  vertical-align:middle;
   width: 16px;
   height: 16px;
   line-height: 16px;
@@ -621,7 +431,184 @@ $ac:#44a78d;
   padding-top: 60px;
 }
 
+/*注册登录公用*/
+.m-input {
+  width: 100%;
+  height: 38px;
+  background-color: #eaeced;
+  border-radius: 3px;
+  color: #4e5a65;
+  padding-left: 10px;
+
+  // 使用webkit内核的浏览器
+  &::-webkit-input-placeholder {
+    color: #4e5a65;
+  }
+
+  // Firefox版本4-18
+  &:-moz-placeholder {
+    color: #4e5a65;
+  }
+
+  // Firefox版本19+
+  &::-moz-placeholder {
+    color: #4e5a65;
+  }
+
+  // IE浏览器
+  &:-ms-input-placeholder {
+    color: #4e5a65;
+  }
+}
+
+.bgcolor-white {
+  background: #fff;
+}
+
 /*公共样式 end*/
+
+
+
+/*轮播点*/
+.iban-pages {
+
+  span {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+    margin: 0 2px;
+    vertical-align: 5px;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    opacity:1;
+    &.swiper-pagination-bullet-active {
+      width: 20px;
+      border-radius: 5px;
+      background: $ac;
+    }
+  }
+}
+
+/*导航*/
+.tab-bar {
+  font-size: 0;
+  margin: 30px 0 15px;
+  height: 50px;
+  border-radius: 3px;
+  display: table;
+  width: 100%;
+  a {
+    font-size: 20px;
+    color: #4e5a65;
+    display: table-cell;
+    height: 60px;
+    line-height: 60px;
+    width: 1%;
+    text-align: center;
+    margin-top: -5px;
+    transition: all 0.3s;
+    &.active,
+    &:hover {
+      background-color: $ac;
+      border-radius: 3px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
+.bar-height {
+  position: relative;
+  &:before {
+    content: "";
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    z-index: -1;
+    width: 100%;
+    background: #fff;
+    border-radius: 3px;
+  }
+ 
+}
+
+/*分类管理*/
+.other-condition {
+  padding-top: 14px;
+  a {
+    background-color: #eaeced;
+    border-radius: 3px;
+    padding: 0 6px;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 24px;
+    margin: 0 2px;
+    i {
+      display: inline-block;
+      vertical-align: 3px;
+      margin-left: 5px;
+      width: 8px;
+      height: 8px;
+      border-left: 1px solid #707070;
+      border-bottom: 1px solid #707070;
+      transform: rotate(-45deg);
+    }
+    &.active {
+      color: $ac;
+      i {
+        transform: rotate(135deg);
+        vertical-align: -1px;
+        border-color: $ac;
+      }
+    }
+  }
+}
+
+.condsearch-box {
+  line-height: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #e6e6e6;
+  margin-left:10px;
+  input {
+    width: 120px;
+    padding-left: 10px;
+    background: url(~@assets/images/inicon10.png) 10px 2px no-repeat;
+    background-size: 14px;
+  }
+  button {
+    width: 40px;
+    height: 24px;
+    background-color: #eaeced;
+    border-radius: 0px 3px 3px;
+    color: #4e5a65;
+  }
+}
+/*弹窗居中*/
+.el-dialog{
+  display: flex;
+  flex-direction: column;
+  margin:0 !important;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  max-height:calc(100% - 30px);
+  max-width:calc(100% - 30px);
+}
+.el-dialog .el-dialog__body{
+  flex:1;
+  overflow: auto;
+}
+
+
 /*个人中心|我要采购-采购订单*/
 .memcommon-title {
   padding-bottom: 13px;
@@ -640,135 +627,42 @@ $ac:#44a78d;
       width: 100%;
       color: #707070;
       padding-left: 10px;
+      padding-right: 35px;
       line-height: 30px;
     }
 
     button {
-      position: absolute;
+      position:absolute;
+      right:0;
+      top:-1px;
       width: 30px;
       height: 30px;
+      overflow: hidden;
       background-color: #479e84;
       border-radius: 3px;
-      right: 0;
-      top: 0;
       color: #fff;
     }
   }
 }
 
-.buy-order-nav {
-  margin-top: 6px;
-  background-color: #f4f4f4;
-  padding: 9px 18px;
-  color: #707070;
+/*表单样式重置*/
+.m-input{padding-left:0;}
+.m-input input{background:none;padding:0;height:38px;line-height:38px;padding-left:10px;border-color:transparent;
+@include ph(#4E5A65);
+&:hover{border-color:transparent;}
 }
-
-.order-nav-navbar {
-  display: inline-block;
-
-  a {
-    color: #707070;
-    display: inline-block;
-    padding: 5px 20px;
-
-    &:hover,
-    &.active {
-      background-color: #479e84;
-      border-radius: 5px;
-      color: #fff;
-    }
-  }
-}
-
-/*注册*/
-.register-web {
-  width: 900px;
-}
-
-.register-tip {
-  padding-top: 15px;
-
-  a {
-    color: #4e5a65;
-    padding: 0 10px;
-
-    &.account-login {
-      padding-left: 0;
-
-    }
-
-    &:hover {
-      color: #44a78d;
-    }
-  }
-}
-
-.register-header {
-  padding: 70px 35px;
-}
-
-.register-nav {
-  font-size: 0;
-  border-radius: 3px;
-
-  li {
-    display: inline-block;
-    vertical-align: middle;
-    width: 33.3%;
-    height: 75px;
-    background-color: #44a78d;
-    line-height: 75px;
-    font-size: 18px;
-    color: #fefefe;
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-
-    &:before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(0deg,
-          #43a78d 0%,
-          #34e9ee 100%);
-      opacity: 0;
-    }
-
-    span {
-      position: relative;
-      z-index: 1;
-    }
-
-    &.active {
-      font-weight: bold;
-      &:before {
-        opacity: 0.68;
-      }
-    }
-  }
-}
-
-.reg-country{
-  margin:35px 0 20px;  
-  .country-title{
+.el-form-item__error{padding:0;transform:scale(0.8); letter-spacing:2px;left:-6px;}
+.register-cell-hd .el-form-item__content{line-height:24px;}
+.country-select .el-form-item__content{height:32px;
+  .el-input__inner{background-color: #d8dcdf;
+    background-image: linear-gradient(0deg, #d9dde0 0%, #f2f4f5 100%);
+    border-radius: 3px;
     color: #4e5a65;
     font-weight: bold;
-    padding-top:7px;
+    padding: 0 10px;height:32px;height:32px;border:0;
+    @include ph(#4E5A65);
   }
-  .country-select{
-    float:right;
-    width: 84px;
-    height: 32px;
-	background-image: linear-gradient(0deg, 
-		#f2f4f5 0%, 
-		#d8dcdf 100%);
-  border-radius: 3px;
-  color: #4e5a65;
-  font-weight: bold;
-  padding:0 10px;
+  .el-select .el-input .el-select__caret{
+    color: #4e5a65;
   }
 }
