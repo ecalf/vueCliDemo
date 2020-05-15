@@ -74,7 +74,7 @@
         props:{},
         data(){
             return {
-                total:35,
+                total:0,
                 page_size:5,
                 page_index:1,
                 type:1,//1 采购,2 销售,3 委托
@@ -101,14 +101,8 @@
                     type:this.type 
                 }
                 
-                //test
-                /*console.log('test getMyNeeds data list');
-                this.list = list;
-                list.reverse();
-                return;*/
 
-
-                let res =  await getMyNeeds({data:params});
+                let res = await getMyNeeds({data:params});
                 if(res.code!=200){
                     this.$message({
                       showClose: true,

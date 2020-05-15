@@ -263,8 +263,9 @@
                         v-bind:list="serviceGroup"
                         label="截止日期" 
                         name="deadtime" 
+                        valueFormat="yyyy-MM-dd"
                         height="40"
-                        width="230"
+                        width="220"
                         @update-value="updateValue"
                         />
 
@@ -374,7 +375,6 @@ import {
 } from "@api/common";
 
 
-import { dateTimeFormat } from '@utils/common';
 import { checkform } from "./CheckForm";
 
 
@@ -458,7 +458,14 @@ export default {
                 {text:'民用',id:2}
             ],
             serviceGroup:[
-                {text:'加入VIP',id:1,addition:{style:{ color:'#44A78D' }}},
+                {
+                    text:'加入VIP',
+                    id:1,
+                    addition:{
+                        emphasize:true,//着重强调
+                        tip:'加入VIP排名更靠前 ￥20'//鼠标提示信息
+                    }
+                },
                 {text:'置顶',id:2},
                 {text:'加急',id:3}
             ],
@@ -534,27 +541,38 @@ export default {
 
             if(res.code==200){
                 if(params.service_id&&res.data.needs_id){
-                    this.payService(res.data.needs_id);
+                    this.payService(res.data.needs_id,params.service_id);
+                }else{
+                    this.$message({
+                        showClose: true,
+                        message: res.message,
+                        type: "success"
+                    });
                 }
             }else{
                 this.$message({
                     showClose: true,
-                    message: res.data.message,
+                    message: res.message,
                     type: "error"
                 });
             }
 
         },
 
-        async payService(needs_id){
-            const res = await payService({data:{needs_id:needs_id}});
+        async payService(needs_id,service_id){
+            if(!(needs_id&&service_id)){
+                return false;
+            }
 
+            
+
+            const res = await payService({data:{needs_id:needs_id}});
             if(res.code==200){
                
             }else{
                 this.$message({
                     showClose: true,
-                    message: res.data.message,
+                    message: res.message,
                     type: "error"
                 });
             }

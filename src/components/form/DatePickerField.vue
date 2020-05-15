@@ -1,6 +1,6 @@
 <template>
       <FieldWrap
-        type="checkGroup" 
+        type="dateTimePicker" 
         v-bind:label="label"
         v-bind:required="required" 
   
@@ -10,6 +10,8 @@
 
       <el-date-picker
         v-bind:editable="false"
+        v-bind:value-format="valueFormat"
+        v-bind:picker-options="pickerOptions"
         v-model="value"
         type="date"
         placeholder="选择日期"
@@ -71,16 +73,17 @@ export default {
           label:String,
           width:String,
           height:String,
-          list:Array
+          valueFormat:String
       },
       data() {
         return {
           value:'',
           pickerOptions: {
             disabledDate(time) {
-                return time.getTime() <= Date.now();
+                return time.getTime() < Date.now();
             },
-            shortcuts: [{
+
+/*            shortcuts: [{
               text: '今天',
               onClick(picker) {
                   picker.$emit('pick', new Date());
@@ -99,9 +102,9 @@ export default {
                 date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
                 picker.$emit('pick', date);
               }
-            }]
-          },
-          value: '',
+            }]*/
+          }
+  
         };
     },
     methods:{

@@ -1,13 +1,16 @@
 <template>
     <div class="check-box clearfix"
-         v-bind:class="{'checked': checked }"
+         v-bind:class="{'checked': checked,emphasize:item.addition&&item.addition.emphasize }"
          data-value="item.id" 
          @click="oncheck()">
         <div class="icon"
             v-bind:class="{'icon-checkbox':type=='checkbox','icon-radio':type=='radio'}"  
-            v-bind:style="iconStyle"
         ></div>
-        <div class="text" v-bind:style="textStyle">{{item.text}}</div>
+        <div class="text"
+            v-bind:class="{tip:item.addition&&item.addition.tip}"
+            v-bind:data-title="item.addition&&item.addition.tip||''"
+        >{{item.text}}</div>
+
     </div>
 </template>
 
@@ -63,6 +66,7 @@
         }
 
         .text{
+            position: relative;
             float:left;
             height:25px;
             line-height: 25px;
@@ -80,6 +84,26 @@
                     background-color: $ac;
                 }
                 
+            }
+
+            .text{
+                &.tip{
+                    &::after {
+                        position:absolute;
+                        top: 24px;
+                        height: 30px;
+                        line-height: 30px;
+                        width: 148px;
+                        padding: 0 6px;
+                        left: 0;
+                        content:attr(data-title);
+                        font-size: 12px;
+                        color:$ac;
+                        border:1px solid $ac;
+                        @include default-radius;
+                    }
+                }
+              
             }
         }
 
@@ -99,7 +123,20 @@
                 
             }
         }
+
+
+        &.emphasize{
+            .text{
+                color:$ac;    
+            }
+            .icon{
+                border-color:$ac;
+            }
+        }
+
     }
+
+
 
 </style>
 
@@ -129,20 +166,7 @@
             };
         },
         computed:{
-            textStyle(){
-                let styleMap = {};
-                if(this.addition&&this.addition.style){
-                    styleMap['color'] = this.addition.style.color;
-                }
-                return styleMap;
-            },
-            iconStyle(){
-                let styleMap = {};
-                if(this.addition&&this.addition.style){
-                    styleMap['border-color'] = this.addition.style.color;
-                }
-                return styleMap;
-            }
+
         },
 
         methods:{

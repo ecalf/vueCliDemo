@@ -137,9 +137,7 @@ export function checkform(fieldData,pageType){
             remark:'该发布消息有效的截止时间,年/月/日',
             required:true,
             type:String,
-            value:()=>{
-                return fieldData.deadtime?dateTimeFormat(fieldData.deadtime,'%y-%m-%d'):'';
-            }
+            value:fieldData.deadtime
         },
         service_id:{
             label:'增值服务',
