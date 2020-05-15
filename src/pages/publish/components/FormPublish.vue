@@ -366,7 +366,7 @@ import SelectCascade from "@components/form/SelectCascade";
 import SubmitBar from  "./SubmitBar";
 
 import { payService } from "@api/payment";
-import { publish } from "@api/publish";
+import { publish } from "@api/need";
 import {
     getQualification,
     getProductCategory,
@@ -376,28 +376,9 @@ import {
 
 
 import { checkform } from "./CheckForm";
+import { formatListData } from "@utils/common";
 
 
-function formatListData(listData){
-    if(!(listData instanceof Array)){
-        console.log('formatListData error,param listData is not an array');
-        return [];
-    }
-
-    listData = listData.map(function(item){
-        item.id = item.id||item.value||'';
-        item.text = item.cn_name;//todo：按中英文选择cn_name en_name
-        item.icon = item.icon||item.img||'';
-
-        if(item.child&&item.child.length){
-            item.child = formatListData(item.child);
-        }
-
-        return item;
-    });
-
-    return listData;
-}
 
 
 

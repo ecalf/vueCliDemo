@@ -17,8 +17,7 @@ export default {
 <style lang="scss" scoped>
 .page404{
   margin:100px auto;
-  h1{
-    text-align: center;
-  }
+  text-align: center;
+ 
 }
 </style>

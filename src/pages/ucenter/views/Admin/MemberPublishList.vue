@@ -7,9 +7,10 @@
     </div>
     
     <!--订单-->
-    <OrderList v-bind:list="list" />
+    <OrderList v-bind:list="list" v-if="total>0" />
+    <Errormsg v-if="total==0" />
 
-    <!--分页 v-if="total>page_size" -->
+    <!--分页 -->
     <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
             <Pagination
                 v-bind:inputAllowed="true"
@@ -60,6 +61,8 @@
 <script>
     import OrderList from "@components/OrderList";
     import Pagination from "@components/Pagination";
+    import Errormsg from "@components/Errormsg";
+
     import {getMyNeeds} from "@api/user";
 
 
@@ -68,7 +71,8 @@
     export default {
         components:{
             OrderList,
-            Pagination
+            Pagination,
+            Errormsg
 
         },
         props:{},
