@@ -287,7 +287,6 @@
 import {routeTo} from "@utils/enhanceRouter";
 import ResgisterBtn from "@components/Register/ResgisterBtn";
 import { bindPhoneCode, submitRegister } from "@api/user";
-import { setToken } from "@utils/common";
 
 
 export default {
