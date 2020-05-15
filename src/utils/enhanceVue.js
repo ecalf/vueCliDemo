@@ -6,9 +6,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VueI18n from 'vue-i18n';
 import VueRouter from "vue-router";
+import NotFoundComponent from "@components/NotFoundComponent";
 
 
 const plugins =  {
+    globalComponents(){
+        Vue.component('NotFoundComponent', NotFoundComponent);
+    },
     usePlugin(Vue){
         Vue.use(Vuex);
         Vue.use(VueI18n);

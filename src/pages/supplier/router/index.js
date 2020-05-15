@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
 import Supplier from "../views/Supplier.vue";
+import NotFoundComponent from "@components/NotFoundComponent";
 
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
       title: '供应商中心'
     }
   },
+  { 
+    path: '/supplier/*', 
+    name:'notFound',
+    component: NotFoundComponent 
+  }
 ];
 
 
