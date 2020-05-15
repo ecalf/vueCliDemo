@@ -404,8 +404,7 @@ export default {
     };
   },
   created() {
-    this.$emit("header", false); //移除头部
-    this.$emit("footer", false); //移移底部
+   
   },
   methods: {
     navclick(index) {
@@ -487,7 +486,8 @@ export default {
             });
 
           }else{
-            this.$routeTo('/ucenter/login');
+            this.$router.push('/ucenter/login');
+            //this.$routeTo('/ucenter/login');
           }
           
 

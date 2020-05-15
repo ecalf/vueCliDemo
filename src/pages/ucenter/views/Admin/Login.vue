@@ -252,8 +252,7 @@ export default {
   },
   created() {
     this.ScrollUp();
-    this.$emit('header', false);
-    this.$emit('footer', false);
+   
   },
   methods: {
     switchSignupType(type){

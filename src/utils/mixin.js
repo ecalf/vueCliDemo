@@ -2,9 +2,11 @@ import {getToken} from "./common";
 
 export default {
     created(){//页面组件刷新自动尝试获取用户信息
-        console.log('mixin created getProfile');
+        let pageName = this.$router.history.current.name;
 
-        let pageName = this.$router.history.name;
+        //console.log('mixin created getProfile, pageName:',pageName);
+
+        
         if(pageName=='Login'||pageName=='Register'){
             return false;
         }

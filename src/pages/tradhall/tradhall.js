@@ -18,13 +18,19 @@ import profileMixin from "@utils/mixin";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper);
 
-const i18n = new VueI18n({ 
- locale: getLang(), // 定义默认语言为中文 
- messages: {   
-    'zh-CN':{account:zh.account},   
-    'en-US': {aaccount:en.aaccount}
-  }
-});
+const i18n = new VueI18n({
+  locale: getLang(), // 定义默认语言为中文 
+  fallbackLocale: 'zh-CN',//没有英文的时候默认中文语言
+  silentFallbackWarn: true,//抑制警告
+  messages: {
+    'zh-CN':{
+        time:zh.time,
+    },   
+    'en-US': {
+        time:en.time,
+    }
+  }
+})
 
 
 new Vue({

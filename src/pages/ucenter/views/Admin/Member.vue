@@ -155,8 +155,7 @@ export default {
 
   },
   created(){
-    this.$emit("header", true);
-    this.$emit("footer", true);
+  
   }
 };
 </script>

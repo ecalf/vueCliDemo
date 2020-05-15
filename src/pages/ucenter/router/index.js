@@ -50,6 +50,8 @@ const routes = [
  
 ];
 
+
 const router = RouterCreator.create(routes);
+
 
 export default router;

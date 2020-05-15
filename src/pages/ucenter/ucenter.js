@@ -17,11 +17,8 @@ import router from "./router";
 import store from "./store";
 import profileMixin from "@utils/mixin";
 
-
-
 Vue.use(VCharts)
 Vue.use(ElementUI);
-
 
 const i18n = new VueI18n({
   locale: getLang(), // 定义默认语言为中文 
