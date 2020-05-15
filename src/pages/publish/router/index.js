@@ -3,9 +3,13 @@ import RouterCreator from '@src/utils/enhanceRouter';
 import PublishBuy from "../views/PublishBuy.vue";
 import PublishSell from "../views/PublishSell.vue";
 import PublishEntrust from "../views/PublishEntrust.vue";
-
+import NotFoundComponent from "@components/NotFoundComponent";
 
 const routes = [
+  {
+    path:"/publish",
+    redirect:"/tradhall"
+  },
   {
     path: "/publish/buy",
     name: "publishBuy",
@@ -29,6 +33,11 @@ const routes = [
     meta: {
       title: '我要委托'
     }
+  },
+  {
+    path:"/publish/*",
+    name:'notFound',
+    component:NotFoundComponent
   }
 
 ];
