@@ -221,38 +221,6 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import { epidemicList,abroadList } from "@api/api";
 export default {
-<<<<<<< HEAD:src/pages/index/views/Home.vue
-  components: {
-    Banner,
-    BusinessSelect,
-    ProductList,
-    OrderList,
-    SuccessOrder,
-    Partner,
-    Swiper,
-    SwiperSlide
-  },
-  data() {
-    return {
-      bannerList: [
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
-      ],
-     items:[],
-     abroadsItems:[],
-      newswiper: {
-        direction: "vertical",
-        autoplay: true
-      }, 
-      show:0,
-    };
-  },
-  methods: {
-   async getEpidemic() {
-       const data = await epidemicList();
-       this.items=data.newslist[0].desc;
-=======
     name: "Test",
     components: {//注册子组件
         HelloWorld,
@@ -303,9 +271,7 @@ export default {
             this.$store.dispatch('getNameList');
         }
         
->>>>>>> 8ae24b99e2b36a60fccac28d088f9c0f69a8199f:src/pages/test/views/Test.vue
-    }
-  },
+    },
   mounted: function() {
     this.getEpidemic();
   }
