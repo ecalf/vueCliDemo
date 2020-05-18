@@ -1,7 +1,7 @@
 <template>
     <div class="other-condition" data-count="config.sequenceList.length">
-        <a href>{{label}}</a>
-        <a href="javascript:;"
+        <a href="javascript:;">{{label}}</a>
+        <a class="sort-btn" href="javascript:;"
             v-for="(item,index) of config.sequenceList"
             v-bind:key="index"
             v-bind:class="{active:sequence[item.name]=='asc'}"
@@ -13,6 +13,7 @@
        
         <form class="condsearch-box" v-if="config.search">
             <input type="text" v-model="keyword" placeholder v-bind:name="config.search&&config.search.name||'keyword'" />
+
             <button type="button" @click="onsearch()">搜索</button>
         </form>
     </div>
@@ -33,25 +34,37 @@
         vertical-align: top;
         line-height: 24px;
         margin: 0 2px;
-    i {
-      display: inline-block;
-      vertical-align: 3px;
-      margin-left: 5px;
-      width: 8px;
-      height: 8px;
-      border-left: 1px solid #707070;
-      border-bottom: 1px solid #707070;
-      transform: rotate(-45deg);
     }
-    &.active {
-      color: $ac;
-      i {
-        transform: rotate(135deg);
-        vertical-align: -1px;
-        border-color: $ac;
-      }
+
+    .sort-btn{
+        i {
+          display: inline-block;
+          vertical-align: 3px;
+          margin-left: 5px;
+          width: 8px;
+          height: 8px;
+          border-left: 1px solid #707070;
+          border-bottom: 1px solid #707070;
+          transform: rotate(-45deg);
+        }
+
+        &.active {
+          color: $ac;
+          i {
+            transform: rotate(135deg);
+            vertical-align: -1px;
+            border-color: $ac;
+          }
+        }
+
+        &:hover{
+            color:$ac;
+            i{
+                border-color: $ac;
+            }
+        }
+
     }
-  }
 }
 
 .condsearch-box {
@@ -75,6 +88,10 @@
         background-color: #eaeced;
         border-radius: 0px 3px 3px;
         color: #4e5a65;
+
+        &:hover{
+            color:$ac;
+        }
     }
 }
 
@@ -95,7 +112,6 @@
                 sequence[item.name] = item.order;
             }
 
-            console.log('sequence>>>',sequence);
             return {
                 sequence:sequence,
                 keyword:''
@@ -103,10 +119,7 @@
         },
         methods:{
             onselect(item){
-                this.sequence[item.name] = (this.sequence[item.name]=='asc'?'desc':'asc');
-
-                console.log('update-value sequence>>>',this.sequence,item);
-                
+                this.sequence[item.name] = (this.sequence[item.name]=='asc'?'desc':'asc');                
                 this.$emit('update-value',item.name,this.sequence[item.name]);
             },
             onsearch(){

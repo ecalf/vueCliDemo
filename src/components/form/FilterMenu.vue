@@ -178,7 +178,6 @@
         },
         updated(){
             this.hasMore = this.judgeMoreItem();
-            console.log('TODO:class-more hover style');
         }
     }
 

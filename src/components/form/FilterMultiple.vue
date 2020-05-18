@@ -44,9 +44,9 @@
 
 
 <script>
-    import FilterCascade from "@components/FilterCascade";
-    import FilterMenu from "@components/FilterMenu";
-    import FilterSearch from "@components/FilterSearch";
+    import FilterCascade from "./FilterCascade";
+    import FilterMenu from "./FilterMenu";
+    import FilterSearch from "./FilterSearch";
 
 
 
@@ -65,17 +65,29 @@
             sequenceConfig:Object
         },
         data(){
+            let filterData = {
+                category:[],
+                brand:'',
+                state:'',
+                keyword:''
+            }
+
+            for(let item of this.sequenceConfig.sequenceList){
+                filterData[item.name] = item.order;
+            }
+
             return {
-                filterData:{}
+                filterData:filterData
             }
         },
         methods:{
             updateValue(name,value){
-                console.log('FilterMultiple updateValue',name,value);
                 this.filterData[name] = value;
+
+                console.log('FilterMultiple updateValue',name,value);
                 console.log('filterData>>>',this.filterData);
-
-
+                
+                this.$emit('on-filter',this.filterData);
             }
         }
 
@@ -89,7 +101,6 @@
 
 
 <style lang="scss" scoped>
- @import "../assets/css/variables.scss";
 .filter-container{
     padding: 30px 25px;
     background: $bgwhite;

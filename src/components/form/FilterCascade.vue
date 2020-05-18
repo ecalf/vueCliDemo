@@ -28,7 +28,7 @@
 
 
 <script>
-import FilterMenu from "@components/FilterMenu";
+import FilterMenu from "./FilterMenu";
 
 
 
@@ -68,7 +68,6 @@ export default {
         }
     },
     updated(){
-        console.log('update list>>>',this.list);
         this.menuData.list_1 = this.list;
     }
 }

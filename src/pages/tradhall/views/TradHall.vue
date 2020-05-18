@@ -10,6 +10,8 @@
         v-bind:categories="categoryList"
         v-bind:brands="brandList"
         v-bind:states="stateList"
+        v-bind:sequenceConfig="sequenceConfig"
+        @on-filter="onFilter"
         />
 
 
@@ -46,7 +48,7 @@
 <script>
 import Banner from "@components/Banner";
 import ProductRecommend from "@components/ProductRecommend";
-import FilterMultiple from "@components/FilterMultiple";
+import FilterMultiple from "@components/form/FilterMultiple";
 import OrderList from "@components/OrderList";
 import Pagination from "@components/Pagination";
 import Errormsg from "@components/Errormsg";
@@ -72,24 +74,33 @@ export default {
   },
   data() {
         return {
-          bannerList: [
-            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
-          ],
-          categoryList:[],
-          brandList:[],
-          stateList:[
-            {id:1,text:"进行中"},
-            {id:2,text:"已截止"}
-          ],
+            bannerList: [
+                { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
+                { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
+                { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
+            ],
+            categoryList:[],
+            brandList:[],
+            stateList:[
+                {id:1,text:"进行中"},
+                {id:2,text:"已截止"}
+            ],
+            sequenceConfig:{
+                label:"综合排序",
+                search:{
+                    name:'keyword'
+                },
+                sequenceList:[
+                    {text:'剩余时间',name:'timeOrder',order:'desc'},
+                    {text:'价格',name:'priceOrder',order:'desc'}
+                ]
+            },
 
-
-          needlist:[],
-          total:0,
-          page_size:10,
-          page_index:1,
-          type:1,  //type 1 发布采购 2 发布销售 3 委托销售'
+            needlist:[],
+            total:0,
+            page_size:10,
+            page_index:1,
+            type:1,  //type 1 发布采购 2 发布销售 3 委托销售'
 
         };
     },
@@ -100,17 +111,43 @@ export default {
         },
         switchPage(page_index){
             this.page_index = page_index*1;
-            this.getNeeds();
+            this.getNeedList();
         },
-        async getNeedList(){
+        onFilter(filterData){
+            //cate 只传最末尾一级
+            let cate = filterData.category[filterData.category.length-1]||{};
+            let brand = filterData.brand||{};
+            let state = filterData.state||{};
+            let keyword = [cate.name,brand.name,filterData.keyword].join()
+                                .replace(/^\,+|\,+$/g,'')
+                                .replace(/\,{2,}/g,',')
+
             const params = {
+                page_size:this.page_size,
+                page_index:this.page_index,
+                type:this.type,
+                keyword:keyword,
+
+                cate_id:cate.id||'',
+                brand_id:brand.id||'',
+                state:state.id||'',
+                timeOrder: filterData.timeOrder,
+                priceOrder: filterData.priceOrder
+               
+            };
+
+            this.getNeedList(params);
+
+        },
+        async getNeedList(params){
+            params = params||{
                 type:this.type,
                 page_size:this.page_size,
                 page_index:1,
                 keyword:''
             }
 
-            const res = await getNeedList(params);
+            const res = await getNeedList({data:params});
 
             if(res.code==200){
                 this.total = res.data.total;
