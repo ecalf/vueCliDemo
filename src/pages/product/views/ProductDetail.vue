@@ -63,11 +63,12 @@
           <span>2020.02.05-2020.04.06</span>
         </div>
         <div class="prodetail-btn">
-          <el-button type="text" @click="dialogVisible = true">立即联系</el-button>
-          <el-button type="text" @click="priceVisible = true">立即报价</el-button>
+          <el-button type="text" @click="showContactDialog(true)">立即联系</el-button>
+          <el-button type="text" @click="showQuotationDialog(true)">立即报价</el-button>
         </div>
       </div>
     </div>
+
     <!--公司主页介绍-->
     <div class="company-info clearfix">
       <a href class="enter-page">进入企业主页</a>
@@ -137,65 +138,42 @@
       </div>
     </div>
 
-    <!--立即联系-->
-    <el-dialog title :visible.sync="dialogVisible" width="400px" :append-to-body="true">
-      <div class="company-msg">
-        <p>联系人：张女士</p>
-        <p>电话：0755-8888 888</p>
-        <p>地址：深圳市福田区天安国际大厦6楼405号</p>
-      </div>
-    </el-dialog>
-    <!--立即报价-->
-    <el-dialog class="price-box"
-      title="立即报价表"
-      :visible.sync="priceVisible"
-      width="600px"
-      :append-to-body="true"
-      center
-    >
-      <el-form :model="form">
-        <h3 class="prodetail-title form-protitle">
-          鱼跃呼吸机家
-          <i class="highcolor">医用</i>正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压
-        </h3>
-        <el-form-item label="手机号码" :label-width="formLabelWidth">
-          <el-input v-model="form.tel" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="姓名/公司名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="价格" :label-width="formLabelWidth">
-          <el-input v-model="form.price" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="留言" :label-width="formLabelWidth">
-          <el-input type="textarea" v-model="form.message" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="priceVisible = false">取 消</el-button>
-        <el-button type="primary" @click="priceVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+
+
+
+    <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog" />
+    <DialogQuotation v-bind:visible="quotationVisible" @trigger="showQuotationDialog" />
+
   </div>
 </template>
 
 
 <script>
+import DialogQuotation from "./DialogQuotation";
+import DialogContact from "./DialogContact";
+
 export default {
-  data() {
-    return {
-      dialogVisible: false,
-      priceVisible: false,
-      form: {
-        title: "",
-        tel: "",
-        name: "",
-        price: "",
-        message: ""
-      },
-      formLabelWidth: "100px"
-    };
-  }
+    components:{
+        DialogQuotation,
+        DialogContact
+    },
+    data() {
+        return {
+            contactVisible: false,
+            quotationVisible: false
+        };
+    },
+    methods:{
+        showContactDialog(frag){
+            this.contactVisible = !!frag;
+        },
+        showQuotationDialog(frag){
+            this.quotationVisible = !!frag;
+        }
+    },
+    created(){
+        console.log('this.id',this.id,this.$props,this.$attrs);
+    }
 };
 </script>
 

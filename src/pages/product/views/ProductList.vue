@@ -3,7 +3,7 @@
     <!--banner-->
     <Banner :bannerList="bannerList" />
     <div class="commonweb">
-      <Product-List />
+      <ProductList />
       <!--分页-->
       <div class="layui-box">
         <div class="layui-laypage">
@@ -27,6 +27,8 @@
     </div>
   </div>
 </template>
+
+
 <script>
 import Banner from "@components/Banner";
 import ProductList from "@components/ProductList";

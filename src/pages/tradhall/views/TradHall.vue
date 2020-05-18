@@ -110,6 +110,7 @@ export default {
             this.getNeedList();
         },
         switchPage(page_index){
+            console.log('switch page_index',page_index);
             this.page_index = page_index*1;
             this.getNeedList();
         },
@@ -143,7 +144,7 @@ export default {
             params = params||{
                 type:this.type,
                 page_size:this.page_size,
-                page_index:1,
+                page_index:this.page_index,
                 keyword:''
             }
 
