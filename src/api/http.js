@@ -44,7 +44,8 @@ instance.interceptors.response.use(
 const requestCtrl = {
   time:10*1000,//10秒内不重复提交
   isAfoot(method,path,params){//判断相同请求是否正在进行中
-    let key = btoa(method+':'+path+':'+JSON.stringify(params));
+    let str = method+':'+path+':'+encodeURIComponent(JSON.stringify(params));
+    let key = btoa(str);
     if(this[key]&&Date.now()-this[key]<=this.time){
       return true;
     }else{

@@ -178,9 +178,10 @@ function setLang(component,lang){
 
 //格式化价格千分位
 function formatPrice(n){
-    n = n.toString().split('.');
+    n= (n||0).toString();
+    n = n.split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
-    return n.join('.');
+    return n.join('.')*1;
 }
 
 

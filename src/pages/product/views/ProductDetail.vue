@@ -1,9 +1,9 @@
 <template>
   <div class="product-details commonweb">
     <div class="crumbs">
-      <a href>商品详情</a>
+      <span>商品详情</span>
       <i class="iconfont iconjiantou1"></i>
-      <a href>呼吸机</a>
+      <span>{{detail.product_category_cnname}}</span>
     </div>
     <div class="prodetatils-box clearfix">
       <div class="prodetatils-img">
@@ -26,24 +26,26 @@
         </ul>
       </div>
       <div class="prodetatils-conetent">
-        <h1 class="prodetail-title">
-          鱼跃呼吸机家
-          <i class="highcolor">医用</i>正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压
-        </h1>
+            <h1 class="prodetail-title" v-html="title(detail.title)"></h1>
         <p
           class="prodetail-dec"
-        >鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压</p>
+        >{{detail.desc}}</p>
         <div class="prodetail-price">
+
           <span class="new-price">
-            优惠价
+            {{detail.type==2?'供应商价格':'市场价'}}
             <i>￥</i>
-            <strong>200,000</strong>
+            <strong>
+                {{formatPrice(detail.type==2?detail.supplier_price:detail.price)}}
+            </strong>
           </span>
+
           <span class="old-price">
             市场价
             <i>￥</i>
-            <em>200，000</em>
+            <em>{{formatPrice(detail.price)}}</em>
           </span>
+
         </div>
         <div class="prodetail-other">
           <span class="authent">
@@ -52,13 +54,13 @@
             <img src="@assets/images/inicon11.png" alt />
             <img src="@assets/images/inicon12.png" alt />
           </span>
-          <span>品牌：鱼跃</span>
-          <span>应用类型：医用</span>
-          <span>出口国：英国</span>
+          <span>品牌：{{detail.brand_id}}</span>
+          <span>应用类型：{{useWay(detail.use_way)}}</span>
+          <span>出口国：{{country(detail.exit_country)}}</span>
         </div>
         <div class="prodetail-num">
           数量：
-          <input type="text" value="1" />个
+          <input type="text" v-bind:value="detail.num" />个
           <span>库存150个</span>
           <span>2020.02.05-2020.04.06</span>
         </div>
@@ -141,8 +143,8 @@
 
 
 
-    <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog" />
-    <DialogQuotation v-bind:visible="quotationVisible" @trigger="showQuotationDialog" />
+    <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog"  />
+    <DialogQuotation v-bind:visible="quotationVisible" @trigger="showQuotationDialog" v-bind:id="this.needs_id" />
 
   </div>
 </template>
@@ -151,6 +153,9 @@
 <script>
 import DialogQuotation from "./DialogQuotation";
 import DialogContact from "./DialogContact";
+import { getNeedInfo } from "@api/need";
+import { getCountrylist,formatPrice } from "@utils/common";
+
 
 export default {
     components:{
@@ -159,20 +164,91 @@ export default {
     },
     data() {
         return {
+            countryList:[],
+            needs_id:this.$attrs.id>>0,
+            detail:{},
             contactVisible: false,
             quotationVisible: false
         };
     },
+    computed:{
+        title(){
+            return (text)=>{
+                return (text+'').replace(/医用|民用/g,function(m){
+                    return '<i class="highcolor">'+m+'</i>';
+                });
+            }
+        },
+        country(){
+            return (code)=>{
+                code = code.toUpperCase();
+                let country = this.countryList.filter((item)=>{
+                    return item.code==code;
+                });
+                return country.length?country[0].name:code
+            }
+        },
+        useWay(){
+            return (type)=>{
+                return type==1?'医用':'民用'
+            }
+        },
+        price(){
+          return (item)=>{
+            //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
+            let p;
+            if(item.type==2){
+              p = item.supplier_price;
+            }else if(item.type==1){
+              p = item.price;
+            }
+
+            return p&&('￥'+formatPrice(p));
+          }
+        }
+    },
     methods:{
+        formatPrice(price){
+            console.log('price>>>',price,formatPrice);
+            return formatPrice(price||0);
+        },
         showContactDialog(frag){
             this.contactVisible = !!frag;
         },
         showQuotationDialog(frag){
             this.quotationVisible = !!frag;
+        },
+        async getCountrylist(){
+            let res =  await getCountrylist();
+
+            if(res.code==200){
+              this.countryList = res.data;
+              this.getInfo();
+            }else{
+              this.$message({
+                showClose: true,
+                message: res.message,
+                type: "error"
+              });
+            }
+        },
+
+        async getInfo(){
+            const res = await getNeedInfo({data:{needs_id:this.needs_id}});
+            if(res.code==200){
+                this.detail = res.data;
+            }else{
+                 this.$message({
+                      showClose: true,
+                      message: res.message,
+                      type: "error"
+                });
+            }
         }
     },
     created(){
-        console.log('this.id',this.id,this.$props,this.$attrs);
+        this.getCountrylist();
+        
     }
 };
 </script>
@@ -184,7 +260,7 @@ export default {
 }
 .crumbs {
   margin-bottom: 3px;
-  a {
+  a ,span{
     color: #3d3938;
     padding: 0 5px;
     display: inline-block;
