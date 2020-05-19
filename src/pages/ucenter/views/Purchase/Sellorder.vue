@@ -10,10 +10,10 @@
               <input type="text" placeholder="搜索" />
             </form>
           </div>
-          <h3>报价管理</h3>
+          <h3>采购订单</h3>
         </div>
         <bar-nav :navlist="navlist" />
-        <price-list />
+        <order-show />
         <!--搜索判断-->
         <!-- <Errormsg /> -->
       </div>
@@ -25,31 +25,32 @@
 import Mleftnav from "@components/Mleftnav";
 import Errormsg from "@components/Errormsg";
 import BarNav from "../../components/BarNav";
-import PriceList from "../../components/PriceList";
-
-
+import OrderShow from "../../components/OrderShow";
 export default {
   components: {
     Mleftnav,
     Errormsg,
     BarNav,
-    PriceList
+    OrderShow
   },
   data() {
     return {
-      navlist: [{ title: "已报价" }, { title: "未报价" }]
+      navlist: [
+        { title: "全部" },
+        { title: "上架" },
+        { title: "下架" },
+        { title: "已截止" }
+      ]
     };
   },
   methods:{
-    getQuotedPriceList(){
-      //获取厂家向我发布的采购订单进行报价的信息
+    getOrderList(){
+      //我发布的销售订单
 
-
-
+      
     }
   }
 };
 </script>
-
 <style lang="scss" scoped>
 </style>

@@ -32,7 +32,7 @@
         </div>
         <div class="prodetail-num">
           数量：
-            <input type="text"  />个
+            <input type="text" value="含义不明" />个
             <span>
                 {{(detail.type==2||detail.type==4)?'库存':'求购'}}
                 {{detail.num}}
@@ -40,9 +40,11 @@
             </span>
           <span>{{detail.created_at|formatDate}}-{{detail.dead_time|formatDate}}</span>
         </div>
-        
+
         <div class="prodetail-btn">
           <el-button type="text" @click="showContactDialog(true)">立即联系</el-button>
+
+          <!--商家发布销售，客户可报价-->
           <el-button type="text" @click="showQuotationDialog(true)" v-if="detail.type==2">立即报价</el-button>
         </div>
 

@@ -42,6 +42,13 @@ export default {
         { title: "已截止" }
       ]
     };
+  },
+  methods:{
+    getOrderList(){
+      //我发布的采购订单
+
+      
+    }
   }
 };
 </script>
