@@ -1,14 +1,14 @@
 import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
-import ProductList from "../views/ProductList.vue";
+import Product from "../views/Product";
 import ProductDetail from "../views/ProductDetail.vue";
 import NotFoundComponent from "@components/NotFoundComponent";
 
 const routes = [
   {
     path: "/product",
-    name: "ProductList",
-    component: ProductList,
+    name: "Product",
+    component: Product,
     meta: {
       title: '产品列表'
     }

@@ -26,7 +26,7 @@ export default {
        
     },
     props:{
-        type:String
+        type:Number
     },
     data(){
 

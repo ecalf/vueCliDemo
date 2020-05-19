@@ -30,7 +30,7 @@ const routes = [
     path: "/publish/entrust",
     name: "publishEntrust",
     component: PublishEntrust,
-    props: (route) => ({ type: route.query.type }),
+    props: (route) => ({ type: route.query.type*1 }),
     meta: {
       title: '我要委托'
     }

@@ -195,7 +195,7 @@
             <i class="iconfont iconzu304" style="background-color:#05544a;"></i>成功订单
           </h3>
         </div>
-        <Success-Order />
+        <SuccessOrder />
       </div>
 
       <!--合作伙伴-->

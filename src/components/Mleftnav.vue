@@ -12,7 +12,7 @@
                 <router-link to="/ucenter/quotedprice">报价管理</router-link>
                 <router-link to="/ucenter/buyorder">采购订单</router-link>
                 <router-link to="/ucenter/suppliers">供应商库</router-link>
-                <router-link to="/publish/entrust?type=4">委托采购</router-link>
+                <router-link v-bind:to="{path:'/publish/entrust',query:{type:4}}">委托采购</router-link>
                 <a href="javascript:;">合同管理</a>
               </div>
             </li>
@@ -24,7 +24,7 @@
                 <router-link to="/publish/sell">发布商品</router-link>
                 <router-link to="/ucenter/sellorder">销售管理</router-link>
                 <router-link to="/ucenter/company">主页管理</router-link>
-                <router-link to="/publish/entrust?type=3">委托销售</router-link>
+                <router-link v-bind:to="{path:'/publish/entrust',query:{type:3}}">委托销售</router-link>
                 <a href="javascript:;">合同管理</a>
               </div>
             </li>

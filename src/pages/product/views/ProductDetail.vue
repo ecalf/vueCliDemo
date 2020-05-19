@@ -34,10 +34,10 @@
 
 <script>
 import ProductImages from "@components/ProductImages";
-import ProductDetailContent from "./ProductDetailContent";
-import ProductRichDesc from "./ProductRichDesc";
-import ProductAdv from "./ProductAdv";
-import CompanyInfo from "./CompanyInfo";
+import ProductDetailContent from "../components/ProductDetailContent";
+import ProductRichDesc from "../components/ProductRichDesc";
+import ProductAdv from "../components/ProductAdv";
+import CompanyInfo from "../components/CompanyInfo";
 
 import { getNeedInfo } from "@api/need";
 
