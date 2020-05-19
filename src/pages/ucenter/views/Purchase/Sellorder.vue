@@ -10,7 +10,7 @@
               <input type="text" placeholder="搜索" />
             </form>
           </div>
-          <h3>采购订单</h3>
+          <h3>销售订单</h3>
         </div>
         <bar-nav :navlist="navlist" />
         <order-show />

@@ -8,11 +8,11 @@
                 <a href="javascript:;"><i class="iconfont iconcaigou"></i>我要采购</a>
               </h4>
               <div class="member-subnav">
-                <a href="/publish/buy">发布采购</a>
-                <a href="/ucenter/quotedprice">报价管理</a>
-                <a href="/ucenter/buyorder">采购订单</a>
-                <a href="javascript:;">供应商库</a>
-                <a href="/publish/entrust">委托采购</a>
+                <router-link to="/publish/buy">发布采购</router-link>
+                <router-link to="/ucenter/quotedprice">报价管理</router-link>
+                <router-link to="/ucenter/buyorder">采购订单</router-link>
+                <router-link to="/ucenter/suppliers">供应商库</router-link>
+                <router-link to="/publish/entrust?type=4">委托采购</router-link>
                 <a href="javascript:;">合同管理</a>
               </div>
             </li>
@@ -21,11 +21,11 @@
                 <a href="javascript:;"><i class="iconfont iconxiaoshou"></i>我要销售</a>
               </h4>
               <div class="member-subnav">
-                <a href="/publish/sell">发布商品</a>
-                <a href="/ucenter/buyorder">销售管理</a><!--类 /ucenter/buyorder-->
-                <a href="javascript:;">主页管理</a>
+                <router-link to="/publish/sell">发布商品</router-link>
+                <router-link to="/ucenter/sellorder">销售管理</router-link>
+                <router-link to="/ucenter/company">主页管理</router-link>
+                <router-link to="/publish/entrust?type=3">委托销售</router-link>
                 <a href="javascript:;">合同管理</a>
-                <a href="/publish/entrust">委托销售</a>
               </div>
             </li>
 
@@ -49,11 +49,9 @@
                 <a href="javascript:;"><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
               </h4>
               <div class="member-subnav">
-                <a href="javascript:;">我的账户</a>
-                 <!--
+                <router-link to="/ucenter/account">我的账户</router-link>
+                <router-link to="/ucenter/authentication">认证中心</router-link>
                 <a href="javascript:;">发票管理</a>
-                -->
-                <a href="javascript:;">认证中心</a>
               </div>
             </li>
           </ul>

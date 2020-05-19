@@ -52,9 +52,12 @@ export default {
         CompanyInfo
        
     },
+    props:{
+        id:String //由路由传入
+    },
     data() {
         return {
-            needs_id:this.$attrs.id>>0,
+            needs_id:this.id>>0,
             detail:{},
             advList:[]
             

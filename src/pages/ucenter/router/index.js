@@ -1,12 +1,18 @@
 import RouterCreator from '@src/utils/enhanceRouter';
 
-import Login from "../views/Admin/Login.vue";
-import Register from "../views/Admin/Register.vue";
-import Member from "../views/Admin/Member.vue";
-import Buyorder from "../views/Purchase/Buyorder.vue";
-import Sellorder from "../views/Purchase/Sellorder.vue";
-import QuotedPrice from "../views/Purchase/QuotedPrice";
 import NotFoundComponent from "@components/NotFoundComponent";
+import Login from "../views/Admin/Login";
+import Register from "../views/Admin/Register";
+import Member from "../views/Admin/Member";
+import Account from "../views/Admin/Account";
+import Authentication from "../views/Admin/Authentication";
+
+import QuotedPrice from "../views/Purchase/QuotedPrice";
+import Buyorder from "../views/Purchase/Buyorder";
+import Sellorder from "../views/Purchase/Sellorder";
+import Company from "../views/Purchase/Company";
+import Suppliers from "../views/Purchase/Suppliers";
+
 
 const routes = [
   {
@@ -39,6 +45,25 @@ const routes = [
     }
   },
   {
+    path: "/ucenter/account",//账户管理-我的账户
+    name: "Account",
+    component: Account,
+    meta: {
+      title: '我的账户'
+    }
+  },
+
+  {
+    path: "/ucenter/authentication",//账户管理-认证中心
+    name: "Authentication",
+    component: Authentication,
+    meta: {
+      title: '认证中心'
+    }
+  },
+
+
+  {
     path: "/ucenter/buyorder",//我要采购-采购订单
     name: "Buyorder",
     component: Buyorder,
@@ -46,6 +71,7 @@ const routes = [
       title: '采购订单'
     }
   },
+
   {
     path: "/ucenter/quotedprice",//我要采购-报价管理
     name: "QuotedPrice",
@@ -54,6 +80,18 @@ const routes = [
       title: '报价管理'
     }
   },
+  
+  {
+    path: "/ucenter/suppliers",//我要采购-供应商库
+    name: "Suppliers",
+    component: Suppliers,
+    meta: {
+      title: '供应商库'
+    }
+  },
+
+
+
   {
     path: "/ucenter/sellorder",//我要销售-销售管理
     name: "Sellorder",
@@ -64,27 +102,22 @@ const routes = [
   },
 
   {
-    path: "/ucenter/sellorder",//我要销售-销售管理
-    name: "Sellorder",
-    component: Sellorder,
+    path: "/ucenter/company",//我要销售-销售管理
+    name: "Company",
+    component: Company,
     meta: {
-      title: '我的账户'
+      title: '主业管理'
     }
   },
 
-  {
-    path: "/ucenter/sellorder",//我要销售-销售管理
-    name: "Sellorder",
-    component: Sellorder,
-    meta: {
-      title: '认证中心'
-    }
-  },
-
+ 
   { 
     path: '/ucenter/*', 
     name:'notFound',
-    component: NotFoundComponent 
+    component: NotFoundComponent,
+    meta: {
+      title: '404'
+    } 
   }
  
 ];
