@@ -121,6 +121,7 @@ export default {
   computed:{
     country(){
         return (code)=>{
+            if(!code){ return code; }
             code = code.toUpperCase();
             let country = this.countryList.filter((item)=>{
                 return item.code==code;

@@ -35,6 +35,14 @@
   </el-dialog>
 </template>
 
+<style lang="scss" scoped>
+  .form-protitle{
+    font-size:16px;
+    font-weight:normal;
+  }
+
+</style>
+
 
 <script>
   import { quotation } from "@api/need";
