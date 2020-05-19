@@ -17,7 +17,6 @@ import Suppliers from "../views/Purchase/Suppliers";
 const routes = [
   {
     path: "/ucenter",
-    name: "Login",
     redirect: "/ucenter/member"
   },
   {

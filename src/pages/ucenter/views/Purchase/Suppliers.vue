@@ -2,7 +2,7 @@
     <div>供应商库</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
     
 </style>
 

@@ -21,7 +21,7 @@
 </template>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .other-condition {
     background: $bgwhite;
     font-size: 12px;

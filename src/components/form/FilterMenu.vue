@@ -30,7 +30,7 @@
 </template>
 
 
-<style lang="scss">      
+<style lang="scss" scoped>      
     .class-list {
         background: $bgwhite;
         font-size: 12px;

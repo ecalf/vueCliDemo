@@ -2,7 +2,7 @@
     <div>我的账户</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
     
 </style>
 

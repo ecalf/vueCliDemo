@@ -208,7 +208,7 @@
                 <FormRow>
                     <FieldWrap 
                         type="fileUploadGroup" 
-                        v-bind:label="'上传图片'"
+                        label="上传图片"
                         v-bind:required="true" 
                         height="150"
                         >
