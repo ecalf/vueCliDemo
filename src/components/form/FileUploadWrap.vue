@@ -2,7 +2,12 @@
 <template>
     <div class="upload-wrap" @click="openFold()">
         <slot name="default" v-bind:uploadedurl="value"/>
-        <input type="file" ref="uploadField" class="upload-field" @change="handleFiles($event)">
+        <input type="file"
+            v-bind:name="fieldName" 
+            ref="uploadField" 
+            class="upload-field" 
+            @change="handleFiles($event)"
+            />
     </div>
 </template>
 
@@ -44,6 +49,7 @@
         },
         data(){
             return {
+                fieldName:'upload_'+Date.now(),
                 defaultMaxSize:1024*2,//单位KB
                 defaultTypes:['image/png','image/jpeg'],
                 value:'' //上传后的图片路劲

@@ -84,9 +84,15 @@ export async function get(path,params){
 
 export async function post(path,params){
     if(params&&!params.data){
-        //按照后端约定，业务传参放在 data 字段内
-        console.log('warn: params format error,[data] must included ');
-        params = { data:params }
+        if(path.indexOf('/upload')>-1&&params&&params.get&&params.get('image')){
+          //业务传参放在 data 字段内,但文件上传接口例外
+          console.log('file upload:',params.get('image').name);
+
+        }else{
+          //按照后端约定，业务传参放在 data 字段内
+          console.log('warn: params format error,[data] must included ');
+          params = { data:params }
+        }
     }
 
     if(requestCtrl.isAfoot('post',path,params)){
