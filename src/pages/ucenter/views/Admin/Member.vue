@@ -26,7 +26,7 @@
                 </span>
               </p>
               <span class="person-name">
-                <span class="person-name-text">{{contact_name}}</span>
+                <span class="person-name-text">{{contact_name(profile.type)}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
@@ -138,17 +138,35 @@ export default {
     company(){
       return (type)=>{
         //type '注册类型：1个人 2 机构 3企业'
+
+        let user_company = this.profile.user_company||{};
+        let user_info = this.profile.user_info||{};
+        let user_organization = this.profile.organization||{};
+
         if(type==1){
-          return this.profile.user_info.user_name;
+          return user_info.user_name||'';
         }else if(type==2){
-          return this.profile.organization_name;
+          return user_organization.organization_name||'';
         }else if(type==3){
-          return this.profile.user_company.company_name||'';
+          return user_company.company_name||'';
         }
       }
     },
     contact_name(){
-      return this.$store.state.profile.user_company.contact_name
+      return (type)=>{
+        let user_company = this.profile.user_company||{};
+        let user_info = this.profile.user_info||{};
+        let user_organization = this.profile.organization||{};
+
+          if(type==1){
+            return user_info.user_name||'';
+          }else if(type==2){
+            return user_organization.contact_name||'';
+          }else if(type==3){
+            return user_company.contact_name||'';
+          }
+      }
+
     }
   },
   methods:{
