@@ -8,9 +8,9 @@
           <span>{{$t('time.welcome')}}</span>
         </div>
         <p>
-          <span>{{profile.user_name||'uid:'+profile.user_id}} 欢迎来到万合优采</span>
-          <router-link to="/ucenter/login" v-if="!(profile.user_id*1>0)">请登录</router-link>
-          <router-link to="/ucenter/register" v-if="!(profile.user_id*1>0)">免费注册</router-link>
+          <span>{{profile.user_info&&profile.user_info.user_name||''}} 欢迎来到万合优采</span>
+          <router-link to="/ucenter/login" v-if="!(profile.user_info&&profile.user_info.user_id*1>0)">请登录</router-link>
+          <router-link to="/ucenter/register" v-if="!(profile.user_info&&profile.user_info.user_id*1>0)">免费注册</router-link>
         </p>
       </div>
     </div>

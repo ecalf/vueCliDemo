@@ -129,11 +129,12 @@ export default {
                 type:this.type,
                 keyword:keyword,
 
+                is_defalut_sort:true,
                 cate_id:cate.id||'',
                 brand_id:brand.id||'',
-                state:state.id||'',
-                timeOrder: filterData.timeOrder,
-                priceOrder: filterData.priceOrder
+                status:state.id||'',
+                remain_time_sort: filterData.timeOrder,
+                price_sort: filterData.priceOrder
                
             };
 

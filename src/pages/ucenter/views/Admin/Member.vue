@@ -139,16 +139,16 @@ export default {
       return (type)=>{
         //type '注册类型：1个人 2 机构 3企业'
         if(type==1){
-          return this.profile.user_name;
+          return this.profile.user_info.user_name;
         }else if(type==2){
           return this.profile.organization_name;
         }else if(type==3){
-          return this.profile.company_name;
+          return this.profile.user_company.company_name||'';
         }
       }
     },
     contact_name(){
-      return this.$store.state.profile.contact_name
+      return this.$store.state.profile.user_company.contact_name
     }
   },
   methods:{
