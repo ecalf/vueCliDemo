@@ -1,6 +1,7 @@
 <template>
     <FieldWrap 
         type="text" 
+        v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -47,7 +48,7 @@
             maxLength:Number, //最大允许字数
             placeholder:String, //占位文字
             defaultvalue:String,//默认值
-
+            error:String,
             label:String, //标签名
             name:String,//表单项名
             width:String,//宽度

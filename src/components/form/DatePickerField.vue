@@ -3,7 +3,7 @@
         type="dateTimePicker" 
         v-bind:label="label"
         v-bind:required="required" 
-  
+        v-bind:error="error"
         v-bind:width="width" 
         v-bind:height="height"
         >
@@ -68,6 +68,7 @@ export default {
           FieldWrap
       },
       props:{
+          error:String,
           required:Boolean,
           name:String,
           label:String,

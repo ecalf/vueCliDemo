@@ -1,8 +1,12 @@
 <template>
   <div class="order-search">
     <form>
-      <button type="button" class="iconfont iconsousuo fr"></button>
-      <input type="text" placeholder="搜索" />
+      <button type="button" class="iconfont iconsousuo fr" @click="onSearch"></button>
+      <input type="text" 
+          v-bind:name="config.name" 
+          v-bind:placeholder="config.placeholder||'搜索'" 
+          v-model="keyword" 
+        />
     </form>
   </div>
 </template>
@@ -15,15 +19,19 @@
   /**************************************
   ******* 用于会员中心 一些列表表头的搜索
   ***************************************/
-    export default {
-        props:{
-         
-        },
-        data(){
-            return {}
-        },
-        methods:{
-            
-        }
-    }
+  export default {
+      props:{
+        config:Object
+      },
+      data(){
+          return {
+            keyword:''
+          }
+      },
+      methods:{
+          onSearch(){
+              this.config.handler(this.name,this.keyword);
+          }
+      }
+  }
 </script>

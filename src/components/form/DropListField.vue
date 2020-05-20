@@ -1,6 +1,7 @@
 <template>
     <FieldWrap 
         type="text" 
+        v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:width="width" 
@@ -40,6 +41,7 @@
             required:Boolean, //是否带必填标记
             defaulttext:String,//默认显示文字
             defaultselected:Number,//默认选中第几项
+            error:String,
             label:String, //标签名
             name:String, //名称，用于表单field
             width:String,//宽度

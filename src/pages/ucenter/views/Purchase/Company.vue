@@ -182,7 +182,7 @@
 
    
             <div class="btn-wrap">
-                <button class="submit-btn" type="button" @click="editCompany()">保 存</button>
+                <Button type="button" text="保 存" @on-click="editCompany()" />
             </div>
 
 
@@ -197,23 +197,6 @@
         margin-top:60px;
         margin-bottom: 20px;
         text-align:  center;
-        .submit-btn{
-            width:120px;
-            height:36px;
-            font-size:14px;
-            line-height: 36px;
-            text-align: center;
-            color:$bgwhite;
-            background-color: $defaultColor;
-            @include default-radius;
-
-            &:hover{
-                background-color: $hoverColor;
-            }
-            &:active{
-                background-color:$activeColor;
-            }
-        }
     }
 
 </style>
@@ -225,6 +208,8 @@
     import InputField from "@components/form/InputField";
     import TextAreaField from  "@components/form/TextAreaField";
     import FileUploadImage from  "@components/form/FileUploadImage";
+    import Button from  "@components/form/Button";
+
 
     import {editCompany} from "@api/user";
     import {validator} from "@utils/common";
@@ -237,7 +222,8 @@
             FieldWrap,
             InputField,
             TextAreaField,
-            FileUploadImage
+            FileUploadImage,
+            Button
             
         },
         props:{

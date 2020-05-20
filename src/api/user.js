@@ -35,6 +35,6 @@ export async function editCompany(params){
 
 
 //认证
-export async function identification(params){
+export async function authenticate(params){
     return post('/v1/user/identification',params);
 }

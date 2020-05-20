@@ -1,11 +1,13 @@
 <template>
     <div class="input-wrap" v-bind:style="wrapStyle">
-        <label class="input-label">
+        <label class="input-label" v-bind:style="labelStyle">
             <span class="input-required" v-if="required">*</span>{{label}}:
         </label>
-        <div class="input-field" v-bind:style="inputStyle">
+        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!error}">
             <slot name="default"></slot>
             <div class="input-suffix" v-if="suffix">{{count}}/{{maxLength}}</div>
+
+            <div class="input-error" v-show="error" v-bind:style="errorStyle">{{error}}</div>
         </div>
     </div>
 </template>
@@ -13,6 +15,7 @@
 
 <style lang="scss" scoped>
     $fieldHeight:40px;
+    $red:#F23A3B;
 
     .input-wrap{
         display:inline-flex;
@@ -27,11 +30,12 @@
         color:#4E5A65;
     }
     .input-required{
-        color:#F23A3B;
+        color:$red;
         margin-right: 2px;
         vertical-align: middle;
     }
     .input-field{
+        position: relative;
         display:flex;
         justify-content: flex-start;
         align-items: center;
@@ -40,6 +44,10 @@
         line-height: $fieldHeight;
         border:1px solid #EAECED;
         border-radius:3px;
+
+        &.error{
+            border-color: $red;
+        }
     }
 
     .input-suffix{
@@ -49,6 +57,18 @@
         font-weight:300;
         color:#EAECED;
         margin-right:10px;
+
+    }
+    .input-error{
+        position: absolute;
+        top:$fieldHeight;
+        left:0;
+        right:0;
+        font-size:12px;
+        line-height: 18px;
+        height: 18px;
+        color:$red;
+        padding:0 5px;
 
     }
 
@@ -64,10 +84,12 @@
             count:Number,
             required:Boolean,
             label:String,
+            labelwidth:String,
             width:String,
             height:String,
             suffix:Boolean,
-            maxLength:Number
+            maxLength:Number,
+            error:String
             
         },
         data(){
@@ -86,6 +108,14 @@
                     styleMap['align-items'] = 'flex-start';
                 }
 
+
+                return styleMap;
+            },
+            labelStyle(){
+                const styleMap = {};
+                if(this.labelwidth*1>0){
+                    styleMap.width = this.labelwidth+'px';
+                }
 
                 return styleMap;
             },
@@ -118,6 +148,14 @@
                 }
 
                 return styleMap;
+            },
+            errorStyle(){
+                const styleMap = {};
+                if(this.height*1>1){
+                    styleMap.top = this.height+'px';
+                }
+
+                return styleMap;
             }
         },
         methods:{
@@ -127,6 +165,7 @@
             onChange(){},
 
         }
+
         
 
 

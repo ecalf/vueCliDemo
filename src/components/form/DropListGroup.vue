@@ -2,6 +2,7 @@
     <FieldWrap 
         type="dropListGroup" 
         v-bind:label="label"
+        v-bind:error="error"
         v-bind:required="required" 
         v-bind:width="width" 
         v-bind:height="height"
@@ -38,6 +39,7 @@
         props:{
             prefix:Boolean,//是否带有前缀icon
             required:Boolean, //是否带必填标记
+            error:String,
             label:String, //标签名
             name:String, //名称，用于表单field
             width:String,//宽度

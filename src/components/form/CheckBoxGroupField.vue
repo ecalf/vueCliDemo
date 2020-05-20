@@ -3,7 +3,7 @@
         type="checkGroup" 
         v-bind:label="label"
         v-bind:required="required" 
-  
+        v-bind:error="error"
         v-bind:width="width" 
         v-bind:height="height"
         >
@@ -36,6 +36,7 @@
             CheckBoxRadio
         },
         props:{
+            error:String,
             required:Boolean,
             label:String,
             name:String,

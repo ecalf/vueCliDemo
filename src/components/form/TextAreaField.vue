@@ -3,6 +3,7 @@
 <template>
     <FieldWrap 
         type="textarea" 
+        v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -52,7 +53,7 @@
             maxLength:Number,
             placeholder:String,
             defaultvalue:String,
-
+            error:String,
             label:String,
             name:String,
             width:String,
