@@ -1,6 +1,6 @@
 
 <template>
-    <div class="upload-wrap" @click="openFold()">
+    <div class="upload-wrap" v-bind:class="{'upload-simple':type=='file'}" @click="openFold()">
         <slot name="default" v-bind:uploadedurl="value"/>
         <input type="file"
             v-bind:name="fieldName" 
@@ -23,7 +23,7 @@
         height:150px;
         background:rgba(254,254,254,0.47);
         border:1px dotted rgba(61,57,56,0.47);
-
+        vertical-align: middle;
         cursor: pointer;
         @include default-radius;
 
@@ -31,6 +31,15 @@
             display:none;
         }
 
+    }
+
+    .upload-simple{
+        display: inline-block;
+        min-width:200px;
+        height: 40px;
+        overflow: hidden;
+        border:none;
+        @include default-radius;
     }
 
 </style>
@@ -43,9 +52,10 @@
     export default {
         components:{},
         props:{
+            type:String,
             title:String,
             maxsize:Number, //最大上传容量,单位KB
-            types:String //文件类型限制
+            filetypes:String //文件类型限制
         },
         data(){
             return {
@@ -67,7 +77,7 @@
 
                 let file = e.target.files[0];
                 let maxsize = this.maxsize||this.defaultMaxSize;
-                let types = this.types||this.defaultTypes;  
+                let filetypes = this.filetypes||this.defaultTypes;  
 
                 /*                
                 const reader = new FileReader(); 
@@ -100,7 +110,7 @@
                         type: "error"
                     });
                     return false;
-                }else if(types.indexOf(file.type)==-1){
+                }else if(filetypes.indexOf(file.type)==-1){
                     this.$message({
                         showClose: true,
                         message: "图片文件类型错误,文件类型请限制为 png,jpeg,webp",

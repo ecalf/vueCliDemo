@@ -8,8 +8,7 @@ const instance = axios.create({
   timeout: 10000,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type' : 'application/json',
-    'Token':''
+    'Content-Type' : 'application/json'
   }
 });
 

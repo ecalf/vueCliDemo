@@ -6,6 +6,7 @@
         v-bind:required="required" 
         v-bind:width="width" 
         v-bind:height="height"
+        v-bind:labelwidth="labelwidth"
         >
             <div v-for="(item,index) of list" v-bind:key="index" class="drop-list-wrap">
                 <DropList
@@ -44,6 +45,7 @@
             name:String, //名称，用于表单field
             width:String,//宽度
             height:String,//高度
+            labelwidth:String,//label宽度
             list:Array //数据
         },
         data(){
@@ -64,6 +66,18 @@
                 this.value = Object.values(this.selected);
 
                 this.$emit('update-value',this.name,this.value);
+                this.$emit('input',this.value);
+            }
+        },
+        created(){
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||[];
+            this.value = defaultvalue;
+        },
+        updated(){
+            //console.log('updated',this.value,this.$attrs.value);
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||[];
             }
         }
 

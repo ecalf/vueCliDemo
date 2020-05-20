@@ -1,12 +1,12 @@
 <template>
     <MemberRightWrap title="" v-bind:tabconfig="titleTabs">
-        <AuthenticationPersonal v-show="curTabId==1" @on-authenticate="authenticate" />
-        <AuthenticationCompany  v-show="curTabId==2" @on-authenticate="authenticate"/>
+        <AuthenticationPersonal v-show="curTabId==0" @on-authenticate="authenticate" />
+        <AuthenticationCompany  v-show="curTabId==1" @on-authenticate="authenticate"/>
     </MemberRightWrap>
 </template>
 
 <style lang="scss" scoped>
-
+    
 
 </style>
 
@@ -28,12 +28,12 @@
         },
         data(){
             return {
-                curTabId:1,
+                curTabId:0,
                 titleTabs:{
                     name:'titleTab',
                     tabs:[
-                        {id:1,text:'个人认证',active:true},
-                        {id:2,text:'企业认证'},
+                        {id:0,text:'个人认证',active:true},
+                        {id:1,text:'企业认证'},
                     ],
                     handler:(name,item)=>{
                         this.curTabId = item.id;
@@ -41,20 +41,6 @@
                         console.log('this.curTabId',name,this.curTabId);
                         console.log('fieldData',this.fieldData);
                     }
-                },
-                fieldData:{
-                    company_name:'',
-                    company_introduce:'',
-                    company_logo:'',//单张图
-                    company_transparency:[],//多张图
-                    company_images:'',//单张图
-                    qualifications:[],//多张图
-                    addr:'',
-                    contact_name:'',
-                    contact_phone:'',
-                    email:'',
-                    qq:'',
-                    wechat:''
                 }
             }
         },

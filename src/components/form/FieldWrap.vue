@@ -65,10 +65,10 @@
         left:0;
         right:0;
         font-size:12px;
-        line-height: 18px;
-        height: 18px;
+        line-height: 14px;
+        height: 14px;
         color:$red;
-        padding:0 5px;
+        padding:0;
 
     }
 
@@ -123,9 +123,14 @@
                 const styleMap = {};
                 if(this.width*1>0){
                     styleMap.width = this.width+'px';
+                }else if(this.width=='auto'){
+                    styleMap.width = this.width;
                 }
+
                 if(this.height*1>1){
                     styleMap.height = this.height+'px';
+                }else if(this.height=='auto'){
+                    styleMap.height = this.height;
                 }
 
                 if(this.type=='textarea'){

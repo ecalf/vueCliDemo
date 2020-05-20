@@ -11,6 +11,7 @@
         v-bind:max-length="maxLength"
         v-bind:width="width" 
         v-bind:height="height" 
+        v-bind:labelwidth="labelwidth"
         >
 
              <textarea
@@ -20,7 +21,6 @@
 
 
                 @input="onInput()"
-                @change="onChange()"
                 v-model="value">
 
             </textarea> 
@@ -57,7 +57,8 @@
             label:String,
             name:String,
             width:String,
-            height:String
+            height:String,
+            labelwidth:String
         },
         data(){
             return {
@@ -76,25 +77,30 @@
         },
         watch:{
             value(newValue,oldValue){
-                if(newValue.length>this.maxLength){
+                if(this.maxLength>0&&newValue.length>this.maxLength){
                     this.value = newValue.slice(0,this.maxLength);
                 }
             }
         },
         methods:{
             onInput(){
-
-            },
-            onChange(){
                 this.$emit('update-value',this.name,this.value);
-            },
 
+                //v-model surport
+                this.$emit("input", this.value);
+            }
         },
         created(){
-            this.value = this.defaultvalue;
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultvalue||'';
+            this.value = defaultvalue;
+        },
+        updated(){
+            //console.log('updated',this.value,this.$attrs.value);
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||'';
+            }
         }
-        
-
 
     }
 
