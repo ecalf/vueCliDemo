@@ -1,13 +1,13 @@
 <template>
     <FieldWrap 
-        type="text"
+        type="readonly"
         v-bind:label="label"
-        v-bind:count="value.length"
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
+        v-bind:border="border||0"
         >
-            <span class="text">{{value}}</span>
+            <span class="text" v-bind="$attrs">{{value}}</span>
     </FieldWrap>
 
 </template>
@@ -22,6 +22,19 @@
 
 
 <script>
+    /************************************************
+        一般用于表单内带标签的只读项数据
+        也可以设置 InputField 为readonly 替代该组件
+        <InputField 
+            label="微信"
+            width="220"
+            height="25"
+            v-bind:border="0"
+            value="微信12123"
+            readonly
+            />
+    **************************************************/
+
     import FieldWrap from  "./FieldWrap.vue";
 
 
@@ -30,8 +43,14 @@
             FieldWrap
         },
         props:{
-            text:String
+            label:String,
+            text:String,
+            width:String,
+            height:String,
+            labelwidth:String,
+            border:Number
         },
+        inheritAttrs:false,
         data(){
             return {
                 value:''

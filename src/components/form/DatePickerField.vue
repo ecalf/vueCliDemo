@@ -7,6 +7,7 @@
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
+        v-bind:border="0"
         >
 
       <el-date-picker

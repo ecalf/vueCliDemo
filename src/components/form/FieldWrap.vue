@@ -5,7 +5,7 @@
         </label>
         <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!error}">
             <slot name="default"></slot>
-            <div class="input-suffix" v-if="suffix">{{count}}/{{maxLength}}</div>
+            <div class="input-suffix" v-bind:style="suffixStyle" v-if="suffix">{{count}}/{{maxLength}}</div>
 
             <div class="input-error" v-show="error" v-bind:style="errorStyle">{{error}}</div>
         </div>
@@ -88,6 +88,7 @@
             width:String,
             height:String,
             suffix:Boolean,
+            border:Number,
             maxLength:Number,
             error:String
             
@@ -121,38 +122,46 @@
             },
             inputStyle(){
                 const styleMap = {};
+
+                //设置边框
+                if(this.border!=undefined){
+                    styleMap['border-width'] = (this.border>>0)+'px';
+                }
+
+                //设置宽度
                 if(this.width*1>0){
                     styleMap.width = this.width+'px';
                 }else if(this.width=='auto'){
                     styleMap.width = this.width;
                 }
 
+                //设置高度
                 if(this.height*1>1){
                     styleMap.height = this.height+'px';
-                }else if(this.height=='auto'){
-                    styleMap.height = this.height;
+                    styleMap['line-height'] = this.height+'px';
                 }
 
+                //特殊类型的样式微调
                 if(this.type=='textarea'){
                     styleMap['flex-direction'] = 'column';
                     styleMap['align-items'] = 'flex-end';
                 }else if(this.type=='editor'){
                     styleMap['flex-direction'] = 'column';
                     styleMap.border = 'none'
-
-                }else if(this.type=='checkGroup'){
-                    styleMap.border = 'none'
                 }else if(this.type=='dropListGroup'){
                     styleMap['justify-content'] = 'space-between';
-                    styleMap.border = 'none';
                 }else if(this.type=="fileUploadGroup"){
-                    styleMap.border = 'none';
-
-                }else if(this.type=='dateTimePicker'){
                     styleMap.border = 'none';
                 }
 
+
                 return styleMap;
+            },
+            suffixStyle(){
+                const styleMap = {};
+                if(this.height*1>1){
+                    styleMap['line-height'] = this.height+'px';
+                }
             },
             errorStyle(){
                 const styleMap = {};

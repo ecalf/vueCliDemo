@@ -245,6 +245,7 @@
                         type="editor"
                         label="电脑端描述"
                         v-bind:required="true" 
+                        v-bind:border="0"
                         height="400"
                         >
 

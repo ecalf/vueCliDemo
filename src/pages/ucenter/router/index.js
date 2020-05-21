@@ -56,6 +56,7 @@ const routes = [
     path: "/ucenter/authentication",//账户管理-认证中心
     name: "Authentication",
     component: Authentication,
+    props: (route) => ({ type: route.query.type*1 }),
     meta: {
       title: '认证中心'
     }

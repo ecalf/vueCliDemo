@@ -24,22 +24,20 @@
             AuthenticationCompany
         },
         props:{
-
+            type:Number
         },
         data(){
+            let curTabId = this.type>>0;
             return {
-                curTabId:0,
+                curTabId:curTabId,
                 titleTabs:{
                     name:'titleTab',
                     tabs:[
-                        {id:0,text:'个人认证',active:true},
-                        {id:1,text:'企业认证'},
+                        {id:0,text:'个人认证',active:curTabId==0},
+                        {id:1,text:'企业认证',active:curTabId==1},
                     ],
                     handler:(name,item)=>{
                         this.curTabId = item.id;
-
-                        console.log('this.curTabId',name,this.curTabId);
-                        console.log('fieldData',this.fieldData);
                     }
                 }
             }

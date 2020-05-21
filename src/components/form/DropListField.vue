@@ -1,12 +1,13 @@
 <template>
     <FieldWrap 
-        type="text" 
+        type="dropList" 
         v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
+        v-bind:border="0"
         >
             <DropList
                 v-bind:name="name"

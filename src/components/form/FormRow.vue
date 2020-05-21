@@ -8,6 +8,9 @@
 <style lang="scss" scoped>
     .form-row{
         margin:15px auto ;
+        justify-content: flex-start;
+        align-items: center;
+        display: flex;
     }
 
 </style>

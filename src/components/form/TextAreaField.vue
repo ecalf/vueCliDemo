@@ -12,10 +12,12 @@
         v-bind:width="width" 
         v-bind:height="height" 
         v-bind:labelwidth="labelwidth"
+        v-bind:border="border"
         >
 
              <textarea
                 class="input-text"
+                v-bind="$attrs"
                 v-bind:placeholder="placeholder"
                 v-bind:defaultvalue="''" 
 
@@ -58,8 +60,10 @@
             name:String,
             width:String,
             height:String,
-            labelwidth:String
+            labelwidth:String,
+            border:Number
         },
+        inheritAttrs:false,
         data(){
             return {
                 value:''

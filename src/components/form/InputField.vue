@@ -10,9 +10,11 @@
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
+        v-bind:border="border"
         >
             <input 
                 class="input-text"
+                v-bind="$attrs"
                 v-bind:placeholder="placeholder"
                 v-bind:defaultvalue="defaultvalue" 
 
@@ -53,8 +55,10 @@
             name:String,//表单项名
             width:String,//宽度
             height:String,//高度
-            labelwidth:String//label宽度
+            labelwidth:String,//label宽度
+            border:Number //设置边框大小，默认1
         },
+        inheritAttrs:false,
         data(){
             return {
                 value:''
