@@ -337,7 +337,7 @@
                 if(res.code==200){
                     this.$message({
                         showClose: true,
-                        message: res.message,
+                        message: '保存成功',
                         type: "success"
                     });
 
