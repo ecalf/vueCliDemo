@@ -133,6 +133,7 @@
             afterUpload(url){    
                 this.value = url;
                 this.$emit('update-value',this.name,url);
+                this.$emit('input',url);
 
             }
         }

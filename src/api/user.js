@@ -27,3 +27,14 @@ export async function getMyNeeds(params){
 export async function identify(params){
     return post('/v1/user/identification',params)
 }
+
+//公司信息编辑
+export async function editCompany(params){
+    return post('/v1/user/company_info_edit',params);
+}
+
+
+//认证
+export async function authenticate(params){
+    return post('/v1/user/identification',params);
+}

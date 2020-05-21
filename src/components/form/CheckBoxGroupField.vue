@@ -3,9 +3,11 @@
         type="checkGroup" 
         v-bind:label="label"
         v-bind:required="required" 
-  
+        v-bind:error="error"
         v-bind:width="width" 
         v-bind:height="height"
+        v-bind:labelwidth="labelwidth"
+        v-bind:border="0"
         >
 
         <CheckBoxRadio v-for="(item,i) in list" 
@@ -36,11 +38,13 @@
             CheckBoxRadio
         },
         props:{
+            error:String,
             required:Boolean,
             label:String,
             name:String,
             width:String,
             height:String,
+            labelwidth:String,
             list:Array
         },
         data(){
@@ -59,8 +63,20 @@
                     });
                 }
 
-                console.log('checkGroup value ',this.value);
+                //console.log('checkGroup value ',this.value);
                 this.$emit('update-value',this.name,this.value);
+                this.$emit("input", this.value);//支持 v-model 指令
+            }
+        },
+        created(){
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||[];
+            this.value = defaultvalue;
+        },
+        updated(){
+            //console.log('updated',this.value,this.$attrs.value);
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||[];
             }
         }
     }

@@ -1,6 +1,7 @@
 <template>
     <FieldWrap 
-        type="text" 
+        type="text"
+        v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -8,15 +9,17 @@
         v-bind:max-length="maxLength"
         v-bind:width="width" 
         v-bind:height="height"
+        v-bind:labelwidth="labelwidth"
+        v-bind:border="border"
         >
             <input 
                 class="input-text"
+                v-bind="$attrs"
                 v-bind:placeholder="placeholder"
                 v-bind:defaultvalue="defaultvalue" 
 
 
                 @input="onInput()"
-                @change="onChange()"
                 v-model="value"
              />
     </FieldWrap>
@@ -47,12 +50,15 @@
             maxLength:Number, //最大允许字数
             placeholder:String, //占位文字
             defaultvalue:String,//默认值
-
+            error:String,
             label:String, //标签名
             name:String,//表单项名
             width:String,//宽度
-            height:String//高度
+            height:String,//高度
+            labelwidth:String,//label宽度
+            border:Number //设置边框大小，默认1
         },
+        inheritAttrs:false,
         data(){
             return {
                 value:''
@@ -60,7 +66,7 @@
         },
         watch:{
             value(newValue,oldValue){
-                if(newValue.length>this.maxLength){
+                if(this.maxLength>0&&newValue.length>this.maxLength){
                     this.value = newValue.slice(0,this.maxLength);
                 }
             }
@@ -68,15 +74,28 @@
 
         methods:{
             onInput(){
-
-            },
-            onChange(){
                 this.$emit('update-value',this.name,this.value);
-            },
+
+                /***********************************************************
+                支持 v-model 指令，该指令默认父组件把数据项绑定在本组件的 value 属性上,
+                并给本组件 自动注册一个 input 事件来更新父组件的数据项,
+                给了给父组件更新数据,本组件需要触发 input 事件并传递数据.
+                *************************************************************/
+                this.$emit("input", this.value);
+                //console.log(this.$props,this.$attrs,this.$data);
+            }
 
         },
         created(){
-            this.value = this.defaultvalue;
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultvalue||'';
+            this.value = defaultvalue;
+        },
+        updated(){
+            //console.log('updated',this.value,this.$attrs.value);
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||'';
+            }
         }
 
 

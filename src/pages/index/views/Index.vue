@@ -123,7 +123,7 @@
         <div class="column-title clearfix">
           <div class="right-msg fr">
             <span>总业务数量：1200</span>
-            <a href class="release-btn">
+            <a href="/publish/sell" class="release-btn">
               <i></i>我要发布
             </a>
           </div>
@@ -139,7 +139,7 @@
       <Product-List />
 
       <div class="adver-area">
-        <a href>
+        <a href="/product">
           <img src="@assets/images/adv_img3.png" alt />
         </a>
       </div>
@@ -148,7 +148,7 @@
         <div class="column-title clearfix">
           <div class="right-msg fr">
             <span>总业务数量：1200</span>
-            <a href class="release-btn">
+            <a href="/publish/buy" class="release-btn">
               <i></i>我要发布
             </a>
           </div>
@@ -157,7 +157,7 @@
           </h3>
         </div>
         <Order-list />
-        <a href class="purchase-more">查看更多</a>
+        <a href="/product" class="purchase-more">查看更多</a>
       </div>
 
       <div class="adver-area">
@@ -171,7 +171,7 @@
         <div class="column-title clearfix">
           <div class="right-msg fr">
             <span>总业务数量：1200</span>
-            <a href class="release-btn">
+            <a href="/publish/sell" class="release-btn">
               <i></i>我要发布
             </a>
           </div>
@@ -180,7 +180,7 @@
           </h3>
         </div>
         <Order-list />
-        <a href class="purchase-more">查看更多</a>
+        <a href="/product" class="purchase-more">查看更多</a>
       </div>
 
       <div class="adver-area">
@@ -195,7 +195,7 @@
             <i class="iconfont iconzu304" style="background-color:#05544a;"></i>成功订单
           </h3>
         </div>
-        <Success-Order />
+        <SuccessOrder />
       </div>
 
       <!--合作伙伴-->

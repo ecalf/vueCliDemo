@@ -18,7 +18,7 @@
             <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
           </h3>
           <p class="dec">
-            医用的达到欧盟欧盟欧盟欧标准医用的达到医
+           【示列】欧盟欧盟欧标准医用的达到医
             医用的达到医用的达到医用的达到医用的达到...
           </p>
         </a>
@@ -45,7 +45,7 @@
       </li>
       <li class="item item6">
         <p class="pro-date"><i>10</i>天<i>5</i>时<i>1</i>分<i>10</i>秒</p>
-        <a href class="click-more">点击查看</a>
+        <router-link to="" class="click-more">点击查看</router-link>
       </li>
     </ul>
 
@@ -94,7 +94,7 @@
           <span v-show="new Date(item.dead_time)>Date.now()"><i>0</i>天<i>0</i>时<i>0</i>分<i>0</i>秒</span>
           <span v-show="new Date(item.dead_time)<=Date.now()"><i>已截止</i></span>
         </p>
-        <a href class="click-more" @click="detail(item.id)">点击查看</a>
+        <router-link v-bind:to="'/product/'+item.id"  class="click-more">点击查看</router-link>
       </li>
     </ul>
 
@@ -121,6 +121,7 @@ export default {
   computed:{
     country(){
         return (code)=>{
+            if(!code){ return code; }
             code = code.toUpperCase();
             let country = this.countryList.filter((item)=>{
                 return item.code==code;
@@ -135,14 +136,12 @@ export default {
     },
     price(){
       return (item)=>{
-        //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售'
+        //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
         let p;
-        if(item.type==1){
-          p = item.market_price;
-        }else if(item.type==2){
+        if(item.type==2){
           p = item.supplier_price;
-        }else if(item.type==3){
-          p = item.supplier_price;
+        }else if(item.type==1){
+          p = item.price;
         }
 
         return p&&('￥'+formatPrice(p));

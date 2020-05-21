@@ -1,11 +1,13 @@
 <template>
     <div class="input-wrap" v-bind:style="wrapStyle">
-        <label class="input-label">
+        <label class="input-label" v-bind:style="labelStyle">
             <span class="input-required" v-if="required">*</span>{{label}}:
         </label>
-        <div class="input-field" v-bind:style="inputStyle">
+        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!error}">
             <slot name="default"></slot>
-            <div class="input-suffix" v-if="suffix">{{count}}/{{maxLength}}</div>
+            <div class="input-suffix" v-bind:style="suffixStyle" v-if="suffix">{{count}}/{{maxLength}}</div>
+
+            <div class="input-error" v-show="error" v-bind:style="errorStyle">{{error}}</div>
         </div>
     </div>
 </template>
@@ -13,6 +15,7 @@
 
 <style lang="scss" scoped>
     $fieldHeight:40px;
+    $red:#F23A3B;
 
     .input-wrap{
         display:inline-flex;
@@ -27,11 +30,12 @@
         color:#4E5A65;
     }
     .input-required{
-        color:#F23A3B;
+        color:$red;
         margin-right: 2px;
         vertical-align: middle;
     }
     .input-field{
+        position: relative;
         display:flex;
         justify-content: flex-start;
         align-items: center;
@@ -40,6 +44,10 @@
         line-height: $fieldHeight;
         border:1px solid #EAECED;
         border-radius:3px;
+
+        &.error{
+            border-color: $red;
+        }
     }
 
     .input-suffix{
@@ -49,6 +57,18 @@
         font-weight:300;
         color:#EAECED;
         margin-right:10px;
+
+    }
+    .input-error{
+        position: absolute;
+        top:$fieldHeight;
+        left:0;
+        right:0;
+        font-size:12px;
+        line-height: 14px;
+        height: 14px;
+        color:$red;
+        padding:0;
 
     }
 
@@ -64,10 +84,13 @@
             count:Number,
             required:Boolean,
             label:String,
+            labelwidth:String,
             width:String,
             height:String,
             suffix:Boolean,
-            maxLength:Number
+            border:Number,
+            maxLength:Number,
+            error:String
             
         },
         data(){
@@ -89,32 +112,61 @@
 
                 return styleMap;
             },
-            inputStyle(){
+            labelStyle(){
                 const styleMap = {};
-                if(this.width*1>0){
-                    styleMap.width = this.width+'px';
-                }
-                if(this.height*1>1){
-                    styleMap.height = this.height+'px';
+                if(this.labelwidth*1>0){
+                    styleMap.width = this.labelwidth+'px';
                 }
 
+                return styleMap;
+            },
+            inputStyle(){
+                const styleMap = {};
+
+                //设置边框
+                if(this.border!=undefined){
+                    styleMap['border-width'] = (this.border>>0)+'px';
+                }
+
+                //设置宽度
+                if(this.width*1>0){
+                    styleMap.width = this.width+'px';
+                }else if(this.width=='auto'){
+                    styleMap.width = this.width;
+                }
+
+                //设置高度
+                if(this.height*1>1){
+                    styleMap.height = this.height+'px';
+                    styleMap['line-height'] = this.height+'px';
+                }
+
+                //特殊类型的样式微调
                 if(this.type=='textarea'){
                     styleMap['flex-direction'] = 'column';
                     styleMap['align-items'] = 'flex-end';
                 }else if(this.type=='editor'){
                     styleMap['flex-direction'] = 'column';
                     styleMap.border = 'none'
-
-                }else if(this.type=='checkGroup'){
-                    styleMap.border = 'none'
                 }else if(this.type=='dropListGroup'){
                     styleMap['justify-content'] = 'space-between';
-                    styleMap.border = 'none';
                 }else if(this.type=="fileUploadGroup"){
                     styleMap.border = 'none';
+                }
 
-                }else if(this.type=='dateTimePicker'){
-                    styleMap.border = 'none';
+
+                return styleMap;
+            },
+            suffixStyle(){
+                const styleMap = {};
+                if(this.height*1>1){
+                    styleMap['line-height'] = this.height+'px';
+                }
+            },
+            errorStyle(){
+                const styleMap = {};
+                if(this.height*1>1){
+                    styleMap.top = this.height+'px';
                 }
 
                 return styleMap;
@@ -127,6 +179,7 @@
             onChange(){},
 
         }
+
         
 
 

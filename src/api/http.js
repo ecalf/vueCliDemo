@@ -8,8 +8,7 @@ const instance = axios.create({
   timeout: 10000,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type' : 'application/json',
-    'Token':''
+    'Content-Type' : 'application/json'
   }
 });
 
@@ -40,14 +39,80 @@ instance.interceptors.response.use(
 );
 
 
+
+const requestCtrl = {
+  time:10*1000,//10秒内不重复提交
+  isAfoot(method,path,params){//判断相同请求是否正在进行中
+    let str = method+':'+path+':'+encodeURIComponent(JSON.stringify(params));
+    let key = btoa(str);
+    if(this[key]&&Date.now()-this[key]<=this.time){
+      return true;
+    }else{
+      this[key]=Date.now();
+      return false;
+    }
+  }
+};
+
+
+
 export async function get(path,params){
-  const res = await instance.get(path,params);
-  return res.data;
+  if(params&&!params.data){
+      //按照后端约定，业务传参放在 data 字段内
+      console.warn('params format error,[data] must included ');
+      params = { data:params }
+  }
+
+  if(requestCtrl.isAfoot('get',path,params)){
+      return {
+        code:500,
+        data:{},
+        message:"表单正在提交，请勿重复提交"
+      }
+    }
+
+    let res; 
+    try{
+      res = await instance.get(path,params);
+    }catch(error){
+      res = {code:500,data:{},message:'请求失败'}
+    }
+  
+    return res.data;
 }
 
 export async function post(path,params){
-  const res = await instance.post(path,params);
-  return res.data;
+    if(params&&!params.data){
+        if(path.indexOf('/upload')>-1&&params&&params.get&&params.get('image')){
+          //业务传参放在 data 字段内,但文件上传接口例外
+          console.log('file upload:',params.get('image').name);
+
+        }else{
+          //按照后端约定，业务传参放在 data 字段内
+          console.log('warn: params format error,[data] must included ');
+          params = { data:params }
+        }
+    }
+
+    if(requestCtrl.isAfoot('post',path,params)){
+      return {
+        code:500,
+        data:{},
+        message:"表单正在提交，请勿重复提交"
+      }
+    }
+    
+
+    let res;
+    try{
+      res = await instance.post(path,params);
+      //console.log('res>>>',res);
+    }catch(error){
+      //console.log('error>>>',error);
+      res = {code:500,data:{},message:'请求失败'}
+    }
+
+    return res.data;
 }
 
 

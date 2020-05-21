@@ -7,7 +7,10 @@ export default {
     //strict模式：任何 state 的变更如果不是通过 mutation commit 的都将被阻止,存在性能损失,只在开发环境使用
     strict: process.env.NODE_ENV !== 'production',
     state: {
-
+        user_info:{},
+        user_company:{},
+        user_bank:{},
+        user_organization:{}
     },
     getters: {
         //模块外使用：getters['moduleName/getterName']

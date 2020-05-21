@@ -17,9 +17,11 @@ const RouterCeator = {
             //console.log('from ',from);
             //console.log('to ',to);
 
+
+
             if(from.name=='Index'){
                 //首页模块只有一个页面,全部使用刷新方式跳转
-                location.href=to.path;
+                location.href=to.path+this.queryString(to.query);
 
             }else if(from.matched.length!=0&&to.matched.length==0){
                 /************************************************
@@ -38,7 +40,7 @@ const RouterCeator = {
                 因此确保 to.matched 能匹配，支处理模块跳出的情况
                 **************************************************/
 
-                location.href=to.path;
+                location.href=to.path+this.queryString(to.query);
             }else {
                 this.fixedDocTitle(to);
                 next();
@@ -52,6 +54,21 @@ const RouterCeator = {
         //通过 path 判断页面所属模块,pathname="/aa/bb"
         let moduleNames = pathname.split('/').slice(1);
         return moduleNames;
+    },
+    queryString(query){
+        //查询参数对象转 location.search
+        let str = '';
+        for(let k in query){
+            if(!str){
+                str = '?'
+            }else{
+                str+='&'
+            }
+
+            str+=k+'='+query[k];
+        }
+        return str;
+
     },
     fixedDocTitle(to){//路由发生变化修改页面title
         if (to.meta.title) {

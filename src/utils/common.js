@@ -3,6 +3,33 @@
 *********************/
 
 
+
+/**************************************************
+格式化列表类数据
+列表类组件 item 基本数据格式为{id:1, text:"名称", icon:"xxx/xxx.png" }
+*******************************************************/
+function formatListData(listData){
+    if(!(listData instanceof Array)){
+        console.log('formatListData error,param listData is not an array');
+        return [];
+    }
+
+    listData = listData.map(function(item){
+        item.id = item.id||item.value||'';
+        item.text = item.cn_name;//todo：按中英文选择cn_name en_name
+        item.icon = item.icon||item.img||'';
+
+        if(item.child&&item.child.length){
+            item.child = formatListData(item.child);
+        }
+
+        return item;
+    });
+
+    return listData;
+}
+
+
 function dateTimeFormat(date,formatStr,frag){
     if(typeof(date)=='string'){
         date = date.replace(/\-/g,'/');
@@ -103,19 +130,16 @@ function getFullWidthLength(str) {
 
 
 //存token
-function setToken(token,client){
-    console.log('========TODO:目前登录返回的 profile 和 getProfile 借口返回的数据格式不一致=====');
-    let clientToken = 'DATA '+btoa(client.uid+':'+client.user_name+':'+token);
+function setToken(token,profile){
+    let user_id = profile.user_info.user_id;
+    let user_name = profile.user_info.user_name;
+    let clientToken = 'DATA '+btoa(user_id+':'+user_name+':'+token);
     localStorage.setItem('Token',clientToken);
 
-    let profile = {
+    return {
         token:clientToken,
-        uid:client.uid,
-        user_name:client.user_name,
-        ...client.profiles
+        profile:profile
     }
-
-    return profile;
 }
 
 //取token
@@ -151,9 +175,49 @@ function setLang(component,lang){
 
 //格式化价格千分位
 function formatPrice(n){
-    n = n.toString().split('.');
+    n= (n||0).toString();
+    n = n.split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
-    return n.join('.');
+    return n.join('.')*1;
+}
+
+
+//常用数据校验
+const validator = {
+    isNum(str,n){
+        let reg;
+        if(n){
+            reg = new RegExp('^\\d{'+n+'}$');
+        }else{
+            reg = /^\d+$/;
+        }
+
+        return reg.test(str);
+    },
+    isCNChar(str){
+        let reg = /^[\u4e00-\u9fa5]+$/;
+        return reg.test(str);
+    },
+    isMobile(str){//手机
+        let reg = /^1[3-9]\d{9}$/;
+        return reg.test(str);
+    },
+
+    isPhone(str){//座机
+        let reg = /^(\d3,4|\d{3,4}-)?\d{7,8}$/;
+        return reg.test(str);
+    },
+    isTel(str){//电话
+        return this.isMobile(str)||this.isPhone(str);
+    },
+    isEmail(str){
+        let reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        return reg.test(str);
+    },
+    isUrl(str){
+        let reg = /^(?:https?:)?\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
+        return reg.test(str);
+    }
 }
 
 
@@ -168,5 +232,7 @@ export {
     setLang,
     dateTimeFormat,
     getFullWidthLength,
-    formatPrice
+    formatPrice,
+    formatListData,
+    validator
 }

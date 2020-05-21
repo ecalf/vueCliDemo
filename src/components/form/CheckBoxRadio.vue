@@ -181,6 +181,7 @@
                 this.triggerCheckStatus();
                 this.value = {...this.item,checked:this.checked};
                 this.$emit('update-value',this.name,this.value);
+                this.$emit('input',this.value);
             }
         },
         created(){
