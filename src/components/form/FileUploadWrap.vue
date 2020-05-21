@@ -123,6 +123,8 @@
 
             },
             async upload(file){
+                this.beforeUpload(file);
+
                 const formdata = new FormData();
                 formdata.append('image',file);
                 let res = await uploadFile(formdata);
@@ -137,13 +139,19 @@
                         type: "success"
                     });
                 }else{
-
+                    this.uploadError(res,file);
                 }
 
+            },
+            beforeUpload(file){
+                this.$emit('before-upload',file);
             },
             afterUpload(uploadedurl){
                 this.value = uploadedurl;
                 this.$emit('after-upload',uploadedurl);
+            },
+            uploadError(error,file){
+                this.$emit('upload-error',error,file);
             }
         }
     }

@@ -46,15 +46,29 @@
             <FormRow>
                 <InputField 
                     label="邮箱认证"
-                    width="220"
+                    width="172"
                     height="25"
+                    />
+
+                <Icon 
+                    v-bind:border="0" 
+                    v-bind:radius="0" 
+                    content="认证"
+                    @on-click="authticateEmail()" 
                     />
 
 
                 <InputField 
                     label="实名认证"
-                    width="220"
+                    width="172"
                     height="25"
+                    />
+
+                 <Icon 
+                    v-bind:border="0" 
+                    v-bind:radius="0" 
+                    content="认证"
+                    @on-click="authticateRealName()" 
                     />
 
 
@@ -65,13 +79,14 @@
                     label="微信"
                     width="220"
                     height="25"
-                    v-model="weixin"
+                    v-model="wechat"
                     />
 
                 <InputField 
                     label="QQ"
                     width="220"
                     height="25"
+                    v-model="qq"
                     />
 
             </FormRow>
@@ -164,6 +179,7 @@ import FieldWrap from "@components/form/FieldWrap";
 import InputField from "@components/form/InputField";
 import TextField from "@components/form/TextField";
 import Button from  "@components/form/Button";
+import Icon from "@components/icon/Icon";
 import IconEditable from "@components/icon/IconEditable";
 
    
@@ -175,13 +191,15 @@ export default {
         InputField,
         TextField,
         Button,
+        Icon,
         IconEditable
 
     },
     props:{},
     data(){
         return {
-            weixin:'微信12312'
+            wechat:'微信12312',
+            qq:'287461246'
         }
     },
     computed:{
@@ -195,10 +213,19 @@ export default {
         },
         changeMobile(){
             console.log('changeMobile');
+        },
+        authticateEmail(){
+            console.log('authticateEmail');
+        },
+        authticateRealName(){
+            console.log('authticateRealName');
         }
     },
     created(){
         console.log('profile>>>',this.profile);
+    },
+    updated(){
+        console.log('wechat:',this.wechat,' qq:',this.qq)
     }
 }
 
