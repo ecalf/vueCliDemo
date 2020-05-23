@@ -2,67 +2,169 @@
   <div class="mb50">
     <!--banner-->
     <Banner :bannerList="bannerList" />
+
+
     <div class="commonweb">
-      <Product-Recommend />
-      <Category />
+      <ProductRecommend />
+      <FilterMultiple
+        v-bind:categories="categoryList"
+        v-bind:brands="brandList"
+        v-bind:states="stateList"
+        />
+
+
       <div class="bar-height">
         <div class="tab-bar">
-          <a href="" class="active">采购订单</a>
-          <a href>销售订单</a>
-          <a href>委托订单</a>
+          <a href="javascript:;" v-bind:class="{active:type==1}" @click.stop="triggerTab(1)">采购订单</a>
+          <a href="javascript:;" v-bind:class="{active:type==2}" @click.stop="triggerTab(2)">销售订单</a>
+          <a href="javascript:;" v-bind:class="{active:type==3}" @click.stop="triggerTab(3)">委托订单</a>
         </div>
       </div>
+
       <div class="order-list">
-         <Order-List class="mb30" />
-          <!--分页-->
-          <div class="layui-box">
-            <div class="layui-laypage">
-              <a href="javascript:;" class="layui-laypage-prev">上一页</a>
-              <span class="layui-laypage-curr">
-                <em>1</em>
-              </span>
-              <a href="javascript:;">2</a>
-              <a href="javascript:;">3</a>
-              <a href="javascript:;">4</a>
-              <a href="javascript:;">5</a>
-              <span>…</span>
-              <a href="javascript:;" class="layui-laypage-next">下一页</a>
-              <span class="layui-laypage-total">
-                到第
-                <input type="number" /> 页
-                <button type="button" class="layui-laypage-btn">确定</button>
-              </span>
-            </div>
-          </div>
+        <OrderList class="mb30" v-bind:list="needlist" v-if="total>0" />
+        <Errormsg title="抱歉，暂时没有找到符合条件的商品" v-if="total==0" />
+        
+        <!--分页 -->
+        <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
+            <Pagination
+                v-bind:inputAllowed="true"
+                v-bind:total="total"
+                v-bind:size="page_size"
+                v-bind:curent="page_index" 
+                @switch-page="switchPage"
+                />
+        </div>
 
       </div>
+
     </div>
   </div>
 </template>
+
+
 <script>
 import Banner from "@components/Banner";
 import ProductRecommend from "@components/ProductRecommend";
-import Category from "@components/Category";
+import FilterMultiple from "@components/FilterMultiple";
 import OrderList from "@components/OrderList";
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import Pagination from "@components/Pagination";
+import Errormsg from "@components/Errormsg";
+
+
+import { getNeedList } from "@api/need";
+import {
+    getProductCategory,
+    getBrandList
+} from "@api/common";
+
+import { formatListData } from "@utils/common";
+
+
 export default {
   components: {
     Banner,
-    Swiper,
-    SwiperSlide,
     ProductRecommend,
-    Category,
-    OrderList
+    FilterMultiple,
+    OrderList,
+    Pagination,
+    Errormsg
   },
   data() {
-    return {
-      bannerList: [
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
-        { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
-      ]
-    };
+        return {
+          bannerList: [
+            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
+            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" },
+            { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
+          ],
+          categoryList:[],
+          brandList:[],
+          stateList:[
+            {id:1,text:"进行中"},
+            {id:2,text:"已截止"}
+          ],
+
+
+          needlist:[],
+          total:0,
+          page_size:10,
+          page_index:1,
+          type:1,  //type 1 发布采购 2 发布销售 3 委托销售'
+
+        };
+    },
+    methods:{
+        triggerTab(type){
+            this.type = type;
+            this.getNeedList();
+        },
+        switchPage(page_index){
+            this.page_index = page_index*1;
+            this.getNeeds();
+        },
+        async getNeedList(){
+            const params = {
+                type:this.type,
+                page_size:this.page_size,
+                page_index:1,
+                keyword:''
+            }
+
+            const res = await getNeedList(params);
+
+            if(res.code==200){
+                this.total = res.data.total;
+                this.needlist = res.data.list;
+            }else{
+                this.$message({
+                  showClose: true,
+                  message: res.message,
+                  type: "error"
+                });
+            }
+
+
+        },
+
+        async getProductCategory(){
+            let res = await getProductCategory();
+
+
+            if(res.code==200){
+                this.categoryList = formatListData(res.data);
+                console.log('format this.categoryList>>>',this.categoryList);
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+        },
+        async getBrandList(){
+            let res = await getBrandList({
+                    data:{
+                        cate_id:3//this.this.params.cate_id
+                    }
+                });
+
+            if(res.code==200){
+                this.brandList = formatListData(res.data);
+
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+        },
+
+    },
+  created(){
+    this.getProductCategory();
+    this.getBrandList();
+    this.getNeedList();
   }
 };
 </script>

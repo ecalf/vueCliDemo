@@ -1,6 +1,34 @@
-/*
-* 通用函数
-*/
+/*********************
+**** 通用函数 *********
+*********************/
+
+
+
+/**************************************************
+格式化列表类数据
+列表类组件 item 基本数据格式为{id:1, text:"名称", icon:"xxx/xxx.png" }
+*******************************************************/
+function formatListData(listData){
+    if(!(listData instanceof Array)){
+        console.log('formatListData error,param listData is not an array');
+        return [];
+    }
+
+    listData = listData.map(function(item){
+        item.id = item.id||item.value||'';
+        item.text = item.cn_name;//todo：按中英文选择cn_name en_name
+        item.icon = item.icon||item.img||'';
+
+        if(item.child&&item.child.length){
+            item.child = formatListData(item.child);
+        }
+
+        return item;
+    });
+
+    return listData;
+}
+
 
 function dateTimeFormat(date,formatStr,frag){
     if(typeof(date)=='string'){
@@ -45,20 +73,6 @@ function dateTimeFormat(date,formatStr,frag){
     });
 }
 
-function getLang(){
-    let langList = ['zh-CN','en-US'];
-    let lang = localStorage.getItem('lang')||navigator.language;
-    if(langList.indexOf(lang)==-1){
-        lang = 'zh-CN';
-    }
-
-    return lang;
-}
-
-function setLang(component,lang){
-    localStorage.setItem('lang',lang||'zh-CN');
-    component.$i18n.locale = lang;
-}
 
 /**
  * 按全角计算文字的长度,2个半全角算1个长度
@@ -113,9 +127,73 @@ function getFullWidthLength(str) {
     return realLength;
 }
 
+
+
+//存token
+function setToken(token,client){
+    console.log('========TODO:目前登录返回的 profile 和 getProfile 借口返回的数据格式不一致=====');
+    let clientToken = 'DATA '+btoa(client.uid+':'+client.user_name+':'+token);
+    localStorage.setItem('Token',clientToken);
+
+    let profile = {
+        token:clientToken,
+        uid:client.uid,
+        user_name:client.user_name,
+        ...client.profiles
+    }
+    return profile;
+}
+
+//取token
+function getToken(){
+    return localStorage.getItem('Token')||'';
+}
+
+//退出登录,清除用户信息
+function delToken(){
+    localStorage.removeItem('Token');
+}
+
+//判断是从站内跳转到本页
+function isInSite(){
+    let reg = new RegExp("^"+location.protocol+'//'+location.host);
+    return reg.test(document.referrer);
+}
+
+//客户端语言
+function getLang(){
+    let langList = ['zh-CN','en-US'];
+    let lang = localStorage.getItem('lang')||navigator.language;
+    if(langList.indexOf(lang)==-1){
+        lang = 'zh-CN';
+    }
+
+    return lang;
+}
+function setLang(component,lang){
+    localStorage.setItem('lang',lang||'zh-CN');
+    component.$i18n.locale = lang;
+}
+
+//格式化价格千分位
+function formatPrice(n){
+    n = n.toString().split('.');
+    n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
+    return n.join('.');
+}
+
+
+
+
 export {
+    setToken,
+    getToken,
+    delToken,
+    isInSite,
     getLang,
     setLang,
     dateTimeFormat,
-    getFullWidthLength
+    getFullWidthLength,
+    formatPrice,
+    formatListData
 }

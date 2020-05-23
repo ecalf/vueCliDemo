@@ -12,21 +12,36 @@ import 'swiper/css/swiper.css'
 import App from "./tradhall.vue";
 import router from "./router";
 import store from "./store";
+import profileMixin from "@utils/mixin";
+
+import ElementUI from 'element-ui';
+import '@assets/theme/index.css';
+
 
 // global swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper);
 
-const i18n = new VueI18n({ 
- locale: getLang(), // 定义默认语言为中文 
- messages: {   
-    'zh-CN':{account:zh.account},   
-    'en-US': {aaccount:en.aaccount}
-  }
-});
+Vue.use(ElementUI);
+
+
+const i18n = new VueI18n({
+  locale: getLang(), // 定义默认语言为中文 
+  fallbackLocale: 'zh-CN',//没有英文的时候默认中文语言
+  silentFallbackWarn: true,//抑制警告
+  messages: {
+    'zh-CN':{
+        time:zh.time,
+    },   
+    'en-US': {
+        time:en.time,
+    }
+  }
+})
 
 
 new Vue({
+    mixins:[profileMixin],
     i18n,
   router,
   store,

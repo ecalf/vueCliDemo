@@ -15,18 +15,10 @@ import '@assets/font/iconfont.css';
 import App from "./Ucenter.vue";
 import router from "./router";
 import store from "./store";
-
-
-// import axios from 'axios'
-
+import profileMixin from "@utils/mixin";
 
 Vue.use(VCharts)
 Vue.use(ElementUI);
-// Vue.use(axios);
-
-// Vue.config.productionTip = false
-// axios.defaults.baseURL = 'http://api.scm.yiminshijie.com';
-// Vue.prototype.$http = axios;
 
 const i18n = new VueI18n({
   locale: getLang(), // 定义默认语言为中文 
@@ -43,6 +35,7 @@ const i18n = new VueI18n({
 })
 
 new Vue({
+  mixins:[profileMixin],
   router,
   store,
   i18n,

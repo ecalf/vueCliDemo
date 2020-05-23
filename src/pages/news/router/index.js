@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
 import NewsList from "../views/NewsList.vue";
+import NotFoundComponent from "@components/NotFoundComponent";
 
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
       title: '新闻详情'
     }
   },
+  {
+    path:"/news/*",
+    name:'notFound',
+    component:NotFoundComponent
+  }
  
 ];
 

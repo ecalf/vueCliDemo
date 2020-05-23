@@ -6,10 +6,10 @@
         <!--主页信息-->
         <div class="member-topmsg mb20">
           <div class="buy-button fr">
-            <a href>
+            <a href="/publish/buy">
               <i class="iconfont iconcaigou"></i>我要采购
             </a>
-            <a href>
+            <a href="/publish/sell">
               <i class="iconfont iconRectangleCopy1"></i>我要销售
             </a>
           </div>
@@ -17,23 +17,24 @@
             <img class="personalimg" src="@assets/images/personnel.png" alt />
             <div class="personal-msg">
               <p class="company-msg">
-                <strong>比亚迪口罩</strong>
+                <strong>{{company(profile.type)}}</strong>
                 <span>
                   <img src="@assets/images/VIP.png" alt />
                 </span>
-                <span>
+                <span v-if="profile.type==3">
                   <img src="@assets/images/qiyerenzheng.png" alt />
                 </span>
               </p>
               <span class="person-name">
-                张某某
+                <span class="person-name-text">{{contact_name}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
           </div>
         </div>
+
         <!--待办提醒-->
-        <div class="reminder-wrap mb20 clearfix">
+        <div class="reminder-wrap mb20 clearfix" v-if="false">
           <div class="reminder-left commonl-box fl">
             <h4 class="mcommon-title">待办提醒</h4>
             <ul>
@@ -65,8 +66,10 @@
             </a>
           </div>
         </div>
+
+
         <!--采购趋势分析-->
-        <div class="mb20 clearfix">
+        <div class="mb20 clearfix" v-if="false">
           <div class="fl commonl-box">
             <h4 class="mcommon-title">采购趋势分析</h4>
             <div class="analysis-table"></div>
@@ -102,46 +105,57 @@
           </div>
         </div>
         <!--list-->
-        <div class="mshow-wrap mb20">
-          <div class="mshow-nav">
-            <a href class="active">我的发布</a>
-            <a href>我的采购</a>
-            <a href>我的销售</a>
-          </div>
-          <!--订单-->
-          <Order-list />
-          <!--分页-->
-          <div class="layui-box">
-            <div class="layui-laypage">
-              <a href="javascript:;" class="layui-laypage-prev">上一页</a>
-              <span class="layui-laypage-curr">
-                <em>1</em>
-              </span>
-              <a href="javascript:;">2</a>
-              <a href="javascript:;">3</a>
-              <a href="javascript:;">4</a>
-              <a href="javascript:;">5</a>
-              <span>…</span>
-              <a href="javascript:;" class="layui-laypage-next">下一页</a>
-              <span class="layui-laypage-total">
-                到第
-                <input type="number" /> 页
-                <button type="button" class="layui-laypage-btn">确定</button>
-              </span>
-            </div>
-          </div>
-        </div>
+
+        <MemberPublishList />
+
       </div>
     </div>
   </div>
 </template>
+
+
+
 <script>
 import Mleftnav from "@components/Mleftnav";
-import OrderList from "@components/OrderList";
+import MemberPublishList from "./MemberPublishList";
+
+
+
 export default {
   components: {
     Mleftnav,
-    OrderList
+    MemberPublishList
+  },
+  data(){
+    return { 
+
+    }
+  },
+  computed:{
+    profile(){
+      return this.$store.state.profile;
+    },
+    company(){
+      return (type)=>{
+        //type '注册类型：1个人 2 机构 3企业'
+        if(type==1){
+          return this.profile.user_name;
+        }else if(type==2){
+          return this.profile.organization_name;
+        }else if(type==3){
+          return this.profile.company_name;
+        }
+      }
+    },
+    contact_name(){
+      return this.$store.state.profile.contact_name
+    }
+  },
+  methods:{
+
+  },
+  created(){
+  
   }
 };
 </script>
@@ -196,8 +210,11 @@ export default {
 }
 
 .person-name {
+  .person-name-text{
+    margin-right:5px;
+  }
   i {
-    margin-left: 5px;
+    margin-left: 0;
     font-size: 24px;
     line-height: 20px;
     vertical-align: middle;
@@ -347,35 +364,6 @@ export default {
     }
   }
 }
-.mshow-box {
-  margin-bottom: 28px;
-}
-.mshow-nav {
-  margin-bottom: 15px;
-  &:before {
-    content: "";
-    display: inline-block;
-    width: 3px;
-    height: 20px;
-    background-color: #479e84;
-    margin-right: 10px;
-    vertical-align: -4px;
-  }
 
-  a {
-    color: #707070;
-    font-size: 16px;
-    padding-right: 35px;
-    &:hover,
-    &.active {
-      color: #44a78d;
-    }
-  }
-}
-
-.mshow-wrap {
-  background: #ffffff;
-  padding: 15px 15px 30px;
-}
 </style>
 

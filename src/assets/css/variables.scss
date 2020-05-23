@@ -7,6 +7,10 @@ $bgwhite:#ffffff;
 $borderColor:#EAECED;//边框颜色
 $fontColor:#4E5A65;
 
+$defaultColor:#44A78D;//按钮颜色
+$hoverColor:#5AB49C; //按钮悬停颜色
+$activeColor:#2D755F;//按钮按下颜色
+
 // 单行文本省略  -- 单行文本优先使用，无兼容问题；
 @mixin ol() {
   white-space: nowrap;

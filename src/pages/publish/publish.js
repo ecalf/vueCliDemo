@@ -11,6 +11,7 @@ import '@assets/font/iconfont.css';
 import App from "./Publish.vue";
 import router from "./router";
 import store from "./store";
+import profileMixin from "@utils/mixin";
 
 
 const i18n = new VueI18n({
@@ -32,6 +33,7 @@ const i18n = new VueI18n({
 
 
 new Vue({
+  mixins:[profileMixin],
   router,
   store,
   i18n,

@@ -1,6 +1,5 @@
 import axios,{post} from './http';
 
-console.log('axios>>>',axios);
 
 export default {
     async getNames(params){

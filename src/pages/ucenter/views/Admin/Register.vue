@@ -3,7 +3,7 @@
     <div class="register-header clearfix">
       <p class="register-tip fr">
         已有帐号，
-        <a href="/ucenter/login" class="account-login">马上登录</a>|
+        <router-link class="account-login" to="/ucenter/login">马上登录</router-link>|
         <a href="/">返回首页</a>
       </p>
       <a href class="login-logo">
@@ -11,6 +11,7 @@
       </a>
     </div>
     <div class="bgcolor-white m-pb52">
+
       <ul class="register-nav">
         <li
           v-for="(navitem,index) in navlist"
@@ -21,20 +22,23 @@
           <span>{{navitem.name}}</span>
         </li>
       </ul>
+
       <div class="register-form-wrap">
         <div class="register-cell-form">
           <el-form :model="registerForm" :rules="rules" ref="registerForm">
+
+            <!-- 切换国家 -->
             <div class="reg-country clearfix">
               <span class="country-title">国家选择</span>
 
               <el-form-item label class="country-select">
                 <el-select
                   v-model="registerForm.country"
-                  placeholder="中国"
-                  @change="selectFn($event)"
+                  placeholder="xx"
+                  @change="selectCountry($event)"
                 >
                   <el-option
-                    v-for="(item) in items"
+                    v-for="(item) in countryList"
                     :key="item.id"
                     :label="item.name"
                     :value="item.country"
@@ -42,18 +46,18 @@
                 </el-select>
               </el-form-item>
             </div>
-            <!--个人注册-->
 
+            <!--个人注册-->
             <div class="register-cell" v-if="show==0">
               <!--中国注册-->
               <div class="china-register" v-if="num">
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
                 </el-form-item>
-                <el-form-item label prop="state_code" class="register-cell-hd">
+                <el-form-item label prop="code" class="register-cell-hd">
                   <el-input
-                    v-model="registerForm.state_code"
-                    placeholder="验证码"
+                    v-model="registerForm.code"
+                    placeholder="请输入6位验证码"
                     class="m-input register-code-input"
                   ></el-input>
                   <span
@@ -80,6 +84,9 @@
                   ></el-input>
                 </el-form-item>
               </div>
+
+
+
               <!-- 国外注册 -->
               <div class="foreign-register" v-else>
                 <el-form-item label prop="user_name" class="register-cell-hd">
@@ -89,7 +96,7 @@
                   <el-input
                     v-model="registerForm.password"
                     type="password"
-                    placeholder="设置密码"
+                    placeholder="设置密码,长度至少8位"
                     class="m-input"
                   ></el-input>
                 </el-form-item>
@@ -102,7 +109,10 @@
                   ></el-input>
                 </el-form-item>
               </div>
+
             </div>
+
+
             <!--机构注册-->
             <div class="register-cell" v-else-if="show==1">
               <!--中国注册-->
@@ -117,19 +127,24 @@
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
                 </el-form-item>
-                <el-form-item label prop="state_code" class="register-cell-hd">
+                <el-form-item label prop="code" class="register-cell-hd">
                   <el-input
-                    v-model="registerForm.state_code"
-                    placeholder="验证码"
+                    v-model="registerForm.code"
+                    placeholder="请输入6位验证码"
                     class="m-input register-code-input"
                   ></el-input>
-                  <button class="register-code-button m-input">发送验证码</button>
+                  <span
+                    class="register-code-button m-input"
+                    @click.stop="sendCode()"
+                    v-if="get_code"
+                  >发送验证码</span>
+
                 </el-form-item>
                 <el-form-item label prop="password" class="register-cell-hd">
                   <el-input
                     v-model="registerForm.password"
                     type="password"
-                    placeholder="设置密码"
+                    placeholder="设置密码,长度至少8位"
                     class="m-input"
                   ></el-input>
                 </el-form-item>
@@ -158,7 +173,7 @@
                   <el-input
                     v-model="registerForm.password"
                     type="password"
-                    placeholder="设置密码"
+                    placeholder="设置密码,长度至少8位"
                     class="m-input"
                   ></el-input>
                 </el-form-item>
@@ -172,6 +187,9 @@
                 </el-form-item>
               </div>
             </div>
+
+
+
             <!--企业注册-->
             <div class="register-cell" v-else>
               <!--中国注册-->
@@ -185,19 +203,24 @@
                 <el-form-item label prop="mobile" class="register-cell-hd">
                   <el-input v-model="registerForm.mobile" placeholder="手机号码" class="m-input"></el-input>
                 </el-form-item>
-                <el-form-item label prop="state_code" class="register-cell-hd">
+                <el-form-item label prop="code" class="register-cell-hd">
                   <el-input
-                    v-model="registerForm.state_code"
-                    placeholder="验证码"
+                    v-model="registerForm.code"
+                    placeholder="请输入6位验证码"
                     class="m-input register-code-input"
                   ></el-input>
-                  <button class="register-code-button m-input">发送验证码</button>
+                  <span
+                    class="register-code-button m-input"
+                    @click.stop="sendCode()"
+                    v-if="get_code"
+                  >发送验证码</span>
+
                 </el-form-item>
                 <el-form-item label prop="password" class="register-cell-hd">
                   <el-input
                     v-model="registerForm.password"
                     type="password"
-                    placeholder="设置密码"
+                    placeholder="设置密码,长度至少8位"
                     class="m-input"
                   ></el-input>
                 </el-form-item>
@@ -222,7 +245,7 @@
                   <el-input
                     v-model="registerForm.password"
                     type="password"
-                    placeholder="设置密码"
+                    placeholder="设置密码,长度至少8位"
                     class="m-input"
                   ></el-input>
                 </el-form-item>
@@ -236,6 +259,8 @@
                 </el-form-item>
               </div>
             </div>
+
+
             <div class="resgister-btn">
               <el-form-item class="register-cell-hd read-checkbox" prop="checkbox">
                 <el-checkbox v-model="registerForm.checkbox" label name="checkbox"></el-checkbox>&nbsp;&nbsp;我已阅读并接受
@@ -246,6 +271,7 @@
                 <el-button class="btn-large" type="primary" @click="submitForm()">立即注册</el-button>
               </el-form-item>
             </div>
+
           </el-form>
         </div>
       </div>
@@ -258,8 +284,11 @@
   </div>
 </template>
 <script>
+import {routeTo} from "@utils/enhanceRouter";
 import ResgisterBtn from "@components/Register/ResgisterBtn";
-import { bindPhoneCode, submitRegister } from "@api/userApi";
+import { bindPhoneCode, submitRegister } from "@api/user";
+
+
 export default {
   components: {
     ResgisterBtn
@@ -278,11 +307,14 @@ export default {
         callback();
       }
     };
+
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+          callback(new Error("请输入密码"));
       } else {
-        if (this.registerForm.re_password !== "") {
+        if(value.length<8){
+          callback(new Error("密码长度不能少于8位"));
+        }else if (this.registerForm.re_password !== "") {
           this.$refs.registerForm.validateField("re_password");
         }
         callback();
@@ -297,47 +329,49 @@ export default {
         callback();
       }
     };
+
+    let countryList = [
+      { id: 0, name: "中国", country: "China" },
+      { id: 1, name: "国外", country: "America" }
+    ];
+
     return {
       show: 0, //判断切换注册方式
       num: true,
       get_code: true,
       isgetcode: false, // 是否获取过code
       count: 60,
-      selectItem: "中国",
       type:1,
       navlist: [
         { name: "个人注册" },
         { name: "机构注册" },
         { name: "企业注册" }
       ],
-      items: [
-        { id: 0, name: "中国", country: "China" },
-        { id: 1, name: "国外", country: "America" }
-      ],
+      countryList:countryList ,
       registerForm: {
         mobile: "",
-        state_code: "",
+        code: "",
         password: "",
         re_password: "",
-        porncode: "",
+        state_code: "",
         checkbox: "",
         user_name: "",
         company_name: "",
         contact_name: "",
         organization_name: "",
-        country: ""
+        country: countryList[0].country
       },
       rules: {
         mobile: [
           { required: true, validator: validatetelnumber, trigger: "blur" }
         ],
-        state_code: [
+        code: [
           {
             required: true,
             min: 6,
             max: 6,
             trigger: "blur",
-            message: "请输入正确验证码"
+            message: "请输入正确的验证码"
           }
         ],
         password: [
@@ -369,8 +403,7 @@ export default {
     };
   },
   created() {
-    this.$emit("header", false); //移除头部
-    this.$emit("footer", false); //移移底部
+   
   },
   methods: {
     navclick(index) {
@@ -378,7 +411,7 @@ export default {
       this.$refs.registerForm.resetFields();
     
     },
-    selectFn(e) {
+    selectCountry(e) {
       if (e == 'China') {
         this.num = true;
       } else {
@@ -406,40 +439,59 @@ export default {
           type: "error"
         });
       }
+
+
       let params = {
         data: {
           mobile: this.registerForm.mobile,
-          type: 2
+          type: 2//1.login  2.register
         }
       };
       const data = await bindPhoneCode(params);
+
     },
 
+
+
     submitForm() {
-      
-      this.$refs.registerForm.validate(valid => {
+      this.$refs.registerForm.validate(async valid => {
         if (valid) {
-         console.log(this.registerForm.country);
-          submitRegister({
+          let params = {
             data:{
-            mobile: this.registerForm.mobile,
-            state_code: this.registerForm.state_code,
-            password: this.registerForm.password,
-            re_password: this.registerForm.re_password,
-            porncode: this.registerForm.porncode,
-            checkbox: this.registerForm.checkbox,
-            user_name: this.registerForm.user_name,
-            company_name: this.registerForm.company_name,
-            contact_name: this.registerForm.contact_name,
-            organization_name: this.registerForm.organization_name,
-            country: this.registerForm.country,
-            type:1,
+              mobile: this.registerForm.mobile,
+              code: this.registerForm.code,
+              password: this.registerForm.password,
+              re_password: this.registerForm.re_password,
+              state_code: this.registerForm.country=='China'?86:'',//国家代号,暂只处理中国设为86,国外为空
+              user_name: this.registerForm.user_name,
+              company_name: this.registerForm.company_name,
+              contact_name: this.registerForm.contact_name,
+              organization_name: this.registerForm.organization_name,
+              country: this.registerForm.country,
+              type:this.show*1+1 //注册类型 1个人 2 机构 3企业
             }
-          }).then(res => {
-            console.log(res);
-          });
+          }
+
+          //console.log('submitRegister params: ',params);
+
+          let res = await submitRegister(params);
+          //console.log("submitRegister res: ",data);
+
+          if(res.code!==200){
+            this.$message({
+              showClose: true,
+              message: res.message,
+              type: "error"
+            });
+
+          }else{
+            this.$router.push('/ucenter/login');
+            //this.$routeTo('/ucenter/login');
+          }
+          
+
         } else {
-          console.log("error submit!!");
+          console.log("register validate error!!");
           return false;
         }
       });

@@ -1,6 +1,6 @@
-import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
 import TradHall from "../views/TradHall.vue";
+import NotFoundComponent from "@components/NotFoundComponent";
 
 
 const routes = [
@@ -12,6 +12,11 @@ const routes = [
       title: '交易大厅'
     }
   },
+  { 
+    path: '/tradhall/*', 
+    name:'notFound',
+    component: NotFoundComponent 
+  }
  
 ];
 

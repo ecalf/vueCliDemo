@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
 import RouterCreator from '@src/utils/enhanceRouter';
 import ProductList from "../views/ProductList.vue";
-
+import NotFoundComponent from "@components/NotFoundComponent";
 
 const routes = [
   {
@@ -20,6 +20,11 @@ const routes = [
       title: '产品详情'
     }
   },
+  {
+    path:"/product/*",
+    name:'notFound',
+    component:NotFoundComponent
+  }
  
 ];
 

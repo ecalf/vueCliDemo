@@ -113,6 +113,8 @@
                 }else if(this.type=="fileUploadGroup"){
                     styleMap.border = 'none';
 
+                }else if(this.type=='dateTimePicker'){
+                    styleMap.border = 'none';
                 }
 
                 return styleMap;

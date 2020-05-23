@@ -6,8 +6,8 @@
         <div class="memcommon-title clearfix">
           <div class="order-search">
             <form>
+              <button class="iconfont iconsousuo fr"></button>
               <input type="text" placeholder="搜索" />
-              <button class="iconfont iconsousuo"></button>
             </form>
           </div>
           <h3>采购订单</h3>

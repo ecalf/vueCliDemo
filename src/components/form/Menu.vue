@@ -2,8 +2,8 @@
     <div class="menu-wrap">
         <div class="menu-split" v-show="hasSplit"></div>
         <ul class="menu" v-bind:style="menuStyle" v-show="list.length">
-            <li class="menu-item" v-for="item in list" v-bind:key="item.id">
-                <span class="item-text" v-bind:class="{active:item.id==0}" v-bind:style="menuItemStyle">
+            <li class="menu-item" v-for="item in list" v-bind:key="item.id" v-bind:class="{active:item.id==value.id}" @click="onselect($event,item)">
+                <span class="item-text" v-bind:style="menuItemStyle">
                     {{item.text}}
                 </span>
                 <span class="arrow-right" v-if="item.child&&item.child.length"></span>
@@ -29,7 +29,7 @@
     }
     .menu{
         box-sizing:border-box;
-        width:290px;
+        width:400px;
         height:320px;
         overflow-y:auto; 
         padding:10px 15px 18px 15px;
@@ -52,26 +52,30 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom:20px;
+            &:hover{
+                .item-text{
+                    color:#44A78D;
+                }
+            }
+
+            &.active{
+                .item-text{
+                    color:#44A78D;
+                   font-weight: bold;
+                }
+            }
 
             .item-text{
                 display: inline-block;
-                width: 220px;
                 font-size:14px;
                 font-weight:400;
                 line-height:20px;
                 color:#4E5A65;
                 font-weight: normal;
                 cursor:pointer;
+                flex: 1;
+
                 @include ol;
-
-                &:hover{
-                    color:#44A78D;
-                }
-
-                &.active{
-                    color:#44A78D;
-                    font-weight: bold;
-                }
             }
             .arrow-right{
                 margin-right:10px;
@@ -87,19 +91,38 @@
 
 
 <script>
-    
-
+/***********************
+//菜单数据格式
+const list = [
+    {
+        id:1,
+        text:'惨菜单1',
+        child:[]
+    },
+    {
+        id:2,
+        text:'惨菜单2',
+        child:[]
+    },
+    {
+        id:3,
+        text:'惨菜单3',
+        child:[]
+    }
+]
+*************************/
 export default {
     data(){
         return {
-            
+            value:''
         }
     },
     props:{
         width:String,
         height:String,
         hasSplit:Boolean,
-        list:Array
+        list:Array,
+        level:Number
     },
     computed:{
         menuStyle(){
@@ -119,11 +142,12 @@ export default {
 
     },
     methods:{
-
-    },
-    mouted(){
-        console.log('menu this.hasSplit>>>',this.hasSplit);
+        onselect(e,item){
+            this.value=item;
+            this.$emit('update-value',item,this.level);
+        }
     }
+   
 }
 
 </script>

@@ -38,9 +38,11 @@
       </div>
     </div>
     <div class="commonweb oh mb50">
-      <Product-Recommend />
+
+      <ProductRecommend />
+
       <!--业务精选-->
-      <Business-Select />
+      <BusinessSelect />
 
       <div class="other-condition">
         <div class="condition-box">
@@ -59,6 +61,8 @@
           </form>
         </div>
       </div>
+
+
       <!--产品列表-->
       <Product-List />
       <!--分页-->

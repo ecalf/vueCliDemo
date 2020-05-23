@@ -92,6 +92,7 @@ module.exports = {
     // 添加别名
     config.resolve.alias
       .set("@src", resolve("src"))
+      .set("@pages",resolve("src/pages"))
       .set("@assets", resolve("src/assets"))
       .set("@components", resolve("src/components"))
       .set("@utils", resolve("src/utils"))
@@ -167,7 +168,8 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'http://api.scm.yiminshijie.com',
+        //target: 'http://api.scm.yiminshijie.com',
+        target: 'http://192.168.1.14:8005',
         // secure: false,
         changeOrigin: true,
         ws: false,

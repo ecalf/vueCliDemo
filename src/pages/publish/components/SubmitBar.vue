@@ -38,8 +38,6 @@
 
 
 <script>
-    import {publish} from "@api/publishApi";
-
 
     export default {
         props:{
@@ -59,39 +57,7 @@
         },
         methods:{
             async submit(){
-                let params = {
-                    "device_id":"",
-                    "platform":"",
-                    "imei":"",
-                    "version":"",
-                    "channel":"",
-                    "timestamp":"",
-                    "lang":"",
-                    "data":{
-                        "type":"",
-                        "title":"",
-                        "desc":"",
-                        "cate_id":0,
-                        "band_id":0,
-                        "price":0,
-                        "num":0,
-                        "use_way":0,
-                        "exit_country":0,
-                        "qualification":"",
-                        "images":"",
-                        "info":"",
-                        "market_price":0,
-                        "supplier_price":0,
-                        "dead_time":"",
-                        "benefit_price":0
-                    }
-                }
-
-
-
-                const data = await publish(params);
-                console.log('data>>>',data)
-
+                this.$emit('on-submit');
             },
             getFooterPosition(){
                 const rect = document.querySelector('#app>footer').getBoundingClientRect();

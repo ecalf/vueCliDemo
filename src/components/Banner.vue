@@ -3,8 +3,8 @@
   <swiper class="index-banner" :options="swiperOption">
     <swiper-slide v-for="(item,index) in bannerList" :key="index">
       <a :href="item.href">
-        <!-- <img :src="item.imgUrl" alt=""> -->
-        <img src="@assets/images/banner.jpg" alt="">
+      <img :src="item.imgUrl" alt="">
+        <!--<img src="@assets/images/banner.jpg" alt=""> -->
       </a>
     </swiper-slide>
     
@@ -34,9 +34,7 @@ export default {
     };
   },
   props:{
-    bannerList:{
-
-    },
+    bannerList:Array
   },
 };
 </script>

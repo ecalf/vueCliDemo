@@ -4,9 +4,15 @@ import Login from "../views/Admin/Login.vue";
 import Register from "../views/Admin/Register.vue";
 import Member from "../views/Admin/Member.vue";
 import Buyorder from "../views/Purchase/Buyorder.vue";
-
+import QuotedPrice from "../views/Purchase/QuotedPrice";
+import NotFoundComponent from "@components/NotFoundComponent";
 
 const routes = [
+  {
+    path: "/ucenter",
+    name: "Login",
+    redirect: "/ucenter/member"
+  },
   {
     path: "/ucenter/login",
     name: "Login",
@@ -42,14 +48,21 @@ const routes = [
   {
     path: "/ucenter/quotedprice",//会员采购-报价管理
     name: "QuotedPrice",
-    component: () => import('../views/Purchase/QuotedPrice.vue'),
+    component: QuotedPrice,
     meta: {
       title: '报价管理'
     }
   },
+  { 
+    path: '/ucenter/*', 
+    name:'notFound',
+    component: NotFoundComponent 
+  }
  
 ];
 
+
 const router = RouterCreator.create(routes);
+
 
 export default router;

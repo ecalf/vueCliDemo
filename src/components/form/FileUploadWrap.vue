@@ -1,11 +1,9 @@
 
 <template>
-    <div class="upload-wrap" @click="openFile">
-        <slot name="default" />
+    <div class="upload-wrap" @click="openFold()">
+        <slot name="default" v-bind:uploadedurl="value"/>
         <input type="file" ref="uploadField" class="upload-field" @change="handleFiles($event)">
     </div>
-
-
 </template>
 
 
@@ -35,27 +33,38 @@
 
 
 <script>
+    import {uploadFile} from "@api/common";
+
     export default {
         components:{},
         props:{
             title:String,
-            fileAllow:String //文件类型限制
+            maxsize:Number, //最大上传容量,单位KB
+            types:String //文件类型限制
         },
         data(){
             return {
-                fileTypes:['image/png','image/jpeg']
+                defaultMaxSize:1024*2,//单位KB
+                defaultTypes:['image/png','image/jpeg'],
+                value:'' //上传后的图片路劲
             }
         },
         methods:{
-            openFile(){
+            openFold(){
                 this.$refs.uploadField.click();
             },
             handleFiles(e){
-                let file = e.target.files[0];
-                console.log('file>>>',file,file.type);
-                this.fileTypes.indexOf(file.type);
+                if(e.target.files.length==0){
+                    return false;
+                }
 
-                var reader = new FileReader(); 
+
+                let file = e.target.files[0];
+                let maxsize = this.maxsize||this.defaultMaxSize;
+                let types = this.types||this.defaultTypes;  
+
+                /*                
+                const reader = new FileReader(); 
                 reader.onabort = function(){
                     console.log('reader.onabort',this);
                 }
@@ -66,25 +75,60 @@
                     console.log('reader.onprogress',this);
                 }
                 reader.onload = function(){  
+                    //todo:这个文件类型浏览器是按文件后缀判断的，与file.type一致，严格的判断应该读取文件二进制数据头来判断
+                    let typeParse = this.result.match(/data:(.+?);/);
+                    let type = typeParse[1];
+
                     console.log('reader.onload ,result>>>',this.result);
-                    console.log(this);
+                    console.log('type>>>',type);
+
                 } 
-                reader.readAsText(file); 
+                reader.readAsDataURL(file); 
+                */
+
+
+                if(file.size>maxsize*1024){
+                    this.$message({
+                        showClose: true,
+                        message: "图片大小请限制在2MB以内",
+                        type: "error"
+                    });
+                    return false;
+                }else if(types.indexOf(file.type)==-1){
+                    this.$message({
+                        showClose: true,
+                        message: "图片文件类型错误,文件类型请限制为 png,jpeg,webp",
+                        type: "error"
+                    });
+                    return false;
+                }else{
+                    this.upload(file);
+                }
 
             },
-            async upload(key,file){
+            async upload(file){
                 const formdata = new FormData();
-                formdata.append(key||'file',file);
-                
-                
+                formdata.append('image',file);
+                let res = await uploadFile(formdata);
 
+                if(res.code==200){
+                    let uploadedurl = res.data.img_url;
+                    this.afterUpload(uploadedurl);
+
+                    this.$message({
+                        showClose: true,
+                        message: "文件上传成功",
+                        type: "success"
+                    });
+                }else{
+
+                }
+
+            },
+            afterUpload(uploadedurl){
+                this.value = uploadedurl;
+                this.$emit('after-upload',uploadedurl);
             }
-        },
-        created(){
-            if(this.fileAllow){
-                this.fileTypes = this.fileAllow.split(',');
-            }
-            
         }
     }
 

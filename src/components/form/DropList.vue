@@ -1,24 +1,25 @@
 <template>
-    <div class="drop-wrap" v-bind:style="wrapStyle">
-        <div class="drop-value" @click="trigger()" v-bind:data-value="value">
+    <div class="drop-wrap" v-bind:style="widthStyle">
+        <div class="drop-value" @click="trigger()" v-bind:data-value="value" v-bind:data-defaulttext="defaulttext">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
-                <span>{{text}}</span>
+                <span class="drop-item-text" v-bind:style="widthStyle">{{text}}</span>
             </div>
             <span class="arrow-down"></span>
         </div>
-        <ul class="drop-menu" v-show="showMenu" @click="selected($event)">
+        <ul class="drop-menu" v-show="showMenu&&list.length>0">
             <li v-for="(item,i) in list" 
                 v-bind:key="item.id"  
                 v-bind:data-index="i"
                 v-bind:data-value="item.id"
                 v-bind:data-text="item.text"
                 v-bind:data-icon="item.icon"
-
-                class="drop-menu-item">
-                <div class="drop-item-text">
-                    <span class="drop-item-icon" v-if="prefix"></span>
-                    <span>{{item.text}}</span>
+                class="drop-menu-item"
+                @click="onselect(item)"
+            >
+                <div class="drop-item-text" v-bind:title="item.text">
+                    <span class="drop-item-icon" v-bind:style="item.icon|listIconBg" v-if="prefix"></span>
+                    <span class="drop-item-text" v-bind:style="widthStyle">{{item.text}}</span>
                 </div>
             </li>
         </ul>
@@ -42,14 +43,18 @@
         width:20px;
         height: 20px;
         margin-right: 5px;
-        
-        background-color: black;
+        background-size: contain;
+        background-position: center;
+        background-repeat:no-repeat;
 
+    }
+    .drop-item-text{
+        @include ol;
     }
     .drop-wrap{
         position: relative;
         display: inline-block;
-        width:205px;
+        width:100%;
         height:$dropHeight;
         border:1px solid #EAECED;
         @include default-radius;
@@ -82,8 +87,6 @@
             background-color: $bgwhite;
             @include default-border;
 
-            
-
             .drop-menu-item{
                 display:flex;
                 justify-content: flex-end;
@@ -92,6 +95,7 @@
                 height: 30px;
                 font-weight: 300;
                 border-bottom: 1px dotted $borderColor;
+                overflow: hidden;
                 &:last-child{
                     border:none;
                 }
@@ -126,22 +130,22 @@
         props:{
             prefix:Boolean,//选项带有前缀小图标
             list:Array,
-            defaultvalue:String,
-            defaulttext:String,
+            defaulttext:String, //组件初始化默认显示的文本
+            defaultselected:Number,//默认选中第几项，优先于defaulttext
+            name:String,
             width:String,
-            height:String //todo: 暂未控制高度
-
+            height:String 
         },
         data(){
             return {
-                value:'',
+                value:'',//选中的项,暂时只处理单选
                 text:'',
                 icon:'',
                 showMenu:false
             };
         },
         computed:{
-            wrapStyle(){
+            widthStyle(){
                 let styleMap = {};
                 if(this.width){
                     styleMap.width = this.width=='auto'?'auto':(this.width+'px');
@@ -153,40 +157,60 @@
                 return {
                     'background-image':'url('+this.icon+')'
                 }
+            },
+
+            defaultIndex(){
+                let n = this.defaultselected*1>>0;
+                if(n>=this.list.length){
+                    n = this.list.length-1;
+                }
+                return n;
             }
         },
+        filters: {
+          listIconBg: function (iconUrl) {
+            return {
+                'background-image':'url('+iconUrl+')'
+            } 
+          }
+        },
         methods:{
-            trigger(){
+            trigger(frag){
                 this.showMenu = !this.showMenu;
             },
-            selected(e){
-                let target = e.target;
-                do{
-                    target = target.parentNode;
-                }while(target.tagName!='LI'&&target.tagName!='UL');
-
-                this.text = target.dataset.text;
-                this.value = target.dataset.value;
-                if(this.prefix){
-                    this.icon = target.dataset.icon;
-                }
-                
-            
+            onselect(item){
                 this.trigger();
+                this.renderValue(item);
+            },
+            renderValue(item){
+                this.value = item;
+                this.text = item.text;
+                this.icon = item.icon;
+                this.$emit('update-value',this.name,item);
             }
         },
         created(){
-            if(!this.defaulttext){
-                this.value = this.defaultvalue;
-                this.text = this.defaulttext;
-            }else{
-                this.value=this.list[0].value;
-                this.text=this.list[0].text;
+            if(!(this.list instanceof Array)){
+                this.list = [];
+                console.log('error,list for DropList.vue is not an array');
             }
-            
-        }
-        
 
+            if(this.defaulttext){
+                this.text = this.defaulttext;
+            }else if(this.list.length){
+                let item  = this.list[this.defaultIndex];
+                this.renderValue(item);
+            }
+        },
+        updated(){
+            if(!this.defaulttext&&!this.selected&&this.list.length){
+                //用于组件初始化没数据，更新列表数据时默认选中的情况
+                console.log('updated renderValue');
+                let item  = this.list[this.defaultIndex];
+                this.renderValue(item);
+
+            }
+        }
 
     }
 

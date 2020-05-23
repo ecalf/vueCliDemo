@@ -1,11 +1,16 @@
 <template>
-    <FileUploadWrap>
-        <div class="upload-icon">
-            <span class="icon-img"></span>
-        </div>
-        <div class="upload-title">增加技术参数图片</div>
+    <FileUploadWrap @after-upload="afterUpload">
+        <template v-slot:default="slotProps">
+            <div class="upload-icon" v-show="!value">
+                <span class="icon-img"></span>
+            </div>
+            <div class="upload-icon upload-icon-showing" v-show="value">
+                <img class="file-show" v-bind:src="value" />
+            </div>
+            <div class="upload-title">{{title}}</div>
+            <p class="upload-url">test slotProps:{{slotProps.uploadedurl}}</p>
+        </template>
     </FileUploadWrap>
-
 </template>
 
 
@@ -23,9 +28,21 @@
                 height: 55px;
                 background-image: url(~@assets/images/icon/upload.png);
                 opacity: 0.47;
-
             }
+
+            .file-show{
+                max-width:144px;
+                max-height: 122px;
+                z-index:9;
+            }
+
+            &.upload-icon-showing{
+                align-items: flex-start;
+            }
+            
         }
+
+        
 
         .upload-title{
             width:100%;
@@ -35,6 +52,10 @@
             line-height: 26px;
             color:$fontColor;
             background:rgba(234,236,237,0.47);
+        }
+
+        .upload-url{
+            display:none;
         }
 
 </style>
@@ -48,14 +69,23 @@
             FileUploadWrap
         }, 
         props:{
+            name:String,
+            title:String
 
         },
         data(){
-            return {}
+            return {
+                value:''
+            }
         },
         methods:{
+            afterUpload(imgurl){    
+                this.value = imgurl;
+                this.$emit('update-value',this.name,imgurl);
 
+            }
         }
+        
     }
 
 </script>
