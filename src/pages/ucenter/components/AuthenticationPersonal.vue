@@ -38,20 +38,27 @@
         <FormRow>
             <FieldWrap 
                 type="fileUploadGroup" 
-                label="手持证件照"
+                label="证件照"
                 v-bind:required="true" 
                 height="150"
                 width="auto"
                 >
 
                 <FileUploadImage
-                    title="手持身份证正面"
+                    title="手持身份证照片"
+                    name="hand_identify_card_photo" 
+                    v-model="fieldData.hand_identify_card_photo"
+                    @update-value="updateValue"/>
+
+
+                <FileUploadImage
+                    title="身份证正面"
                     name="hand_identify_card_photo_front" 
                     v-model="fieldData.hand_identify_card_photo_front"
                     @update-value="updateValue"/>
 
                 <FileUploadImage
-                    title="手持身份证反面" 
+                    title="身份证反面" 
                     name="hand_identify_card_photo_back" 
                     v-model="fieldData.hand_identify_card_photo_back"
                     @update-value="updateValue"
@@ -72,7 +79,7 @@
 <style lang="scss" scoped>
     .form-panel{
         margin:0 auto;
-        width:600px;
+        width:666px;
     }
     .authenticate-title{
         font-size: 16px;
@@ -117,6 +124,7 @@ export default {
                 scene:'identify_person',
                 idcard:'',//身份证
                 real_name:'',//姓名
+                hand_identify_card_photo:'',//手持证件照
                 hand_identify_card_photo_front:'',//身份证正面
                 hand_identify_card_photo_back:''//身份证反面
             }
@@ -153,10 +161,12 @@ export default {
                 errMsg = '请输入身份证号码';
             }else if(!validator.isIdCard(params.idcard)){
                 errMsg = '身份证号码输入错误';
+            }else if(!params.hand_identify_card_photo){
+                errMsg = '请上传身份证照片';
             }else if(!params.hand_identify_card_photo_front){
-                errMsg = '请输入上传手持身份证正面照片';
+                errMsg = '请上传身份证正面照片';
             }else if(!params.hand_identify_card_photo_back){
-                errMsg = '请输入上传手持身份证反面照片';
+                errMsg = '请上传身份证反面照片';
             }
 
 

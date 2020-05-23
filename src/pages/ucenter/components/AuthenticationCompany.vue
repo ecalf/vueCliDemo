@@ -164,14 +164,21 @@
                 >
 
                 <FileUploadImage
-                    title="手持身份证正面"
-                    name="company_transparency"
+                    title="手持身份证照片"
+                    name="hand_identify_card_photo"
+                    v-model="fieldData.hand_identify_card_photo" 
+                    @update-value="updateValue"
+                    />
+
+                <FileUploadImage
+                    title="身份证正面"
+                    name="legal_hand_identify_card_photo_font"
                     v-model="fieldData.legal_hand_identify_card_photo_font" 
                     @update-value="updateValue"
                     />
 
                 <FileUploadImage 
-                    title="手持身份证反面" 
+                    title="身份证反面" 
                     name="legal_hand_identify_card_photo_back" 
                     v-model="fieldData.legal_hand_identify_card_photo_back"
                     @update-value="updateValue"
@@ -271,7 +278,7 @@
         font-size: 16px;
         font-weight: bold;
         margin-left:140px;
-        width: 600px;
+        width: 666px;
     }
 
     .download-file{
@@ -351,8 +358,9 @@ export default {
                 business_scope_cate: '',//经营范围
                 company_form: '',//企业形式
                 
-                legal_hand_identify_card_photo_back: '',//负责人身份证背面
-                legal_hand_identify_card_photo_font: '',//负责人身份证正面
+                hand_identify_card_photo:'',//负责人手持证件照
+                legal_hand_identify_card_photo_font: '',//身份证正面
+                legal_hand_identify_card_photo_back: '',//身份证背面
                 legal_person: '',//负责人姓名
                 legal_person_cardno: '',//负责人身份证号码
 
@@ -413,6 +421,8 @@ export default {
                 errMsg = '请输入企业名称';
             }else if(!params.business_license_code){
                 errMsg = '请输入营业执照编号';
+            }else if(!(/^(\d{15}|\d{18})$/).test(params.business_license_code)){
+                errMsg = '营业执照编号输入错误,请输入15或18位数字';
             }else if(!params.business_license){
                 errMsg = '请上传营业执照照片';
             }else if(!params.legal_person){
@@ -421,10 +431,12 @@ export default {
                 errMsg = '请输入企业负责人身份证号码';
             }else if(!validator.isIdCard(params.legal_person_cardno)){
                 errMsg = '企业负责人身份证号码输入错误';
+            }else if(!params.hand_identify_card_photo){
+                errMsg = '请上传负责人身份证照片';
             }else if(!params.legal_hand_identify_card_photo_font){
-                errMsg = '请上传负责人身份证正面照片';
+                errMsg = '请上传身份证正面照片';
             }else if(!params.legal_hand_identify_card_photo_back){
-                errMsg = '请上传负责人身份证反面照片';
+                errMsg = '请上传身份证反面照片';
             }else if(!params.contact_name){
                 errMsg = '请输入联系人';
             }else if(!params.contact_phone){
@@ -439,7 +451,9 @@ export default {
                 errMsg = '请输入银行卡号';
             }/*else if(!validator.isBankCard(params.bank_account)){
                 errMsg = '银行卡号输入错误';
-            }*/else if(!params.full_name){
+            }*/else if((/^\d{16,19}$/).test(params.bank_account)){
+                errMsg = '银行卡号输入错误,请输入16~19位数字';
+            }else if(!params.full_name){
                 errMsg = '请输入银行账户姓名';
             }else if(!params.official_letter){
                 errMsg = '请上传认证公函';
