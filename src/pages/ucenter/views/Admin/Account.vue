@@ -48,6 +48,7 @@
                     label="邮箱认证"
                     width="172"
                     height="25"
+                    v-model="email"
                     />
 
                 <Icon 
@@ -62,6 +63,8 @@
                     label="实名认证"
                     width="172"
                     height="25"
+                    readonly
+                    v-model="real_name"
                     />
 
                  <Icon 
@@ -90,6 +93,11 @@
                     />
 
             </FormRow>
+
+            <div class="btn-wrap">
+                <Button type="button" text="保 存" @on-click="editPersonalInfo()" />
+            </div>
+
         </div>
 
         <div class="info-section company-info">
@@ -97,14 +105,14 @@
             <FormRow>
                 <TextField 
                     label="公司名称"
-                    text="13723764444"
+                    v-bind:text="profile.user_company.company_name||''"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
                     label="所属行业"
-                    text="13723764444"
+                    v-bind:text="profile.user_company.company_industry||''"
                     width="220"
                     height="25"
                     />
@@ -113,15 +121,15 @@
 
             <FormRow>
                 <TextField 
-                    label="企业类型"
-                    text="13723764444"
+                    label="经营方式"
+                    v-bind:text="profile.user_company.company_form|companyForm(companyFormGroup)"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
                     label="公司网址"
-                    text="13723764444"
+                    v-bind:text="profile.user_company.company_url||''"
                     width="220"
                     height="25"
                     />
@@ -168,6 +176,19 @@
         }
     }
 
+    .user-info{
+        border-bottom: 1px dotted #EAECED;
+    }
+
+
+    .btn-wrap{
+        margin-top:30px;
+        margin-left:115px;
+        margin-bottom: 20px;
+        text-align:  left;
+    }
+
+
 </style>
 
 
@@ -198,6 +219,9 @@ export default {
     props:{},
     data(){
         return {
+            companyFormGroup:this.$store.state.company.companyFormGroup,
+            email:'1836173@qq.com',
+            real_name:'张大千',
             wechat:'微信12312',
             qq:'287461246'
         }
@@ -205,6 +229,12 @@ export default {
     computed:{
         profile(){
           return this.$store.state.profile;
+        }
+    },
+    filters:{
+        companyForm(id,companyFormGroup){
+            let form = companyFormGroup.filter((item)=>{ return id==item.id;  });
+            return form.length?form[0].text:'';
         }
     },
     methods:{
@@ -218,14 +248,11 @@ export default {
             console.log('authticateEmail');
         },
         authticateRealName(){
-            console.log('authticateRealName');
+            this.$router.push('/ucenter/authentication');
+        },
+        editPersonalInfo(){
+            console.log('editPersonalInfo');
         }
-    },
-    created(){
-        console.log('profile>>>',this.profile);
-    },
-    updated(){
-        console.log('wechat:',this.wechat,' qq:',this.qq)
     }
 }
 

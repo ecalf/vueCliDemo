@@ -130,7 +130,11 @@ const validator = {
 
         return reg.test(str);
     },
-    isCNChar(str){
+    isPrice(str){//价格
+        let reg = /^\d+(?:\.\d*)?$/;
+        return reg.test(str);
+    },
+    isCNChar(str){//中文字符
         let reg = /^[\u4e00-\u9fa5]+$/;
         return reg.test(str);
     },

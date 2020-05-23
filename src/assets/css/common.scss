@@ -562,17 +562,18 @@ body {
 
 /*个人中心|我要采购-采购订单*/
 .memcommon-title {
-  padding-bottom: 13px;
+  position: relative;
+  padding-bottom: 15px;
   border-bottom: 1px solid #F4F4F4;
 
   .order-search {
-    float: right;
+    position: absolute;
+    right:0;
     width: 220px;
     height: 30px;
     background-color: #ffffff;
     border-radius: 3px;
     border: solid 1px #cccccc;
-    position: relative;
 
     input {
       width: 100%;
@@ -600,10 +601,24 @@ body {
 
 /*表单样式重置*/
 .m-input{padding-left:0;}
-.m-input input{background:none;padding:0;height:38px;line-height:38px;padding-left:10px;border-color:transparent;
-@include ph(#4E5A65);
-&:hover{border-color:transparent;}
+.m-input input{
+  background:none;
+  padding:0;
+  height:38px;
+  line-height:38px;
+  padding-left:10px;
+  border-color:transparent;
+  @include ph(#4E5A65);
+  &:hover{
+    border-color:transparent;
+  }
 }
+.area-code-mobile input{
+    padding-left:55px!important;
+}
+
+
+
 .el-form-item__error{padding:0;transform:scale(0.8); letter-spacing:2px;left:-6px;}
 .register-cell-hd .el-form-item__content{line-height:24px;}
 .country-select .el-form-item__content{height:32px;

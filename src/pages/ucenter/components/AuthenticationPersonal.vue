@@ -46,21 +46,21 @@
 
                 <FileUploadImage
                     title="手持身份证照片"
-                    name="hand_identify_card_photo" 
-                    v-model="fieldData.hand_identify_card_photo"
+                    name="identify_card_photo" 
+                    v-model="fieldData.identify_card_photo"
                     @update-value="updateValue"/>
 
 
                 <FileUploadImage
                     title="身份证正面"
-                    name="hand_identify_card_photo_front" 
-                    v-model="fieldData.hand_identify_card_photo_front"
+                    name="identify_card_photo_front" 
+                    v-model="fieldData.identify_card_photo_front"
                     @update-value="updateValue"/>
 
                 <FileUploadImage
                     title="身份证反面" 
-                    name="hand_identify_card_photo_back" 
-                    v-model="fieldData.hand_identify_card_photo_back"
+                    name="identify_card_photo_back" 
+                    v-model="fieldData.identify_card_photo_back"
                     @update-value="updateValue"
                     />
                
@@ -124,9 +124,9 @@ export default {
                 scene:'identify_person',
                 idcard:'',//身份证
                 real_name:'',//姓名
-                hand_identify_card_photo:'',//手持证件照
-                hand_identify_card_photo_front:'',//身份证正面
-                hand_identify_card_photo_back:''//身份证反面
+                identify_card_photo:'',//手持证件照
+                identify_card_photo_front:'',//身份证正面
+                identify_card_photo_back:''//身份证反面
             }
         }
     },
@@ -161,11 +161,11 @@ export default {
                 errMsg = '请输入身份证号码';
             }else if(!validator.isIdCard(params.idcard)){
                 errMsg = '身份证号码输入错误';
-            }else if(!params.hand_identify_card_photo){
+            }else if(!params.identify_card_photo){
                 errMsg = '请上传身份证照片';
-            }else if(!params.hand_identify_card_photo_front){
+            }else if(!params.identify_card_photo_front){
                 errMsg = '请上传身份证正面照片';
-            }else if(!params.hand_identify_card_photo_back){
+            }else if(!params.identify_card_photo_back){
                 errMsg = '请上传身份证反面照片';
             }
 

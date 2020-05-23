@@ -3,19 +3,18 @@
     <div class="member-web commonweb clearfix">
       <Mleftnav />
       <div class="member-right common-slide">
-         <div class="memcommon-title clearfix">
+          <div class="memcommon-title clearfix">
             <ListTopSearchBar
               v-if="searchconfig&&searchconfig.name"
               v-bind:config="searchconfig" 
             />
+            
             <ListTopTabs 
               v-if="tabconfig&&tabconfig.tabs.length" 
               v-bind:config="tabconfig" 
             />
 
             <h3 v-if="!!title">{{title}}</h3>
-
-            
           </div>
 
         <div class="memcommon-content">
@@ -32,9 +31,9 @@
 </style>
 
 <script>
-    import Mleftnav from "@components/Mleftnav";
-    import ListTopSearchBar from "../components/ListTopSearchBar";
-    import ListTopTabs from "../components/ListTopTabs";
+    import Mleftnav from "./Mleftnav";
+    import ListTopSearchBar from "./ListTopSearchBar";
+    import ListTopTabs from "./ListTopTabs";
 
     export default {
         components:{

@@ -458,7 +458,6 @@ body {
   background-color: #eaeced;
   border-radius: 3px;
   color: #4e5a65;
-  padding-left: 10px;
 
   // 使用webkit内核的浏览器
   &::-webkit-input-placeholder {
@@ -549,9 +548,7 @@ body {
   padding-left: 10px;
   z-index:1;
 }
-.area-code-mobile{
-  padding-left:45px;
-}
+
 
 .code-input {
   display: inline-block;

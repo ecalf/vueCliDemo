@@ -15,17 +15,20 @@
         鱼跃呼吸机家
         <i class="highcolor">医用</i>正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压
       </h3>
-      <el-form-item label="手机号码" :label-width="formLabelWidth" prop="mobile">
-        <el-input v-model="quotationForm.mobile" autocomplete="off"></el-input>
+      <el-form-item label="联系电话" :label-width="formLabelWidth" prop="phone">
+        <el-input v-model="quotationForm.phone" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="姓名/公司" :label-width="formLabelWidth" prop="contact">
-        <el-input v-model="quotationForm.contact" autocomplete="off"></el-input>
+      <el-form-item label="联系人" :label-width="formLabelWidth" prop="contact_name">
+        <el-input v-model="quotationForm.contact_name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="价格" :label-width="formLabelWidth" prop="price">
-        <el-input v-model="quotationForm.price" autocomplete="off"></el-input>
+       <el-form-item label="公司" :label-width="formLabelWidth" prop="company_name">
+        <el-input v-model="quotationForm.company_name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="留言" :label-width="formLabelWidth" prop="message">
-        <el-input type="textarea" v-model="quotationForm.message" autocomplete="off"></el-input>
+      <el-form-item label="单价" :label-width="formLabelWidth" prop="quoted_price">
+        <el-input v-model="quotationForm.quoted_price" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="留言" :label-width="formLabelWidth" prop="desc">
+        <el-input type="textarea" v-model="quotationForm.desc" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -75,11 +78,11 @@
 
 
   const rules = {
-      mobile: [
+      phone: [
           { required: true, validator: validaMobile, trigger: "blur" }
       ],
-      contact:[ { required: true,trigger: "blur",message: "请输入你的姓名/公司名"}],
-      price:[{ required: true,trigger: "blur",validator:validatePrice}]
+      contact_name:[ { required: true,trigger: "blur",message: "请输入你的姓名"}],
+      quoted_price:[{ required: true,trigger: "blur",validator:validatePrice}]
   }
 
   export default {
@@ -91,10 +94,11 @@
       return {
         formLabelWidth: "100px",
         quotationForm: {
-            mobile: "",
-            contact: "",
-            price: "",
-            message: ""
+            phone: "",
+            contact_name: "",
+            company_name:"",
+            quoted_price: "",
+            desc: ""
         },
         rules:rules
       }
@@ -113,11 +117,11 @@
           if (valid) {
               const params = {
                 needs_id:this.id,
-                quoted_price:this.quotationForm.price,
-                desc:this.quotationForm.message,
-                phone:this.quotationForm.mobile,
-                contact_name:this.quotationForm.contact,
-                company_name:this.quotationForm.contact
+                quoted_price:this.quotationForm.quoted_price,
+                desc:this.quotationForm.desc,
+                phone:this.quotationForm.phone,
+                contact_name:this.quotationForm.contact_name,
+                company_name:this.quotationForm.company_name
               }
 
               const res = await quotation({data:params});
