@@ -8,20 +8,20 @@
     <ul class="mshow-list">
       <li class="item item1">
         <i class="iconannoyed kicon">急</i>
-        <h2>呼吸机...</h2>
+        <h2>demo呼吸机...</h2>
         <span>飞利浦企业</span>
         <span>出口国：中国</span>
       </li>
       <li class="item item2">
-        <a href>
-          <h3 class="title">
-            <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
-          </h3>
-          <p class="dec">
-           【示列】欧盟欧盟欧标准医用的达到医
-            医用的达到医用的达到医用的达到医用的达到...
-          </p>
-        </a>
+
+        <h3 class="title">
+          <span class="medical-use civil-use">医用</span> S9 VPAP ST主机 VPAP ST主机主...
+        </h3>
+        <p class="dec">
+         【示列】欧盟欧盟欧标准医用的达到医
+          医用的达到医用的达到医用的达到医用的达到...
+        </p>
+
       </li>
       <li class="item item3">
         <span class="number">1500/个</span>
@@ -60,20 +60,18 @@
         <span>出口国：{{country(item.exit_country)}}</span>
       </li>
       <li class="item item2">
-        <a href>
           <h3 class="title">
             <span class="medical-use civil-use">
-              {{useWay(item.use_way)}}</span>
+              {{item.use_way|useWay}}</span>
               {{item.title}}
           </h3>
           <p class="dec">{{item.desc}}</p>
-        </a>
       </li>
       <li class="item item3">
         <span class="number">{{item.num}}{{item.unit||''}}</span>
       </li>
       <li class="item item4">
-        <span class="price">{{price(item)}}</span>
+        <span class="price">{{item|price}}</span>
       </li>
       <li class="item item5">
         <p>
@@ -120,32 +118,33 @@ export default {
   },
   computed:{
     country(){
-        return (code)=>{
-            if(!code){ return code; }
-            code = code.toUpperCase();
-            let country = this.countryList.filter((item)=>{
-                return item.code==code;
-            });
-            return country.length?country[0].name:code
-        }
-    },
-    useWay(){
-      return (type)=>{
-        return type==1?'医用':'民用'
+      return (code)=>{
+        if(!code){ return code||''; }
+        code = code.toUpperCase();
+        let country = this.countryList.filter((item)=>{
+            return item.code==code;
+        });
+        return country.length?country[0].name:code
       }
-    },
-    price(){
-      return (item)=>{
-        //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-        let p;
-        if(item.type==2){
-          p = item.supplier_price;
-        }else if(item.type==1){
-          p = item.price;
-        }
+    }
+    
 
-        return p&&('￥'+formatPrice(p));
+  },
+  filters:{
+    useWay(type){
+      return type==1?'医用':'民用'
+    },
+    price(item){
+      //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
+      let p;
+      if(item.type==2){
+        p = item.supplier_price;
+      }else if(item.type==1){
+        p = item.price;
       }
+
+      return p&&('￥'+formatPrice(p));
+      
     }
   },
   methods:{
@@ -269,7 +268,6 @@ export default {
   -webkit-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
-  cursor: pointer;
   background: #fbfbfb;
   margin-bottom: 2px;
   width: 100%;

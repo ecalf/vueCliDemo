@@ -27,7 +27,7 @@
             <RadioGroupField
                 v-bind:required="true" 
                 v-bind:list="companyFormGroup"
-                label="企业形式" 
+                label="经营方式" 
                 name="company_form" 
                 width="312"
                 height="40"
@@ -54,10 +54,25 @@
 
         <FormRow>
             <InputField 
+                v-bind:required="false" 
+
+                type="text"
+                label="所属行业" 
+                name="business_industry" 
+                width="312"
+                height="40"
+                labelwidth="130"
+                v-model="fieldData.business_industry"
+                @update-value="updateValue"
+                />
+        </FormRow>
+
+        <FormRow>
+            <InputField 
                 v-bind:required="true" 
 
                 type="text"
-                label="营业执照编号" 
+                label="纳税人识别号" 
                 name="business_license_code" 
                 width="312"
                 height="40"
@@ -124,7 +139,7 @@
                 v-bind:required="true" 
 
                 type="text"
-                label="负责人姓名" 
+                label="法人姓名" 
                 name="legal_person" 
                 width="312"
                 height="40"
@@ -139,7 +154,7 @@
                 v-bind:required="true" 
 
                 type="text"
-                label="负责人身份证" 
+                label="法人身份证" 
                 name="legal_person_cardno" 
                 width="312"
                 height="40"
@@ -157,7 +172,7 @@
             <FieldWrap 
                 v-bind:required="true"
                 type="fileUploadGroup" 
-                label="负责人证件照"
+                label="法人证件照"
                 height="150"
                 width="auto"
                 labelwidth="130"
@@ -165,22 +180,22 @@
 
                 <FileUploadImage
                     title="手持身份证照片"
-                    name="hand_identify_card_photo"
-                    v-model="fieldData.hand_identify_card_photo" 
+                    name="identify_card_photo"
+                    v-model="fieldData.identify_card_photo" 
                     @update-value="updateValue"
                     />
 
                 <FileUploadImage
                     title="身份证正面"
-                    name="legal_hand_identify_card_photo_font"
-                    v-model="fieldData.legal_hand_identify_card_photo_font" 
+                    name="legal_identify_card_photo_font"
+                    v-model="fieldData.legal_identify_card_photo_font" 
                     @update-value="updateValue"
                     />
 
                 <FileUploadImage 
                     title="身份证反面" 
-                    name="legal_hand_identify_card_photo_back" 
-                    v-model="fieldData.legal_hand_identify_card_photo_back"
+                    name="legal_identify_card_photo_back" 
+                    v-model="fieldData.legal_identify_card_photo_back"
                     @update-value="updateValue"
                     />
                
@@ -188,26 +203,13 @@
             </FieldWrap>
         </FormRow> 
 
+
         <FormRow>
             <InputField 
-                v-bind:required="true" 
+                v-bind:required="false" 
+
                 type="text"
                 label="企业开户银行" 
-                name="bank_name" 
-                width="312"
-                height="40"
-                labelwidth="130"
-                v-model="fieldData.bank_name"
-                @update-value="updateValue"
-                />
-        </FormRow>
-
-        <FormRow>
-            <InputField 
-                v-bind:required="true" 
-
-                type="text"
-                label="开户支行" 
                 name="bank_branch_name" 
                 width="312"
                 height="40"
@@ -219,7 +221,7 @@
 
         <FormRow>
             <InputField 
-                v-bind:required="true" 
+                v-bind:required="false" 
 
                 type="text"
                 label="银行卡号" 
@@ -232,20 +234,7 @@
                 />
         </FormRow>
 
-        <FormRow>
-            <InputField 
-                v-bind:required="true" 
 
-                type="text"
-                label="账户姓名" 
-                name="full_name" 
-                width="312"
-                height="40"
-                labelwidth="130"
-                v-model="fieldData.full_name"
-                @update-value="updateValue"
-                />
-        </FormRow>
 
 
 
@@ -338,11 +327,7 @@ export default {
     },
     data(){
         return {
-            companyFormGroup:[
-                {text:'工厂',id:1,checked:true},
-                {text:'代理',id:2}
-
-            ],
+            companyFormGroup:this.$store.state.company.companyFormGroup,
             fieldData:{
                 //个人认证：identify_person 组织认证：identify_organization 公司认证：identify_company
                 scene:'identify_company',//认证场景 
@@ -354,15 +339,16 @@ export default {
 
                 company_name:'',//企业名称
                 business_license: '',//营业执照照片
-                business_license_code: '',//营业执照编号
+                business_license_code: '',//纳税人识别号
                 business_scope_cate: '',//经营范围
+                business_industry:'',//所属行业
                 company_form: '',//企业形式
                 
-                hand_identify_card_photo:'',//负责人手持证件照
-                legal_hand_identify_card_photo_font: '',//身份证正面
-                legal_hand_identify_card_photo_back: '',//身份证背面
-                legal_person: '',//负责人姓名
-                legal_person_cardno: '',//负责人身份证号码
+                identify_card_photo:'',//法人手持证件照
+                legal_identify_card_photo_font: '',//身份证正面
+                legal_identify_card_photo_back: '',//身份证背面
+                legal_person: '',//法人姓名
+                legal_person_cardno: '',//法人身份证号码
 
                 contact_name:'',//联系人
                 contact_phone:'',//联系人电话
@@ -420,22 +406,22 @@ export default {
             if(!params.company_name){
                 errMsg = '请输入企业名称';
             }else if(!params.business_license_code){
-                errMsg = '请输入营业执照编号';
+                errMsg = '请输入纳税人识别号';
             }else if(!(/^(\d{15}|\d{18})$/).test(params.business_license_code)){
-                errMsg = '营业执照编号输入错误,请输入15或18位数字';
+                errMsg = '纳税人识别号输入错误,请输入15或18位数字';
             }else if(!params.business_license){
                 errMsg = '请上传营业执照照片';
             }else if(!params.legal_person){
-                errMsg = '请输入企业负责人姓名';
+                errMsg = '请输入企业法人姓名';
             }else if(!params.legal_person_cardno){
-                errMsg = '请输入企业负责人身份证号码';
+                errMsg = '请输入企业法人身份证号码';
             }else if(!validator.isIdCard(params.legal_person_cardno)){
-                errMsg = '企业负责人身份证号码输入错误';
-            }else if(!params.hand_identify_card_photo){
-                errMsg = '请上传负责人身份证照片';
-            }else if(!params.legal_hand_identify_card_photo_font){
+                errMsg = '企业法人身份证号码输入错误';
+            }else if(!params.identify_card_photo){
+                errMsg = '请上传法人身份证照片';
+            }else if(!params.legal_identify_card_photo_font){
                 errMsg = '请上传身份证正面照片';
-            }else if(!params.legal_hand_identify_card_photo_back){
+            }else if(!params.legal_identify_card_photo_back){
                 errMsg = '请上传身份证反面照片';
             }else if(!params.contact_name){
                 errMsg = '请输入联系人';
@@ -443,19 +429,20 @@ export default {
                 errMsg = '请输入联系电话';
             }else if(!validator.isTel(params.contact_phone)){
                 errMsg = '联系电话输入错误';
-            }else if(!params.bank_name){
+            }/*else if(!params.bank_name){
                 errMsg = '请输入企业开户银行名称';
-            }else if(!params.bank_branch_name){
-                errMsg = '请输入开户支行名称';
-            }else if(!params.bank_account){
+            }*/else if(!params.bank_branch_name){
+                errMsg = '请输入开户银行名称';
+            }/*else if(!params.bank_account){
                 errMsg = '请输入银行卡号';
-            }/*else if(!validator.isBankCard(params.bank_account)){
+            }*//*else if(!validator.isBankCard(params.bank_account)){
                 errMsg = '银行卡号输入错误';
-            }*/else if((/^\d{16,19}$/).test(params.bank_account)){
+            }*/else if(params.bank_account&&!(/^\d{16,19}$/).test(params.bank_account)){
+                //银行卡号非必填，但如果填了要检查格式
                 errMsg = '银行卡号输入错误,请输入16~19位数字';
-            }else if(!params.full_name){
+            }/*else if(!params.full_name){
                 errMsg = '请输入银行账户姓名';
-            }else if(!params.official_letter){
+            }*/else if(!params.official_letter){
                 errMsg = '请上传认证公函';
             }
 
@@ -482,24 +469,30 @@ export default {
                 const params = {
                     scene: info.params.scene,
                     company:{
-                        business_license: info.params.business_license,
-                        business_license_code: info.params.business_license_code,
-                        business_scope_cate: info.params.business_scope_cate,
                         company_name: info.params.company_name,
                         company_form: info.params.company_form,
+                        business_scope_cate: info.params.business_scope_cate,
+                        business_industry:info.params.business_industry,
+                        business_license: info.params.business_license,
+                        business_license_code: info.params.business_license_code,
+                        
+                       
                         contact_name: info.params.contact_name,
                         contact_phone: info.params.contact_phone,
-                        legal_hand_identify_card_photo_back: info.params.legal_hand_identify_card_photo_back,
-                        legal_hand_identify_card_photo_font: info.params.legal_hand_identify_card_photo_font,
+
                         legal_person: info.params.legal_person,
                         legal_person_cardno: info.params.legal_person_cardno,
+                        identify_card_photo: info.params.identify_card_photo,
+                        legal_identify_card_photo_back: info.params.legal_identify_card_photo_back,
+                        legal_identify_card_photo_font: info.params.legal_identify_card_photo_font,
+                        
                         official_letter: info.params.official_letter
                     },
                     bank:{
                         bank_account: info.params.bank_account,
                         bank_branch_name: info.params.bank_branch_name,
-                        bank_name: info.params.bank_name,
-                        full_name: info.params.full_name
+                        bank_name: info.params.bank_name||'',
+                        full_name: info.params.full_name||''
                     }
                 }
 

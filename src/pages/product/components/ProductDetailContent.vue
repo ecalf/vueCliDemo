@@ -27,7 +27,7 @@
             <img src="@assets/images/inicon12.png" alt />
           </span>
           <span>品牌：{{detail.product_brand_cnname||detail.other_brand}}</span>
-          <span>应用类型：{{useWay(detail.use_way)}}</span>
+          <span>应用类型：{{detail.use_way|useWay}}</span>
           <span>出口国：{{country(detail.exit_country)}}</span>
         </div>
         <div class="prodetail-num">
@@ -52,10 +52,10 @@
 
         <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog"  />
         <DialogQuotation
-            v-bind:visible="quotationVisible"
+            v-bind:visible="true"
             @trigger="showQuotationDialog"
             v-bind:id="detail.id"
-            v-if="detail.type==2" 
+            v-if="true" 
             />
 
       </div>
@@ -195,43 +195,44 @@
                     });
                 }
             },
-            country(){
-                return (code)=>{
-                    if(!code){ return code; }
+            country(){//filters 不能访问 this，用计算属性实现
+              return (code)=>{
+                if(!code){ return code||''; }
 
-                    code = code.toUpperCase();
-                    let country = this.countryList.filter((item)=>{
-                        return item.code==code;
-                    });
-                    return country.length?country[0].name:code
-                }
-            },
-            useWay(){
-                return (type)=>{
-                    return type==1?'医用':'民用'
-                }
-            },
-            price(){
-              return (item)=>{
-                //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-                let p;
-                if(item.type==2){
-                  p = item.supplier_price;
-                }else if(item.type==1){
-                  p = item.price;
-                }
-
-                return p&&('￥'+formatPrice(p));
+                code = code.toUpperCase();
+                let country = this.countryList.filter((item)=>{
+                    return item.code==code;
+                });
+                return country.length?country[0].name:code
               }
             }
+            
         },
         filters:{
+            
+
+            useWay(type){
+                return type==1?'医用':'民用'
+            },
+
             formatPrice(price){
                 return formatPrice(price||0);
             },
             
             formatDate(date){
                 return dateTimeFormat(date,'%y.%m.%d');
+            },
+
+            price(item){
+              //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
+              let p;
+              if(item.type==2){
+                p = item.supplier_price;
+              }else if(item.type==1){
+                p = item.price;
+              }
+
+              return p&&('￥'+formatPrice(p));
             }
         },
         methods:{

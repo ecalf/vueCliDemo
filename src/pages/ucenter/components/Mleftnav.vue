@@ -1,7 +1,7 @@
 <template>
         <!-- 会员左侧导航 -->
         <div class="member-nav">
-          <h3><i class="iconfont iconzhuye"></i>个人主页</h3>
+          <h3 @click="goUcenter()"><i class="iconfont iconzhuye"></i>个人主页</h3>
           <ul class="membernav-list">
             <li>
               <h4>
@@ -13,7 +13,7 @@
                 <router-link to="/ucenter/buyorder">采购订单</router-link>
                 <router-link to="/ucenter/suppliers">供应商库</router-link>
                 <router-link v-bind:to="{path:'/publish/entrust',query:{type:4}}">委托采购</router-link>
-                <a href="javascript:;">合同管理</a>
+                <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
             <li>
@@ -25,7 +25,7 @@
                 <router-link to="/ucenter/sellorder">销售管理</router-link>
                 <router-link to="/ucenter/company">主页管理</router-link>
                 <router-link v-bind:to="{path:'/publish/entrust',query:{type:3}}">委托销售</router-link>
-                <a href="javascript:;">合同管理</a>
+                <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
 
@@ -51,7 +51,7 @@
               <div class="member-subnav">
                 <router-link to="/ucenter/account">我的账户</router-link>
                 <router-link to="/ucenter/authentication">认证中心</router-link>
-                <a href="javascript:;">发票管理</a>
+                <a href="javascript:;" title="comming soon">发票管理</a>
               </div>
             </li>
           </ul>
@@ -62,6 +62,15 @@
 <script>
 export default {
   name:'Mleftnav',
+  methods:{
+    goUcenter(){
+      let path = '/ucenter/member';
+      if(location.pathname.indexOf(path)==-1){
+        this.$router.push(path);  
+      }
+      
+    }
+  }
 };
 </script>
 
@@ -84,6 +93,7 @@ export default {
         text-align: center;
         background-color: #479e84;
         border-radius: 3px 5px 0px 0px;
+        cursor:pointer;
         i{
           margin-right:10px;
           font-size:24px;
