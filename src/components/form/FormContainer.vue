@@ -1,8 +1,10 @@
 <template>
+
     <section class="form-wrap">
         <div class="form-title" v-bind:style="titleStyle">{{title}}</div>
         <slot name="default"></slot>
     </section>
+
 </template>
 
 
@@ -25,14 +27,19 @@
 </style>
 
 <script>
+
 export default {
-    components:{},
+    components:{
+        
+    },
     data(){
         return {};
     },
     props:{
         title:String,
         baseline:Boolean
+        
+
     },
     computed:{
         titleStyle(){

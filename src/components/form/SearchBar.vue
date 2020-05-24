@@ -68,6 +68,7 @@ export default {
             //test,如果不在本空间显示搜索结果时约定以事件 update-value 传参...
             let result = [];
             this.$emit('update-value',this.name,{keyword:value,result:result});
+            this.$emit('input',{keyword:value,result:result});
         }
     }
 

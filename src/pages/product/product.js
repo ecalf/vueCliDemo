@@ -27,7 +27,7 @@ const i18n = new VueI18n({ 
  locale: getLang(), // 定义默认语言为中文 
  messages: {   
     'zh-CN':{account:zh.account},   
-    'en-US': {aaccount:en.aaccount}
+    'en-US': {aaccount:en.account}
   }
 });
 

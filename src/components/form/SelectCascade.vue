@@ -86,6 +86,7 @@ const data = getData();
             return obj;
         },
         props:{
+            label:String,
             list:Array,
             deep:Number,
             name:String
@@ -94,7 +95,7 @@ const data = getData();
 
         },
         methods:{
-            updateValue(item,level){
+            updateValue(name,item,level){
                 //展开子菜单
                 if(level<this.deep){
                     this.menuData['list_'+(level+1)] = item.child||[]
@@ -106,7 +107,6 @@ const data = getData();
             }
 
         },
-        created(){ },
         updated(){
             this.menuData.list_1 = this.list;
         }

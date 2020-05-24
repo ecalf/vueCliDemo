@@ -1,7 +1,7 @@
 <template>
     <section class="commonweb">
         <Banner v-bind:list="bannerList" />
-        <FormPublish v-bind:type="3" />
+        <FormPublish v-bind:type="this.entrustType" />
     </section>
 </template>
 
@@ -26,11 +26,12 @@ export default {
        
     },
     props:{
-        type:String
+        type:Number
     },
     data(){
 
         return{
+            entrustType:this.type||3,
             bannerList:[//todo:fetch list data
                 {text:'Buybanner',id:1},
                 {text:'Buybanner',id:2},

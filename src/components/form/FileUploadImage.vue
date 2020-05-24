@@ -82,6 +82,7 @@
             afterUpload(imgurl){    
                 this.value = imgurl;
                 this.$emit('update-value',this.name,imgurl);
+                this.$emit('input',imgurl);
 
             }
         }

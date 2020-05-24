@@ -130,18 +130,16 @@ function getFullWidthLength(str) {
 
 
 //存token
-function setToken(token,client){
-    console.log('========TODO:目前登录返回的 profile 和 getProfile 借口返回的数据格式不一致=====');
-    let clientToken = 'DATA '+btoa(client.uid+':'+client.user_name+':'+token);
+function setToken(token,profile){
+    let user_id = profile.user_info.user_id;
+    let user_name = profile.user_info.user_name;
+    let clientToken = 'DATA '+btoa(user_id+':'+user_name+':'+token);
     localStorage.setItem('Token',clientToken);
 
-    let profile = {
+    return {
         token:clientToken,
-        uid:client.uid,
-        user_name:client.user_name,
-        ...client.profiles
+        profile:profile
     }
-    return profile;
 }
 
 //取token
@@ -177,10 +175,14 @@ function setLang(component,lang){
 
 //格式化价格千分位
 function formatPrice(n){
-    n = n.toString().split('.');
+    n= (n||0).toString();
+    n = n.split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
-    return n.join('.');
+    return n.join('.')*1;
 }
+
+
+
 
 
 

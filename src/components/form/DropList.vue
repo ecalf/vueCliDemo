@@ -187,6 +187,7 @@
                 this.text = item.text;
                 this.icon = item.icon;
                 this.$emit('update-value',this.name,item);
+                this.$emit('input',item);
             }
         },
         created(){

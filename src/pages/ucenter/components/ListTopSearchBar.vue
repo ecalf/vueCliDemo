@@ -1,0 +1,37 @@
+<template>
+  <div class="order-search">
+    <form>
+      <button type="button" class="iconfont iconsousuo fr" @click="onSearch"></button>
+      <input type="text" 
+          v-bind:name="config.name" 
+          v-bind:placeholder="config.placeholder||'搜索'" 
+          v-model="keyword" 
+        />
+    </form>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+    
+</style>
+
+<script>
+  /**************************************
+  ******* 用于会员中心 一些列表表头的搜索
+  ***************************************/
+  export default {
+      props:{
+        config:Object
+      },
+      data(){
+          return {
+            keyword:''
+          }
+      },
+      methods:{
+          onSearch(){
+              this.config.handler(this.name,this.keyword);
+          }
+      }
+  }
+</script>

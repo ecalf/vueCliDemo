@@ -118,6 +118,8 @@ export default {
         }
     },
     props:{
+        label:String,//暂时不使用该属性，后继扩展可能用到
+        name:String,
         width:String,
         height:String,
         hasSplit:Boolean,
@@ -144,7 +146,7 @@ export default {
     methods:{
         onselect(e,item){
             this.value=item;
-            this.$emit('update-value',item,this.level);
+            this.$emit('update-value',this.name,item,this.level);
         }
     }
    

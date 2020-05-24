@@ -298,13 +298,12 @@ export default {
       if (value === "") {
         callback(new Error("请输入手机号"));
       } else {
-        if (value !== "") {
-          let reg = /^1[3456789]\d{9}$/;
+         let reg = /^1[3456789]\d{9}$/;
           if (!reg.test(value)) {
             callback(new Error("请输入正确的手机号！"));
+          }else{
+            callback();
           }
-        }
-        callback();
       }
     };
 

@@ -166,7 +166,11 @@
         },
         watch:{
             value(newContent,oldContent){
+                console.log(newContent,oldContent);
                 this.$emit('update-value',this.name,newContent);
+
+                //$attrs.value ,v-model surport
+                this.$emit('input',newContent);
             }
         },
         methods:{
@@ -174,6 +178,17 @@
         },
         mounted(){
             console.log('vue-neditor-wrap mounted');
+        },
+        created(){
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultvalue||'';
+            this.value = defaultvalue;
+        },
+        updated(){
+            //$attrs.value ,v-model surport
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||'';
+            }
         }
     }
 

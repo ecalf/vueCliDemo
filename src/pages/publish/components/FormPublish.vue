@@ -27,7 +27,7 @@
 
             <FormContainer  title="发布信息" v-bind:baseline="true">
 
-                <FormRow v-if="type==3">
+                <FormRow v-if="type==3||type==4">
                     <RadioGroupField
                         v-bind:required="true" 
                         v-bind:list="entrustGroup"
@@ -208,7 +208,7 @@
                 <FormRow>
                     <FieldWrap 
                         type="fileUploadGroup" 
-                        v-bind:label="'上传图片'"
+                        label="上传图片"
                         v-bind:required="true" 
                         height="150"
                         >
@@ -245,6 +245,7 @@
                         type="editor"
                         label="电脑端描述"
                         v-bind:required="true" 
+                        v-bind:border="0"
                         height="400"
                         >
 
@@ -431,8 +432,8 @@ export default {
             ],*/
             entrustGroup:[
                 //3 委托销售 4 委托采购
-                {text:'销售',id:3,checked:true},
-                {text:'采购',id:4}
+                {text:'销售',id:3,checked:this.type==3||this.type==undefined},
+                {text:'采购',id:4,checked:this.type==4}
             ],
             useGroup:[
                 {text:'医用',id:1,checked:true},

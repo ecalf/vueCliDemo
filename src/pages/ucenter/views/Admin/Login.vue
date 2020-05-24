@@ -347,8 +347,8 @@ export default {
 
           }else{
             //console.log('data:',res.data);
-
-            const profile = setToken(res.data.token,res.data.client);
+            const profile = res.data.client.profiles;
+            setToken(res.data.token,profile);
             this.$store.commit('profile/updateProfile',profile);
             this.$router.push('/ucenter/member');
 

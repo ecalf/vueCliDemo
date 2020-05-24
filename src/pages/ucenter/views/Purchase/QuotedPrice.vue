@@ -26,6 +26,8 @@ import Mleftnav from "@components/Mleftnav";
 import Errormsg from "@components/Errormsg";
 import BarNav from "../../components/BarNav";
 import PriceList from "../../components/PriceList";
+
+
 export default {
   components: {
     Mleftnav,
@@ -37,6 +39,14 @@ export default {
     return {
       navlist: [{ title: "已报价" }, { title: "未报价" }]
     };
+  },
+  methods:{
+    getQuotedPriceList(){
+      //获取厂家向我发布的采购订单进行报价的信息
+
+
+
+    }
   }
 };
 </script>

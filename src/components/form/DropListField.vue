@@ -1,10 +1,13 @@
 <template>
     <FieldWrap 
-        type="text" 
+        type="dropList" 
+        v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:width="width" 
         v-bind:height="height"
+        v-bind:labelwidth="labelwidth"
+        v-bind:border="0"
         >
             <DropList
                 v-bind:name="name"
@@ -40,10 +43,12 @@
             required:Boolean, //是否带必填标记
             defaulttext:String,//默认显示文字
             defaultselected:Number,//默认选中第几项
+            error:String,
             label:String, //标签名
             name:String, //名称，用于表单field
             width:String,//宽度
             height:String,//高度
+            labelwidth:String,//label宽度
             list:Array //下拉列表数据
         },
         data(){
@@ -55,9 +60,22 @@
 
         methods:{
             onselect(name,value){
+                this.value = value;
                 this.$emit('update-value',name,value);
+                this.$emit('input',value);
             },
 
+        },
+        created(){
+            //$attrs.value ,v-model surport
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||'';
+            this.value = defaultvalue;
+        },
+        updated(){
+            //console.log('updated',this.value,this.$attrs.value);
+            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
+                this.value = this.$attrs.value||'';
+            }
         }
 
 

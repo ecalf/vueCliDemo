@@ -5,6 +5,7 @@
         label="品类" 
         name="category" 
         v-bind:list="categories" 
+        v-bind:deep="2"
         @update-value="updateValue" 
         />
 
@@ -28,7 +29,11 @@
     </div>
 
     <div>
-        <FilterSearch  />
+        <FilterSearch
+            v-bind:label="sequenceConfig.label"
+            v-bind:config="sequenceConfig"  
+            @update-value="updateValue"
+            />
     </div>
 
 
@@ -39,9 +44,9 @@
 
 
 <script>
-    import FilterCascade from "@components/FilterCascade";
-    import FilterMenu from "@components/FilterMenu";
-    import FilterSearch from "@components/FilterSearch";
+    import FilterCascade from "./FilterCascade";
+    import FilterMenu from "./FilterMenu";
+    import FilterSearch from "./FilterSearch";
 
 
 
@@ -56,20 +61,34 @@
         props:{
             categories:Array,
             brands:Array,
-            states:Array
+            states:Array,
+            sequenceConfig:Object
         },
         data(){
-            return {
+            let filterData = {
+                category:[],
+                brand:'',
+                state:'',
+                keyword:''
+            }
 
+            for(let item of this.sequenceConfig.sequenceList){
+                filterData[item.name] = item.order;
+            }
+
+            return {
+                filterData:filterData
             }
         },
         methods:{
             updateValue(name,value){
+                this.filterData[name] = value;
+
                 console.log('FilterMultiple updateValue',name,value);
+                console.log('filterData>>>',this.filterData);
+                
+                this.$emit('on-filter',this.filterData);
             }
-        },
-        created(){
-            console.log('categories>>>',this.categories)
         }
 
     };
@@ -82,7 +101,6 @@
 
 
 <style lang="scss" scoped>
- @import "../assets/css/variables.scss";
 .filter-container{
     padding: 30px 25px;
     background: $bgwhite;
