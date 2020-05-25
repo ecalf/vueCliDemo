@@ -296,9 +296,13 @@
         </section>
 
         <SubmitBar text="立即发布" @on-submit="publish" />
+        <PaymentMethod 
+            v-bind:title="payment.title" 
+            v-bind:visible="payment.visible" 
+            @trigger="showPaymentDialog" 
+            @on-pay="onPay"  
+            />
     </section>
-
-    
 </template>
 
 
@@ -365,6 +369,7 @@ import Editor from  "@components/form/Editor";
 import DatePickerField from  "@components/form/DatePickerField";
 import SelectCascade from "@components/form/SelectCascade";
 import SubmitBar from  "./SubmitBar";
+import PaymentMethod from "@components/PaymentMethod";
 
 import { payService } from "@api/payment";
 import { publish } from "@api/need";
@@ -400,7 +405,8 @@ export default {
         FileUploadImage,
         FileUploadVideo,
         Editor,
-        DatePickerField
+        DatePickerField,
+        PaymentMethod
     },
     props:{
         //1 发布采购, 2 发布销售, 3 委托销售, 4 委托采购 
@@ -475,11 +481,71 @@ export default {
                 richDesc:'',//富文本描述
                 deadtime:'',//截止时间
                 service:''//增值服务,非必须选
+            },
+            payment:{//支付借口参数
+                title:'支付增值服务费',
+                visible:true,
+                needs_id:0,
+                service_id:0,
+                channel_code:''
             }
         }
     },
     
     methods:{
+        showPaymentDialog(frag){
+            if(frag===undefined){
+                this.payment.visible = !this.payment.visible;
+            }else{
+                this.payment.visible = !!frag;    
+            }
+            
+        },
+        onPay(channal){
+            this.payService(this.payment.needs_id,this.payment.service_id,channal.channel_code);
+        },
+        async payService(needs_id,service_id,pay_channel_code){
+            pay_channel_code = "alipay";
+            needs_id = "57";
+            service_id =  "2";
+
+            if(!(needs_id&&service_id)){
+                return false;
+            }
+
+            const res = await payService({
+                data:{
+                    needs_id:needs_id,
+                    service_id:service_id,
+                    pay_channel_code:pay_channel_code
+                }
+            });
+
+            if(res.code==200){
+                console.log('payService res>>>',res);
+                if(pay_channel_code=='alipay'){
+                    this.alipay(res.data);
+                }else if(pay_channel_code=='wxpay'){
+                    this.wxpay(res.data);
+                }
+
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
+                });
+            }
+
+        },
+
+        alipay(payInfo){
+            window.open(payInfo.payurl+'?order_no='+payInfo.order_no,'');
+        },
+        wxpay(payInfo){
+            console.log('wxpay:',payInfo);
+        },
+
         updateValue(name,value){
             console.log('【publish form updateValue】',name,value);
 
@@ -517,15 +583,17 @@ export default {
             const params = this.checkform();
             if(!params){ return false; }
 
-            console.log('publish params ',params);
+            //console.log('publish params ',params);
             const res = await publish({data:params});
-            console.log('publish res ',res);
+            //console.log('publish res ',res);
 
-            console.log("params>>>",params);
 
             if(res.code==200){
                 if(params.service_id&&res.data.needs_id){
-                    this.payService(res.data.needs_id,params.service_id);
+                    this.payment.service_id = params.service_id;
+                    this.payment.needs_id = res.data.needs_id;
+                    this.showPaymentDialog(true);
+                    
                 }else{
                     this.$message({
                         showClose: true,
@@ -543,26 +611,7 @@ export default {
 
         },
 
-        async payService(needs_id,service_id){
-            if(!(needs_id&&service_id)){
-                return false;
-            }
 
-            
-
-            const res = await payService({data:{needs_id:needs_id,service_id:service_id}});
-            if(res.code==200){
-               console.log('res>>>',res);
-
-            }else{
-                this.$message({
-                    showClose: true,
-                    message: res.message,
-                    type: "error"
-                });
-            }
-
-        },
         
         async getQualification(){
             let res =  await getQualification();
