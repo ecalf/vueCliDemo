@@ -49,14 +49,14 @@
 
 <script>
   import { quotation } from "@api/need";
+  import { isTel } from "@utils/validator";
 
   let validaMobile = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入手机号"));
       } else {
-        let reg = /^1[3456789]\d{9}$/;
-        if (!reg.test(value)) {
-          callback(new Error("请输入正确的手机号！"));
+        if(!validator.isTel(value)){
+          callback(new Error("请输入正确的电话号码"));
         }else{
           callback();
         }
@@ -67,8 +67,7 @@
      if (value === "") {
         callback(new Error("请输入价格"));
       } else {
-        let reg = /^\d+(?:\.\d*)?$/;
-        if(!reg.test(value+'')){
+        if(!validator.isPrice(value+'')){
           callback(new Error("价格输入错误"));
         }else{
           callback();
@@ -128,7 +127,7 @@
               if(res.code==200){
                   this.$message({
                     showClose: true,
-                    message: res.message,
+                    message: '您的报价已经成功提交',
                     type: "success"
                   });
 

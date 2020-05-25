@@ -17,7 +17,7 @@
 
     <div class="prodetatils-info clearfix">
       <div class="prodetatils-left">
-            <ProductRichDesc v-bind:desc="detail.info" />
+            <ProductRichDesc v-bind:desc="detail.info||{}" />
       </div>
       <div class="prodetatils-right">
             <ProductAdv v-bind:list="advList" />

@@ -191,7 +191,7 @@
 
                 <FormRow>
                     <DropListGroup 
-                        v-bind:required="false" 
+                        v-bind:required="true" 
                         v-bind:prefix="true"
                         v-bind:list="qualificationList"
                         label="资质要求"
@@ -521,6 +521,8 @@ export default {
             const res = await publish({data:params});
             console.log('publish res ',res);
 
+            console.log("params>>>",params);
+
             if(res.code==200){
                 if(params.service_id&&res.data.needs_id){
                     this.payService(res.data.needs_id,params.service_id);
@@ -548,9 +550,10 @@ export default {
 
             
 
-            const res = await payService({data:{needs_id:needs_id}});
+            const res = await payService({data:{needs_id:needs_id,service_id:service_id}});
             if(res.code==200){
-               
+               console.log('res>>>',res);
+
             }else{
                 this.$message({
                     showClose: true,

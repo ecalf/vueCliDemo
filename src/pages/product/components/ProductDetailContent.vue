@@ -31,11 +31,9 @@
           <span>出口国：{{country(detail.exit_country)}}</span>
         </div>
         <div class="prodetail-num">
-          数量：
-            <input type="text" value="含义不明" />个
             <span>
                 {{(detail.type==2||detail.type==4)?'库存':'求购'}}
-                {{detail.num}}
+                <i>{{detail.num}}</i>
                 {{detail.unit_category_cnname}}
             </span>
           <span>{{detail.created_at|formatDate}}-{{detail.dead_time|formatDate}}</span>
@@ -52,10 +50,10 @@
 
         <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog"  />
         <DialogQuotation
-            v-bind:visible="true"
+            v-bind:visible="quotationVisible"
             @trigger="showQuotationDialog"
             v-bind:id="detail.id"
-            v-if="true" 
+            v-if="detail.type==2" 
             />
 
       </div>
@@ -137,8 +135,12 @@
     padding-left: 2px;
   }
   span {
-    padding-left: 20px;
+    padding-right: 20px;
     font-size: 12px;
+  }
+  i{
+    font-size: 20px;
+    color: $green;
   }
 }
 .prodetail-btn {
@@ -197,7 +199,7 @@
             },
             country(){//filters 不能访问 this，用计算属性实现
               return (code)=>{
-                if(!code){ return code||''; }
+                if(!code){ return ''; }
 
                 code = code.toUpperCase();
                 let country = this.countryList.filter((item)=>{
