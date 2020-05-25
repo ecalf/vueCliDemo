@@ -1,7 +1,9 @@
 <template>
     
       <div class="prodetatils-conetent">
-        <h1 class="prodetail-title" v-html="formatTitle(detail.title)"></h1>
+        <h1 class="prodetail-title">
+          {{ detail.title }}
+        </h1>
         <p class="prodetail-dec">{{detail.desc}}</p>
 
         <div class="prodetail-price">
@@ -48,7 +50,16 @@
 
 
 
-        <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog"  />
+        <DialogContact
+          v-bind:visible="contactVisible" 
+          @trigger="showContactDialog" 
+          v-bind:info="{
+              contact_name: detail.contact_name,
+              contact_phone: detail.contact_phone,
+              addr:detail.addr
+            }" 
+          />
+
         <DialogQuotation
             v-bind:visible="quotationVisible"
             @trigger="showQuotationDialog"
@@ -72,11 +83,12 @@
   color: #3d3938;
   font-weight: bold;
   margin: 0 0 15px;
-  i {
+  .highcolor {
     font-style: normal;
     color: $ac;
   }
 }
+
 .prodetail-dec {
   margin-bottom: 25px;
 }
@@ -192,6 +204,8 @@
             formatTitle(){
                 //filters 只能用于 vbind 和 插值，只好用 计算属性实现
                 return (text)=>{
+                    if(!text){ return ''; }
+
                     return (text+'').replace(/医用|民用/g,function(m){
                         return '<i class="highcolor">'+m+'</i>';
                     });

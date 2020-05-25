@@ -41,7 +41,7 @@ instance.interceptors.response.use(
 
 
 const requestCtrl = {
-  time:10*1000,//10秒内不重复提交
+  time:5*1000,//5秒内不重复提交
   isUploadApi(method,path,params){
     return !!((method.toLowerCase()=='post')&&path.indexOf('/upload')>-1&&params&&params.get&&params.get('image'));
   },

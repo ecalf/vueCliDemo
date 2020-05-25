@@ -178,7 +178,7 @@ function formatPrice(n){
     n= (n||0).toString();
     n = n.split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
-    return n.join('.')*1;
+    return n.join('.');
 }
 
 

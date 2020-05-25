@@ -14,10 +14,17 @@ import router from "./router";
 import store from "./store";
 import profileMixin from "@utils/mixin";
 
+import ElementUI from 'element-ui';
+import '@assets/theme/index.css';
+
+Vue.use(ElementUI);
 
 // global swiper
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper);
+
+
+
 
 const i18n = new VueI18n({ 
  locale: getLang(), // 定义默认语言为中文 

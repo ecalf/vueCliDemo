@@ -1,6 +1,7 @@
 <template>
   <div class="mb50">
     <!--banner-->
+    <img src="@assets/images/banner.jpg" style="display:none">
     <Banner :bannerList="bannerList" />
 
 

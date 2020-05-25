@@ -17,7 +17,7 @@
           <p class="dec">{{item.desc}}</p>
       </li>
       <li class="item item3">
-        <span class="number">{{item.num}}{{item.unit||''}}</span>
+        <span class="number">{{item.num}}{{item.unit_category_cnname||''}}</span>
       </li>
       <li class="item item4">
         <span class="price">{{item|price}}</span>
@@ -51,7 +51,7 @@
 
 <script>
 import {formatPrice} from "@utils/common";
-import {getCountrylist,getQualification,getProductCategory} from "@api/common";
+import {countryList,getCountryNameByCode} from "@utils/country";
 
 
 export default {
@@ -60,7 +60,7 @@ export default {
   },
   data(){
     return {
-        countryList:[],
+        countryList:countryList,
         qualificationList:[],
         categoryList:[]
     }
@@ -68,12 +68,7 @@ export default {
   computed:{
     country(){
       return (code)=>{
-        if(!code){ return code||''; }
-        code = code.toUpperCase();
-        let country = this.countryList.filter((item)=>{
-            return item.code==code;
-        });
-        return country.length?country[0].name:code
+        return getCountryNameByCode(code);
       }
     }
     
@@ -97,47 +92,7 @@ export default {
     }
   },
   methods:{
-      async getCountrylist(){
-          let res =  await getCountrylist();
 
-          if(res.code==200){
-              this.countryList = res.data;
-
-          }else{
-              this.$message({
-                showClose: true,
-                message: res.message,
-                type: "error"
-              });
-          }
-      },
-      async getQualification(){
-        let res =  await getQualification();
-
-          if(res.code==200){
-              this.qualificationList = res.data;
-
-          }else{
-              this.$message({
-                showClose: true,
-                message: res.message,
-                type: "error"
-              });
-          }
-      },
-      async getProductCategory(){
-        let res = await getProductCategory();
-        if(res.code==200){
-            this.categoryList = res.data;
-
-        }else{
-            this.$message({
-              showClose: true,
-              message: res.message,
-              type: "error"
-            });
-        }
-      },
       detail(id){
         location.href="/product/detail?id="+id;
       },
@@ -192,15 +147,6 @@ export default {
         },time);
       }
     }
-  },
-  created(){
-      this.getCountrylist();
-      //this.getQualification();
-      //this.getProductCategory();
-      
-  },
-  mounted(){
-
   }
 
 }
