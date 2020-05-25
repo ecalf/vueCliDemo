@@ -483,8 +483,8 @@ export default {
                 service:''//增值服务,非必须选
             },
             payment:{//支付借口参数
-                title:'支付增值服务费',
-                visible:true,
+                title:'增值服务费-支付方式',
+                visible:false,
                 needs_id:0,
                 service_id:0,
                 channel_code:''
