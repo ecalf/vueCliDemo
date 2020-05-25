@@ -61,6 +61,12 @@
         },
         created(){
             this.value = this.$attrs.value||this.text||'';
+        },
+        updated(){
+            let newValue = this.$attrs.value||this.text;
+            if(this.value!=newValue){
+                this.value = newValue;
+            }
         }
     }
 

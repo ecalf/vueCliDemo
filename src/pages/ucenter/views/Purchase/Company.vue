@@ -6,7 +6,7 @@
                     defaultvalue=""
 
                     type="text"
-                    label="公司名称" 
+                    label="企业名称" 
                     name="company_name" 
                     width="655"
                     height="40"
@@ -17,7 +17,7 @@
             <FormRow>
                 <FieldWrap 
                     type="fileUploadGroup" 
-                    label="公司LOGO"
+                    label="企业LOGO"
                     v-bind:required="true" 
                     height="150"
                     width="680"
@@ -51,7 +51,7 @@
                     v-bind:max-length="240"
                     placeholder="最多输入240个字符"
                     defaultvalue=""
-                    label="公司介绍" 
+                    label="企业介绍" 
                     name="company_introduce" 
                     width="655"
                     height="160"
@@ -75,7 +75,7 @@
             <FormRow>
                 <FieldWrap 
                     type="fileUploadGroup" 
-                    label="公司资质"
+                    label="企业资质"
                     v-bind:required="true" 
                     height="150"
                     width="680"
@@ -95,7 +95,7 @@
                     defaultvalue=""
 
                     type="text"
-                    label="公司地址" 
+                    label="企业地址" 
                     name="addr" 
                     width="655"
                     height="40"
@@ -283,11 +283,11 @@
                 //console.log('params',params);
 
                 if(!params.company_name){
-                    errMsg = '请输入公司名称';
+                    errMsg = '请输入企业名称';
                 }else if(!params.company_introduce){
-                    errMsg = '请输入公司介绍';
+                    errMsg = '请输入企业介绍';
                 }else if(!params.addr){
-                    errMsg = '请输入公司地址';
+                    errMsg = '请输入企业地址';
                 }else if(!params.contact_name){
                     errMsg = '请输入联系人';
                 }else if(!params.contact_phone){
@@ -295,13 +295,13 @@
                 }else if(!params.email){
                     errMsg = '请输入邮箱';
                 }else if(!params.company_logo){
-                    errMsg = '请上传公司logo';
+                    errMsg = '请上传企业logo';
                 }else if(!params.company_transparency.length){
                     errMsg = '请上传幻灯片图片';
                 }else if(!params.company_images){
-                    errMsg = '请上传公司介绍图片';
+                    errMsg = '请上传企业介绍图片';
                 }else if(!params.qualifications.length){
-                    errMsg = '请上传公司资质图片';
+                    errMsg = '请上传企业资质图片';
                 }else if(!validator.isTel(params.contact_phone)){
                     errMsg = '电话号码输入错误';
                 }else if(!validator.isEmail(params.email)){

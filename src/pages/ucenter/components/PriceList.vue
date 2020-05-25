@@ -1,26 +1,6 @@
 <template>
   <div class="purchase-order">
-    <ul>
-      <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">飞利浦呼吸机</a>
-      </li>
-      <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
-      </li>
-      <li class="li3 fs16">1500个</li>
-      <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
-      </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
-      <li class="li6">
-        <a href="javascript:;" class="quoted-price">报价<strong>20</strong>家</a>
-      </li>
-    </ul>
-
-
-
+    
      <ul v-for="item of list">
       <li class="li1 liorder">
         <span class="iconannoyed kicon">急</span>
@@ -30,7 +10,7 @@
         <span class="medical-use">{{item.use_way|useWay}}</span>
         <a href class="m-pro-title ellipsis">{{item.desc}}</a>
       </li>
-      <li class="li3 fs16">{{item.num}}{{item.unit_cate_id}}个？</li>
+      <li class="li3 fs16">{{item.num}}{{item.unit_category_cnname}}</li>
       <li class="li4 fs16">
         <span class="order-price">{{item|price}}</span>
       </li>
@@ -69,7 +49,6 @@ export default {
   },
   filters:{
      
-
       useWay(type){
           return type==1?'医用':'民用'
       },
