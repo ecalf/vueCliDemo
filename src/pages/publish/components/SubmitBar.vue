@@ -1,5 +1,5 @@
 <template>
-    <div class="submitBar" ref="publishSubmitBar" v-bind:style="mapStyle" >
+    <div class="submitBar" v-bind:style="mapStyle" >
         <button class="submitBtn" @click="submit()">{{text}}</button>
     </div>
 

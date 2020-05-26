@@ -1,7 +1,13 @@
 <template>
   <div class="buy-order-nav">
     <div class="order-nav-navbar">
-      <a href="javascript:;" v-for="(navitem,index) in navlist" :key="index">{{navitem.title}}</a>
+      <a href="javascript:;" 
+        v-for="(item,index) in navlist" 
+        v-bind:data-id="item.id"
+        v-bind:key="index"
+        v-bind:class="{active:index==curTabIndex}"
+        @click="switchTab(item,index)"
+        >{{item.title}}</a>
     </div>
   </div>
 </template>
@@ -9,7 +15,26 @@
 <script>
 export default {
   props:{
-    navlist:{}
+    navlist:Array
+  },
+  data(){
+    let curTabIndex = 0;
+    this.navlist.forEach((item,index)=>{
+      if(item.active==true){
+        curTabIndex = index;
+      }
+    });
+    
+
+    return {
+      curTabIndex:curTabIndex
+    }
+  },
+  methods:{
+    switchTab(item,index){
+      this.curTabIndex = index;
+      this.$emit("switch-tab",item);
+    }
   }
 };
 </script>

@@ -81,7 +81,7 @@
                 total:0,
                 page_size:5,
                 page_index:1,
-                type:1,//1 采购,2 销售,3 委托
+                type:1,//1 采购,2 销售,3 委托销售, 4 委托采购
                 list:[]
             }
         },
@@ -96,6 +96,7 @@
             },
             switchType(type){
                 this.type = type*1;
+                this.page_index = 1;
                 this.getNeeds();
             },
             async getNeeds(){

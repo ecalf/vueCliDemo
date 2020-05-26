@@ -9,19 +9,31 @@
         >
 
         <div class="company-msg">
-            <p>联系人：张女士</p>
-            <p>电话：0755-8888 888</p>
-            <p>地址：深圳市福田区天安国际大厦6楼405号</p>
+            <p>联系人：{{info.contact_name}}</p>
+            <p>电话：{{info.contact_phone}}</p>
+            <p>地址：{{info.addr}}</p>
         </div>
     </el-dialog>
 </template>
+
+<style lang="scss" scoped>
+.company-msg {
+    width:300px;
+    margin:0 auto;
+    font-size: 16px;
+    p {
+        padding-bottom: 5px;
+    }
+}
+</style>
 
 
 
 <script>
     export default {
         props:{
-            visible:Boolean
+            visible:Boolean,
+            info:Object
         },
         data(){
             return {
@@ -34,6 +46,7 @@
                 this.$emit('trigger',false);
             }
         }
+
         
     }
 

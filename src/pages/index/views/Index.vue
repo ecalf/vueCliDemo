@@ -133,13 +133,13 @@
           </h3>
         </div>
 
-        <Business-Select />
+        <BusinessSelect />
       </div>
       <!--产品列表-->
-      <Product-List />
+      <ProductList />
 
       <div class="adver-area">
-        <a href="/product">
+        <a href="/tradhall">
           <img src="@assets/images/adv_img3.png" alt />
         </a>
       </div>
@@ -156,7 +156,7 @@
             <i class="iconfont iconzu304" style="background-color:#4e5a65;"></i>采购订单
           </h3>
         </div>
-        <Order-list />
+        <Orderlist />
         <a href="/product" class="purchase-more">查看更多</a>
       </div>
 

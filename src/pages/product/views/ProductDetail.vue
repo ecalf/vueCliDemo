@@ -7,12 +7,17 @@
     </div>
 
     <div class="prodetatils-box clearfix">
-        <ProductImages v-bind:list="[].concat(detail.images)"  />
+        <ProductImages v-bind:list="detail.images|toArray"  />
         <ProductDetailContent v-bind:detail="detail" />
     
     </div>
 
-    <CompanyInfo v-bind:info="detail.info||{}" />
+    <CompanyInfo v-bind:info="{
+      company_name:detail.company_name,
+      company_introduce:detail.company_introduce,
+      company_industry:detail.industry,
+      business_scope_cate:detail.business_scope_cate
+    }" />
 
 
     <div class="prodetatils-info clearfix">
@@ -33,7 +38,7 @@
 
 
 <script>
-import ProductImages from "@components/ProductImages";
+import ProductImages from "../components/ProductImages";
 import ProductDetailContent from "../components/ProductDetailContent";
 import ProductRichDesc from "../components/ProductRichDesc";
 import ProductAdv from "../components/ProductAdv";
@@ -66,6 +71,11 @@ export default {
     computed:{
 
     },
+    filters:{
+      toArray(imgs){
+        return (imgs+'').split(',')
+      }
+    },
 
     methods:{
         async getInfo(){
@@ -73,7 +83,7 @@ export default {
             if(res.code==200){
                 this.detail = res.data;
 
-                console.log('=======test detail.images===========');
+                /*console.log('=======test detail.images===========');
                 this.detail.images = [
                     '/img/productimg7.ebd76f2c.png?a=1',
                     '/img/productimg7.ebd76f2c.png?a=2',
@@ -83,7 +93,7 @@ export default {
                     '/img/productimg7.ebd76f2c.png?a=6',
                     '/img/productimg7.ebd76f2c.png?a=7',
                     '/img/productimg7.ebd76f2c.png?a=8'
-                ];
+                ];*/
 
             }else{
                  this.$message({
@@ -138,6 +148,7 @@ export default {
 .prodetatils-info {
     .prodetatils-left {
       width: 930px;
+      min-height: 600px;
       float: left;
       padding: 25px;
       background: #fff;

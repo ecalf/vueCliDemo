@@ -6,7 +6,7 @@
                     defaultvalue=""
 
                     type="text"
-                    label="公司名称" 
+                    label="企业名称" 
                     name="company_name" 
                     width="655"
                     height="40"
@@ -17,7 +17,7 @@
             <FormRow>
                 <FieldWrap 
                     type="fileUploadGroup" 
-                    label="公司LOGO"
+                    label="企业LOGO"
                     v-bind:required="true" 
                     height="150"
                     width="680"
@@ -36,10 +36,10 @@
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_1" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_2" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_3" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_4" @update-value="updateValue"/>
 
                 </FieldWrap>
             </FormRow>  
@@ -51,7 +51,7 @@
                     v-bind:max-length="240"
                     placeholder="最多输入240个字符"
                     defaultvalue=""
-                    label="公司介绍" 
+                    label="企业介绍" 
                     name="company_introduce" 
                     width="655"
                     height="160"
@@ -75,16 +75,16 @@
             <FormRow>
                 <FieldWrap 
                     type="fileUploadGroup" 
-                    label="公司资质"
+                    label="企业资质"
                     v-bind:required="true" 
                     height="150"
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="qualifications_1" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="qualifications_2" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="qualifications_3" @update-value="updateValue"/>
+                    <FileUploadImage title="支持jpg、png格式" name="qualifications_4" @update-value="updateValue"/>
 
                 </FieldWrap>
             </FormRow>  
@@ -95,7 +95,7 @@
                     defaultvalue=""
 
                     type="text"
-                    label="公司地址" 
+                    label="企业地址" 
                     name="addr" 
                     width="655"
                     height="40"
@@ -105,7 +105,6 @@
 
 
             <FormRow>
-                <div class="fieldGroup">
                 <InputField 
                     v-bind:required="true" 
                     v-bind:suffix="false"
@@ -147,9 +146,10 @@
                     height="40"
                     @update-value="updateValue"
                     />
-                </div>
+                
+                </FormRow>
 
-                <div class="fieldGroup">
+                <FormRow>
                 <InputField 
                     v-bind:required="false" 
                     v-bind:suffix="false"
@@ -177,7 +177,6 @@
                     height="40"
                     @update-value="updateValue"
                     />
-                </div>
             </FormRow>
 
    
@@ -212,7 +211,7 @@
 
 
     import {editCompany} from "@api/user";
-    import {validator} from "@utils/common";
+    import validator from "@utils/validator";
 
 
     export default {
@@ -250,13 +249,23 @@
         methods:{
             updateValue(name,value){
                 console.log('updateValue',name,value);
-                if(Object.prototype.toString.call(this.fieldData[name])=='[object Array]'){
-                    this.fieldData[name].push(value);
+
+                if((/\_\d+$/).test(name)){//数组field: xxx_0, xxx_1, xxx_2
+                    let nameParseInfo = name.match(/(.+)\_(\d+)$/);
+                    let fieldName = nameParseInfo[1];
+                    let index = nameParseInfo[2]*1;
+                    if(Object.prototype.toString.call(this.fieldData[fieldName])!='[object Array]'){
+                        this.fieldData[fieldName] = [];
+                    }
+                    this.fieldData[fieldName][index] = value;
+
                 }else{
                     this.fieldData[name] = value;
                 }
+
                 
-                console.log(this.fieldData);
+                
+                //console.log(this.fieldData);
             },
             validForm(){
                 const params = {};
@@ -265,7 +274,7 @@
 
                 for(let name in fieldData){
                     if(Object.prototype.toString.call(fieldData[name])=='[object Array]'){
-                        params[name] = [].concat(fieldData[name]).join();
+                        params[name] = [].concat(fieldData[name]).join().replace(/^,|,$/g,'');
                     }else{
                         params[name] = fieldData[name];
                     }
@@ -274,11 +283,11 @@
                 //console.log('params',params);
 
                 if(!params.company_name){
-                    errMsg = '请输入公司名称';
+                    errMsg = '请输入企业名称';
                 }else if(!params.company_introduce){
-                    errMsg = '请输入公司介绍';
+                    errMsg = '请输入企业介绍';
                 }else if(!params.addr){
-                    errMsg = '请输入公司地址';
+                    errMsg = '请输入企业地址';
                 }else if(!params.contact_name){
                     errMsg = '请输入联系人';
                 }else if(!params.contact_phone){
@@ -286,13 +295,13 @@
                 }else if(!params.email){
                     errMsg = '请输入邮箱';
                 }else if(!params.company_logo){
-                    errMsg = '请上传公司logo';
-                }else if(!params.company_transparency){
+                    errMsg = '请上传企业logo';
+                }else if(!params.company_transparency.length){
                     errMsg = '请上传幻灯片图片';
                 }else if(!params.company_images){
-                    errMsg = '请上传公司介绍图片';
-                }else if(!params.qualifications){
-                    errMsg = '请上传公司资质图片';
+                    errMsg = '请上传企业介绍图片';
+                }else if(!params.qualifications.length){
+                    errMsg = '请上传企业资质图片';
                 }else if(!validator.isTel(params.contact_phone)){
                     errMsg = '电话号码输入错误';
                 }else if(!validator.isEmail(params.email)){
@@ -328,7 +337,7 @@
                 if(res.code==200){
                     this.$message({
                         showClose: true,
-                        message: res.message,
+                        message: '保存成功',
                         type: "success"
                     });
 

@@ -116,7 +116,7 @@
 
 
 <script>
-import Mleftnav from "@components/Mleftnav";
+import Mleftnav from "../../components/Mleftnav";
 import MemberPublishList from "./MemberPublishList";
 
 

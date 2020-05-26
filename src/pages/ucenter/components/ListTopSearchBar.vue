@@ -17,7 +17,7 @@
 
 <script>
   /**************************************
-  ******* 用于会员中心 一些列表表头的搜索
+  ******* 用于会员中心 一些列表表头的搜索 ****
   ***************************************/
   export default {
       props:{
@@ -30,7 +30,7 @@
       },
       methods:{
           onSearch(){
-              this.config.handler(this.name,this.keyword);
+              this.config.handler(this.config.name,this.keyword);
           }
       }
   }

@@ -178,47 +178,11 @@ function formatPrice(n){
     n= (n||0).toString();
     n = n.split('.');
     n[0] = n[0].replace(/(\d)(?=(\d{3})+\b)/g,"$1,");
-    return n.join('.')*1;
+    return n.join('.');
 }
 
 
-//常用数据校验
-const validator = {
-    isNum(str,n){
-        let reg;
-        if(n){
-            reg = new RegExp('^\\d{'+n+'}$');
-        }else{
-            reg = /^\d+$/;
-        }
 
-        return reg.test(str);
-    },
-    isCNChar(str){
-        let reg = /^[\u4e00-\u9fa5]+$/;
-        return reg.test(str);
-    },
-    isMobile(str){//手机
-        let reg = /^1[3-9]\d{9}$/;
-        return reg.test(str);
-    },
-
-    isPhone(str){//座机
-        let reg = /^(\d3,4|\d{3,4}-)?\d{7,8}$/;
-        return reg.test(str);
-    },
-    isTel(str){//电话
-        return this.isMobile(str)||this.isPhone(str);
-    },
-    isEmail(str){
-        let reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-        return reg.test(str);
-    },
-    isUrl(str){
-        let reg = /^(?:https?:)?\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
-        return reg.test(str);
-    }
-}
 
 
 
@@ -233,6 +197,5 @@ export {
     dateTimeFormat,
     getFullWidthLength,
     formatPrice,
-    formatListData,
-    validator
+    formatListData
 }

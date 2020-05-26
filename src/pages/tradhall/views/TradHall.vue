@@ -1,6 +1,7 @@
 <template>
   <div class="mb50">
     <!--banner-->
+    <img src="@assets/images/banner.jpg" style="display:none">
     <Banner :bannerList="bannerList" />
 
 
@@ -106,15 +107,17 @@ export default {
     },
     methods:{
         triggerTab(type){
+            this.page_index = 1;
             this.type = type;
             this.getNeedList();
         },
         switchPage(page_index){
-            console.log('switch page_index',page_index);
             this.page_index = page_index*1;
             this.getNeedList();
         },
         onFilter(filterData){
+            this.page_index = 1;
+
             //cate 只传最末尾一级
             let cate = filterData.category[filterData.category.length-1]||{};
             let brand = filterData.brand||{};
@@ -171,7 +174,6 @@ export default {
 
             if(res.code==200){
                 this.categoryList = formatListData(res.data);
-                console.log('format this.categoryList>>>',this.categoryList);
             }else{
                 this.$message({
                     showClose: true,
@@ -200,10 +202,11 @@ export default {
         },
 
     },
-  created(){
-    this.getProductCategory();
-    this.getBrandList();
-    this.getNeedList();
+  async created(){
+    await this.getProductCategory();
+    await this.getBrandList();
+    await this.getNeedList();
+    console.log('tradhall async created');
   }
 };
 </script>

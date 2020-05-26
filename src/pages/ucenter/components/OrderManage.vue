@@ -1,8 +1,8 @@
 <template>
-  <MemberRightWrap title="报价管理" v-bind:searchconfig="searchconfig">
+  <MemberRightWrap v-bind:title="title" v-bind:searchconfig="searchconfig">
     <BarNav v-bind:navlist="navlist" @switch-tab="switchTab" />
-    <PriceList v-bind:list="quotationList" v-if="total>0" />
     <Errormsg v-if="total==0" />
+    <OrderShow v-bind:list="orderList" v-if="total>0" />
 
     <!--分页 -->
     <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
@@ -18,44 +18,52 @@
 </template>
 
 
-<script>
-import MemberRightWrap from "../../components/MemberRightWrap";
-import Pagination from "@components/Pagination";
-import Errormsg from "@components/Errormsg";
-import BarNav from "../../components/BarNav";
-import PriceList from "../../components/PriceList";
 
-import { getMyQuotation } from "@api/user";
-import {formatPrice} from "@utils/common";
+
+
+<script>
+import Errormsg from "@components/Errormsg";
+import MemberRightWrap from "./MemberRightWrap";
+import BarNav from "./BarNav";
+import OrderShow from "./OrderShow";
+
+ import {getMyNeeds} from "@api/user";
 
 
 export default {
   components: {
     MemberRightWrap,
     Errormsg,
-    Pagination,
     BarNav,
-    PriceList
+    OrderShow
+  },
+  props:{
+    title:String,
+    type:Number  //1 发布采购 2 发布销售 3 委托销售 4 委托采购
+
   },
   data() {
     return {
+      navlist: [
+        { id:0,title: "全部" ,active:true},
+        { id:1,title: "上架" },
+        { id:2,title: "下架" },
+        { id:3,title: "已截止" }
+      ],
       searchconfig:{
         name:"keyword",
         handler:(name,keyword)=>{
           this.onSearch(name,keyword);
         }
       },
-      navlist: [
-        {id:0, title: "已报价",active:true }, 
-        {id:1, title: "未报价" }
-      ],
 
-      quoted:0,//0 未报价，1 已报价
+      status:0,//0 全部，1 上架,2 下架,3 已截止
       keyword:'',
       total:0,
       page_size:10,
       page_index:1,
-      quotationList:[],
+      orderList:[]
+
 
     };
   },
@@ -63,27 +71,37 @@ export default {
     onSearch(name,keyword){
       this.keyword = keyword;
       this.page_index = 1;
-      this.getMyQuotation();
+      this.getOrderList();
     },
     switchTab(item){
-      this.quoted = item.id*1;
+      this.status = item.id*1;
       this.page_index = 1;
-      this.getMyQuotation();
+      this.getOrderList();
     },
     switchPage(page_index){
       this.page_index = page_index*1;
-      this.getMyQuotation();
+      this.getOrderList();
     },
-    async getMyQuotation(){//获取厂家向我发布的采购订单进行报价的信息
-      const params ={
-        page_size:this.page_size,
-        page_index:this.page_index,
-        keyword:this.keyword
-      };
-      const res = await getMyQuotation({data:params});
 
+    async getOrderList(){//我发布的采购订单
+      const params = {
+        type:this.type,
+        page_index:this.page_index,
+        page_size:this.page_size,
+        keyword:this.keyword
+      }
+
+      if(this.status==1){//上架
+        params.status = 1; 
+      }else if(this.status==2){//下架
+        params.status = 0; 
+      }else if(this.status==3){//已截止
+        params.is_deadtime = 1;//1 已截至 0 未截至
+      }
+
+      const res = await getMyNeeds({data:params});
       if(res.code==200){
-        this.quotationList = res.data.list;
+        this.orderList = res.data.list;
         this.total = res.data.total;
       }else{
         this.$message({
@@ -93,13 +111,13 @@ export default {
         });
       }
 
+      
     }
   },
   created(){
-    this.getMyQuotation();
+    this.getOrderList();
   }
 };
 </script>
-
 <style lang="scss" scoped>
 </style>

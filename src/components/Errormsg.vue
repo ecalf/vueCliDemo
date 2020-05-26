@@ -3,7 +3,7 @@
     <p>
       <img src="@assets/images/error.png" alt />
     </p>
-    <p>抱歉 Sorry！~ 没有找到符合条件的商品</p>
+    <p>抱歉 Sorry！~ 没有找到符合条件的数据</p>
   </div>
 </template>
 <script>

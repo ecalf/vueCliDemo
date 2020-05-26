@@ -29,7 +29,7 @@
 
 <style lang="scss" scoped>
     .input-text{
-        flex:1;
+        width:100%;
         padding:0 10px;
     }
 

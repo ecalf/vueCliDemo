@@ -3,7 +3,7 @@
         <!-- logo-->
         <div class="user-profile">
             <img class="personal-img" src="@assets/images/personnel.png" alt />
-            <p class="company-name">比亚迪口罩公司</p>
+            <p class="company-name">比亚迪口罩企业</p>
             <p class="user-name">张大千</p>
         </div>
 
@@ -48,6 +48,7 @@
                     label="邮箱认证"
                     width="172"
                     height="25"
+                    v-model="email"
                     />
 
                 <Icon 
@@ -62,6 +63,8 @@
                     label="实名认证"
                     width="172"
                     height="25"
+                    readonly
+                    v-model="real_name"
                     />
 
                  <Icon 
@@ -90,42 +93,45 @@
                     />
 
             </FormRow>
+
+            <div class="btn-wrap">
+                <Button type="button" text="保 存" @on-click="editPersonalInfo()" />
+            </div>
+
         </div>
 
         <div class="info-section company-info">
-            <div class="info-title">公司信息</div>
+            <div class="info-title">企业信息</div>
             <FormRow>
                 <TextField 
-                    label="公司名称"
-                    text="13723764444"
+                    label="企业名称"
+                    v-bind:text="companyInfo.company_name||''"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
                     label="所属行业"
-                    text="13723764444"
+                    v-bind:text="companyInfo.industry||''"
                     width="220"
                     height="25"
                     />
-
             </FormRow>
 
             <FormRow>
                 <TextField 
-                    label="企业类型"
-                    text="13723764444"
+                    label="经营方式"
+                    v-bind:text="companyForm(companyInfo.company_form)"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
-                    label="公司网址"
-                    text="13723764444"
+                    label="联系人"
+                    v-bind:text="companyInfo.contact_name||''"
                     width="220"
                     height="25"
                     />
-
             </FormRow>
         </div>
 
@@ -168,6 +174,19 @@
         }
     }
 
+    .user-info{
+        border-bottom: 1px dotted #EAECED;
+    }
+
+
+    .btn-wrap{
+        margin-top:30px;
+        margin-left:115px;
+        margin-bottom: 20px;
+        text-align:  left;
+    }
+
+
 </style>
 
 
@@ -198,15 +217,36 @@ export default {
     props:{},
     data(){
         return {
+            companyFormGroup:this.$store.state.company.companyFormGroup,
+            email:'1836173@qq.com',
+            real_name:'张大千',
             wechat:'微信12312',
             qq:'287461246'
         }
     },
     computed:{
+        companyForm(){
+            return (id)=>{
+                let text = '';
+                this.companyFormGroup.forEach((item)=>{ 
+                    if(id==item.id){
+                        text = item.text;
+                    }  
+                });
+                return text;
+            }
+        },
         profile(){
-          return this.$store.state.profile;
+            return this.$store.state.profile;
+        },
+        companyInfo(){
+            return this.$store.state.profile.user_company;
+        },
+        userInfo(){
+            return this.$store.state.profile.user_info;
         }
     },
+    
     methods:{
         modifyPass(){
             console.log('modifyPass');
@@ -218,14 +258,11 @@ export default {
             console.log('authticateEmail');
         },
         authticateRealName(){
-            console.log('authticateRealName');
+            this.$router.push('/ucenter/authentication');
+        },
+        editPersonalInfo(){
+            console.log('editPersonalInfo');
         }
-    },
-    created(){
-        console.log('profile>>>',this.profile);
-    },
-    updated(){
-        console.log('wechat:',this.wechat,' qq:',this.qq)
     }
 }
 

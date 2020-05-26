@@ -10,3 +10,8 @@ export async function getPayWayList(){
 export async function payService (params){
     return post('/v1/pay/pay-service',params);
 }
+
+//获取支付订单状态
+export async function getOrderStatus(params){
+    return post('/v1/pay/get-order-status',params);
+}

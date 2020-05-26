@@ -1,7 +1,9 @@
 <template>
     
       <div class="prodetatils-conetent">
-        <h1 class="prodetail-title" v-html="formatTitle(detail.title)"></h1>
+        <h1 class="prodetail-title">
+          {{ detail.title }}
+        </h1>
         <p class="prodetail-dec">{{detail.desc}}</p>
 
         <div class="prodetail-price">
@@ -27,15 +29,13 @@
             <img src="@assets/images/inicon12.png" alt />
           </span>
           <span>品牌：{{detail.product_brand_cnname||detail.other_brand}}</span>
-          <span>应用类型：{{useWay(detail.use_way)}}</span>
+          <span>应用类型：{{detail.use_way|useWay}}</span>
           <span>出口国：{{country(detail.exit_country)}}</span>
         </div>
         <div class="prodetail-num">
-          数量：
-            <input type="text" value="含义不明" />个
             <span>
                 {{(detail.type==2||detail.type==4)?'库存':'求购'}}
-                {{detail.num}}
+                <i>{{detail.num}}</i>
                 {{detail.unit_category_cnname}}
             </span>
           <span>{{detail.created_at|formatDate}}-{{detail.dead_time|formatDate}}</span>
@@ -44,18 +44,34 @@
         <div class="prodetail-btn">
           <el-button type="text" @click="showContactDialog(true)">立即联系</el-button>
 
-          <!--商家发布销售，客户可报价-->
+          <!--商家发布销售，客户可报价 -->
           <el-button type="text" @click="showQuotationDialog(true)" v-if="detail.type==2">立即报价</el-button>
         </div>
 
 
 
-        <DialogContact v-bind:visible="contactVisible" @trigger="showContactDialog"  />
+        <DialogContact
+          v-bind:visible="contactVisible" 
+          @trigger="showContactDialog" 
+          v-bind:info="{
+              contact_name: detail.contact_name,
+              contact_phone: detail.contact_phone,
+              addr:detail.addr
+            }" 
+          />
+
         <DialogQuotation
+            v-if="detail.type==2"
             v-bind:visible="quotationVisible"
-            @trigger="showQuotationDialog"
             v-bind:id="detail.id"
-            v-if="detail.type==2" 
+            v-bind:info="{
+              id:detail.id,
+              category_name:detail.product_category_cnname,
+              title:detail.title,
+              use_way:detail.use_way
+            }"
+            
+            @trigger="showQuotationDialog" 
             />
 
       </div>
@@ -74,11 +90,12 @@
   color: #3d3938;
   font-weight: bold;
   margin: 0 0 15px;
-  i {
+  .highcolor {
     font-style: normal;
     color: $ac;
   }
 }
+
 .prodetail-dec {
   margin-bottom: 25px;
 }
@@ -137,8 +154,12 @@
     padding-left: 2px;
   }
   span {
-    padding-left: 20px;
+    padding-right: 20px;
     font-size: 12px;
+  }
+  i{
+    font-size: 20px;
+    color: $green;
   }
 }
 .prodetail-btn {
@@ -190,48 +211,51 @@
             formatTitle(){
                 //filters 只能用于 vbind 和 插值，只好用 计算属性实现
                 return (text)=>{
+                    if(!text){ return ''; }
+
                     return (text+'').replace(/医用|民用/g,function(m){
                         return '<i class="highcolor">'+m+'</i>';
                     });
                 }
             },
-            country(){
-                return (code)=>{
-                    if(!code){ return code; }
+            country(){//filters 不能访问 this，用计算属性实现
+              return (code)=>{
+                if(!code){ return ''; }
 
-                    code = code.toUpperCase();
-                    let country = this.countryList.filter((item)=>{
-                        return item.code==code;
-                    });
-                    return country.length?country[0].name:code
-                }
-            },
-            useWay(){
-                return (type)=>{
-                    return type==1?'医用':'民用'
-                }
-            },
-            price(){
-              return (item)=>{
-                //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-                let p;
-                if(item.type==2){
-                  p = item.supplier_price;
-                }else if(item.type==1){
-                  p = item.price;
-                }
-
-                return p&&('￥'+formatPrice(p));
+                code = code.toUpperCase();
+                let country = this.countryList.filter((item)=>{
+                    return item.code==code;
+                });
+                return country.length?country[0].name:code
               }
             }
+            
         },
         filters:{
+            
+
+            useWay(type){
+                return type==1?'医用':'民用'
+            },
+
             formatPrice(price){
                 return formatPrice(price||0);
             },
             
             formatDate(date){
                 return dateTimeFormat(date,'%y.%m.%d');
+            },
+
+            price(item){
+              //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
+              let p;
+              if(item.type==2){
+                p = item.supplier_price;
+              }else if(item.type==1){
+                p = item.price;
+              }
+
+              return p&&('￥'+formatPrice(p));
             }
         },
         methods:{

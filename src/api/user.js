@@ -23,6 +23,11 @@ export async function getMyNeeds(params){
     return post('/v1/user/get-my-needs-list',params); 
 }
 
+//我的报价
+export async function getMyQuotation(params){
+    return post('/v1/user/get-my-quotation-list',params);
+}
+
 //用户认证
 export async function identify(params){
     return post('/v1/user/identification',params)
