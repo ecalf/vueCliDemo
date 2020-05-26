@@ -45,13 +45,7 @@
   padding: 10px 0 8px;
   line-height: 16px;
 }
-.company-msg {
-  margin-top: -20px;
-  font-size: 16px;
-  p {
-    padding-bottom: 5px;
-  }
-}
+
 
 .enter-page {
   float: right;

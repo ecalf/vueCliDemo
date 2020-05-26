@@ -7,19 +7,20 @@
         class="category-one"
         v-bind:data-id="item.id"
         v-bind:class="{active:indexshow==index,hasChild:!!(item.child&&item.child.length)}"
-        @click="subShow(index)"
+        @click="subShow(item,index)"
     >{{item.text}}</div>
 
     <transition name="sub-comments" v-if="item.child&&item.child.length">
       <div class="ani-height">
         <div
             class="category-two"
+            v-bind:class="{active:curId==subitem.id}"
             v-bind:data-id="subitem.id"
             v-show="index===indexshow"
             v-for="(subitem,i) in item.child"
             v-bind:key="i"
-            v-on:mouseover="showToggle(i)"
-            v-on:mouseout="handleHide"
+            v-on:click="showToggle(subitem,i)"
+           
         >
             <a href="javascript:;" class="sub-title">{{subitem.text}}</a>
             <div class="category-three"  v-show="i===isShow" v-if="subitem.child&&subitem.child.length">
@@ -123,7 +124,7 @@
 .category-two {
   position: relative;
   font-size: 12px;
-  &:hover {
+  &.active,&:hover {
     .sub-title {
       color: $ac;
       background: #fff;
@@ -141,7 +142,7 @@
   a {
     display: inline-block;
     padding: 4px 5px;
-    &:hover {
+    &.active,&:hover {
       color: $ac;
     }
   }
@@ -167,19 +168,32 @@ export default {
     },
     data(){
         return {
+            curId:-1,
             isShow: -1,
             indexshow: -1
         }
     },
     methods:{
-        showToggle: function(i) {
-          this.isShow = i;
+        showToggle: function(item,i) {
+          if(this.isShow == i){
+            this.isShow = -1;
+          }else{
+            this.isShow = i
+          }
+
+          this.curId = item.id;
         },
         handleHide: function() {
           this.isShow = !this.isShow;
         },
-        subShow: function(index) {
-          this.indexshow = index;
+        subShow: function(item,index) {
+          if(this.indexshow == index){
+            this.indexshow = -1;
+          }else{
+            this.indexshow = index;
+          }
+          
+          this.curId = item.id;
         }
 
     }

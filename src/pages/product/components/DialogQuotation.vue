@@ -12,8 +12,8 @@
   >
     <el-form :model="quotationForm" :rules="rules" ref="quotationForm">
       <h3 class="prodetail-title form-protitle">
-        鱼跃呼吸机家
-        <i class="highcolor">医用</i>正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压单水平自动无创呼吸器睡眠老人止鼾机YH-450 鱼跃呼吸机家医用正压
+        {{info.category_name}}
+        <i class="highcolor">{{info.use_way|useWay}}</i>{{info.title}}
       </h3>
       <el-form-item label="联系电话" :label-width="formLabelWidth" prop="phone">
         <el-input v-model="quotationForm.phone" autocomplete="off"></el-input>
@@ -21,7 +21,7 @@
       <el-form-item label="联系人" :label-width="formLabelWidth" prop="contact_name">
         <el-input v-model="quotationForm.contact_name" autocomplete="off"></el-input>
       </el-form-item>
-       <el-form-item label="公司" :label-width="formLabelWidth" prop="company_name">
+       <el-form-item label="公司名称" :label-width="formLabelWidth" prop="company_name">
         <el-input v-model="quotationForm.company_name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="单价" :label-width="formLabelWidth" prop="quoted_price">
@@ -39,6 +39,23 @@
 </template>
 
 <style lang="scss" scoped>
+  .price-box{
+    width: 500px;
+    margin: 0 auto;
+  }
+
+  .prodetail-title {
+    font-size: 18px;
+    color: #3d3938;
+    font-weight: bold;
+    margin: 0 0 15px;
+      .highcolor {
+        font-style: normal;
+        color: $ac;
+      }
+  }
+
+
   .form-protitle{
     font-size:16px;
     font-weight:normal;
@@ -49,7 +66,7 @@
 
 <script>
   import { quotation } from "@api/need";
-  import { isTel } from "@utils/validator";
+  import validator from "@utils/validator";
 
   let validaMobile = (rule, value, callback) => {
       if (value === "") {
@@ -86,10 +103,12 @@
 
   export default {
     props:{
+        info:Object,
         visible:Boolean,
         id:Number
     },
     data(){
+
       return {
         formLabelWidth: "100px",
         quotationForm: {
@@ -100,6 +119,11 @@
             desc: ""
         },
         rules:rules
+      }
+    },
+    filters:{
+      useWay(type){
+          return type==1?'医用':'民用'
       }
     },
     methods:{
@@ -145,6 +169,7 @@
 
         
       }
+     
     }
 
   

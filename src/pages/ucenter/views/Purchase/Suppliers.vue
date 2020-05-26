@@ -144,12 +144,12 @@ import BarNav from "../../components/BarNav";
         methods:{
             onSearch(name,keyword){
               this.keyword = keyword;
-              this.page_index = 0;
+              this.page_index = 1;
               this.getSupplier();
             },
             switchTab(item){
               this.type = item.id*1;
-              this.page_index = 0;
+              this.page_index = 1;
               this.getSupplier();
             },
             switchPage(page_index){

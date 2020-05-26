@@ -61,7 +61,7 @@ export default {
       keyword:'',
       total:0,
       page_size:10,
-      page_index:0,
+      page_index:1,
       orderList:[]
 
 
@@ -70,12 +70,12 @@ export default {
   methods:{
     onSearch(name,keyword){
       this.keyword = keyword;
-      this.page_index = 0;
+      this.page_index = 1;
       this.getOrderList();
     },
     switchTab(item){
       this.status = item.id*1;
-      this.page_index = 0;
+      this.page_index = 1;
       this.getOrderList();
     },
     switchPage(page_index){

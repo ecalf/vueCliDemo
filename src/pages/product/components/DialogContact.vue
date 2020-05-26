@@ -16,6 +16,17 @@
     </el-dialog>
 </template>
 
+<style lang="scss" scoped>
+.company-msg {
+    width:300px;
+    margin:0 auto;
+    font-size: 16px;
+    p {
+        padding-bottom: 5px;
+    }
+}
+</style>
+
 
 
 <script>
@@ -35,6 +46,7 @@
                 this.$emit('trigger',false);
             }
         }
+
         
     }
 

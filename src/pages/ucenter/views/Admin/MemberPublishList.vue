@@ -96,7 +96,7 @@
             },
             switchType(type){
                 this.type = type*1;
-                this.page_index = 0;
+                this.page_index = 1;
                 this.getNeeds();
             },
             async getNeeds(){

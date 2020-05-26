@@ -44,7 +44,7 @@
         <div class="prodetail-btn">
           <el-button type="text" @click="showContactDialog(true)">立即联系</el-button>
 
-          <!--商家发布销售，客户可报价-->
+          <!--商家发布销售，客户可报价 -->
           <el-button type="text" @click="showQuotationDialog(true)" v-if="detail.type==2">立即报价</el-button>
         </div>
 
@@ -61,10 +61,17 @@
           />
 
         <DialogQuotation
+            v-if="detail.type==2"
             v-bind:visible="quotationVisible"
-            @trigger="showQuotationDialog"
             v-bind:id="detail.id"
-            v-if="detail.type==2" 
+            v-bind:info="{
+              id:detail.id,
+              category_name:detail.product_category_cnname,
+              title:detail.title,
+              use_way:detail.use_way
+            }"
+            
+            @trigger="showQuotationDialog" 
             />
 
       </div>
