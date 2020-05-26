@@ -1,4 +1,4 @@
-# whscmfront
+# vueCliDemo
 
 ## Project setup
 ```
