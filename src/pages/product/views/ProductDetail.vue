@@ -73,8 +73,7 @@ export default {
     },
     filters:{
       toArray(imgs){
-        console.log('imgs>>>',imgs);
-        return imgs.split(',')
+        return (imgs+'').split(',')
       }
     },
 
@@ -84,7 +83,7 @@ export default {
             if(res.code==200){
                 this.detail = res.data;
 
-                console.log('=======test detail.images===========');
+                /*console.log('=======test detail.images===========');
                 this.detail.images = [
                     '/img/productimg7.ebd76f2c.png?a=1',
                     '/img/productimg7.ebd76f2c.png?a=2',
@@ -94,7 +93,7 @@ export default {
                     '/img/productimg7.ebd76f2c.png?a=6',
                     '/img/productimg7.ebd76f2c.png?a=7',
                     '/img/productimg7.ebd76f2c.png?a=8'
-                ];
+                ];*/
 
             }else{
                  this.$message({
