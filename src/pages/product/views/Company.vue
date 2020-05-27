@@ -20,11 +20,7 @@
                         </span>
                     </h4>
                     <div class="deatils-content">
-                        deatils-content
-                        deatils-content
-                        deatils-content
-                        deatils-content
-                        deatils-content
+                        {{ info.company_introduce }}
                     </div>
                     <div class="company-label-wrap">
                         <span class="company-label">企业主营：{{info.business_scope_cate}}</span>
@@ -38,9 +34,9 @@
                 企业简介
                 <span class="sub-title">Company profile</span>
                 <ul class="need-type-switch">
-                <li class="item" v-bind:class="{active:type==1}" @click="switchType(1)">采购订单</li>
-                <li class="item" v-bind:class="{active:type==2}" @click="switchType(2)">销售订单</li>
-                <li class="item" v-bind:class="{active:type==3}" @click="switchType(3)">委托订单</li>
+                    <li class="item" v-bind:class="{active:type==1}" @click="switchType(1)">采购订单</li>
+                    <li class="item" v-bind:class="{active:type==2}" @click="switchType(2)">销售订单</li>
+                    <li class="item" v-bind:class="{active:type==3}" @click="switchType(3)">委托订单</li>
                 </ul>
             </h4>
 
@@ -71,18 +67,10 @@
 
             <div class="deatils-content">
                 <ul class="img-list">
-                    <li class="img-list-item">
-                        <img src="http://qamdtrcrj.bkt.clouddn.com/5b8d7b5350576a5f757a718b753fa61e.jpg" />
+                    <li class="img-list-item" v-for="src of qualifications">
+                        <img v-bind:src="src" alt="" />
                     </li>
-                    <li>
-                        <img src="http://qamdtrcrj.bkt.clouddn.com/5b8d7b5350576a5f757a718b753fa61e.jpg" />
-                    </li>
-                    <li>
-                        <img src="http://qamdtrcrj.bkt.clouddn.com/5b8d7b5350576a5f757a718b753fa61e.jpg" />
-                    </li>
-                    <li>
-                        <img src="http://qamdtrcrj.bkt.clouddn.com/5b8d7b5350576a5f757a718b753fa61e.jpg" />
-                    </li>
+                   
                 </ul>
             </div>
         </div>
@@ -94,20 +82,22 @@
                 <span class="sub-title">Company contact</span>
             </h4>
 
+
             <div class="deatils-content">
                 <div class="company-contact">
-                    <span>联系人：xxxxx</span>
+                    <span>联系人：{{info.contact_name||''}}</span>
                 </div>
                 <div class="company-contact">
-                    <span>电话：44525865555</span>
-                    <span>QQ：44525865555</span>
-                    <span>微信：44525865555</span>
-                    <span>邮箱：44525865555</span>
+                    <span>电话：{{info.contact_phone||''}}</span>
+                    <span>QQ：{{info.qq||''}}</span>
+                    <span>微信：{{info.wechat||''}}</span>
+                    <span>邮箱：{{info.email||''}}</span>
                 </div>
                 <div class="company-contact">
-                    <span>地址：qileyqwelhqweh</span>
+                    <span>地址：{{info.addr||''}}</span>
                 </div>
             </div>
+
         </div>
 
 
@@ -229,6 +219,10 @@
         span{
             margin-right: 40px;
         }
+
+        &:last-child{
+            margin-bottom: 150px;
+        }
     }
 }
 
@@ -242,6 +236,7 @@
     import Errormsg from "@components/Errormsg";
 
     import { getUserInfo } from "@api/user";
+    import { getNeedList } from "@api/need";
 
     export default {
         components:{
@@ -273,12 +268,16 @@
                     'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2824904003,987247610&fm=11&gp=0.jpg',
                     'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3696244676,3361057726&fm=26&gp=0.jpg'
                 ]
+
                 return images.map((url)=>{
                     return {
                         imgUrl:url,
                         href:''
                     }
                 });
+            },
+            qualifications(){
+                return this.info.qualifications&&this.info.qualifications.split(',')||[];
             }
         },
         methods:{
@@ -307,13 +306,14 @@
 
             async getNeeds(){
                 let params = {
+                    user_id:this.info.user_id,
                     page_size:this.page_size,
                     page_index:this.page_index,
                     type:this.type 
                 }
                 
 
-                let res = await getMyNeeds({data:params});
+                let res = await getNeedList({data:params});
                 if(res.code!=200){
                     this.$message({
                       showClose: true,

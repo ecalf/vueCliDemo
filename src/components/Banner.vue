@@ -38,9 +38,9 @@ export default {
   },
 };
 </script>
+
+
 <style lang="scss" scoped>
-@import "../assets/css/variables.scss";
-/*indexbanner*/
 .index-banner {
   position: relative;
   overflow: hidden;
