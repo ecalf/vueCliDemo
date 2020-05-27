@@ -373,6 +373,7 @@ import PaymentMethod from "@components/PaymentMethod";
 
 import { payService,getOrderStatus } from "@api/payment";
 import { publish } from "@api/need";
+import { getNeedInfo } from "@api/need";
 import {
     getQualification,
     getProductCategory,
@@ -712,12 +713,29 @@ export default {
             }
         },
 
+        async getNeedInfo(){
+            if(!this.id*1){
+                return false;
+            }
+
+            const res = await getNeedInfo({data:{needs_id:this.id}});
+
+            if(res.code==200){
+                
+            }else{
+                
+            }
+
+        }
     },
     created(){
         this.getProductCategory();
         this.getQualification();
         this.getBrandList();
         this.getUnitList();
+        if(this.id){
+            this.getNeedInfo();
+        }
 
     }
 
