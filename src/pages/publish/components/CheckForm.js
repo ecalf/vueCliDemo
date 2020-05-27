@@ -109,7 +109,7 @@ export function checkform(fieldData,pageType){
             required:true,
             type:String,
             value:()=>{
-                return fieldData.qualification.map((item)=>{
+                return [].concat(fieldData.qualification).map((item)=>{
                     return item.id;
                 }).join();
             }

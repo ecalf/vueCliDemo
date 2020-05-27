@@ -329,8 +329,10 @@
                 
             }
         },
-        created(){
-            this.getUserInfo();
+        async created(){
+            await this.getUserInfo();
+            await this.getNeeds();
+
         }
     }
 

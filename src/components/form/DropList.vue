@@ -86,6 +86,7 @@
             z-index: 1;
             background-color: $bgwhite;
             @include default-border;
+            @include default-shadow;
 
             .drop-menu-item{
                 display:flex;
@@ -107,6 +108,10 @@
                     cursor: default;
                     flex:1;
                     padding: 10px;
+
+                    span{
+                        padding: 0;
+                    }
                 }
 
             }

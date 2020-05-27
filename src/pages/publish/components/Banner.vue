@@ -57,7 +57,6 @@ export default {
     },
     methods:{
         async getBannerList(){
-            console.log('getBannerList');
             //type 1 首页banner 2 分类banner
             const res = await getBannerList({data:{type:this.type||2}});
             if(res.code==200){

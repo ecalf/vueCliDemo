@@ -77,7 +77,7 @@
                 <FormRow>
                     <DropListField
                         v-bind:required="true" 
-                        v-bind:prefix="true"
+                        v-bind:prefix="false"
                         v-bind:list="brandList" 
                         label="品牌" 
                         name="brand" 
@@ -190,15 +190,31 @@
 
 
                 <FormRow>
+                    <!-- 多个 下来列表
                     <DropListGroup 
                         v-bind:required="true" 
-                        v-bind:prefix="true"
+                        v-bind:prefix="false"
                         v-bind:list="qualificationList"
                         label="资质要求"
                         name="qualification" 
                         height="40"
                         @update-value="updateValue"
                         />
+                    -->
+
+                    <!--单个下拉列表-->
+                    <DropListField
+                        v-bind:required="true" 
+                        v-bind:prefix="true"
+                        v-bind:list="qualificationList" 
+                        label="资质要求" 
+                        name="qualification" 
+                        height="40"
+                        width="300"
+                        defaulttext="请选择资质要求"
+                        @update-value="updateValue"
+                        />
+
  
                 </FormRow>
 
@@ -585,7 +601,10 @@ export default {
         },
 
         updateValue(name,value){
-            console.log('publish form updateValue:',name,value);
+            console.log('[publish form updateValue]:',name,value);
+            if(name=="category"){//选择品类，更新品牌选择列表
+                this.getBrandList(value);
+            }
 
             this.fieldData[name] = value;
 
@@ -680,10 +699,16 @@ export default {
                 });
             }
         },
-        async getBrandList(){
+        async getBrandList(cate){
+            if(cate.length==0){
+                return false;
+            }            
+
+            cate = cate[cate.length-1];
+            console.log(cate);
             let res = await getBrandList({
                     data:{
-                        cate_id:3//this.this.params.cate_id
+                        cate_id:cate.id
                     }
                 });
 
@@ -721,9 +746,9 @@ export default {
             const res = await getNeedInfo({data:{needs_id:this.id}});
 
             if(res.code==200){
-                
+
             }else{
-                
+
             }
 
         }
@@ -731,7 +756,6 @@ export default {
     created(){
         this.getProductCategory();
         this.getQualification();
-        this.getBrandList();
         this.getUnitList();
         if(this.id){
             this.getNeedInfo();
