@@ -1,6 +1,16 @@
 import axios from "axios";
 import {getToken} from "@utils/common";
 
+const clientInfo = {
+  device_id:'',//  设备ID    
+  platform:'pcweb',// 平台，目前有：iOS、Android、pcweb、h5   
+  imei:'',//设备imei    
+  version:(navigator.userAgent.match(/Windows NT [\d\.]+/)||[''])[0],// 系统版本    
+  channel:'pc',// 分发渠道号   
+  timestamp:Date.now(),// 请求时间戳   
+  lang:navigator.language.indexOf('zh')>-1?'zh':'en'//
+}
+
 
 //只用于本站接口请求的实例
 const instance = axios.create({
@@ -73,13 +83,13 @@ const requestCtrl = {
 
 
 export async function get(path,params){
-  if(params&&!params.data){
-      //按照后端约定，业务传参放在 data 字段内
-      console.warn('params format error,[data] must included ');
-      params = { data:params }
-  }
+    if(params&&!params.data){
+        //按照后端约定，业务传参放在 data 字段内
+        console.warn('params format error,[data] must included ');
+        params = { data:params }
+    }
 
-  if(requestCtrl.isAfoot('get',path,params)){
+    if(requestCtrl.isAfoot('get',path,params)){
       return {
         code:500,
         data:{},
@@ -89,6 +99,7 @@ export async function get(path,params){
 
     let res; 
     try{
+      //params = {...clientInfo,data:params.data};
       res = await instance.get(path,params);
     }catch(error){
       res = {code:500,data:{},message:'请求失败'}
@@ -116,10 +127,9 @@ export async function post(path,params){
 
     let res;
     try{
+      //params = {...clientInfo,data:params.data};
       res = await instance.post(path,params);
-      //console.log('res>>>',res);
     }catch(error){
-      //console.log('error>>>',error);
       res = {code:500,data:{},message:'请求失败'}
     }
 

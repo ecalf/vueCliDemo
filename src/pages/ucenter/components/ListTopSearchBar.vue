@@ -1,13 +1,11 @@
 <template>
   <div class="order-search">
-    <form>
       <button type="button" class="iconfont iconsousuo fr" @click="onSearch"></button>
       <input type="text" 
           v-bind:name="config.name" 
           v-bind:placeholder="config.placeholder||'搜索'" 
           v-model="keyword" 
         />
-    </form>
   </div>
 </template>
 

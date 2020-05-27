@@ -1,7 +1,7 @@
 <template>
     <section class="commonweb">
-        <Banner v-bind:list="bannerList" />
-        <FormPublish v-bind:type="1" />
+        <Banner v-bind:type="2" />
+        <FormPublish v-bind:type="1" v-bind:id="id" />
     </section>
 </template>
 
@@ -26,18 +26,12 @@ export default {
        
     },
     props:{
-        type:String
+        id:Number//编辑使用传入的ID
     },
     data(){
 
         return{
-            bannerList:[//todo:fetch list data
-                {text:'Buybanner',id:1},
-                {text:'Buybanner',id:2},
-                {text:'Buybanner',id:3},
-                {text:'Buybanner',id:4}
-            ]
-           
+                      
         }
     },
     computed:{

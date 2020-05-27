@@ -87,9 +87,12 @@
                 }
             }
         },
-        async created(){
-            await this.getPaymentMethods();
+        async updated(){
+            if(this.list.length==0){
+                await this.getPaymentMethods();
+            }
         }
+        
     }
 
 </script>

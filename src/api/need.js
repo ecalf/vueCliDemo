@@ -20,4 +20,9 @@ export async function quotation(params){
     return post('/v1/needs/quotation',params);
 }
 
+//修改状态
+export async function changeNeedStatus(params){
+    return post('/v1/needs/change-status',params);
+}
+
 

@@ -131,6 +131,7 @@ function getFullWidthLength(str) {
 
 //存token
 function setToken(token,profile){
+    console.log('setToken',!!token);
     let user_id = profile.user_info.user_id;
     let user_name = profile.user_info.user_name;
     let clientToken = 'DATA '+btoa(user_id+':'+user_name+':'+token);
@@ -149,6 +150,7 @@ function getToken(){
 
 //退出登录,清除用户信息
 function delToken(){
+    console.log('delToken');
     localStorage.removeItem('Token');
 }
 

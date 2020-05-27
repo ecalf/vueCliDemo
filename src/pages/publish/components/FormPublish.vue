@@ -371,7 +371,7 @@ import SelectCascade from "@components/form/SelectCascade";
 import SubmitBar from  "./SubmitBar";
 import PaymentMethod from "@components/PaymentMethod";
 
-import { payService } from "@api/payment";
+import { payService,getOrderStatus } from "@api/payment";
 import { publish } from "@api/need";
 import {
     getQualification,
@@ -383,8 +383,6 @@ import {
 
 import { checkform } from "./CheckForm";
 import { formatListData } from "@utils/common";
-
-
 
 
 
@@ -410,8 +408,9 @@ export default {
     },
     props:{
         //1 发布采购, 2 发布销售, 3 委托销售, 4 委托采购 
-        //此处值传入 1\2\3，委托类型在表单选择
-        type:Number 
+        //此处type传入 1\2\3，委托类型在表单选择
+        type:Number,
+        id:Number //需求ID，编辑时使用
     },
 
     data(){
@@ -541,13 +540,51 @@ export default {
 
         alipay(payInfo){
             window.open(payInfo.payurl+'?order_no='+payInfo.order_no,'');
+            this.getOrderStatus(payInfo.order_no);
         },
         wxpay(payInfo){
             console.log('wxpay:',payInfo);
         },
+        async getOrderStatus(order_no){
+            let timer;
+            let retry = false;
+            let tryTimes = 5;
+            let timeCtrl = 1000*30;
+
+            let fn = async ()=>{
+                const res = await getOrderStatus({data:{order_no:order_no}});
+                
+                if(res.code==200){
+                    let order_status = res.data.order_status;
+                    let stateText = ['','待支付','支付成功','支付失败'][order_status];
+                    if(order_status==2||order_status==3){
+                        retry = false;
+                        this.$message({
+                            showClose:true,
+                            message:stateText
+                        });
+                    }else if(order_status==1){
+                        retry = true;
+                    }
+                    
+                }else{
+                    retry = true;
+                }
+
+                if(retry&&tryTimes>0){
+                    tryTimes-=1;
+                    timer = setTimeout(fn,timeCtrl);
+                }
+            };
+
+
+            timer = setTimeout(fn,timeCtrl);
+            
+
+        },
 
         updateValue(name,value){
-            console.log('【publish form updateValue】',name,value);
+            console.log('publish form updateValue:',name,value);
 
             this.fieldData[name] = value;
 
@@ -677,8 +714,8 @@ export default {
 
     },
     created(){
-        this.getQualification();
         this.getProductCategory();
+        this.getQualification();
         this.getBrandList();
         this.getUnitList();
 

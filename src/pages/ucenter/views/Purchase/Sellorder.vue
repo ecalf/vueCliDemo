@@ -1,5 +1,5 @@
 <template>
-  <OrderManage v-bind:type="2" title="销售管理" />
+  <OrderManage v-bind:kinds="2" title="销售管理" />
 </template>
 
 
