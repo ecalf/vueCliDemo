@@ -8,11 +8,12 @@
 格式化列表类数据
 列表类组件 item 基本数据格式为{id:1, text:"名称", icon:"xxx/xxx.png" }
 *******************************************************/
-function formatListData(listData){
+function formatListData(listData,key){
     if(!(listData instanceof Array)){
         console.log('formatListData error,param listData is not an array');
         return [];
     }
+    if(!key){ key = 'id'; }
 
     listData = listData.map(function(item){
         item.id = item.id||item.value||'';
@@ -27,6 +28,36 @@ function formatListData(listData){
     });
 
     return listData;
+}
+
+/************************************************
+*****  通过item 的 key 从 list 中找出该唯一项*******
+************************************************/
+function findItemByKey(key,value,list,deep){
+    let result = [];
+    for(let item of list){
+        let parentItem;
+        let matchItem;
+        if(item[key]===value){
+            matchItem = item;
+        }else if(deep&&item.child&&item.child.length){
+            let m = findItemByKey(key,value,item.child,deep);
+            if(m){
+                matchItem = m;
+                parentItem = item;
+            }
+        }
+
+        if(matchItem){
+            if(parentItem){
+                result.push([].concat(parentItem,matchItem));
+            }else{
+                result.push(matchItem);
+            }
+        }
+    }
+
+    return result.length>1?result:result[0]; 
 }
 
 
@@ -199,5 +230,6 @@ export {
     dateTimeFormat,
     getFullWidthLength,
     formatPrice,
-    formatListData
+    formatListData,
+    findItemByKey
 }

@@ -15,7 +15,10 @@
                         name="category"
                         v-bind:list="categoryList"
                         v-bind:deep="2"
-                        @update-value="updateValue" />
+                        v-bind:xx="fieldData.xx"
+                        v-model="fieldData.category"
+                        @update-value="updateValue"
+                         />
                 </div>
                 <div class="form-section category-show">
                     <template v-for="(item,i) of fieldData.category">
@@ -52,6 +55,7 @@
                         name="title" 
                         width="1020"
                         height="40"
+                        v-model="fieldData.title"
                         @update-value="updateValue"
                         />
                 </FormRow>
@@ -399,7 +403,7 @@ import {
 
 
 import { checkform } from "./CheckForm";
-import { formatListData } from "@utils/common";
+import { formatListData,findItemByKey } from "@utils/common";
 
 
 
@@ -476,6 +480,7 @@ export default {
 
             //表单值
             fieldData:{
+                xx:0,
                 category:'', //产品类别
                 entrust:'',//委托类型,仅委托表单可用
                 title:'',//标题
@@ -602,11 +607,19 @@ export default {
 
         updateValue(name,value){
             console.log('[publish form updateValue]:',name,value);
+            this.fieldData[name] = value;
+
             if(name=="category"){//选择品类，更新品牌选择列表
-                this.getBrandList(value);
+                this.getBrandList();
             }
 
-            this.fieldData[name] = value;
+        },
+        renderInfo(info){
+            console.log('======renderInfo=====');
+            const fieldData = {};
+            this.fieldData.title = info.title;
+            this.fieldData.category = findItemByKey('id',info.cate_id,this.categoryList,true);
+            console.log('renderInfo this.fieldData.category>>>',this.fieldData.category);
 
         },
         checkform(){
@@ -699,13 +712,12 @@ export default {
                 });
             }
         },
-        async getBrandList(cate){
-            if(cate.length==0){
-                return false;
-            }            
+        async getBrandList(){
+            let cate = [].concat(this.fieldData['category']).slice(-1)[0];
+            if(!cate){ return false;  }
 
-            cate = cate[cate.length-1];
-            console.log(cate);
+
+
             let res = await getBrandList({
                     data:{
                         cate_id:cate.id
@@ -744,19 +756,23 @@ export default {
             }
 
             const res = await getNeedInfo({data:{needs_id:this.id}});
-
             if(res.code==200){
-
+                this.renderInfo(res.data);
             }else{
-
+                this.$message({
+                    showClose:true,
+                    message:res.message,
+                    type:"error"
+                });
             }
 
         }
+
     },
-    created(){
-        this.getProductCategory();
-        this.getQualification();
-        this.getUnitList();
+    async created(){
+        await this.getProductCategory();
+        await this.getQualification();
+        await this.getUnitList();
         if(this.id){
             this.getNeedInfo();
         }
