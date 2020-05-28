@@ -67,6 +67,8 @@
 <script>
   import { quotation } from "@api/need";
   import validator from "@utils/validator";
+  import filters from "@utils/filters";
+
 
   let validaMobile = (rule, value, callback) => {
       if (value === "") {
@@ -102,6 +104,7 @@
   }
 
   export default {
+    mixins:[filters],
     props:{
         info:Object,
         visible:Boolean,
@@ -122,9 +125,7 @@
       }
     },
     filters:{
-      useWay(type){
-          return type==1?'医用':'民用'
-      }
+     
     },
     methods:{
       closeDialog(){

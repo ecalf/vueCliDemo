@@ -191,8 +191,11 @@
     import DialogContact from "./DialogContact";
     import { getCountrylist } from "@api/common";
     import { formatPrice,dateTimeFormat } from "@utils/common";
+    import filters from "@utils/filters";
+
 
     export default {
+        mixins:[filters],
         components:{
             DialogQuotation,
             DialogContact
@@ -209,7 +212,7 @@
         },
         computed:{
             formatTitle(){
-                //filters 只能用于 vbind 和 插值，只好用 计算属性实现
+                //filters 只能用于 v-bind 和 插值，用 computed实现
                 return (text)=>{
                     if(!text){ return ''; }
 
@@ -218,7 +221,7 @@
                     });
                 }
             },
-            country(){//filters 不能访问 this，用计算属性实现
+            country(){//filters 不能访问 this，用computed实现
               return (code)=>{
                 if(!code){ return ''; }
 
@@ -234,29 +237,6 @@
         filters:{
             
 
-            useWay(type){
-                return type==1?'医用':'民用'
-            },
-
-            formatPrice(price){
-                return formatPrice(price||0);
-            },
-            
-            formatDate(date){
-                return dateTimeFormat(date,'%y.%m.%d');
-            },
-
-            price(item){
-              //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-              let p;
-              if(item.type==2){
-                p = item.supplier_price;
-              }else if(item.type==1){
-                p = item.price;
-              }
-
-              return p&&('￥'+formatPrice(p));
-            }
         },
         methods:{
             showContactDialog(frag){

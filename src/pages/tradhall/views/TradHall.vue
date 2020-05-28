@@ -115,7 +115,11 @@ export default {
             this.page_index = page_index*1;
             this.getNeedList();
         },
-        onFilter(filterData){
+        async onFilter(name,value,filterData){
+            if(name=='category'){//按类别切换品牌
+                await this.getBrandList(value);
+            }
+
             this.page_index = 1;
 
             //cate 只传最末尾一级
@@ -182,10 +186,12 @@ export default {
                 });
             }
         },
-        async getBrandList(){
+        async getBrandList(category){
+            category = [].concat(category).slice(-1)[0];
+
             let res = await getBrandList({
                     data:{
-                        cate_id:3//this.this.params.cate_id
+                        cate_id:category.id
                     }
                 });
 
@@ -204,9 +210,7 @@ export default {
     },
   async created(){
     await this.getProductCategory();
-    await this.getBrandList();
     await this.getNeedList();
-    console.log('tradhall async created');
   }
 };
 </script>
