@@ -46,11 +46,11 @@ export default {
         }
       },
       navlist: [
-        {id:0, title: "已报价",active:true }, 
-        {id:1, title: "未报价" }
+        {id:1, title: "已报价",active:true }, 
+        {id:0, title: "未报价" }
       ],
 
-      quoted:0,//0 未报价，1 已报价
+      is_quoted:1,//0 未报价，1 已报价
       keyword:'',
       total:0,
       page_size:10,
@@ -66,7 +66,7 @@ export default {
       this.getMyQuotation();
     },
     switchTab(item){
-      this.quoted = item.id*1;
+      this.is_quoted = item.id*1;
       this.page_index = 1;
       this.getMyQuotation();
     },
@@ -78,7 +78,8 @@ export default {
       const params ={
         page_size:this.page_size,
         page_index:this.page_index,
-        keyword:this.keyword
+        keyword:this.keyword,
+        is_quoted:this.is_quoted
       };
       const res = await getMyQuotation({data:params});
 

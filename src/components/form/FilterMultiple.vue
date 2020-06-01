@@ -87,7 +87,7 @@
                 console.log('FilterMultiple updateValue',name,value);
                 console.log('filterData>>>',this.filterData);
                 
-                this.$emit('on-filter',this.filterData);
+                this.$emit('on-filter',name,value,this.filterData);
             }
         }
 

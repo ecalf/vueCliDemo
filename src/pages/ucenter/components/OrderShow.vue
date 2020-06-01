@@ -16,10 +16,14 @@
       </li>
       <li class="li5">{{item.created_at|formatDate}}-{{item.dead_time|formatDate}}</li>
       <li class="li6 order-btn">
+        <!-- status -1 删除 0 下架 1上架 -->
         <a href="javascript:;" class="modify" @click="modify(item)">修改</a>
-        <a href="javascript:;" class="upper-shelf" @click="updateStatus(item,1)">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete" @click="updateStatus(item,0)">删除</a>
+
+        <a href="javascript:;" class="upper-shelf" @click="updateStatus(item,1)" v-if="item.status==0">上架</a>
+
+        <a href="javascript:;" class="lower-shelf" @click="updateStatus(item,0)" v-if="item.status==1">下架</a>
+
+        <a href="javascript:;" class="delete" @click="updateStatus(item,-1)">删除</a>
       </li>
     </ul>
    
@@ -29,9 +33,11 @@
 
 
 <script>
-import {formatPrice,dateTimeFormat} from "@utils/common";
+import filters from "@utils/filters";
+
 
 export default {
+  mixins:[filters],
   props:{
     list:Array
   },
@@ -52,38 +58,16 @@ export default {
     }
   },
   filters:{
-      useWay(type){
-          return type==1?'医用':'民用'
-      },
 
-      formatPrice(price){
-          return formatPrice(price||0);
-      },
-      
-      formatDate(date){
-          return dateTimeFormat(date,'%y.%m.%d');
-      },
-
-      price(item){
-        //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-        let p;
-        if(item.type==2){
-          p = item.supplier_price;
-        }else if(item.type==1){
-          p = item.price;
-        }
-
-        return p&&('￥'+formatPrice(p));
-      }
 
 
   },
   methods:{
     updateStatus(item,status){
-      console.log('updateStatus',item,status);
+      this.$emit("update-status",item,status);
     },
     modify(item){
-      console.log('modify',item);
+      this.$emit("modify",item);
     }
   }
 }

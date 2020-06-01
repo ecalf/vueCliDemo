@@ -31,6 +31,6 @@ export async function getUnitList(){
 }
 
 //banner 列表
-export async function getBannerList(){
-    return post('/v1/banner/get-list');
+export async function getBannerList(params){
+    return post('/v1/banner/get-list',params);
 }

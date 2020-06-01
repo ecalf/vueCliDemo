@@ -11,11 +11,11 @@
             <i></i>
         </a>
        
-        <form class="condsearch-box" v-if="config.search">
+        <div class="condsearch-box" v-if="config.search">
             <input type="text" v-model="keyword" placeholder v-bind:name="config.search&&config.search.name||'keyword'" />
 
             <button type="button" @click="onsearch()">搜索</button>
-        </form>
+        </div>
     </div>
 
 </template>

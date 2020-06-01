@@ -1,7 +1,9 @@
 <template>
     <ul class="banner-wrap">
         <li v-for="item in list" class="banner-item">
-            {{item.id}}:{{item.text}}
+            <a v-bind:href="item.jump_url">
+                <img v-bind:src="item.img_url" v-bind:alt="item.desc" />
+            </a>
         </li>
        
     </ul>
@@ -23,6 +25,12 @@
             height: 100px;
             border-radius: 3px;
             background-color: #fff;
+
+            a,img{
+                display: inline-block;
+                width:100%;
+                height: 100%;
+            }
         }
     }
 
@@ -31,19 +39,41 @@
 </style>
 
 <script>
+import { getBannerList } from "@api/common";
+
 export default {
     components:{},
-    data(){
-        return {};
-    },
+   
     props:{
-        list:Array
+        type:Number
+    },
+    data(){
+        return {
+            list:[]
+        };
     },
     computed:{
 
     },
     methods:{
+        async getBannerList(){
+            //type 1 首页banner 2 分类banner
+            const res = await getBannerList({data:{type:this.type||2}});
+            if(res.code==200){
+                this.list = res.data;
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: res.message,
+                    type: "error"
 
+                });
+            }
+        }
+    },
+    created(){
+        console.log('banner created');
+        this.getBannerList();
     }
 
 }

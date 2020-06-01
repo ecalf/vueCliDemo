@@ -14,6 +14,7 @@ const routes = [
     path: "/publish/buy",
     name: "publishBuy",
     component: PublishBuy,
+    props: (route) => ({ id:route.query.id*1 }),
     meta: {
       title: '我要采购'
     }
@@ -22,6 +23,7 @@ const routes = [
     path: "/publish/sell",
     name: "publishSell",
     component: PublishSell,
+    props: (route) => ({ id:route.query.id*1 }),
     meta: {
       title: '我要销售'
     }
@@ -30,7 +32,7 @@ const routes = [
     path: "/publish/entrust",
     name: "publishEntrust",
     component: PublishEntrust,
-    props: (route) => ({ type: route.query.type*1 }),
+    props: (route) => ({ type: route.query.type*1,id:route.query.id*1 }),
     meta: {
       title: '我要委托'
     }

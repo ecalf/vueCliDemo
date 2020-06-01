@@ -50,11 +50,12 @@
 
 
 <script>
-import {formatPrice} from "@utils/common";
 import {countryList,getCountryNameByCode} from "@utils/country";
+import filters from "@utils/filters";
 
 
 export default {
+  mixins:[filters],
   props:{
     list:Array,
   },
@@ -75,21 +76,7 @@ export default {
 
   },
   filters:{
-    useWay(type){
-      return type==1?'医用':'民用'
-    },
-    price(item){
-      //"type": 1, //类型 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买'
-      let p;
-      if(item.type==2){
-        p = item.supplier_price;
-      }else if(item.type==1){
-        p = item.price;
-      }
-
-      return p&&('￥'+formatPrice(p));
-      
-    }
+    
   },
   methods:{
 

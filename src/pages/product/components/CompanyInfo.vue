@@ -1,7 +1,9 @@
 <template>
         <!--公司主页介绍-->
     <div class="company-info clearfix">
-      <a href class="enter-page">进入企业主页</a>
+      <router-link v-bind:to="'/product/company/'+info.user_id" class="enter-page">
+        进入企业主页
+      </router-link>
       <div class="company-type">
         <h2 class="company-title">{{info.company_name}}</h2>
        <!--

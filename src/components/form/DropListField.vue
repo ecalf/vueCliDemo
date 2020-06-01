@@ -1,6 +1,7 @@
 <template>
     <FieldWrap 
         type="dropList" 
+        v-bind:data-value="$attrs.value"
         v-bind:error="error"
         v-bind:label="label"
         v-bind:required="required" 
@@ -15,6 +16,8 @@
                 v-bind:list="list"
                 v-bind:defaultselected="defaultselected"
                 v-bind:defaulttext="defaulttext"
+                v-bind:width="width" 
+                v-model="value"
                 @update-value="onselect"
             />
 
@@ -76,6 +79,8 @@
             if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
                 this.value = this.$attrs.value||'';
             }
+
+            console.log('droplist value:',this.name,this.value);
         }
 
 

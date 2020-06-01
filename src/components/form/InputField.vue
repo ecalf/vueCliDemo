@@ -92,7 +92,6 @@
             this.value = defaultvalue;
         },
         updated(){
-            //console.log('updated',this.value,this.$attrs.value);
             if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
                 this.value = this.$attrs.value||'';
             }

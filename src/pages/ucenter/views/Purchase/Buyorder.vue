@@ -1,5 +1,5 @@
 <template>
-  <OrderManage v-bind:type="1" title="采购订单" />
+  <OrderManage v-bind:kinds="1" title="采购订单" />
 </template>
 
 

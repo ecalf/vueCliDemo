@@ -9,10 +9,10 @@
     <div class="prodetatils-box clearfix">
         <ProductImages v-bind:list="detail.images|toArray"  />
         <ProductDetailContent v-bind:detail="detail" />
-    
     </div>
 
     <CompanyInfo v-bind:info="{
+      user_id:detail.user_id,
       company_name:detail.company_name,
       company_introduce:detail.company_introduce,
       company_industry:detail.industry,
@@ -82,18 +82,6 @@ export default {
             const res = await getNeedInfo({data:{needs_id:this.needs_id}});
             if(res.code==200){
                 this.detail = res.data;
-
-                /*console.log('=======test detail.images===========');
-                this.detail.images = [
-                    '/img/productimg7.ebd76f2c.png?a=1',
-                    '/img/productimg7.ebd76f2c.png?a=2',
-                    '/img/productimg7.ebd76f2c.png?a=3',
-                    '/img/productimg7.ebd76f2c.png?a=4',
-                    '/img/productimg7.ebd76f2c.png?a=5',
-                    '/img/productimg7.ebd76f2c.png?a=6',
-                    '/img/productimg7.ebd76f2c.png?a=7',
-                    '/img/productimg7.ebd76f2c.png?a=8'
-                ];*/
 
             }else{
                  this.$message({

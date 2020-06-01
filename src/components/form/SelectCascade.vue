@@ -1,15 +1,19 @@
 <template>
     <!-- data-count 直接绑定使用prop的 list 数据,防止父组件更新list数据组件不刷新-->
-    <div class="menu-container" v-bind:data-count="list.length">
+    <div class="menu-container" 
+        v-bind:value="$attrs.value"
+        v-bind:data-count="list.length"
+        >
         <Menu 
             v-for="i of this.deep"
             v-bind:has-split="i!=1" 
             v-bind:data-level="i"
+            v-bind:name="'menu_'+i"
             v-bind:key="i"
             v-bind:level="i"
             v-bind:list="menuData['list_'+i]" 
             v-show="menuData['list_'+i].length>0"
-
+            v-model="value[i-1]"
             @update-value="updateValue" 
             />
 
@@ -95,20 +99,44 @@ const data = getData();
 
         },
         methods:{
-            updateValue(name,item,level){
+            initValue(){
+                this.value = this.$attrs.value||[];
+
+                let selectedDeep = this.value.length;
+                this.menuData.list_1 = this.list;
+                this.value.forEach((item,i)=>{
+                    if(item.child&&item.child.length&&selectedDeep>i+1){
+                        this.menuData['list_'+(i+1+1)] = item.child;
+                    }
+                });
+
+            },
+            updateValue(name,item,level,silent){
+                //silent = true,只更新界面，不修改值，用于带值初始化
+                console.log('展开子菜单 updateValue',name,item,level);
                 //展开子菜单
                 if(level<this.deep){
                     this.menuData['list_'+(level+1)] = item.child||[]
                 }
 
-                //清除当前level之以上菜单选中的值
-                this.value = [].concat(this.value.slice(0,level-1),item);
-                this.$emit('update-value',this.name,this.value);
+                //if(!silent){
+                    //清除当前level之以上菜单选中的值
+                    this.value = [].concat(this.value.slice(0,level-1),item);
+                    this.$emit('update-value',this.name,this.value);
+                    this.$emit('input',this.value);
+                    //console.log('SelectCascade select  ',this.value);
+                //}
+                
+                
             }
 
         },
-        updated(){
-            this.menuData.list_1 = this.list;
+        beforeUpdate(){
+            this.initValue();
+            console.log('SelectCascade updated  ',this.value,this.menuData);
+        },
+        created(){
+            this.initValue();
         }
     }
 

@@ -6,11 +6,11 @@ import Register from "../views/Admin/Register";
 import Member from "../views/Admin/Member";
 import Account from "../views/Admin/Account";
 import Authentication from "../views/Admin/Authentication";
+import Company from "../views/Admin/Company";
 
 import QuotedPrice from "../views/Purchase/QuotedPrice";
 import Buyorder from "../views/Purchase/Buyorder";
 import Sellorder from "../views/Purchase/Sellorder";
-import Company from "../views/Purchase/Company";
 import Suppliers from "../views/Purchase/Suppliers";
 
 
