@@ -1,25 +1,28 @@
 <template>
-    <div class="drop-wrap" v-bind:style="widthStyle">
-        <div class="drop-value" @click="trigger()" v-bind:data-value="value" v-bind:data-defaulttext="defaulttext">
+    <div class="drop-wrap" v-bind:style="widthStyle" v-bind:data-width="this.width">
+        <div class="drop-value" @click="trigger()"  v-bind:data-defaulttext="defaulttext">
             <div class="drop-value-text">
                 <span class="drop-item-icon" v-bind:style="iconBg" v-if="prefix"></span>
-                <span class="drop-item-text" v-bind:style="widthStyle">{{text}}</span>
+                <span class="drop-item-text" >{{value&&value.text||defaulttext}}</span>
             </div>
             <span class="arrow-down"></span>
         </div>
-        <ul class="drop-menu" v-show="showMenu&&list.length>0">
+
+        <ul class="drop-menu" v-show="showMenu&&list.length>0" v-bind:data-value="$attrs.value">
             <li v-for="(item,i) in list" 
                 v-bind:key="item.id"  
                 v-bind:data-index="i"
                 v-bind:data-value="item.id"
                 v-bind:data-text="item.text"
                 v-bind:data-icon="item.icon"
+                v-model = "value"
                 class="drop-menu-item"
                 @click="onselect(item)"
-            >
+                >
+
                 <div class="drop-item-text" v-bind:title="item.text">
                     <span class="drop-item-icon" v-bind:style="item.icon|listIconBg" v-if="prefix"></span>
-                    <span class="drop-item-text" v-bind:style="widthStyle">{{item.text}}</span>
+                    <span class="drop-item-text" >{{item.text}}</span>
                 </div>
             </li>
         </ul>
@@ -144,7 +147,6 @@
         data(){
             return {
                 value:'',//选中的项,暂时只处理单选
-                text:'',
                 icon:'',
                 showMenu:false
             };
@@ -159,9 +161,11 @@
                 return styleMap;
             },
             iconBg(){
-                return {
-                    'background-image':'url('+this.icon+')'
+                let styleMap = {};
+                if(this.icon){
+                    styleMap['background-image'] = 'url('+this.icon+')';
                 }
+                return styleMap;
             },
 
             defaultIndex(){
@@ -174,9 +178,11 @@
         },
         filters: {
           listIconBg: function (iconUrl) {
-            return {
-                'background-image':'url('+iconUrl+')'
-            } 
+            let styleMap = {};
+            if(iconUrl){
+                styleMap['background-image']='url('+iconUrl+')';
+            }
+            return styleMap;
           }
         },
         methods:{
@@ -185,36 +191,36 @@
             },
             onselect(item){
                 this.trigger();
-                this.renderValue(item);
-            },
-            renderValue(item){
                 this.value = item;
-                this.text = item.text;
-                this.icon = item.icon;
                 this.$emit('update-value',this.name,item);
                 this.$emit('input',item);
             }
         },
         created(){
             if(!(this.list instanceof Array)){
-                this.list = [];
                 console.log('error,list for DropList.vue is not an array');
             }
 
-            if(this.defaulttext){
-                this.text = this.defaulttext;
-            }else if(this.list.length){
+            if(this.$attrs.value){
+                this.value = this.$attrs.value;
+                this.icon = this.value.icon;
+
+            }else if(this.defaultIndex&&this.list.length){
                 let item  = this.list[this.defaultIndex];
-                this.renderValue(item);
+                this.value = item;
+                this.icon = this.value.icon;
+
             }
         },
         updated(){
-            if(!this.defaulttext&&!this.selected&&this.list.length){
-                //用于组件初始化没数据，更新列表数据时默认选中的情况
-                console.log('updated renderValue');
-                let item  = this.list[this.defaultIndex];
-                this.renderValue(item);
+            if(this.$attrs.value){
+                this.value = this.$attrs.value;
+                this.icon = this.value.icon;
 
+            }else if(this.defaultIndex&&this.list.length){
+                let item  = this.list[this.defaultIndex];
+                this.value = item;
+                this.icon = this.value.icon;
             }
         }
 

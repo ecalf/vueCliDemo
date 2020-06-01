@@ -99,37 +99,44 @@ const data = getData();
 
         },
         methods:{
+            initValue(){
+                this.value = this.$attrs.value||[];
+
+                let selectedDeep = this.value.length;
+                this.menuData.list_1 = this.list;
+                this.value.forEach((item,i)=>{
+                    if(item.child&&item.child.length&&selectedDeep>i+1){
+                        this.menuData['list_'+(i+1+1)] = item.child;
+                    }
+                });
+
+            },
             updateValue(name,item,level,silent){
                 //silent = true,只更新界面，不修改值，用于带值初始化
-                //console.log('展开子菜单 updateValue',name,item,level);
+                console.log('展开子菜单 updateValue',name,item,level);
                 //展开子菜单
                 if(level<this.deep){
                     this.menuData['list_'+(level+1)] = item.child||[]
                 }
 
-                if(!silent){
+                //if(!silent){
                     //清除当前level之以上菜单选中的值
                     this.value = [].concat(this.value.slice(0,level-1),item);
                     this.$emit('update-value',this.name,this.value);
                     this.$emit('input',this.value);
-                    console.log('select  updateValue',this.value);
-                }
+                    //console.log('SelectCascade select  ',this.value);
+                //}
                 
                 
             }
 
         },
-        updated(){
-            this.menuData.list_1 = this.list;
-            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
-                this.value = this.$attrs.value;
-            }
-
+        beforeUpdate(){
+            this.initValue();
+            console.log('SelectCascade updated  ',this.value,this.menuData);
         },
         created(){
-            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
-                this.value = this.$attrs.value;
-            }
+            this.initValue();
         }
     }
 

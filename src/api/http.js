@@ -90,6 +90,7 @@ export async function get(path,params){
     }
 
     if(requestCtrl.isAfoot('get',path,params)){
+      console.log('请求过于频繁，已被终止,path:',path);
       return {
         code:500,
         data:{},

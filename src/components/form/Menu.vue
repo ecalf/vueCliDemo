@@ -1,7 +1,7 @@
 <template>
-    <div class="menu-wrap">
+    <div class="menu-wrap" v-bind="$attrs">
         <div class="menu-split" v-show="hasSplit"></div>
-        <ul class="menu" v-bind:style="menuStyle" v-show="list.length" v-bind="$attrs">
+        <ul class="menu" v-bind:style="menuStyle" v-show="list.length" >
             <li class="menu-item" v-for="item in list" v-bind:key="item.id" v-bind:class="{active:item.id==value.id}" @click="onselect(item)">
                 <span class="item-text" v-bind:style="menuItemStyle">
                     {{item.text}}
@@ -151,13 +151,8 @@ export default {
         }
     },
     updated(){
-        console.log('update this.$attrs:',this.$attrs);
-        if(this.$attrs.value!=undefined&&this.value!=this.$attrs.value){
-            this.value=this.$attrs.value;
+        this.value=this.$attrs.value||'';
 
-            //上报父组件，更新联动子菜单
-            this.$emit('update-value',this.name,this.value,this.level,true);
-        }
     },
     created(){
         this.value=this.$attrs.value||'';

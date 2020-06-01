@@ -10,7 +10,7 @@
 *******************************************************/
 function formatListData(listData,key){
     if(!(listData instanceof Array)){
-        console.log('formatListData error,param listData is not an array');
+        console.log('formatListData error,param listData is not an array,listData:',listData);
         return [];
     }
     if(!key){ key = 'id'; }
@@ -34,6 +34,10 @@ function formatListData(listData,key){
 *****  通过item 的 key 从 list 中找出该唯一项*******
 ************************************************/
 function findItemByKey(key,value,list,deep){
+    if(!list||!list.length){
+        return undefined;
+    }
+
     let result = [];
     for(let item of list){
         let parentItem;

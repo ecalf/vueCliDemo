@@ -14,9 +14,10 @@
         v-bind:editable="false"
         v-bind:value-format="valueFormat"
         v-bind:picker-options="pickerOptions"
-        v-model="value"
         type="date"
         placeholder="选择日期"
+        v-bind:data-value="$attrs.value"
+        v-model="value"
         @change="pickDate"
        />
         
@@ -114,7 +115,7 @@ export default {
     methods:{
       pickDate(date){
         this.value = date;
-        this.$emit('update-value',this.name,date);
+        this.$emit('update-value',this.name,this.value);
         this.$emit("input", this.value);
       }
     },

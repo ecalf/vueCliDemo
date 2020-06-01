@@ -1,5 +1,6 @@
 <template>
     <FieldWrap 
+        v-bind:data-value="$attrs.value"
         type="dropListGroup" 
         v-bind:label="label"
         v-bind:error="error"
@@ -11,6 +12,7 @@
         >
             <div v-for="(item,index) of list" v-bind:key="index" class="drop-list-wrap">
                 <DropList
+                    v-bind:key="index"
                     v-bind:name="name+'_'+index"
                     v-bind:prefix="prefix"
                     v-bind:defaulttext="item.text"
@@ -41,7 +43,7 @@
         props:{
             prefix:Boolean,//是否带有前缀icon
             required:Boolean, //是否带必填标记
-            error:String,
+            error:String, //表单错误
             label:String, //标签名
             name:String, //名称，用于表单field
             width:String,//宽度

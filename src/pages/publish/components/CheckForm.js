@@ -1,4 +1,4 @@
-export function checkform(fieldData,pageType){
+export function checkform(fieldData){
     let errMsg = '';
     const params = {};
     const paramsConfig = {
@@ -8,7 +8,7 @@ export function checkform(fieldData,pageType){
             required:true,
             type:Number,
             value:()=>{//使用箭头写法让 value 方法内可以通过 this 访问组件
-                return fieldData.entrust&&fieldData.entrust.id||pageType;
+                return fieldData.entrust&&fieldData.entrust.id||fieldData.type;
             }    
         },
         cate_id:{
@@ -83,7 +83,7 @@ export function checkform(fieldData,pageType){
         supplier_price:{
             label:'供应商价',
             remark:'供应商价，仅用于 发布销售',
-            required:pageType==2,
+            required:fieldData.type==2,
             type:Number,
             value:fieldData.supplierPrice
         },
@@ -121,7 +121,11 @@ export function checkform(fieldData,pageType){
             required:true,
             type:String,
             value:()=>{
-                return [fieldData.techImg,fieldData.productImg,fieldData.companyImg,fieldData.otherImg].join(',')
+                let imageKeys = fieldData.imageKeys.split(',');
+                let imgs = imageKeys.map((key,i)=>{
+                    return fieldData[key]||'';
+                });
+                return imgs.join(',');
             }
         },
         info:{
@@ -168,8 +172,9 @@ export function checkform(fieldData,pageType){
             }
         }
 
+
+        //console.log(label,required,value,errMsg);
         if(required&&!value){
-            console.log(label,'required ',required,value);
             errMsg = label+'必须填写';
             break;
         }

@@ -1,5 +1,5 @@
 <template>
-    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" />
+    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" v-bind:data-value="$attrs.value" />
 
 </template>
 
@@ -34,7 +34,7 @@
 
 
             return {
-                value: this.defaultcontent||'',
+                value: '',
                 myConfig: {
                     //语言包
                     lang:lang,
@@ -170,7 +170,6 @@
         },
         watch:{
             value(newContent,oldContent){
-                console.log(newContent,oldContent);
                 this.$emit('update-value',this.name,newContent);
 
                 //$attrs.value ,v-model surport
@@ -185,14 +184,11 @@
         },
         created(){
             //$attrs.value ,v-model surport
-            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultvalue||'';
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultcontent||'';
             this.value = defaultvalue;
         },
         updated(){
-            //$attrs.value ,v-model surport
-            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
-                this.value = this.$attrs.value||'';
-            }
+            this.value = this.$attrs.value||'';
         }
     }
 
