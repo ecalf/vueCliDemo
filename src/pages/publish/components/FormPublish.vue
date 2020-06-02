@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section ref="publishForm">
         <section class="commonweb container">
             <FormContainer  title="品类" v-bind:baseline="false">
                 <!--
@@ -49,7 +49,6 @@
                         v-bind:max-length="30"
                         placeholder="最多输入30个字符"
                         defaultvalue=""
-
                         type="text"
                         label="标题" 
                         name="title" 
@@ -236,7 +235,7 @@
 
             <FormContainer  title="图片信息" v-bind:baseline="true">
                 <FormRow>
-                    <FieldWrap 
+                    <FieldWrap
                         type="fileUploadGroup" 
                         label="上传图片"
                         v-bind:required="true" 
@@ -850,6 +849,9 @@ export default {
             this.getNeedInfo();
         }
 
+        console.log('publishForm>>>',this.$refs.publishForm);
+        window.publishForm = this.$refs.publishForm;
+        window.com = this;
     },
     updated(){
         console.log('updated, fieldData>>>',this.fieldData);

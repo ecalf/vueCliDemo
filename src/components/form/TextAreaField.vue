@@ -3,7 +3,7 @@
 <template>
     <FieldWrap 
         type="textarea" 
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -66,6 +66,7 @@
         inheritAttrs:false,
         data(){
             return {
+                errorMsg:this.error||'',
                 value:''
             }
         },
@@ -87,6 +88,12 @@
             }
         },
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onInput(){
                 this.$emit('update-value',this.name,this.value);
 

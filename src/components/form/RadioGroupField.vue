@@ -5,7 +5,7 @@
         type="checkGroup" 
         v-bind:label="label"
         v-bind:required="required" 
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
@@ -54,12 +54,19 @@
         },
         data(){
             return {
+                errorMsg:this.error||'',
                 checked:{},
                 value:''
             }
         },
         
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             initValue(value){
                 if(value){
                     this.list.forEach((item)=>{
