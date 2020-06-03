@@ -1,24 +1,21 @@
 <template>
-  <MemberRightWrap v-bind:title="title" v-bind:searchconfig="searchconfig">
-    <BarNav v-bind:navlist="navlist" @switch-tab="switchTab" />
+  <MemberRightWrap :title="title" :searchconfig="searchconfig">
+    <BarNav :navlist="navlist" @switch-tab="switchTab" />
     <Errormsg v-if="total==0" />
-    <OrderShow v-bind:list="orderList" v-if="total>0" @update-status="updateStatus" @modify="modify"/>
+    <OrderShow :list="orderList" v-if="total>0" @update-status="updateStatus" @modify="modify"/>
 
     <!--分页 -->
     <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
       <Pagination
-          v-bind:inputAllowed="false"
-          v-bind:total="total"
-          v-bind:size="page_size"
-          v-bind:curent="page_index" 
+          :inputAllowed="false"
+          :total="total"
+          :size="page_size"
+          :curent="page_index" 
           @switch-page="switchPage"
           />
     </div>
   </MemberRightWrap>
 </template>
-
-
-
 
 
 <script>
@@ -63,7 +60,6 @@ export default {
       page_size:10,
       page_index:1,
       orderList:[]
-
 
     };
   },
@@ -118,7 +114,6 @@ export default {
         need_id:item.id,
         status:status// -1 删除 0 下架 1上架
       }
-
 
       if(status==-1){
         this.$confirm('确定要删除吗?', '提示', {

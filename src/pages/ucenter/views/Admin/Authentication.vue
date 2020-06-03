@@ -53,7 +53,7 @@
                         message: '认证申请已成功提交',
                         type: "success"
                     });
-
+                    this.$router.push('/ucenter/member')
                 }else{
                     this.$message({
                         showClose: true,

@@ -330,8 +330,6 @@
                     return false;
                 }
 
-
-
                 const params = info.params;
                 const res = await editCompany({data:params});
                 if(res.code==200){
@@ -340,7 +338,7 @@
                         message: '保存成功',
                         type: "success"
                     });
-
+                    this.$router.push('/ucenter/member')
                 }else{
                     this.$message({
                         showClose: true,

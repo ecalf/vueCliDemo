@@ -1,7 +1,7 @@
 <template>
   <div class="purchase-order">
     
-     <ul v-for="item of list">
+     <ul v-for="(item,index) of list" :key='index'>
       <li class="li1 liorder">
         <span class="iconannoyed kicon">急</span>
         <a href class="purtitle ellipsis">{{item.title}}</a>

@@ -17,7 +17,6 @@
                   v-bind:class="{active:isCurrentPath('/publish/entrust')}"
                   >委托采购</router-link>
 
-                <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
             <li>
@@ -28,12 +27,13 @@
                 <router-link to="/publish/sell" v-bind:class="{active:isCurrentPath('/publish/sell')}">发布商品</router-link>
                 <router-link to="/ucenter/sellorder" v-bind:class="{active:isCurrentPath('/ucenter/sellorder')}">销售管理</router-link>
                 <router-link to="/ucenter/company" v-bind:class="{active:isCurrentPath('/ucenter/company')}">主页管理</router-link>
+                <router-link to="/ucenter/company" v-bind:class="{active:isCurrentPath('/ucenter/company')}">我的报价</router-link>
                 <router-link 
                   v-bind:to="{path:'/publish/entrust',query:{type:3}}"
                   v-bind:class="{active:isCurrentPath('/publish/entrust')}"
                   >委托销售</router-link>
 
-                <a href="javascript:;" title="comming soon">合同管理</a>
+               
               </div>
             </li>
 

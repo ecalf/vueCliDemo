@@ -2,10 +2,6 @@
   <OrderManage v-bind:kinds="1" title="采购订单" />
 </template>
 
-
-
-
-
 <script>
 import OrderManage from "../../components/OrderManage";
 

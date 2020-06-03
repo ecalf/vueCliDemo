@@ -62,7 +62,7 @@
                 width="312"
                 height="40"
                 labelwidth="130"
-                v-model="fieldData.business_industry"
+                v-model="fieldData.industry"
                 @update-value="updateValue"
                 />
         </FormRow>
@@ -181,7 +181,7 @@
                 <FileUploadImage
                     title="手持身份证照片"
                     name="identify_card_photo"
-                    v-model="fieldData.identify_card_photo" 
+                    v-model="fieldData.hand_identify_card_photo" 
                     @update-value="updateValue"
                     />
 
@@ -234,13 +234,7 @@
                 />
         </FormRow>
 
-
-
-
-
-
-
-        <div class="file-wrap">
+        <!-- <div class="file-wrap">
             <FileUpload 
                 title="上传认证公函" 
                 type="file" 
@@ -249,7 +243,7 @@
                 @update-value="updateValue"
                 />
             <a href="" download="万和优采企业认证公函模板" class="download-file">下载公函模板</a>
-        </div>
+        </div> -->
 
         <div class="btn-wrap">
             <Button type="button" text="保 存" @on-click="authenticate()" />
@@ -258,47 +252,7 @@
 </template>
 
 
-<style lang="scss" scoped>
-    .form-panel{
-        margin:0 auto;
-        width:600px;
-    }
-    .authenticate-title{
-        font-size: 16px;
-        font-weight: bold;
-        margin-left:140px;
-        width: 666px;
-    }
 
-    .download-file{
-        display: inline-block;
-        min-width:200px;
-        height: 40px;
-        border:none;
-        text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 40px;
-        color:$fontColor;
-        background-color:#EAECED;
-        vertical-align: middle;
-        cursor: default;
-        @include default-radius;
-    }
-
-    .btn-wrap{
-        margin-top:60px;
-        margin-bottom: 20px;
-        text-align:  center;
-        width:555px;
-    }
-    .file-wrap{
-        margin-top:30px;
-        margin-bottom: 20px;
-        text-align:  center;
-        width:555px;
-    }
-</style>
 
 <script>
 import FormRow from "@components/form/FormRow";
@@ -331,29 +285,22 @@ export default {
             fieldData:{
                 //个人认证：identify_person 组织认证：identify_organization 公司认证：identify_company
                 scene:'identify_company',//认证场景 
-                
                 bank_name: '',//开户银行
-                bank_branch_name: '',//开户支行
                 bank_account: '',//银行账户
                 full_name: '',//银行账户姓名
-
                 company_name:'',//企业名称
                 business_license: '',//营业执照照片
                 business_license_code: '',//纳税人识别号
                 business_scope_cate: '',//经营范围
-                business_industry:'',//所属行业
+                industry:'',//所属行业
                 company_form: '',//企业形式
-                
-                identify_card_photo:'',//法人手持证件照
+                hand_identify_card_photo:'',//法人手持证件照
                 legal_identify_card_photo_font: '',//身份证正面
                 legal_identify_card_photo_back: '',//身份证背面
                 legal_person: '',//法人姓名
                 legal_person_cardno: '',//法人身份证号码
-
                 contact_name:'',//联系人
                 contact_phone:'',//联系人电话
-
-                official_letter: ''//认证公函
 
             }
         }
@@ -403,49 +350,54 @@ export default {
 
             //console.log('params',params);
 
-            if(!params.company_name){
-                errMsg = '请输入企业名称';
-            }else if(!params.business_license_code){
-                errMsg = '请输入纳税人识别号';
-            }else if(!(/^(\d{15}|\d{18})$/).test(params.business_license_code)){
-                errMsg = '纳税人识别号输入错误,请输入15或18位数字';
-            }else if(!params.business_license){
-                errMsg = '请上传营业执照照片';
-            }else if(!params.legal_person){
-                errMsg = '请输入企业法人姓名';
-            }else if(!params.legal_person_cardno){
-                errMsg = '请输入企业法人身份证号码';
-            }else if(!validator.isIdCard(params.legal_person_cardno)){
-                errMsg = '企业法人身份证号码输入错误';
-            }else if(!params.identify_card_photo){
-                errMsg = '请上传法人身份证照片';
-            }else if(!params.legal_identify_card_photo_font){
-                errMsg = '请上传身份证正面照片';
-            }else if(!params.legal_identify_card_photo_back){
-                errMsg = '请上传身份证反面照片';
-            }else if(!params.contact_name){
-                errMsg = '请输入联系人';
-            }else if(!params.contact_phone){
-                errMsg = '请输入联系电话';
-            }else if(!validator.isTel(params.contact_phone)){
-                errMsg = '联系电话输入错误';
-            }/*else if(!params.bank_name){
+            // if(!params.company_name){
+            //     errMsg = '请输入企业名称';
+            // }
+            // else if(!params.business_license_code){
+            //     errMsg = '请输入纳税人识别号';
+            // }
+            // else if(!(/^(\d{15}|\d{18})$/).test(params.business_license_code)){
+            //     errMsg = '纳税人识别号输入错误,请输入15或18位数字';
+            // }
+            // else if(!params.business_license){
+            //     errMsg = '请上传营业执照照片';
+            // }else if(!params.legal_person){
+            //     errMsg = '请输入企业法人姓名';
+            // }else if(!params.legal_person_cardno){
+            //     errMsg = '请输入企业法人身份证号码';
+            // }else if(!validator.isIdCard(params.legal_person_cardno)){
+            //     errMsg = '企业法人身份证号码输入错误';
+            // }else if(!params.identify_card_photo){
+            //     errMsg = '请上传法人身份证照片';
+            // }else if(!params.legal_identify_card_photo_font){
+            //     errMsg = '请上传身份证正面照片';
+            // }else if(!params.legal_identify_card_photo_back){
+            //     errMsg = '请上传身份证反面照片';
+            // }else if(!params.contact_name){
+            //     errMsg = '请输入联系人';
+            // }else if(!params.contact_phone){
+            //     errMsg = '请输入联系电话';
+            // }else if(!validator.isTel(params.contact_phone)){
+            //     errMsg = '联系电话输入错误';
+            // }
+            /*else if(!params.bank_name){
                 errMsg = '请输入企业开户银行名称';
-            }*/else if(!params.bank_branch_name){
-                errMsg = '请输入开户银行名称';
-            }/*else if(!params.bank_account){
+            }*/
+            // else if(!params.bank_branch_name){
+            //     errMsg = '请输入开户银行名称';
+            // }
+            /*else if(!params.bank_account){
                 errMsg = '请输入银行卡号';
             }*//*else if(!validator.isBankCard(params.bank_account)){
                 errMsg = '银行卡号输入错误';
-            }*/else if(params.bank_account&&!(/^\d{16,19}$/).test(params.bank_account)){
-                //银行卡号非必填，但如果填了要检查格式
-                errMsg = '银行卡号输入错误,请输入16~19位数字';
-            }/*else if(!params.full_name){
+            }*/
+            // else if(params.bank_account&&!(/^\d{16,19}$/).test(params.bank_account)){
+            //     //银行卡号非必填，但如果填了要检查格式
+            //     errMsg = '银行卡号输入错误,请输入16~19位数字';
+            // }
+            /*else if(!params.full_name){
                 errMsg = '请输入银行账户姓名';
-            }*/else if(!params.official_letter){
-                errMsg = '请上传认证公函';
-            }
-
+            }*/
             return {
                 state:!errMsg,
                 params:params,
@@ -472,21 +424,17 @@ export default {
                         company_name: info.params.company_name,
                         company_form: info.params.company_form,
                         business_scope_cate: info.params.business_scope_cate,
-                        business_industry:info.params.business_industry,
+                        industry:info.params.industry,
                         business_license: info.params.business_license,
                         business_license_code: info.params.business_license_code,
-                        
-                       
                         contact_name: info.params.contact_name,
                         contact_phone: info.params.contact_phone,
-
                         legal_person: info.params.legal_person,
                         legal_person_cardno: info.params.legal_person_cardno,
-                        identify_card_photo: info.params.identify_card_photo,
+                        hand_identify_card_photo: info.params.hand_identify_card_photo,
                         legal_identify_card_photo_back: info.params.legal_identify_card_photo_back,
                         legal_identify_card_photo_font: info.params.legal_identify_card_photo_font,
                         
-                        official_letter: info.params.official_letter
                     },
                     bank:{
                         bank_account: info.params.bank_account,
@@ -503,3 +451,45 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    .form-panel{
+        margin:0 auto;
+        width:600px;
+    }
+    .authenticate-title{
+        font-size: 16px;
+        font-weight: bold;
+        margin-left:140px;
+        width: 666px;
+    }
+
+    .download-file{
+        display: inline-block;
+        min-width:200px;
+        height: 40px;
+        border:none;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 40px;
+        color:$fontColor;
+        background-color:#EAECED;
+        vertical-align: middle;
+        cursor: default;
+        @include default-radius;
+    }
+
+    .btn-wrap{
+        margin-top:60px;
+        margin-bottom: 20px;
+        text-align:  center;
+        width:555px;
+    }
+    .file-wrap{
+        margin-top:30px;
+        margin-bottom: 20px;
+        text-align:  center;
+        width:555px;
+    }
+</style>

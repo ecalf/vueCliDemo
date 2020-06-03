@@ -1,7 +1,7 @@
 <template>
   <div class="purchase-order">
    
-    <ul v-for="(item,index) of list">
+    <ul v-for="(item,index) of list" :key='index'>
       <li class="li1 liorder">
         <span class="iconannoyed kicon">急</span>
         <a href class="purtitle ellipsis">{{item.title}}</a>
@@ -19,9 +19,9 @@
         <!-- status -1 删除 0 下架 1上架 -->
         <a href="javascript:;" class="modify" @click="modify(item)">修改</a>
 
-        <a href="javascript:;" class="upper-shelf" @click="updateStatus(item,1)" v-if="item.status==0">上架</a>
+        <!-- <a href="javascript:;" class="upper-shelf" @click="updateStatus(item,1)" v-if="item.status==0">上架</a>
 
-        <a href="javascript:;" class="lower-shelf" @click="updateStatus(item,0)" v-if="item.status==1">下架</a>
+        <a href="javascript:;" class="lower-shelf" @click="updateStatus(item,0)" v-if="item.status==1">下架</a> -->
 
         <a href="javascript:;" class="delete" @click="updateStatus(item,-1)">删除</a>
       </li>
