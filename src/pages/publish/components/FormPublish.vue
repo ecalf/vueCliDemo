@@ -19,12 +19,24 @@
                         @update-value="updateValue"
                          />
                 </div>
-                <div class="form-section category-show">
-                    <template v-for="(item,i) of fieldData.category">
-                        <span >{{ item.text }}</span>
-                        <i class="arrow-right" v-show="i<fieldData.category.length-1"></i>
-                    </template>
-                </div>
+
+                <FormRow>
+                    <FieldWrap
+                        label=""
+                        type="noborder"
+                        prop="cate_id"
+                        v-bind:silent="fieldData.category.length>0"
+                    >
+
+                        <div class="form-section category-show">
+                            <template v-for="(item,i) of fieldData.category">
+                                <span >{{ item.text }}</span>
+                                <i class="arrow-right" v-show="i<fieldData.category.length-1"></i>
+                            </template>
+                        </div>
+
+                    </FieldWrap>
+                </FormRow>
             </FormContainer>
 
             <FormContainer  title="发布信息" v-bind:baseline="true">
@@ -38,6 +50,7 @@
                         height="40"
                         width="140"
                         v-model="fieldData.entrust"
+                        prop="type"
                         @update-value="updateValue"
                         />
                 </FormRow>
@@ -55,6 +68,7 @@
                         width="1020"
                         height="40"
                         v-model="fieldData.title"
+                        prop="title"
                         @update-value="updateValue"
                         />
                 </FormRow>
@@ -74,6 +88,7 @@
                         width="1020"
                         height="100"
                         v-model="fieldData.desc"
+                        prop="desc"
                         @update-value="updateValue"
                         />
                 </FormRow>
@@ -89,6 +104,7 @@
                         width="300"
                         defaulttext="请选择品牌"
                         v-model="fieldData.brand"
+                        prop="brand_id"
                         @update-value="updateValue"
 
                         />
@@ -105,6 +121,7 @@
                         width="245"
                         height="40"
                         v-model="fieldData.otherBrand"
+                        prop="other_brand"
                         @update-value="updateValue"
                         />
 
@@ -120,6 +137,7 @@
                         width="245"
                         height="40"
                         v-model="fieldData.country"
+                        prop="exit_country"
                         @update-value="updateValue"
                         />
 
@@ -139,6 +157,7 @@
                         width="100"
                         height="40"
                         v-model="fieldData.supplierPrice"
+                        prop="supplier_price"
                         @update-value="updateValue"
                         />
 
@@ -147,13 +166,13 @@
                         v-bind:suffix="false"
                         placeholder=""
                         defaultvalue=""
-
                         type="text"
                         label="市场价" 
                         name="price" 
                         width="100"
                         height="40"
                         v-model="fieldData.price"
+                        prop="price"
                         @update-value="updateValue"
                         />
 
@@ -163,12 +182,14 @@
                         placeholder=""
                         defaultvalue=""
 
+                        
                         type="text"
                         label="数量" 
                         name="quantity" 
                         width="100"
                         height="40"
                         v-model="fieldData.quantity"
+                        prop="num"
                         @update-value="updateValue"
                         />
 
@@ -183,6 +204,7 @@
                         width="130"
                         defaulttext="请选择单位"
                         v-model="fieldData.unit"
+                        prop="unit_cate_id"
                         @update-value="updateValue"
                         />
 
@@ -195,6 +217,7 @@
                         height="40"
                         width="140"
                         v-model="fieldData.usage"
+                        prop="use_way"
                         @update-value="updateValue"
                         />
 
@@ -225,6 +248,7 @@
                         width="300"
                         defaulttext="请选择资质要求"
                         v-model="fieldData.qualification"
+                        prop="qualification"
                         @update-value="updateValue"
                         />
 
@@ -240,6 +264,7 @@
                         label="上传图片"
                         v-bind:required="true" 
                         height="150"
+                        prop="images"
                         >
 
                         <FileUploadImage 
@@ -296,6 +321,7 @@
                         v-bind:required="true" 
                         v-bind:border="0"
                         height="400"
+                        prop="info"
                         >
 
                         <Editor 
@@ -322,6 +348,7 @@
                         height="40"
                         width="220"
                         v-model="fieldData.deadtime"
+                        prop="dead_time"
                         @update-value="updateValue"
                         />
 
@@ -338,6 +365,7 @@
                         height="40"
                         width="230"
                         v-model="fieldData.service"
+                        prop="service_id"
                         @update-value="updateValue"
                         />
 
@@ -349,6 +377,8 @@
                 
 
             </FormContainer>
+
+            <div class="form-msg" v-show="!!fieldData.formError">{{fieldData.formError}}</div>
         </section>
 
         <SubmitBar text="立即发布" @on-submit="publish" />
@@ -372,6 +402,14 @@
         justify-content: flex-start;
         margin-top:20px;
     }
+    .form-msg{
+        position: absolute;
+        bottom: -28px;
+        width:100%;
+        font-size: 14px;
+        text-align: left;
+        color:$errorColor;
+    }
 
     .category-menu-container{
         margin-left:115px;
@@ -379,7 +417,6 @@
 
     .category-show{
         align-items: center;
-        margin-left:115px;
         font-size: 16px;
         font-weight: bold;
         height: 26px;
@@ -437,8 +474,8 @@ import {
 } from "@api/common";
 
 
-import { checkform } from "./CheckForm";
-import { formatListData,findItemByKey } from "@utils/common";
+import  checkform  from "./CheckForm";
+import { formatListData,findItemByKey,findField } from "@utils/common";
 
 
 
@@ -501,6 +538,7 @@ export default {
             
             //表单值
             fieldData:{
+                formError:'',//显示表单错误信息
                 imageKeys:'techImg,productImg,companyImg,otherImg',
                 type:this.type,
                 category:'', //产品类别
@@ -688,8 +726,6 @@ export default {
 
 
             console.log('fieldData>>>',this.fieldData);
-
-
         },
         checkform(){
             /*
@@ -702,20 +738,15 @@ export default {
             console.log('表单类型:',entrustId||pageType,',computed:',fieldData.entrust&&fieldData.entrust.id||this.type);
             */
 
-            let info = checkform(this.fieldData);
+            let info = checkform(this.fieldData,this,'prop');
+
             if(info.state){
+                this.fieldData.formError = '';
                 return info.params;
             }else{
-                this.$message({
-                    showClose: true,
-                    message: info.errMsg,
-                    type: "error"
-                });
-
+                this.fieldData.formError = Object.values(info.errorInfo).join();
                 return false;
             }
-
-
         },
 
         async publish(){
@@ -740,7 +771,7 @@ export default {
                     this.$message({
                         showClose: true,
                         message: res.message,
-                        type: "success"
+                        type: "error"
                     });
                 }
             }else{
@@ -849,12 +880,8 @@ export default {
             this.getNeedInfo();
         }
 
-        console.log('publishForm>>>',this.$refs.publishForm);
         window.publishForm = this.$refs.publishForm;
         window.com = this;
-    },
-    updated(){
-        console.log('updated, fieldData>>>',this.fieldData);
     }
 
 }

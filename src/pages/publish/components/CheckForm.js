@@ -1,6 +1,9 @@
-export function checkform(fieldData){
-    let errMsg = '';
-    const params = {};
+import FormValidator from "@utils/formValidator";
+import validator from "@utils/validator";
+
+
+
+export default function checkform(fieldData,parent,bindKey){
     const paramsConfig = {
         type:{
             label:fieldData.entrust?'委托类型':'发布类型',
@@ -78,6 +81,12 @@ export function checkform(fieldData){
             remark:'发布销售/发布采购/委托采购/委托销售 市场价',
             required:true,
             type:Number,
+            validate:(val)=>{
+                return {
+                    errMsg:"价格输入错误",
+                    state:validator.isPrice(val)
+                }
+            },
             value:fieldData.price
         },
         supplier_price:{
@@ -92,6 +101,8 @@ export function checkform(fieldData){
             remark:'销售或采购的数量',
             required:true,
             type:Number,
+            msg:'请输入数字',
+            validate:/^\d+$/,
             value:fieldData.quantity
         },
         unit_cate_id:{
@@ -125,7 +136,7 @@ export function checkform(fieldData){
                 let imgs = imageKeys.map((key,i)=>{
                     return fieldData[key]||'';
                 });
-                return imgs.join(',');
+                return imgs.join(',').replace(/,{2,}/g,'').replace(/^,|,$/,'');
             }
         },
         info:{
@@ -158,35 +169,7 @@ export function checkform(fieldData){
 
 
 
-    for(let key of Object.keys(paramsConfig)){
-        let required = paramsConfig[key].required;
-        let label = paramsConfig[key].label;
-        let value = paramsConfig[key].value;
-        let dataType = paramsConfig[key].type;
+    let formValidator = new FormValidator(parent,bindKey,paramsConfig);
 
-        if(typeof(value)=='function'){
-            try{
-                value = value();
-            }catch(error){ 
-                value = new dataType().valueOf();
-            }
-        }
-
-
-        //console.log(label,required,value,errMsg);
-        if(required&&!value){
-            errMsg = label+'必须填写';
-            break;
-        }
-
-        params[key] = value;
-    }
-
-
-    return {
-        params:params,
-        errMsg:errMsg,
-        state:!errMsg
-    }
+    return formValidator.validate();
 }
-

@@ -63,7 +63,6 @@
             labelwidth:String,
             border:Number
         },
-        inheritAttrs:false,
         data(){
             return {
                 errorMsg:this.error||'',

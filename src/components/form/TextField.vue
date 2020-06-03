@@ -52,7 +52,6 @@
             border:Number,
             error:String
         },
-        inheritAttrs:false,
         data(){
             return {
                 value:'',

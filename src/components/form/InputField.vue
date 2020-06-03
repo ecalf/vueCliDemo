@@ -58,10 +58,9 @@
             labelwidth:String,//label宽度
             border:Number //设置边框大小，默认1
         },
-        inheritAttrs:false,
         data(){
             return {
-                errorMsg:this.error,
+                errorMsg:this.error||'',
                 value:''
             }
         },
