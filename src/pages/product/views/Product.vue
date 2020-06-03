@@ -3,7 +3,7 @@
     <!--banner-->
     <Banner :bannerList="bannerList" />
     <div class="commonweb">
-      <ProductList />
+      <ProductList :productList="productList" />
       <!--分页-->
       <div class="layui-box">
         <div class="layui-laypage">
@@ -34,6 +34,7 @@ import Banner from "@components/Banner";
 import ProductList from "@components/ProductList";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import { getNeedList } from "@api/need";
 export default {
   components: {
     Banner,
@@ -47,6 +48,42 @@ export default {
         { imgUrl: "/img/banner.cfe483c5.jpg", href: "/ucenter/login" }
       ]
     };
+  },
+  methods:{
+     async getProductList(params) {//列表推荐
+      params = params || {
+        type:5,
+        page_size:10,
+        page_index:1,
+        keyword: ""
+      };
+      const res = await getNeedList({ data: params });
+      if (res.code == 200) {
+        let lists=res.data.list;
+        this.total = res.data.total;
+
+       for(let i=0;i<lists.length;i++){//数组重组
+         let serviceData = lists[i].service_cnname != null ? lists[i].service_cnname.split(',') : '';
+            lists[i].service_cnname = serviceData;//得到服务类型数组
+            
+				 let qualification = lists[i].qualification_icon != null ? lists[i].qualification_icon.split(',') : '';
+         lists[i].qualification_icon = qualification;//得到资质类型数组
+            
+         let images = lists[i].images != null ? lists[i].images.split(',') : '';
+					lists[i].images = images;//得到图片数组
+       }
+        this.productList = lists;
+      } else {
+        this.$message({
+          showClose: true,
+          message: res.message,
+          type: "error"
+        });
+      }
+    }
+  },
+   mounted: function() {
+    this.getProductList(); //官方列表
   }
 };
 </script>

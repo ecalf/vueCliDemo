@@ -18,3 +18,4 @@ export default {
         return res.data.nameList;
     }
 }
+

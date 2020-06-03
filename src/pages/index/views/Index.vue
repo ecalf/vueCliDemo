@@ -132,11 +132,11 @@
             <em>优选</em>
           </h3>
         </div>
-
         <BusinessSelect />
       </div>
       <!--产品列表-->
-      <ProductList />
+      <ProductList :productList="productList" />
+      <div class="promore-btn"><a href="/product">查看更多</a></div>  
 
       <div class="adver-area">
         <a href="/tradhall">
@@ -156,7 +156,7 @@
             <i class="iconfont iconzu304" style="background-color:#4e5a65;"></i>采购订单
           </h3>
         </div>
-        <Orderlist />
+        <Order-list />
         <a href="/product" class="purchase-more">查看更多</a>
       </div>
 
@@ -220,6 +220,7 @@ import Partner from "../components/Partner";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import { epidemicList, abroadList } from "@api/outside";
+import { getNeedList } from "@api/need";
 export default {
   components: {
     Banner,
@@ -240,6 +241,11 @@ export default {
       ],
       items: [],
       abroadsItems: [],
+      productList: [],
+      total: 0,
+      page_size: 10,
+      page_index: 1,
+      type: 1, //type 1 发布采购 2 发布销售 3 委托销售 4委托采购 5官网推荐'
       newswiper: {
         direction: "vertical",
         autoplay: true
@@ -249,18 +255,47 @@ export default {
   },
   methods: {
     async getEpidemic() {
-      let epidemic = await epidemicList();
+      let epidemic = await epidemicList(); //国内疫情
       this.items = epidemic.newslist[0].desc;
 
-      let abroad = await abroadList();
+      let abroad = await abroadList(); //国外疫情
       this.abroadsItems = abroad.newslist[0].desc;
+    },
+    async getProductList(params) {//列表推荐
+      params = params || {
+        type:5,
+        page_size:10,
+        page_index:1,
+        keyword: ""
+      };
+      const res = await getNeedList({ data: params });
+      if (res.code == 200) {
+        let lists=res.data.list;
+        this.total = res.data.total;
 
-
-    
+       for(let i=0;i<lists.length;i++){//数组重组
+         let serviceData = lists[i].service_cnname != null ? lists[i].service_cnname.split(',') : '';
+            lists[i].service_cnname = serviceData;//得到服务类型数组
+            
+				 let qualification = lists[i].qualification_icon != null ? lists[i].qualification_icon.split(',') : '';
+         lists[i].qualification_icon = qualification;//得到资质类型数组
+            
+         let images = lists[i].images != null ? lists[i].images.split(',') : '';
+					lists[i].images = images;//得到图片数组
+       }
+        this.productList = lists;
+      } else {
+        this.$message({
+          showClose: true,
+          message: res.message,
+          type: "error"
+        });
+      }
     }
   },
   mounted: function() {
     this.getEpidemic();
+    this.getProductList(); //列表推荐
   }
 };
 </script>
@@ -521,5 +556,21 @@ export default {
   text-align: right;
   color: #3d3938;
   font-size: 16px;
+}
+
+.promore-btn{
+  text-align: center;
+  padding-bottom:40px;
+  a{
+    padding:10px 40px;
+    display: inline-block;
+    border:1px solid $ac;
+    border-radius:20px;
+    transition:all .3s;
+    &:hover{
+      background:$ac;
+      color:#fff;
+    }
+  }
 }
 </style>
