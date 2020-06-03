@@ -56,7 +56,7 @@ export default class FormValidator {
 
             //validate value
             if(required&&!value){
-                errMsg = msg||(label+'必须填写');
+                errMsg = msg||(label+'不能为空');
             }else if(value&&validate){
                 if(validate instanceof RegExp){
                     let reg = validate;
