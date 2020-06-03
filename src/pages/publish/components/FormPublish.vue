@@ -474,7 +474,7 @@ import {
 } from "@api/common";
 
 
-import  checkform  from "./CheckForm";
+import  Checkform  from "./CheckForm";
 import { formatListData,findItemByKey,findField } from "@utils/common";
 
 
@@ -535,7 +535,9 @@ export default {
                 {text:'加急',id:3}
             ],
 
-            
+
+           
+
             //表单值
             fieldData:{
                 formError:'',//显示表单错误信息
@@ -673,6 +675,8 @@ export default {
                 this.getBrandList();
             }
 
+            //checkform(this.fieldData,this,'prop');
+
         },
         async renderInfo(info){
             if(this.type!=info.type){
@@ -738,8 +742,11 @@ export default {
             console.log('表单类型:',entrustId||pageType,',computed:',fieldData.entrust&&fieldData.entrust.id||this.type);
             */
 
-            let info = checkform(this.fieldData,this,'prop');
+             //表单验证器
+            let validator = new Checkform(this.fieldData,this,'prop');
+            let info = validator.validate();
 
+            
             if(info.state){
                 this.fieldData.formError = '';
                 return info.params;

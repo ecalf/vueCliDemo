@@ -28,17 +28,18 @@ export default class FormValidator {
         const errorInfo = {};
         const rules = this.rules;
 
+
         for(let key of Object.keys(rules)){
             if(fieldName&&key!=fieldName){
                 continue;
             }
 
             let fieldConfig = rules[key];
-            let required = fieldConfig.required;
+            let required = !!fieldConfig.required;
             let label = fieldConfig.label;
             let value = fieldConfig.value;
             let validate = fieldConfig.validate;
-            let msg = fieldConfig.msg;
+            let msg = fieldConfig.errMsg;
             let dataType = fieldConfig.type||String;
             let errMsg = '';
 
@@ -48,14 +49,14 @@ export default class FormValidator {
                     value = value();
                 }catch(error){ 
                     value = new dataType().valueOf();
-                    errMsg = label+'数据异常';
+                    errMsg = msg||(label+'数据异常');
                 }
             }
             params[key] = value;
 
             //validate value
             if(required&&!value){
-                errMsg = label+'必须填写';
+                errMsg = msg||(label+'必须填写');
             }else if(value&&validate){
                 if(validate instanceof RegExp){
                     let reg = validate;
@@ -99,11 +100,18 @@ export default class FormValidator {
         }
     }
 
-    reset(){
-        for(let fieldName in this.fields){
-            this.fields[fieldName].clearError();
-            this.fields[fieldName].value = '';
+    clear(fieldName){
+        for(let key in this.fields){
+            if(fieldName&&fieldName!=key){
+                continue;
+            }
+
+            this.fields[key].clearError();
         }
+    }
+
+    setRules(rules){
+        this.rules = rules;
     }
 
 
