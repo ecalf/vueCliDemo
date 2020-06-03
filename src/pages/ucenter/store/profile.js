@@ -22,19 +22,20 @@ export default {
         updateProfile(state,profile){
             console.log('mutation updateProfile', profile);
             for(let key in profile){
-                //为state新增key需要使用Vue.set方法,使该属性成为可监控属性
+                //为state新增key需要使用Vue.set方法,使该属性成为响应式
                 Vue.set(state,key,profile[key]||'');
             }
         }
     },
     actions: {
-        //action.method(context,data) 根节点状态则为 context.rootState
+        //actionMethod(context,data) 根节点状态则为 context.rootState
         //模块外使用： dispatch('moduleName/actionName',data)
         //模块内使用: dispatch('actionName',data)
         async getProfile({state,commit, rootState}){
-
+            console.log('dispatch profile/getProfile');
             const res =  await getProfile();
-            
+            //console.log('getProfile res',res);
+
             if(res.code==200){
                 commit('updateProfile',res.data.profiles);
             }else{

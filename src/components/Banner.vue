@@ -2,8 +2,8 @@
   <!--index banner-->
   <swiper class="index-banner" :options="swiperOption">
     <swiper-slide v-for="(item,index) in bannerList" :key="index">
-      <a :href="item.href">
-      <img :src="item.imgUrl" alt="">
+      <a :href="item.href||'javascript:;'">
+      <img :src="item.imgUrl" :alt="item.desc||''">
         <!--<img src="@assets/images/banner.jpg" alt=""> -->
       </a>
     </swiper-slide>
@@ -38,9 +38,9 @@ export default {
   },
 };
 </script>
+
+
 <style lang="scss" scoped>
-@import "../assets/css/variables.scss";
-/*indexbanner*/
 .index-banner {
   position: relative;
   overflow: hidden;

@@ -150,3 +150,7 @@ $activeColor:#2D755F;//按钮按下颜色
     border-radius:3px;
 }
 
+//边框阴影
+@mixin default-shadow{
+  box-shadow: #eaeced 1px 1px 8px;
+}

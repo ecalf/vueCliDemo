@@ -1,5 +1,5 @@
 <template>
-    <div class="upload-container">
+    <div class="upload-container" v-bind:data-value="$attrs.value">
         <FileUploadWrap @after-upload="afterUpload">
             <template v-slot:default="slotProps">
                 <div class="upload-handler" v-show="!value">
@@ -136,6 +136,12 @@
                 this.$emit('input',url);
 
             }
+        },
+        updated(){
+            this.value = this.$attrs.value;
+        },
+        created(){
+            this.value = this.$attrs.value;
         }
     }
 

@@ -2,7 +2,7 @@
   <MemberRightWrap v-bind:title="title" v-bind:searchconfig="searchconfig">
     <BarNav v-bind:navlist="navlist" @switch-tab="switchTab" />
     <Errormsg v-if="total==0" />
-    <OrderShow v-bind:list="orderList" v-if="total>0" />
+    <OrderShow v-bind:list="orderList" v-if="total>0" @update-status="updateStatus" @modify="modify"/>
 
     <!--分页 -->
     <div class="layui-box" v-if="Math.ceil(total/page_size)>1">
@@ -27,8 +27,8 @@ import MemberRightWrap from "./MemberRightWrap";
 import BarNav from "./BarNav";
 import OrderShow from "./OrderShow";
 
- import {getMyNeeds} from "@api/user";
-
+import {getMyNeeds} from "@api/user";
+import {changeNeedStatus} from "@api/need";
 
 export default {
   components: {
@@ -39,7 +39,7 @@ export default {
   },
   props:{
     title:String,
-    type:Number  //1 发布采购 2 发布销售 3 委托销售 4 委托采购
+    kinds:Number  //1 采购 2销售
 
   },
   data() {
@@ -57,11 +57,11 @@ export default {
         }
       },
 
-      status:0,//0 全部，1 上架,2 下架,3 已截止
+      status:0,
       keyword:'',
       total:0,
       page_size:10,
-      page_index:0,
+      page_index:1,
       orderList:[]
 
 
@@ -70,12 +70,12 @@ export default {
   methods:{
     onSearch(name,keyword){
       this.keyword = keyword;
-      this.page_index = 0;
+      this.page_index = 1;
       this.getOrderList();
     },
     switchTab(item){
       this.status = item.id*1;
-      this.page_index = 0;
+      this.page_index = 1;
       this.getOrderList();
     },
     switchPage(page_index){
@@ -85,7 +85,7 @@ export default {
 
     async getOrderList(){//我发布的采购订单
       const params = {
-        type:this.type,
+        kinds:this.kinds,
         page_index:this.page_index,
         page_size:this.page_size,
         keyword:this.keyword
@@ -96,7 +96,7 @@ export default {
       }else if(this.status==2){//下架
         params.status = 0; 
       }else if(this.status==3){//已截止
-        params.is_deadtime = 1;//1 已截至 0 未截至
+        params.is_deadtime = 1;//1 已截止 0 未截止
       }
 
       const res = await getMyNeeds({data:params});
@@ -112,7 +112,57 @@ export default {
       }
 
       
+    },
+    async updateStatus(item,status){
+      const params = {
+        need_id:item.id,
+        status:status// -1 删除 0 下架 1上架
+      }
+
+
+      if(status==-1){
+        this.$confirm('确定要删除吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(async (res) => {
+            await changeNeedStatus({data:params});
+            await getOrderList();
+          }).catch((err) => {
+
+          });
+      }else{
+        await changeNeedStatus({data:params});
+        await getOrderList();
+
+      }
+
+      
+
+    },
+    modify(item){
+      //"type": 类型：1 发布采购 2 发布销售 3 委托销售 4 委托购买',
+      let path;
+      switch (item.type*1){
+        case 1:
+          path='/publish/buy';
+          break;
+        case 2:
+          path="/publish/sell";
+          break;
+        case 3:
+          path="/publish/entrust";
+          break;
+        case 4:
+          path="/publish/entrust";
+          break;
+      }
+
+      this.$router.push(path+'?id='+item.id);
     }
+
+
+
   },
   created(){
     this.getOrderList();

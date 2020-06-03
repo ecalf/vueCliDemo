@@ -1,5 +1,5 @@
 <template>
-    <FileUploadWrap @after-upload="afterUpload">
+    <FileUploadWrap @after-upload="afterUpload" v-bind:value="$attrs.value">
         <template v-slot:default="slotProps">
             <div class="upload-icon" v-show="!value">
                 <span class="icon-img"></span>
@@ -33,7 +33,6 @@
             .file-show{
                 max-width:144px;
                 max-height: 122px;
-                z-index:9;
             }
 
             &.upload-icon-showing{
@@ -81,10 +80,16 @@
         methods:{
             afterUpload(imgurl){    
                 this.value = imgurl;
-                this.$emit('update-value',this.name,imgurl);
-                this.$emit('input',imgurl);
+                this.$emit('update-value',this.name,this.value);
+                this.$emit('input',this.value);
 
             }
+        },
+        updated(){
+            this.value = this.$attrs.value;
+        },
+        created(){
+            this.value = this.$attrs.value;
         }
         
     }

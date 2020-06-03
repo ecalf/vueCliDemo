@@ -1,16 +1,18 @@
 <template>
         <!--公司主页介绍-->
     <div class="company-info clearfix">
-      <a href class="enter-page">进入企业主页</a>
+      <router-link v-bind:to="'/product/company/'+info.user_id" class="enter-page">
+        进入企业主页
+      </router-link>
       <div class="company-type">
-        <h2 class="company-title">深圳迈万和优采股份有限公司</h2>
+        <h2 class="company-title">{{info.company_name}}</h2>
+       <!--
         <span>工厂</span>
         <span>广州</span>
-        <span>企业主营： 口罩，防护服，呼吸机</span>
+        -->
+        <span>企业主营： {{info.business_scope_cate}}</span>
       </div>
-      <div
-        class="company-dec"
-      >万合国际供应链投资（深圳）有限公司创立于20018年11月19日。自成立以来，万合专注于服务质量的提升，已积累国际供应链服务21年的行业经验，与2018年成立全流程服务的，凭借卓越的物流供应链服务和持续创新的技术应用，与诸多产业客户建立了长期深度合作...</div>
+      <div class="company-dec">{{info.company_introduce}}</div>
     </div>
 </template>
 
@@ -45,13 +47,7 @@
   padding: 10px 0 8px;
   line-height: 16px;
 }
-.company-msg {
-  margin-top: -20px;
-  font-size: 16px;
-  p {
-    padding-bottom: 5px;
-  }
-}
+
 
 .enter-page {
   float: right;

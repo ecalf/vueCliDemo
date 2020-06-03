@@ -8,11 +8,15 @@
                 <a href="javascript:;"><i class="iconfont iconcaigou"></i>我要采购</a>
               </h4>
               <div class="member-subnav">
-                <router-link to="/publish/buy">发布采购</router-link>
-                <router-link to="/ucenter/quotedprice">报价管理</router-link>
-                <router-link to="/ucenter/buyorder">采购订单</router-link>
-                <router-link to="/ucenter/suppliers">供应商库</router-link>
-                <router-link v-bind:to="{path:'/publish/entrust',query:{type:4}}">委托采购</router-link>
+                <router-link to="/publish/buy" v-bind:class="{active:isCurrentPath('/publish/buy')}">发布采购</router-link>
+                <router-link to="/ucenter/quotedprice" v-bind:class="{active:isCurrentPath('/ucenter/quotedprice')}">报价管理</router-link>
+                <router-link to="/ucenter/buyorder" v-bind:class="{active:isCurrentPath('/ucenter/buyorder')}">采购订单</router-link>
+                <router-link to="/ucenter/suppliers" v-bind:class="{active:isCurrentPath('/ucenter/suppliers')}">供应商库</router-link>
+                <router-link 
+                  v-bind:to="{path:'/publish/entrust',query:{type:4}}"
+                  v-bind:class="{active:isCurrentPath('/publish/entrust')}"
+                  >委托采购</router-link>
+
                 <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
@@ -21,10 +25,14 @@
                 <a href="javascript:;"><i class="iconfont iconxiaoshou"></i>我要销售</a>
               </h4>
               <div class="member-subnav">
-                <router-link to="/publish/sell">发布商品</router-link>
-                <router-link to="/ucenter/sellorder">销售管理</router-link>
-                <router-link to="/ucenter/company">主页管理</router-link>
-                <router-link v-bind:to="{path:'/publish/entrust',query:{type:3}}">委托销售</router-link>
+                <router-link to="/publish/sell" v-bind:class="{active:isCurrentPath('/publish/sell')}">发布商品</router-link>
+                <router-link to="/ucenter/sellorder" v-bind:class="{active:isCurrentPath('/ucenter/sellorder')}">销售管理</router-link>
+                <router-link to="/ucenter/company" v-bind:class="{active:isCurrentPath('/ucenter/company')}">主页管理</router-link>
+                <router-link 
+                  v-bind:to="{path:'/publish/entrust',query:{type:3}}"
+                  v-bind:class="{active:isCurrentPath('/publish/entrust')}"
+                  >委托销售</router-link>
+
                 <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
@@ -49,8 +57,8 @@
                 <a href="javascript:;"><i class="iconfont iconzhanghuxinxi"></i>账户管理</a>
               </h4>
               <div class="member-subnav">
-                <router-link to="/ucenter/account">我的账户</router-link>
-                <router-link to="/ucenter/authentication">认证中心</router-link>
+                <router-link to="/ucenter/account" v-bind:class="{active:isCurrentPath('/ucenter/account')}">我的账户</router-link>
+                <router-link to="/ucenter/authentication"  v-bind:class="{active:isCurrentPath('/ucenter/authentication')}">认证中心</router-link>
                 <a href="javascript:;" title="comming soon">发票管理</a>
               </div>
             </li>
@@ -69,6 +77,13 @@ export default {
         this.$router.push(path);  
       }
       
+    }
+  },
+  computed:{
+    isCurrentPath(){
+      return (path)=>{
+        return this.$router.history.current.fullPath.indexOf(path)>-1
+      }
     }
   }
 };

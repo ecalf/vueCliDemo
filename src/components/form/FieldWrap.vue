@@ -3,11 +3,11 @@
         <label class="input-label" v-bind:style="labelStyle">
             <span class="input-required" v-if="required">*</span>{{label}}:
         </label>
-        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!error}">
+        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!errorMsg}">
             <slot name="default"></slot>
             <div class="input-suffix" v-bind:style="suffixStyle" v-if="suffix">{{count}}/{{maxLength}}</div>
 
-            <div class="input-error" v-show="error" v-bind:style="errorStyle">{{error}}</div>
+            <div class="input-error"  v-show="!!errorMsg" v-bind:style="errorStyle">{{errorMsg}}</div>
         </div>
     </div>
 </template>
@@ -95,7 +95,7 @@
         },
         data(){
             return {
-                
+                errorMsg:this.error||''
             }
         },
         computed:{
@@ -172,12 +172,29 @@
                 return styleMap;
             }
         },
+        watch:{
+            error(newval,oldval){
+                this.errorMsg = newval;
+            }
+        },
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onInput(){
 
             },
-            onChange(){},
+            onChange(){
 
+            }
+
+        },
+        updated(){
+            console.log('FieldWrap updated, error>>>',this.error,this.errorMsg);
         }
 
         

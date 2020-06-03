@@ -1,6 +1,7 @@
 <template>
     <FieldWrap 
         type="readonly"
+        v-bind:error="errorMsg"
         v-bind:label="label"
         v-bind:width="width" 
         v-bind:height="height"
@@ -48,19 +49,32 @@
             width:String,
             height:String,
             labelwidth:String,
-            border:Number
+            border:Number,
+            error:String
         },
         inheritAttrs:false,
         data(){
             return {
-                value:''
+                value:'',
+                errorMsg:this.error||''
             }
         },
         methods:{
-
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            }
         },
         created(){
             this.value = this.$attrs.value||this.text||'';
+        },
+        updated(){
+            let newValue = this.$attrs.value||this.text;
+            if(this.value!=newValue){
+                this.value = newValue;
+            }
         }
     }
 

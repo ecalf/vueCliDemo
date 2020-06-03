@@ -3,7 +3,7 @@
         type="dateTimePicker" 
         v-bind:label="label"
         v-bind:required="required" 
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
@@ -14,9 +14,10 @@
         v-bind:editable="false"
         v-bind:value-format="valueFormat"
         v-bind:picker-options="pickerOptions"
-        v-model="value"
         type="date"
         placeholder="选择日期"
+        v-bind:data-value="$attrs.value"
+        v-model="value"
         @change="pickDate"
        />
         
@@ -81,6 +82,7 @@ export default {
       },
       data() {
         return {
+          errorMsg:this.error||'',
           value:'',
           pickerOptions: {
             disabledDate(time) {
@@ -112,9 +114,15 @@ export default {
         };
     },
     methods:{
+      showError(msg){
+          this.errorMsg = msg;
+      },
+      clearError(){
+          this.errorMsg = '';
+      },
       pickDate(date){
         this.value = date;
-        this.$emit('update-value',this.name,date);
+        this.$emit('update-value',this.name,this.value);
         this.$emit("input", this.value);
       }
     },

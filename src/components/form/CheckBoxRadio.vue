@@ -1,15 +1,16 @@
 <template>
     <div class="check-box clearfix"
-         v-bind:class="{'checked': checked,emphasize:item.addition&&item.addition.emphasize }"
-         data-value="item.id" 
+        v-bind="$attrs"
+         v-bind:class="{'checked': checked,emphasize:config&&config.addition&&config.addition.emphasize }"
+         data-value="config.id" 
          @click="oncheck()">
         <div class="icon"
             v-bind:class="{'icon-checkbox':type=='checkbox','icon-radio':type=='radio'}"  
         ></div>
         <div class="text"
-            v-bind:class="{tip:item.addition&&item.addition.tip}"
-            v-bind:data-title="item.addition&&item.addition.tip||''"
-        >{{item.text}}</div>
+            v-bind:class="{tip:config&&config.addition&&config.addition.tip}"
+            v-bind:data-title="config&&config.addition&&config.addition.tip||''"
+        >{{config&&config.text}}</div>
 
     </div>
 </template>
@@ -156,12 +157,11 @@
         props:{
             type:String,//checkbox radio
             name:String,
-            item:Object,//配置项对象
-            addition:Object //预留特殊处理
+            config:Object
         },
         data(){
             return {
-                value:this.item,
+                value:'',
                 checked:false
             };
         },
@@ -171,6 +171,8 @@
 
         methods:{
             triggerCheckStatus(frag){//修改选中状态
+                //console.log(this.name,'triggerCheckStatus',this.value,frag);
+
                 if(frag===undefined){
                     this.checked = !this.checked;
                 }else{
@@ -178,16 +180,24 @@
                 }
             },
             oncheck(){
+                if(this.type=="radio"&&this.checked){
+                    return false;
+                }
+
                 this.triggerCheckStatus();
-                this.value = {...this.item,checked:this.checked};
+                this.value.checked = this.checked;
                 this.$emit('update-value',this.name,this.value);
                 this.$emit('input',this.value);
             }
         },
         created(){
-            this.triggerCheckStatus(!!this.item.checked);
-            console.log('check-box created,update-value default ',this.item,this.checked);
-            this.$emit('update-value',this.name,{...this.item,checked:this.checked});
+            this.value = this.$attrs.value||this.config;
+            this.triggerCheckStatus(!!this.value.checked);
+            //this.$emit('update-value',this.name,this.value);
+        },
+        updated(){
+            this.value = this.$attrs.value||this.config;
+            this.triggerCheckStatus(!!this.value.checked);
         }
         
 

@@ -1,124 +1,86 @@
 <template>
   <div class="purchase-order">
-    <ul>
+   
+    <ul v-for="(item,index) of list">
       <li class="li1 liorder">
         <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">demo飞利浦呼吸机</a>
+        <a href class="purtitle ellipsis">{{item.title}}</a>
       </li>
       <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
+        <span class="medical-use">{{item.use_way|useWay}}</span>
+        <a href class="m-pro-title ellipsis">{{item.desc}}</a>
       </li>
-      <li class="li3 fs16">1500个</li>
+      <li class="li3 fs16">{{item.num}}{{item.unit_category_cnname}}</li>
       <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
+        <span class="order-price">{{item|price}}</span>
       </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
+      <li class="li5">{{item.created_at|formatDate}}-{{item.dead_time|formatDate}}</li>
       <li class="li6 order-btn">
-        <a href="javascript:;" class="modify">修改</a>
-        <a href="javascript:;" class="upper-shelf">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete">删除</a>
-      </li>
-    </ul>
+        <!-- status -1 删除 0 下架 1上架 -->
+        <a href="javascript:;" class="modify" @click="modify(item)">修改</a>
 
+        <a href="javascript:;" class="upper-shelf" @click="updateStatus(item,1)" v-if="item.status==0">上架</a>
 
-    <ul>
-      <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">飞利浦呼吸机</a>
-      </li>
-      <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
-      </li>
-      <li class="li3 fs16">1500个</li>
-      <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
-      </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
-      <li class="li6 order-btn">
-        <a href="javascript:;" class="modify">修改</a>
-        <a href="javascript:;" class="upper-shelf">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete">删除</a>
+        <a href="javascript:;" class="lower-shelf" @click="updateStatus(item,0)" v-if="item.status==1">下架</a>
+
+        <a href="javascript:;" class="delete" @click="updateStatus(item,-1)">删除</a>
       </li>
     </ul>
-    <ul>
-      <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">飞利浦呼吸机</a>
-      </li>
-      <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
-      </li>
-      <li class="li3 fs16">1500个</li>
-      <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
-      </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
-      <li class="li6 order-btn">
-        <a href="javascript:;" class="modify">修改</a>
-        <a href="javascript:;" class="upper-shelf">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete">删除</a>
-      </li>
-    </ul>
-    <ul>
-      <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">飞利浦呼吸机</a>
-      </li>
-      <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
-      </li>
-      <li class="li3 fs16">1500个</li>
-      <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
-      </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
-      <li class="li6 order-btn">
-        <a href="javascript:;" class="modify">修改</a>
-        <a href="javascript:;" class="upper-shelf">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete">删除</a>
-      </li>
-    </ul>
-    <ul>
-      <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">飞利浦呼吸机</a>
-      </li>
-      <li class="li2 liorder">
-        <span class="medical-use">民用</span>
-        <a href class="m-pro-title ellipsis">S9 VPAP ST主机 VPAP ST主机主...</a>
-      </li>
-      <li class="li3 fs16">1500个</li>
-      <li class="li4 fs16">
-        <span class="order-price">￥200,000</span>
-      </li>
-      <li class="li5">2020.02.05-2020.04.06</li>
-      <li class="li6 order-btn">
-        <a href="javascript:;" class="modify">修改</a>
-        <a href="javascript:;" class="upper-shelf">上架</a>
-        <!-- <a href="javascript:;" class="lower-shelf">下架</a> -->
-        <a href="javascript:;" class="delete">删除</a>
-      </li>
-    </ul>
+   
   </div>
 </template>
 
+
+
 <script>
-export default {};
+import filters from "@utils/filters";
+
+
+export default {
+  mixins:[filters],
+  props:{
+    list:Array
+  },
+  data(){
+    return {}
+  },
+  computed:{
+     country(){
+      return (code)=>{
+          if(!code){ return code; }
+
+          code = code.toUpperCase();
+          let country = this.countryList.filter((item)=>{
+              return item.code==code;
+          });
+          return country.length?country[0].name:code
+      }
+    }
+  },
+  filters:{
+
+
+
+  },
+  methods:{
+    updateStatus(item,status){
+      this.$emit("update-status",item,status);
+    },
+    modify(item){
+      this.$emit("modify",item);
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .purchase-order {
   padding-top: 22px;
   ul {
-    display: table;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
     width: 100%;
     padding: 18px 12px;
     background: #f4f4f4;
@@ -127,28 +89,35 @@ export default {};
     line-height: 24px;
     white-space: nowrap;
     li {
-      display: table-cell;
-      padding: 0 10px;
+      display: inline-block;
+      padding-left: 10px;
       text-align: center;
-      &.li1 {
-          text-align:left;
-        .purtitle {
-          width: 120px;
-        }
+      vertical-align: middle;
+
+      &.li1{
+        width:150px;
       }
-      &.li2 {
-          text-align:left;
-        .m-pro-title {
-          width: 250px;
-        }
+      &.li2{
+        flex: 1;
+      }
+      &.li3{
+        width:90px;
+      }
+      &.li4{
+        width:90px;
+      }
+      &.li5{
+        width:155px;
+      }
+      &.li6{
+        width:130px;
       }
     }
   }
 }
-.purtitle {
-  padding-left: 15px;
-  display: block;
-}
+
+
+
 .liorder {
   position: relative;
   span {
@@ -159,14 +128,28 @@ export default {};
     transform: translateY(-50%);
   }
 }
+
+.purtitle {
+  padding-left: 15px;
+  display: inline-block;
+  width: 120px;
+  text-align: left;
+  vertical-align: middle;
+}
+
 .m-pro-title {
   padding-left: 25px;
+  display: inline-block;
+  width: 315px;
+  text-align: left;
+  vertical-align: middle;
 }
 .order-price {
   color: #44a78d;
 }
 .order-btn {
   a {
+    cursor:default;
     padding-right: 5px;
     &:after {
       content: "|";

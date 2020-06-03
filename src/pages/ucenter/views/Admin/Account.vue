@@ -3,7 +3,7 @@
         <!-- logo-->
         <div class="user-profile">
             <img class="personal-img" src="@assets/images/personnel.png" alt />
-            <p class="company-name">比亚迪口罩公司</p>
+            <p class="company-name">比亚迪口罩企业</p>
             <p class="user-name">张大千</p>
         </div>
 
@@ -101,39 +101,37 @@
         </div>
 
         <div class="info-section company-info">
-            <div class="info-title">公司信息</div>
+            <div class="info-title">企业信息</div>
             <FormRow>
                 <TextField 
-                    label="公司名称"
-                    v-bind:text="profile.user_company.company_name||''"
+                    label="企业名称"
+                    v-bind:text="companyInfo.company_name||''"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
                     label="所属行业"
-                    v-bind:text="profile.user_company.company_industry||''"
+                    v-bind:text="companyInfo.industry||''"
                     width="220"
                     height="25"
                     />
-
             </FormRow>
 
             <FormRow>
                 <TextField 
                     label="经营方式"
-                    v-bind:text="profile.user_company.company_form|companyForm(companyFormGroup)"
+                    v-bind:text="companyForm(companyInfo.company_form)"
                     width="220"
                     height="25"
                     />
 
                 <TextField 
-                    label="公司网址"
-                    v-bind:text="profile.user_company.company_url||''"
+                    label="联系人"
+                    v-bind:text="companyInfo.contact_name||''"
                     width="220"
                     height="25"
                     />
-
             </FormRow>
         </div>
 
@@ -227,16 +225,28 @@ export default {
         }
     },
     computed:{
+        companyForm(){
+            return (id)=>{
+                let text = '';
+                this.companyFormGroup.forEach((item)=>{ 
+                    if(id==item.id){
+                        text = item.text;
+                    }  
+                });
+                return text;
+            }
+        },
         profile(){
-          return this.$store.state.profile;
+            return this.$store.state.profile;
+        },
+        companyInfo(){
+            return this.$store.state.profile.user_company;
+        },
+        userInfo(){
+            return this.$store.state.profile.user_info;
         }
     },
-    filters:{
-        companyForm(id,companyFormGroup){
-            let form = companyFormGroup.filter((item)=>{ return id==item.id;  });
-            return form.length?form[0].text:'';
-        }
-    },
+    
     methods:{
         modifyPass(){
             console.log('modifyPass');

@@ -1,7 +1,7 @@
 <template>
     <FieldWrap 
         type="text"
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -29,7 +29,7 @@
 
 <style lang="scss" scoped>
     .input-text{
-        flex:1;
+        width:100%;
         padding:0 10px;
     }
 
@@ -61,9 +61,11 @@
         inheritAttrs:false,
         data(){
             return {
+                errorMsg:this.error,
                 value:''
             }
         },
+        
         watch:{
             value(newValue,oldValue){
                 if(this.maxLength>0&&newValue.length>this.maxLength){
@@ -73,6 +75,12 @@
         },
 
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onInput(){
                 this.$emit('update-value',this.name,this.value);
 
@@ -92,7 +100,6 @@
             this.value = defaultvalue;
         },
         updated(){
-            //console.log('updated',this.value,this.$attrs.value);
             if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
                 this.value = this.$attrs.value||'';
             }

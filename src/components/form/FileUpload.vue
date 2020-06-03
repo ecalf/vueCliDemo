@@ -3,6 +3,7 @@
         @before-upload="beforeUpload"
         @after-upload="afterUpload" 
         @upload-error="uploadError"
+        v-bind:data-value="$attrs.value"
         v-bind:type="type">
         <template v-slot:default="slotProps">
             <div class="upload-title">{{stateText}}</div>
@@ -75,6 +76,12 @@
                 console.log(error,file);
                 this.state.code = 3;
             }
+        },
+        updated(){
+            this.value = this.$attrs.value;
+        },
+        created(){
+            this.value = this.$attrs.value;
         }
         
     }

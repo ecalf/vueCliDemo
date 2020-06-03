@@ -29,3 +29,8 @@ export async function getQualification (){
 export async function getUnitList(){
     return post('/v1/category/get-unit-category');
 }
+
+//banner 列表
+export async function getBannerList(params){
+    return post('/v1/banner/get-list',params);
+}

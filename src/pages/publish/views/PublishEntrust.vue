@@ -1,7 +1,7 @@
 <template>
     <section class="commonweb">
-        <Banner v-bind:list="bannerList" />
-        <FormPublish v-bind:type="this.entrustType" />
+        <Banner v-bind:type="2" />
+        <FormPublish v-bind:type="this.entrustType" v-bind:id="id" />
     </section>
 </template>
 
@@ -26,19 +26,13 @@ export default {
        
     },
     props:{
+        id:Number,//编辑使用传入的ID
         type:Number
     },
     data(){
 
         return{
-            entrustType:this.type||3,
-            bannerList:[//todo:fetch list data
-                {text:'Buybanner',id:1},
-                {text:'Buybanner',id:2},
-                {text:'Buybanner',id:3},
-                {text:'Buybanner',id:4}
-            ]
-           
+            entrustType:this.type||3     
         }
     },
     computed:{

@@ -43,3 +43,8 @@ export async function editCompany(params){
 export async function authenticate(params){
     return post('/v1/user/identification',params);
 }
+
+//按 user_id 查询用户信息
+export async function getUserInfo(params){
+    return post('/v1/user/get-other-user-info',params)
+}

@@ -1,5 +1,5 @@
 <template>
-    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" />
+    <vue-neditor-wrap v-model="value" v-bind:config="myConfig" v-bind:destroy="false" v-bind:data-value="$attrs.value" />
 
 </template>
 
@@ -34,7 +34,7 @@
 
 
             return {
-                value: this.defaultcontent||'',
+                value: '',
                 myConfig: {
                     //语言包
                     lang:lang,
@@ -42,7 +42,11 @@
                     langPath:UEDITOR_HOME_URL +"i18n/",
 
                     // 如果需要上传功能,找后端小伙伴要服务器接口地址
-                    serverUrl: '/api/web/upload/ueditor',
+                    //如果在 neditor.service.js 重写了getActionUrl方法，该选项会失效
+                    //接口返回的json数据需要有url字段保存上传后的图片地址
+                    serverUrl: 'http://192.168.1.26:8080/api/v1/upload',
+                    imageFieldName:'image',//上传图片使用的表单项名称
+
                     // 你的UEditor资源存放的路径,相对于打包后的index.html
                     UEDITOR_HOME_URL: UEDITOR_HOME_URL,
 
@@ -166,7 +170,6 @@
         },
         watch:{
             value(newContent,oldContent){
-                console.log(newContent,oldContent);
                 this.$emit('update-value',this.name,newContent);
 
                 //$attrs.value ,v-model surport
@@ -181,14 +184,11 @@
         },
         created(){
             //$attrs.value ,v-model surport
-            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultvalue||'';
+            let defaultvalue = (this.$attrs.value!==undefined&&this.$attrs.value)||this.defaultcontent||'';
             this.value = defaultvalue;
         },
         updated(){
-            //$attrs.value ,v-model surport
-            if(this.$attrs.value!==undefined&&this.value!=this.$attrs.value){
-                this.value = this.$attrs.value||'';
-            }
+            this.value = this.$attrs.value||'';
         }
     }
 
