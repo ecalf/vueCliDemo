@@ -3,7 +3,7 @@
         type="dateTimePicker" 
         v-bind:label="label"
         v-bind:required="required" 
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:width="width" 
         v-bind:height="height"
         v-bind:labelwidth="labelwidth"
@@ -82,6 +82,7 @@ export default {
       },
       data() {
         return {
+          errorMsg:this.error||'',
           value:'',
           pickerOptions: {
             disabledDate(time) {
@@ -113,6 +114,12 @@ export default {
         };
     },
     methods:{
+      showError(msg){
+          this.errorMsg = msg;
+      },
+      clearError(){
+          this.errorMsg = '';
+      },
       pickDate(date){
         this.value = date;
         this.$emit('update-value',this.name,this.value);

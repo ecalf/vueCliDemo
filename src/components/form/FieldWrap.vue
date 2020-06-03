@@ -1,13 +1,13 @@
 <template>
     <div class="input-wrap" v-bind:style="wrapStyle">
-        <label class="input-label" v-bind:style="labelStyle">
-            <span class="input-required" v-if="required">*</span>{{label}}:
+        <label class="input-label" v-bind:style="labelStyle" v-if="nolabel!==true">
+            <span class="input-required" v-if="required">*</span>{{label?label+'：':''}}
         </label>
-        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!error}">
+        <div class="input-field" v-bind:style="inputStyle" v-bind:class="{error:!!errorMsg&&!silent}">
             <slot name="default"></slot>
             <div class="input-suffix" v-bind:style="suffixStyle" v-if="suffix">{{count}}/{{maxLength}}</div>
 
-            <div class="input-error" v-show="error" v-bind:style="errorStyle">{{error}}</div>
+            <div class="input-error"  v-show="!!errorMsg&&!silent" v-bind:style="errorStyle">{{errorMsg}}</div>
         </div>
     </div>
 </template>
@@ -90,12 +90,14 @@
             suffix:Boolean,
             border:Number,
             maxLength:Number,
-            error:String
+            error:String,
+            silent:Boolean, //设置为true将不会在校验时显示错误信息
+            nolabel:Boolean //设置为 true 将不会有 label 占位
             
         },
         data(){
             return {
-                
+                errorMsg:this.error||''
             }
         },
         computed:{
@@ -152,6 +154,8 @@
                     styleMap['justify-content'] = 'space-between';
                 }else if(this.type=="fileUploadGroup"){
                     styleMap.border = 'none';
+                }else if(this.type=='noborder'){
+                    styleMap.border = 'none';
                 }
 
 
@@ -172,11 +176,25 @@
                 return styleMap;
             }
         },
+        watch:{
+            error(newval,oldval){
+                this.errorMsg = newval;
+            }
+        },
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onInput(){
 
             },
-            onChange(){},
+            onChange(){
+
+            }
 
         }
 

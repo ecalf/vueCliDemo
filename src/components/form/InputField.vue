@@ -1,7 +1,7 @@
 <template>
     <FieldWrap 
         type="text"
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:suffix="suffix"
@@ -58,12 +58,13 @@
             labelwidth:String,//label宽度
             border:Number //设置边框大小，默认1
         },
-        inheritAttrs:false,
         data(){
             return {
+                errorMsg:this.error||'',
                 value:''
             }
         },
+        
         watch:{
             value(newValue,oldValue){
                 if(this.maxLength>0&&newValue.length>this.maxLength){
@@ -73,6 +74,12 @@
         },
 
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onInput(){
                 this.$emit('update-value',this.name,this.value);
 

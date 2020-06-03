@@ -2,7 +2,7 @@
     <FieldWrap 
         type="dropList" 
         v-bind:data-value="$attrs.value"
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:label="label"
         v-bind:required="required" 
         v-bind:width="width" 
@@ -56,12 +56,19 @@
         },
         data(){
             return {
+                errorMsg:this.error||'',
                 value:''
             }
         },
         
 
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onselect(name,value){
                 this.value = value;
                 this.$emit('update-value',name,value);

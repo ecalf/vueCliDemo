@@ -3,7 +3,7 @@
         v-bind:data-value="$attrs.value"
         type="dropListGroup" 
         v-bind:label="label"
-        v-bind:error="error"
+        v-bind:error="errorMsg"
         v-bind:required="required" 
         v-bind:width="width" 
         v-bind:height="height"
@@ -58,12 +58,19 @@
             }
 
             return {
+                errorMsg:this.error||'',
                 selected:obj,
                 value:[]
                 
             }
         },
         methods:{
+            showError(msg){
+                this.errorMsg = msg;
+            },
+            clearError(){
+                this.errorMsg = '';
+            },
             onselect(name,value){
                 this.selected[name] = value;
                 this.value = Object.values(this.selected);
