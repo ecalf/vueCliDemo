@@ -128,6 +128,12 @@ module.exports = {
                 })
             });
     },
+    configureWebpack: config => {
+    
+        config.entry = pageConfig.entry;
+
+    }
+
     configureWebpack: {
         entry: pageConfig.entry,//form backup
 
