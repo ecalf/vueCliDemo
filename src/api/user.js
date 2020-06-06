@@ -23,9 +23,9 @@ export async function getMyNeeds(params){
     return post('/v1/user/get-my-needs-list',params); 
 }
 
-//我的报价
+//我的报价 报价管理
 export async function getMyQuotation(params){
-    return post('/v1/user/get-my-quotation-list',params);
+    return post('/v1/user/get-my-needs-list',params);
 }
 
 //用户认证
@@ -48,3 +48,29 @@ export async function authenticate(params){
 export async function getUserInfo(params){
     return post('/v1/user/get-other-user-info',params)
 }
+
+//收藏
+export async function getCollectInfo(params){
+    return post('/v1/user/collect',params)
+}
+//供应商库
+export async function getSupplier(params){
+    return post('/v1/user/get-collect-list',params)
+}
+
+//我的报价
+export async function getQuote(params){
+    return post('/v1/user/get-my-quotation-list',params)
+}
+
+// 报价详情
+export async function getofferData(params){
+    return post('/v1/user/get-quotation-info',params)
+}
+
+// 我的报价详情
+export async function getmyofferData(params){
+    return post('/v1/user/get-my-quotation-info',params)
+}
+
+

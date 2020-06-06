@@ -1,5 +1,5 @@
 <template>
-    <MemberRightWrap title="主页管理">
+    <MemberRightWrap title="" v-bind:tabconfig="titleTabs" v-bind:data-company="user_company">
             <FormRow>
                 <InputField 
                     v-bind:required="true" 
@@ -10,6 +10,7 @@
                     name="company_name" 
                     width="655"
                     height="40"
+                    v-model="fieldData.company_name"
                     @update-value="updateValue"
                     />
             </FormRow>
@@ -23,7 +24,11 @@
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="company_logo" @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_logo" 
+                        v-model="fieldData.company_logo"
+                        @update-value="updateValue"/>
                 </FieldWrap>
             </FormRow>  
 
@@ -36,10 +41,28 @@
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_1" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_2" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_3" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="company_transparency_4" @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_transparency_1" 
+                        v-model="fieldData.company_transparency_1"
+                        @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_transparency_2" 
+                        v-model="fieldData.company_transparency_2"
+                        @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_transparency_3" 
+                        v-model="fieldData.company_transparency_3"
+                        @update-value="updateValue"
+                        />
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_transparency_4" 
+                        v-model="fieldData.company_transparency_4"
+                        @update-value="updateValue"
+                        />
 
                 </FieldWrap>
             </FormRow>  
@@ -55,6 +78,7 @@
                     name="company_introduce" 
                     width="655"
                     height="160"
+                    v-model="fieldData.company_introduce"
                     @update-value="updateValue"
                     />
             </FormRow>
@@ -68,7 +92,11 @@
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="company_images" @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="company_images" 
+                        v-model="fieldData.company_images"
+                        @update-value="updateValue"/>
                 </FieldWrap>
             </FormRow>  
 
@@ -81,10 +109,26 @@
                     width="680"
                     >
 
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications_1" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications_2" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications_3" @update-value="updateValue"/>
-                    <FileUploadImage title="支持jpg、png格式" name="qualifications_4" @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="qualifications_1" 
+                        v-model="fieldData.qualifications_1"
+                        @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="qualifications_2" 
+                        v-model="fieldData.qualifications_2"
+                        @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="qualifications_3" 
+                        v-model="fieldData.qualifications_3"
+                        @update-value="updateValue"/>
+                    <FileUploadImage 
+                        title="支持jpg、png格式" 
+                        name="qualifications_4" 
+                        v-model="fieldData.qualifications_4"
+                        @update-value="updateValue"/>
 
                 </FieldWrap>
             </FormRow>  
@@ -99,6 +143,7 @@
                     name="addr" 
                     width="655"
                     height="40"
+                    v-model="fieldData.addr"
                     @update-value="updateValue"
                     />
             </FormRow>
@@ -116,6 +161,7 @@
                     name="contact_name" 
                     width="142"
                     height="40"
+                    v-model="fieldData.contact_name"
                     @update-value="updateValue"
                     />
 
@@ -130,6 +176,7 @@
                     name="contact_phone" 
                     width="142"
                     height="40"
+                    v-model="fieldData.contact_phone"
                     @update-value="updateValue"
                     />
 
@@ -144,6 +191,7 @@
                     name="email" 
                     width="142"
                     height="40"
+                    v-model="fieldData.email"
                     @update-value="updateValue"
                     />
                 
@@ -161,6 +209,7 @@
                     name="wechat" 
                     width="142"
                     height="40"
+                    v-model="fieldData.wechat"
                     @update-value="updateValue"
                     />
 
@@ -175,6 +224,7 @@
                     name="qq" 
                     width="142"
                     height="40"
+                    v-model="fieldData.qq"
                     @update-value="updateValue"
                     />
             </FormRow>
@@ -230,12 +280,32 @@
         },
         data(){
             return {
+                titleTabs:{
+                    name:'titleTab',
+                    tabs:[
+                        {id:0,text:'主业管理',active:true},
+                        {id:1,text:'查看主页'},
+                    ],
+                    handler:(name,item)=>{
+                        if(item.id==1){
+                            location.href="/product/company/"+this.user_info.user_id+"/0"
+                        }
+                    }
+                },
                 fieldData:{
                     company_name:'',
                     company_introduce:'',
                     company_logo:'',//单张图
+                    company_transparency_1:'',
+                    company_transparency_2:'',
+                    company_transparency_3:'',
+                    company_transparency_4:'',
                     company_transparency:[],//多张图
                     company_images:'',//单张图
+                    qualifications_1:'',
+                    qualifications_2:'',
+                    qualifications_3:'',
+                    qualifications_4:'',
                     qualifications:[],//多张图
                     addr:'',
                     contact_name:'',
@@ -246,7 +316,55 @@
                 }
             }
         },
+        computed:{
+            user_info(){
+                return this.$store.state.profile.user_info||{};
+            },
+            user_company() {
+                return this.$store.state.profile.user_company||{};
+            }
+          
+        },
+        
         methods:{
+              companyData(){
+                const user_company = this.$store.state.profile.user_company;
+                if(!user_company){
+                    return {}
+                }
+
+                const obj = this.fieldData;
+
+                obj.company_name = user_company.company_name;
+                obj.company_introduce = user_company.company_introduce;
+                obj.company_logo = user_company.company_logo;
+                obj.company_images = user_company.company_images;
+                obj.addr = user_company.addr;
+                obj.email = user_company.email;
+                obj.qq = user_company.qq;
+                obj.wechat = user_company.wechat;
+                obj.contact_name = user_company.contact_name;
+                obj.contact_phone = user_company.contact_phone;
+
+
+                let transparency = (user_company.company_transparency||'').split(',');
+                obj.company_transparency = transparency;
+                obj.company_transparency_1 = transparency[0];
+                obj.company_transparency_2 = transparency[1];
+                obj.company_transparency_3 = transparency[2];
+                obj.company_transparency_4 = transparency[3];
+
+                let qualifications = (user_company.qualifications||'').split(',');
+                obj.qualifications = qualifications;
+                obj.qualifications_1 = qualifications[0];
+                obj.qualifications_2 = qualifications[1];
+                obj.qualifications_3 = qualifications[2];
+                obj.qualifications_4 = qualifications[3];
+
+
+                return obj;
+            },
+            
             updateValue(name,value){
                 console.log('updateValue',name,value);
 
@@ -270,6 +388,8 @@
             validForm(){
                 const params = {};
                 const fieldData = this.fieldData;
+                               
+
                 let errMsg = '';
 
                 for(let name in fieldData){
@@ -279,6 +399,15 @@
                         params[name] = fieldData[name];
                     }
                 }
+                delete params.company_transparency_1;
+                delete params.company_transparency_2;
+                delete params.company_transparency_3;
+                delete params.company_transparency_4;
+                delete params.qualifications_1;
+                delete params.qualifications_2;
+                delete params.qualifications_3;
+                delete params.qualifications_4;
+
 
                 //console.log('params',params);
 
@@ -330,8 +459,6 @@
                     return false;
                 }
 
-
-
                 const params = info.params;
                 const res = await editCompany({data:params});
                 if(res.code==200){
@@ -340,7 +467,7 @@
                         message: '保存成功',
                         type: "success"
                     });
-
+                    this.$router.push('/ucenter/member')
                 }else{
                     this.$message({
                         showClose: true,
@@ -349,6 +476,16 @@
                     });
                 }
             }
+        },
+        beforeMount(){
+            let timer = setInterval(()=>{
+                if(this.fieldData.company_name){
+                    clearInterval(timer);
+                }else{
+                    this.companyData();
+                }
+                
+            },1000);
         }
     }
 </script>

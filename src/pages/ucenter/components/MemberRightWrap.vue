@@ -6,7 +6,7 @@
           <div class="memcommon-title clearfix">
             <ListTopSearchBar
               v-if="searchconfig&&searchconfig.name"
-              v-bind:config="searchconfig" 
+              :config="searchconfig" 
             />
             
             <ListTopTabs 

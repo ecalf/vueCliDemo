@@ -18,11 +18,21 @@
 <script>
 import Head from "@components/Head";
 import Footer from "@components/Footer";
-
+import Banner from "@components/Banner";
 export default {
   components: {
     Head,
-    Footer
+    Footer,
+  },
+  data(){
+    return{     
+    }
+  },
+  methods:{
+
+  },
+  created(){
+   
   }
 };
 </script>

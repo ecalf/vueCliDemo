@@ -1,59 +1,34 @@
 <template>
   <!--产品推荐-->
   <ul class="trading-hall-hot clearfix">
-    <li class="li1">
-      <a href>
+    <li :class="'li'+index" v-for="(item,index) in productBanner" :key="item.index">
+      <router-link :to="item.url">
         <div class="hall-hot-left">
-          <h2 class="title">迈瑞医用呼吸机</h2>
-          <p class="dec">一款很牛的呼吸机</p>
+          <h2 class="title">{{item.name}}</h2>
+          <p class="dec">{{item.description}}</p>
           <span class="view">点击查看</span>
         </div>
         <div class="hall-hot-right oh">
-          <img src="@assets/images/productimg5.png" alt />
+         <img :src="'https://admin.scm.wanheglobal.com/'+item.image" :alt="item.description||''" />
         </div>
-      </a>
-    </li>
-    <li class="li2">
-      <a href>
-        <div class="hall-hot-left">
-          <h2 class="title">迈瑞医用呼吸机</h2>
-          <p class="dec">一款很牛的呼吸机</p>
-          <span class="view">点击查看</span>
-        </div>
-        <div class="hall-hot-right oh">
-          <img src="@assets/images/productimg6.png" alt />
-        </div>
-      </a>
-    </li>
-    <li class="li3">
-      <a href>
-        <div class="hall-hot-left">
-          <h2 class="title">迈瑞医用呼吸机</h2>
-          <p class="dec">一款很牛的呼吸机</p>
-          <span class="view">点击查看</span>
-        </div>
-        <div class="hall-hot-right oh">
-          <img src="@assets/images/productimg5.png" alt />
-        </div>
-      </a>
-    </li>
-    <li class="li4">
-      <a href>
-        <div class="hall-hot-left">
-          <h2 class="title">迈瑞医用呼吸机</h2>
-          <p class="dec">一款很牛的呼吸机</p>
-          <span class="view">点击查看</span>
-        </div>
-        <div class="hall-hot-right oh">
-          <img src="@assets/images/productimg6.png" alt />
-        </div>
-      </a>
+      </router-link>
     </li>
   </ul>
 </template>
 
 <script>
-export default {};
+import { getBannerList } from "@api/news";
+export default {
+  data(){
+    return{
+      //productBanner:[]
+    }
+  },
+  props:{
+    productBanner:Array
+  },
+
+};
 </script>
 <style lang="scss" scoped>
 /*交易大厅-产品推荐*/
@@ -64,7 +39,7 @@ export default {};
     width: 25%;
     padding-right: (20%/12);
     border-radius: 3px;
-
+   
     &:last-child {
       margin-right: 0;
     }
@@ -96,8 +71,9 @@ export default {};
     a {
       padding: 15px 15px 15px 25px;
       display: block;
+       height:126px;
     }
-    &.li1 {
+    &.li0 {
       a {
         background-color: #e3cfe5;
         color: #ca3f81;
@@ -106,7 +82,7 @@ export default {};
         background-image: linear-gradient(270deg, #eaceff 0%, #5a3eaa 100%);
       }
     }
-    &.li2 {
+    &.li1 {
       a {
         background-color: #8cd8f8;
         color: #fefefe;
@@ -115,7 +91,7 @@ export default {};
         background-image: linear-gradient(270deg, #99c2f2 0%, #367edc 100%);
       }
     }
-    &.li3 {
+    &.li2 {
       a {
         background-color: #f1d5b9;
         color: #f05926;
@@ -124,7 +100,7 @@ export default {};
         background-image: linear-gradient(270deg, #fce5bc 0%, #c19632 100%);
       }
     }
-    &.li4 {
+    &.li3 {
       a {
         background-color: #b0e5d0;
         color: #fefefe;

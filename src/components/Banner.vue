@@ -2,12 +2,12 @@
   <!--index banner-->
   <swiper class="index-banner" :options="swiperOption">
     <swiper-slide v-for="(item,index) in bannerList" :key="index">
-      <a :href="item.href||'javascript:;'">
-      <img :src="item.imgUrl" :alt="item.desc||''">
+        <router-link :to="item.url">
+        <img :src="'https://admin.scm.wanheglobal.com/'+item.image" :alt="item.description||''" />
         <!--<img src="@assets/images/banner.jpg" alt=""> -->
-      </a>
+      </router-link>
     </swiper-slide>
-    
+
     <div class="iban-pages" slot="pagination"></div>
   </swiper>
 </template>
@@ -33,9 +33,9 @@ export default {
       }
     };
   },
-  props:{
-    bannerList:Array
-  },
+  props: {
+    bannerList: Array
+  }
 };
 </script>
 
@@ -44,28 +44,18 @@ export default {
 .index-banner {
   position: relative;
   overflow: hidden;
-
-  ul {
-    li {
-      a {
-        display: block;
-        width: 100%;
-        position: relative;
-
-        &:before {
-          content: "";
-          display: block;
-          padding-bottom: (400%/19.2);
-        }
-
-        img {
-          position: absolute;
-          left: 0;
-          top: 0;
-          display: block;
-          width: 100%;
-        }
-      }
+  .swiper-slide {
+    display: block;
+    width: 100%;
+    position: relative;
+    img {
+    
+      display: block;
+      width:auto;
+      min-height:400px;
+      position: relative;
+      left:50%;
+     transform: translateX(-50%);
     }
   }
 }

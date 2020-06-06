@@ -30,7 +30,7 @@ export async function getUnitList(){
     return post('/v1/category/get-unit-category');
 }
 
-//banner 列表
-export async function getBannerList(params){
-    return post('/v1/banner/get-list',params);
-}
+//疫情
+export async function abroadList(params){
+    return post('/v1/needs/get-disease-data',params); 
+} 

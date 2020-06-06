@@ -2,158 +2,46 @@
   <!--产品列表-->
   <div class="index-prolist">
     <ul class="clearfix">
-      <li>
-        <a href>
+      <li v-for="item in productList" :key="item.id">
+        <router-link :to="'/product/'+item.id">
           <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
+            <img :src="item.images[0]" alt />
           </p>
           <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
+            <span v-if="item.service_cnname[0] !=='' && item.service_cnname.length>0">
+            <em class="kicon iconannoyed" v-for="(service,num) in item.service_cnname" :key="num">{{service}}</em>
+            </span>
+           {{item.title}}
           </h3>
           <p class="price">
             <span>
-              <i>￥</i>200,000
+              <i>￥</i> {{item.price}}
             </span>
-            <span class="old-price">
+            <!-- <span class="old-price">
               <i>￥</i>
               <em>200,000</em>
-            </span>
+            </span> -->
           </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <i>￥</i>200，000
-          </p>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:{
+    productList:{
+      type:Array
+    }
+  },
+  data(){
+    return{
+
+    }
+  }
+
+};
 </script>
 
 <style lang="scss" scoped>
@@ -176,9 +64,14 @@ export default {};
           transform: translateY(-3px);
           box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1);
         }
+        .thumb{
+          overflow: hidden;
+         margin:10px 0;
+         height:160px;
+        }
         img {
-          width: 186px;
-          height: 160px;
+          max-width: 186px;
+          max-height: 160px;
         }
       }
       .inpro-title {

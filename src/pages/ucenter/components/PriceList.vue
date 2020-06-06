@@ -1,32 +1,30 @@
 <template>
   <div class="purchase-order">
-    
-     <ul v-for="item of list">
+     <ul v-for="(item,index) of list" :key='index'>
       <li class="li1 liorder">
-        <span class="iconannoyed kicon">急</span>
-        <a href class="purtitle ellipsis">{{item.title}}</a>
+        <div class="newtap">
+          <span class="iconannoyed kicon" v-for="(serviceitem,index) in item.service_cnname"  :key='index'>{{serviceitem}}</span>
+        </div>
+       {{item.product_category_cnname}}
       </li>
       <li class="li2 liorder">
         <span class="medical-use">{{item.use_way|useWay}}</span>
-        <a href class="m-pro-title ellipsis">{{item.desc}}</a>
+        <router-link :to="'/product/myofferdetail/'+item.need_id+'/'+item.quotation_id" class="ellipsis purtitle">{{item.title}}</router-link>
       </li>
       <li class="li3 fs16">{{item.num}}{{item.unit_category_cnname}}</li>
       <li class="li4 fs16">
         <span class="order-price">{{item|price}}</span>
       </li>
-      <li class="li5">{{item.created_at|formatDate}}-{{item.dead_time|formatDate}}</li>
+      <li class="li5">{{item.created_at|formatDate}}-{{item.dead_time|formatDate}}</li> 
       <li class="li6">
-        <a href="javascript:;" class="quoted-price">报价<strong>20?</strong>家</a>
-      </li>
+        <router-link :to="'/product/myofferdetail/'+item.need_id+'/'+item.quotation_id" class="colorgreen">点击查看</router-link>
+        </li>
     </ul>
-
-
   </div>
 </template>
 
 <script>
 import filters from "@utils/filters";
-
 
 export default {
   mixins:[filters],
@@ -38,9 +36,9 @@ export default {
   },
   computed:{
      country(){
+       
       return (code)=>{
           if(!code){ return code; }
-
           code = code.toUpperCase();
           let country = this.countryList.filter((item)=>{
               return item.code==code;
@@ -66,7 +64,6 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
     width: 100%;
     padding: 18px 12px;
     background: #f4f4f4;
@@ -79,9 +76,9 @@ export default {
       padding-left: 10px;
       text-align: center;
       vertical-align: middle;
-
       &.li1{
         width:150px;
+        text-align:left;
       }
       &.li2{
         flex: 1;
@@ -90,7 +87,7 @@ export default {
         width:90px;
       }
       &.li4{
-        width:90px;
+        width:150px;
       }
       &.li5{
         width:155px;
@@ -102,21 +99,20 @@ export default {
   }
 }
 
-
+.colorgreen{
+  color:#44a78d;
+}
 
 .liorder {
   position: relative;
-  span {
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+ .newtap {
+    display: inline-block;
+
   }
 }
 
 .purtitle {
-  padding-left: 15px;
+  padding-left: 5px;
   display: inline-block;
   width: 120px;
   text-align: left;

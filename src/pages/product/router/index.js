@@ -4,7 +4,8 @@ import Product from "../views/Product";
 import ProductDetail from "../views/ProductDetail.vue";
 import Company from "../views/Company.vue";
 import NotFoundComponent from "@components/NotFoundComponent";
-
+import OfferDetails from "../views/OfferDetails";
+import MyOfferDetails from "../views/MyOfferDetails";
 const routes = [
   {
     path: "/product",
@@ -24,12 +25,29 @@ const routes = [
     }
   },
   {
-    path: "/product/company/:id",
+    path: "/product/company/:id/:collect",
     name: "Company",
     component:Company,
     props: true,
     meta: {
       title: '企业详情'
+    }
+  },
+
+  {
+    name: "OfferDetail",
+    path: "/product/offerdetail/:id/:quotationid",
+    component: OfferDetails,
+    meta: {
+      title: '报价详情'
+    }
+  },
+  {
+    name: "MyOfferDetail",
+    path: "/product/myofferdetail/:id/:quotationid",
+    component: MyOfferDetails,
+    meta: {
+      title: '我的报价详情'
     }
   },
   {

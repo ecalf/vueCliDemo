@@ -69,7 +69,9 @@ console.log('pageConfig>>>', pageConfig);
 module.exports = {
   lintOnSave: true,
   pages: pageConfig.pages,
-
+  publicPath:'/' ,
+  outputDir: 'dist',
+  assetsDir: "./",
   /*pages: {
     index: {
           entry: "./src/pages/index/index.js", 
@@ -115,7 +117,6 @@ module.exports = {
       // 生产环境配置
     }
 
-
     config.entry = pageConfig.entry;
 
   },
@@ -159,12 +160,21 @@ module.exports = {
     // hotOnly: false, // 热更新
     proxy: {
       '/api2': {
-        target: 'http://api.tianapi.com',
+        target: 'https://c.m.163.com/',
         // secure: false,
         changeOrigin: true,
         ws: false,
         pathRewrite: {
           '^/api2': '/'
+        }
+      },
+      '/api3': {
+        target: 'http://admin.scm.wanheglobal.com/index.php',
+        // secure: false,
+        changeOrigin: true,
+        ws: false,
+        pathRewrite: {
+          '^/api3': '/'
         }
       },
       '/api': {

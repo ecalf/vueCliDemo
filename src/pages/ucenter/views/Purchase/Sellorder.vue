@@ -1,9 +1,6 @@
 <template>
-  <OrderManage v-bind:kinds="2" title="销售管理" />
+  <OrderManage :kinds="2" title="销售管理" />
 </template>
-
-
-
 
 
 <script>

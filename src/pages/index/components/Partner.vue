@@ -2,52 +2,53 @@
   <ul class="clearfix inpartner-list">
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner01.png" alt />
+        <img src="@assets/images/newparter1.png" alt />
+      </a>
+    </li>
+     <li>
+      <a href="javascript:;">
+        <img src="@assets/images/newparter4.png" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner02.png" alt />
+        <img src="@assets/images/newparter2.png" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner03.png" alt />
+        <img src="@assets/images/newparter3.png" alt />
+      </a>
+    </li>
+   
+    <li>
+      <a href="javascript:;">
+        <img src="@assets/images/newparter5.png" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner04.png" alt />
+        <img src="@assets/images/newpartner1.jpg" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner05.png" alt />
+        <img src="@assets/images/newpartner2.jpg" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner05.png" alt />
+        <img src="@assets/images/newpartner3.jpg" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner04.png" alt />
+        <img src="@assets/images/newpartner4.jpg" alt />
       </a>
     </li>
     <li>
       <a href="javascript:;">
-        <img src="@assets/images/partner03.png" alt />
-      </a>
-    </li>
-    <li>
-      <a href="javascript:;">
-        <img src="@assets/images/partner01.png" alt />
-      </a>
-    </li>
-    <li>
-      <a href="javascript:;">
-        <img src="@assets/images/partner02.png" alt />
+        <img src="@assets/images/newpartner5.jpg" alt />
       </a>
     </li>
     <li>

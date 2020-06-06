@@ -5,8 +5,9 @@
  * @returns 返回自定义的上传接口
  */
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+/*
 UE.Editor.prototype.getActionUrl = function(action) {
-    /* 按config中的xxxActionName返回对应的接口地址 */
+    // 按config中的xxxActionName返回对应的接口地址 
     if (action == 'uploadimage' || action == 'uploadscrawl') {
         return 'http://a.b.com/upload.php';
     } else if (action == 'uploadvideo') {
@@ -15,6 +16,7 @@ UE.Editor.prototype.getActionUrl = function(action) {
         return this._bkGetActionUrl.call(this, action);
     }
 }
+*/
 
 /**
  * 图片上传service

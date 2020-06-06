@@ -17,7 +17,6 @@
                   v-bind:class="{active:isCurrentPath('/publish/entrust')}"
                   >委托采购</router-link>
 
-                <a href="javascript:;" title="comming soon">合同管理</a>
               </div>
             </li>
             <li>
@@ -28,12 +27,13 @@
                 <router-link to="/publish/sell" v-bind:class="{active:isCurrentPath('/publish/sell')}">发布商品</router-link>
                 <router-link to="/ucenter/sellorder" v-bind:class="{active:isCurrentPath('/ucenter/sellorder')}">销售管理</router-link>
                 <router-link to="/ucenter/company" v-bind:class="{active:isCurrentPath('/ucenter/company')}">主页管理</router-link>
+                <router-link to="/ucenter/myquote" v-bind:class="{active:isCurrentPath('/ucenter/myquote')}">我的报价</router-link>
                 <router-link 
                   v-bind:to="{path:'/publish/entrust',query:{type:3}}"
                   v-bind:class="{active:isCurrentPath('/publish/entrust')}"
                   >委托销售</router-link>
 
-                <a href="javascript:;" title="comming soon">合同管理</a>
+               
               </div>
             </li>
 
@@ -58,8 +58,9 @@
               </h4>
               <div class="member-subnav">
                 <router-link to="/ucenter/account" v-bind:class="{active:isCurrentPath('/ucenter/account')}">我的账户</router-link>
-                <router-link to="/ucenter/authentication"  v-bind:class="{active:isCurrentPath('/ucenter/authentication')}">认证中心</router-link>
-                <a href="javascript:;" title="comming soon">发票管理</a>
+                <!-- <router-link to="/ucenter/authentication"  v-bind:class="{active:isCurrentPath('/ucenter/authentication')}">认证中心</router-link> -->
+                <!-- <a href="javascript:;" title="comming soon">发票管理</a> -->
+              <a href="javascript:;" @click="goIdentifiy()" v-bind:class="{active:isCurrentPath('/ucenter/authentication')}">认证中心</a>
               </div>
             </li>
           </ul>
@@ -83,6 +84,21 @@ export default {
     isCurrentPath(){
       return (path)=>{
         return this.$router.history.current.fullPath.indexOf(path)>-1
+      }
+    },
+  },
+  methods:{
+    goIdentifiy(){
+      let profile = this.$store.state.profile;
+      console.log(93,profile.user_info.is_identifiy);
+      if(profile.user_info.is_identifiy==0){//未认证
+         this.$router.push('/ucenter/authentication');
+      }else{
+        this.$message({
+          showClose: true,
+          message:'您已认证,无需重新认证',
+          type: "success"
+        });
       }
     }
   }

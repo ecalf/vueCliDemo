@@ -3,48 +3,38 @@
     <div class="today-news clearfix">
       <div class="today-title">今日要闻</div>
       <div class="oh today-con">
-        <a href>
-          <h1>习近平主持召开中央深改委第十三次会议</h1>
+        <div v-for="item in todayList" :key="item.id">
+        <router-link :to="'/news/detail/'+item.id">
+          <h1>{{item.title}}</h1>
           <p
-            class="today-dec"
-          >"习近平强调，我国疫情防控和复工复产之所以能够有力推进，根本原因是党的领导和我国社会主义制度的优势发挥了无可比拟的重要作用。发展环境越是严峻复杂，越要坚定不移深化改革，健全各方面制度，完善治理体系，促进制度建设和治理效能更好转化融合，善于运用制度优势应对风险挑战冲击。"</p>
-        </a>
+            class="today-dec">{{item.description}}</p>
+        </router-link>
+        </div>
       </div>
     </div>
     <!--推荐新闻-->
     <div class="recommended-news clearfix">
       <div class="re-slider">
         <swiper :options="newSwiper" ref="newSwiper">
-          <swiper-slide>
-            <a href>
-              <img src="@assets/images/newimg01.png" alt />
-              <h3 class="renews-title">习近平同尼泊尔总统班达里通电话</h3>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href>
-              <img src="@assets/images/newimg01.png" alt />
-              <h3 class="renews-title">习近平同尼泊尔总统班达里通电话2</h3>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href>
-              <img src="@assets/images/newimg01.png" alt />
-              <h3 class="renews-title">习近平同尼泊尔总统班达里通电话3</h3>
-            </a>
+          <swiper-slide v-for="item in newslist" :key="item.id">
+            <router-link :to="'/news/detail/'+item.id">
+              <img :src="'https://admin.scm.wanheglobal.com/'+item.image" alt />
+              <h3 class="renews-title">{{item.title}}</h3>
+            </router-link>
           </swiper-slide>
         </swiper>
+
+        
         <div class="iban-pages"></div>
       </div>
       <div class="re-list">
         <ul>
-          <li v-for="(item,index) in newslist" :key="index" @click="toSlide(index)">
-            <a href="javascript:;">
+          <li v-for="(item,index) in newslist" :key="item.id" @click="toSlide(index)">
+            <router-link :to="'/news/detail/'+item.id">
               <h2 class="fs16">{{item.title}}</h2>
-              <p>{{item.dec}}</p>
-            </a>
+              <p>{{item.description}}</p>
+            </router-link>
           </li>
-         
         </ul>
       </div>
     </div>
@@ -52,285 +42,169 @@
     <div class="pagenews-wrap clearfix">
       <div class="pagenews-left fl">
         <h3 class="comnew-title">疫情新闻</h3>
-        <ul class="comnew-list">
-          <li>
-            <a href>互联网发展状况报告:我国网民9.04亿...</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民规模达</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民9.04亿...</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民规模达</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民9.04亿...</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民规模达</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民9.04亿...</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民规模达</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告:我国网民9.04亿...</a>
-          </li>
-          <li>
-            <a href>互联网发展状况报告</a>
-          </li>
-        </ul>
+        <recommendedList :list="yqNewsLlist"></recommendedList>
       </div>
       <div class="pagenews-right fl clearfix">
         <div class="item">
           <h3 class="comnew-title">国际新闻</h3>
-          <ul class="comnew-list">
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-          </ul>
+          <recommendedList :list="gjNewsLlist"></recommendedList>
         </div>
         <div class="item">
           <h3 class="comnew-title">行业新闻</h3>
-          <ul class="comnew-list">
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-          </ul>
+          <recommendedList :list="hyNewsLlist"></recommendedList>
         </div>
         <div class="item">
           <h3 class="comnew-title">政策新闻</h3>
-          <ul class="comnew-list">
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-          </ul>
+          <recommendedList :list="zcNewsLlist"></recommendedList>
         </div>
         <div class="item">
           <h3 class="comnew-title">公司新闻</h3>
-          <ul class="comnew-list">
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民9.04亿...</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告</a>
-            </li>
-            <li>
-              <a href>互联网发展状况报告:我国网民规模达</a>
-            </li>
-          </ul>
+          <recommendedList :list="gsNewsLlist"></recommendedList>
         </div>
       </div>
     </div>
     <!--导航-->
     <div class="bar-height news-bar">
       <div class="tab-bar">
-        <a href class="active">疫情新闻</a>
-        <a href>国际新闻</a>
-        <a href>政策新闻</a>
-        <a href>行业新闻</a>
-        <a href>公司新闻</a>
+        <a
+          href="javascript:;"
+          :class="{active:index==curTabIndex}"
+          @click="switchTab(item,index)"
+          v-for="(item,index) in newsnav"
+          :key="index"
+        >{{item.cate_name}}</a>
       </div>
     </div>
-    <div class="comnews-type-list yitype gjtype zctype hytype gstype">
-      <ul>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大</a>
-        </li>
-        <li class="clearfix">
-          <span class="date">
-            <em>疫情</em> 2小时前
-          </span>
-          <a href>战“疫”每日观察丨疫情之后，高质量发展的步伐将更大战“疫”每日观察丨疫情之后，高质量发...</a>
-        </li>
-      </ul>
-    </div>
+    <newList :list="list"></newList>
   </div>
 </template>
 <script>
+import recommendedList from "../components/recommendedList";
+import newList from "../components/newList";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+
+import { getNewsList } from "@api/news";
 export default {
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    recommendedList,
+    newList
   },
   data() {
     return {
-      newslist:[
-        {title:"习近平同尼泊尔总统班达里通电话",dec:"习近平强调，中方将秉持构建人类命运共同体理念，积极开展抗疫国际作，支持世界卫生组织发挥领导作用。"},
-        {title:"习近平同尼泊尔总统班达里通电话",dec:"习近平强调，中方将秉持构建人类命运共同体理念，积极开展抗疫国际作，支持世界卫生组织发挥领导作用。"},
-        {title:"习近平同尼泊尔总统班达里通电话",dec:"习近平强调，中方将秉持构建人类命运共同体理念，积极开展抗疫国际作，支持世界卫生组织发挥领导作用。"}
-        ],
+     
       newSwiper: {
         pagination: {
           el: ".iban-pages",
           clickable: true
         }
-      }
+      },
+      newsnav: [
+        { cate_name: "疫情新闻", id: 0 },
+        { cate_name: "国际新闻", id: 2 },
+        { cate_name: "政策新闻", id: 3 },
+        { cate_name: "行业新闻", id: 4 },
+        { cate_name: "公司新闻", id: 5 }
+      ],
+      list: [], //新闻列表
+      yqNewsLlist: [], //疫情推荐
+      gjNewsLlist: [], //国际推荐
+      hyNewsLlist: [], //行业推荐
+      zcNewsLlist: [], //政策推荐
+      gsNewsLlist: [], //公司推荐      
+      todayList:[],//今日要闻
+       newslist:[],//头条新闻
+      curTabIndex: 0,
+      cate_name: "疫情新闻" //传参
     };
   },
   methods: {
     toSlide(index) {
       this.$refs.newSwiper.$swiper.slideTo(index, 0);
+    },
+    switchTab(item, index) {
+      this.curTabIndex = index;
+      this.cate_name = item.cate_name;
+      this.getNews();
+    },
+    async getNews() {
+      const res = await getNewsList({
+        data: { cate_name: this.cate_name, tag_name: "" }
+      });
+      if (res.code == 200) {
+        //console.log(res);
+        this.list = res.data.data;
+        //console.log(this.list);
+      }
+    },
+    async getyqNews() {//疫情推荐
+      const res = await getNewsList({
+        data: { cate_name: "疫情新闻", tag_name: "推荐" }
+      });
+      if (res.code == 200) {
+        this.yqNewsLlist = res.data.data;
+      }
+    },
+    async getgjNews() {//国际推荐
+      const res = await getNewsList({
+        data: { cate_name: "国际新闻", tag_name: "推荐" }
+      });
+      if (res.code == 200) {
+        this.gjNewsLlist = res.data.data;
+      }
+    },
+    async gethyNews() {//行业推荐
+      const res = await getNewsList({
+        data: { cate_name: "行业新闻", tag_name: "推荐" }
+      });
+      if (res.code ==200) {
+        this.hyNewsLlist = res.data.data;
+      }
+    },
+    async getzcNews() {//政策推荐
+      const res = await getNewsList({
+        data: { cate_name: "政策新闻", tag_name: "推荐" }
+      });
+      if (res.code == 200) {
+        this.zcNewsLlist = res.data.data;
+      }
+    },
+     async getgsNews() {//公司推荐
+      const res = await getNewsList({
+        data: { cate_name: "公司新闻", tag_name: "推荐" }
+      });
+      if (res.code == 200) {
+        this.gsNewsLlist = res.data.data;
+      }
+    },
+     async getjrNews() {//今日要闻
+      const res = await getNewsList({
+        data: { cate_name: "今日要闻", tag_name: "" }
+      });
+      if (res.code == 200) {
+        this.todayList = res.data.data;
+      }
+    },
+    async gettoutNews() {//头条新闻
+      const res = await getNewsList({
+        data: { cate_name: "头条新闻", tag_name: "" }
+      });
+      if (res.code == 200) {
+        this.newslist = res.data.data;
+      }
     }
+  },
+  created() {
+    this.getNews();
+    this.getyqNews();
+    this.getgjNews();
+    this.gethyNews();
+    this.getzcNews();
+    this.getgsNews();
+    this.getjrNews();
+    this.gettoutNews();
   }
 };
 </script>
@@ -471,12 +345,10 @@ export default {
 .re-list {
   float: left;
   width: 460px;
-  height:327px;
-  overflow-y:auto;
+  height: 327px;
+  overflow-y: auto;
   @include scrollbar();
   ul {
-   
-    
     li {
       margin-bottom: 1px;
 
@@ -547,77 +419,12 @@ export default {
     float: left;
     padding-left: 60px;
     margin-bottom: 10px;
+    width:50%;
   }
 }
 .news-bar {
   &.bar-height:before {
     background: #a6acb1;
-  }
-}
-
-.comnews-type-list {
-  li {
-    border-bottom: solid 1px #eaeced;
-    a {
-      display: block;
-      height: 44px;
-      line-height: 44px;
-      @include ol();
-      font-size: 16px;
-      color: #4e5a65;
-      &:hover {
-        color: $ac;
-      }
-    }
-    .date {
-      display: block;
-      float: right;
-      margin-top: 8px;
-      em {
-        font-style: normal;
-        border-radius: 3px;
-        padding: 5px 4px;
-        display: inline-block;
-        line-height: 16px;
-        margin-right: 8px;
-      }
-    }
-  }
-}
-
-.yitype {
-  ul li {
-    em {
-      border: solid 1px #44a78d;
-      color: #44a78d;
-    }
-  }
-}
-
-.gjtype {
-  ul li {
-    em {
-      border: solid 1px #00cbff;
-      color: #00cbff;
-    }
-  }
-}
-
-.zctype {
-  ul li {
-    em {
-      border: solid 1px #446ca7;
-      color: #446ca7;
-    }
-  }
-}
-
-.gstype {
-  ul li {
-    em {
-      border: solid 1px #f05926;
-      color: #f05926;
-    }
   }
 }
 </style>

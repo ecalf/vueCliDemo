@@ -3,9 +3,9 @@
     <div class="order-nav-navbar">
       <a href="javascript:;" 
         v-for="(item,index) in navlist" 
-        v-bind:data-id="item.id"
-        v-bind:key="index"
-        v-bind:class="{active:index==curTabIndex}"
+        :data-id="item.id"
+        :key="index"
+        :class="{active:index==curTabIndex}"
         @click="switchTab(item,index)"
         >{{item.title}}</a>
     </div>
@@ -25,7 +25,6 @@ export default {
       }
     });
     
-
     return {
       curTabIndex:curTabIndex
     }

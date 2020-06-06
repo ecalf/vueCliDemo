@@ -1,7 +1,7 @@
 <template>
         <!--公司主页介绍-->
     <div class="company-info clearfix">
-      <router-link v-bind:to="'/product/company/'+info.user_id" class="enter-page">
+      <router-link v-bind:to="'/product/company/'+info.user_id+'/'+info.is_collect" class="enter-page">
         进入企业主页
       </router-link>
       <div class="company-type">

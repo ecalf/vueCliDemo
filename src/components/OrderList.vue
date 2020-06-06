@@ -3,7 +3,7 @@
   <div class="mshow-box">
     <ul class="mshow-list" v-for="(item,index) of list" v-bind:key="index">
       <li class="item item1">
-        <i class="iconannoyed kicon">急</i>
+        <!-- <i class="iconannoyed kicon">急</i> -->
         <h2>{{item.product_category_cnname}}</h2>
         <span>{{item.product_brand_cnname}}</span>
         <span>出口国：{{country(item.exit_country)}}</span>
@@ -24,16 +24,18 @@
       </li>
       <li class="item item5">
         <p>
-          <span class="iconannoyed kicon">急</span>
-          <span class="icontop kicon">顶</span>
-          <span class="iconcompany kicon">企</span>
-          <span class="iconorder kicon">订</span>
+          <!-- <span class="iconannoyed kicon" v-if="item.service_cnname[0]=='急'">急</span>
+          <span class="icontop kicon" v-if="item.service_cnname[1]=='顶'">顶</span> -->
+          <span v-if="item.service_cnname[0] !=='' && item.service_cnname.length>0">
+            <em class="iconannoyed kicon" v-for="(seritem,index) in item.service_cnname" :key="index">
+              {{seritem}}
+            </em>
+          </span>
+          <span class="iconcompany kicon" v-if="item.user_type==3 && item.user_is_identifiy==1">企</span>
+          <!-- <span class="iconorder kicon">订</span> -->
         </p>
         <p>
-          <img src="@assets/images/icon1.png" alt />
-          <img src="@assets/images/icon2.png" alt />
-          <img src="@assets/images/icon3.png" alt />
-          <img src="@assets/images/icon4.png" alt />
+          <img v-for="(quaitem,index) in item.qualification_icon" :key="index" :src="quaitem" alt />          
         </p>
       </li>
       <li class="item item6">
@@ -165,7 +167,7 @@ export default {
     &.item1 {
       text-align: left;
       position: relative;
-      padding-left: 10px;
+      padding-right:20px;
 
       h2 {
         width: 140px;
@@ -191,7 +193,7 @@ export default {
     }
 
     &.item2 {
-      width: 180px;
+      width: 240px;
       text-align: left;
 
       a {
@@ -244,7 +246,7 @@ export default {
     }
 
     &.item5 {
-      width: 130px;
+      min-width: 130px;
       img {
         height: 16px;
         margin: 0 2px;

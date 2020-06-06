@@ -1,6 +1,6 @@
 <template>
     <div class="other-condition" data-count="config.sequenceList.length">
-        <a href="javascript:;">{{label}}</a>
+        <a href="javascript:;" @click="ondefalut()" :class="{active:this.defalutSort==1}">{{label}}</a>
         <a class="sort-btn" href="javascript:;"
             v-for="(item,index) of config.sequenceList"
             v-bind:key="index"
@@ -34,6 +34,9 @@
         vertical-align: top;
         line-height: 24px;
         margin: 0 2px;
+          &.active {
+          color: $ac;
+          }
     }
 
     .sort-btn{
@@ -114,10 +117,17 @@
 
             return {
                 sequence:sequence,
-                keyword:''
+                keyword:'',
+                defalutSort:''
             }
         },
         methods:{
+            ondefalut(){
+                let name="defalutOrder";
+               this.defalutSort = this.defalutSort === 1 ? 0 : 1;
+                //console.log(item.name);
+                 this.$emit('update-value',name,this.defalutSort);
+            },
             onselect(item){
                 this.sequence[item.name] = (this.sequence[item.name]=='asc'?'desc':'asc');                
                 this.$emit('update-value',item.name,this.sequence[item.name]);

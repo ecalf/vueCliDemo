@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const configBase = {
-  baseURL: '/api2',
+  baseURL: 'https://c.m.163.com/',
 }
 
 function getConfig(path,params,option){
@@ -36,10 +36,10 @@ export async function post(path,params,option={}){
 // export const abroadList = p => post('/txapi/ncovabroad/index?key=38e1c194ac8a375278a6cc447a7933e5', p); //国外疫情数据
 
 export async function epidemicList(params){
-    return post('txapi/ncov/index?key=38e1c194ac8a375278a6cc447a7933e5',params); 
+    return get('txapi/ncov/index?key=38e1c194ac8a375278a6cc447a7933e5',params); 
 } 
 
 
 export async function abroadList(params){
-    return post('/txapi/ncovabroad/index?key=38e1c194ac8a375278a6cc447a7933e5',params); 
+    return get('/ug/api/wuhan/app/data/list-total?t=318283240963',params); 
 } 

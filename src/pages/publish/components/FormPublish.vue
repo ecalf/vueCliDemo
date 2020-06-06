@@ -95,7 +95,8 @@
 
                 <FormRow>
                     <DropListField
-                        v-bind:required="true" 
+                        v-show="brandList.length>0"
+                        v-bind:required="false" 
                         v-bind:prefix="false"
                         v-bind:list="brandList" 
                         label="品牌" 
@@ -116,7 +117,7 @@
                         defaultvalue=""
 
                         type="text"
-                        label="其他品牌" 
+                        v-bind:label="brandList.length>0?'其他品牌':'品牌'" 
                         name="otherBrand" 
                         width="245"
                         height="40"
@@ -238,6 +239,7 @@
                     -->
 
                     <!--单个下拉列表-->
+                    <!--
                     <DropListField
                         v-bind:required="true" 
                         v-bind:prefix="true"
@@ -247,6 +249,19 @@
                         height="40"
                         width="300"
                         defaulttext="请选择资质要求"
+                        v-model="fieldData.qualification"
+                        prop="qualification"
+                        @update-value="updateValue"
+                        />
+                    -->
+
+                     <CheckBoxGroupField
+                        v-bind:required="true" 
+                        v-bind:list="qualificationList"
+                        label="资质要求" 
+                        name="qualification" 
+                        height="40"
+                        width=""
                         v-model="fieldData.qualification"
                         prop="qualification"
                         @update-value="updateValue"
@@ -523,16 +538,8 @@ export default {
                 {text:'民用',id:2}
             ],
             serviceGroup:[
-                {
-                    text:'加入VIP',
-                    id:1,
-                    addition:{
-                        emphasize:true,//着重强调
-                        tip:'加入VIP排名更靠前 ￥20'//鼠标提示信息
-                    }
-                },
-                {text:'置顶',id:2,checked:true},
-                {text:'加急',id:3}
+                {text:'置顶',id:2,addition:{tip:"9.9元/天"}},
+                {text:'加急',id:3,addition:{tip:"4.9元/天"}}
             ],
 
 
@@ -588,9 +595,9 @@ export default {
             this.payService(this.payment.needs_id,this.payment.service_id,channal.channel_code);
         },
         async payService(needs_id,service_id,pay_channel_code){
-            pay_channel_code = "alipay";
-            needs_id = "57";
-            service_id =  "2";
+            // pay_channel_code = "alipay";
+            // needs_id = "57";
+            // service_id =  "2";
 
             if(!(needs_id&&service_id)){
                 return false;
@@ -726,10 +733,11 @@ export default {
             this.fieldData.brand = findItemByKey('id',info.brand_id*1,this.brandList);
             //console.log('this.fieldData.brand:',info.brand_id,this.brandList, this.fieldData.brand);
 
-            this.fieldData.qualification = findItemByKey('id',info.qualification*1,this.qualificationList);
+            this.fieldData.qualification = info.qualification.split(',').map((id)=>{
+                return findItemByKey('id',id*1,this.qualificationList)
+            }); 
 
-
-            console.log('fieldData>>>',this.fieldData);
+            //console.log('fieldData>>>',this.fieldData);
         },
         checkform(){
             /*

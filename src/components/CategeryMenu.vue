@@ -22,14 +22,9 @@
             v-on:click="showToggle(subitem,i)"
            
         >
-            <a href="javascript:;" class="sub-title">{{subitem.text}}</a>
+            <a href="javascript:;" class="sub-title"  @click="selectCategory(subitem)">{{subitem.text}}</a>
             <div class="category-three"  v-show="i===isShow" v-if="subitem.child&&subitem.child.length">
-                <a
-                  href="javascript:;"
-                  v-for="(threeitem,j) in subitem.child"
-                  v-bind:data-id="threeitem.id"
-                  v-bind:key="j"
-                >{{threeitem.text}}</a>
+                <a href="javascript:;" v-for="(threeitem,j) in subitem.child" v-bind:data-id="threeitem.id" v-bind:key="j">{{threeitem.text}}</a>
             </div>
         </div>
       </div>
@@ -194,6 +189,11 @@ export default {
           }
           
           this.curId = item.id;
+
+        },
+        selectCategory(item){
+          console.log(item.id);
+           this.$emit('update-value',item);
         }
 
     }

@@ -84,7 +84,7 @@ export default class Checkform{
             brand_id:{
                 label:'品牌',
                 remark:'选择的品牌ID',
-                required:true,
+                required:false,
                 type:Number,
                 value:()=>{
                     return fieldData.brand.id;

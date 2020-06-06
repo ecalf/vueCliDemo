@@ -1,4 +1,4 @@
-import {getToken} from "./common";
+import {getToken,isPC} from "./common";
 
 export default {
     created(){//页面组件刷新自动尝试获取用户信息
@@ -13,5 +13,10 @@ export default {
             //this.$store.commit('profile/updateProfile',{});
         }
         
+    },
+    beforeMount(){
+        if(!isPC()){
+            location.href="http://m.scm.wanheglobal.com/h5/index.html"
+        }
     }
 }

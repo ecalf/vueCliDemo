@@ -24,9 +24,9 @@
         <div class="prodetail-other">
           <span class="authent">
             认证：
-            <img src="@assets/images/inicon13.png" alt />
-            <img src="@assets/images/inicon11.png" alt />
-            <img src="@assets/images/inicon12.png" alt />
+            <img v-for="(item,index) in list" :key="index" :src="item" alt />
+            <!-- <img src="@assets/images/inicon11.png" alt />
+            <img src="@assets/images/inicon12.png" alt /> -->
           </span>
           <span>品牌：{{detail.product_brand_cnname||detail.other_brand}}</span>
           <span>应用类型：{{detail.use_way|useWay}}</span>
@@ -41,11 +41,11 @@
           <span>{{detail.created_at|formatDate}}-{{detail.dead_time|formatDate}}</span>
         </div>
 
-        <div class="prodetail-btn">
+        <div class="prodetail-btn" v-if="isshow">
           <el-button type="text" @click="showContactDialog(true)">立即联系</el-button>
 
           <!--商家发布销售，客户可报价 -->
-          <el-button type="text" @click="showQuotationDialog(true)" v-if="detail.type==2">立即报价</el-button>
+          <el-button type="text" @click="showQuotationDialog(true)" v-if="detail.type==1">立即报价</el-button>
         </div>
 
 
@@ -61,7 +61,7 @@
           />
 
         <DialogQuotation
-            v-if="detail.type==2"
+            v-if="detail.type==1"
             v-bind:visible="quotationVisible"
             v-bind:id="detail.id"
             v-bind:info="{
@@ -160,6 +160,7 @@
   i{
     font-size: 20px;
     color: $green;
+    font-style: normal;
   }
 }
 .prodetail-btn {
@@ -201,7 +202,9 @@
             DialogContact
         },
         props:{
-            detail:Object
+            detail:Object,
+            list:Array,
+            isshow:Boolean,
         },
         data(){
             return {

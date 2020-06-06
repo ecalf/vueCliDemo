@@ -1,42 +1,25 @@
 <template>
     <ul class="clearfix index-prolist">
-      <li>
+      <li v-for="item in list" :key="item.id">
         <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
+          <p class="thumb" v-if="item.images">
+            <img :src="item.images[0]" alt />
           </p>
           <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
+             <span v-if="item.service_cnname[0] !=='' && item.service_cnname.length>0">
+            <em class="iconannoyed kicon" v-for="(seritem,index) in item.service_cnname" :key="index">
+              {{seritem}}
+            </em>
+          </span>
+            {{item.title}}
           </h3>
           <p class="price">
             <span>
-              <i>￥</i>200,000
+              <i>￥</i> {{item.price}}
             </span>
-            <span class="old-price">
+            <span class="old-price" v-if="item.type=2 && item.supplier_price !=null">
               <i>￥</i>
-              <em>200,000</em>
-            </span>
-          </p>
-        </a>
-      </li>
-
-      <li>
-        <a href>
-          <p class="thumb">
-            <img src="@assets/images/productimg4.jpg" alt />
-          </p>
-          <h3 class="inpro-title">
-            <span class="kicon iconannoyed">急</span>
-            这款呼吸机 卖疯了这款呼这款呼吸机 卖疯了这款呼这款
-          </h3>
-          <p class="price">
-            <span>
-              <i>￥</i>200,000
-            </span>
-            <span class="old-price">
-              <i>￥</i>
-              <em>200,000</em>
+              <em>{{item.supplier_price}}</em>
             </span>
           </p>
         </a>
@@ -61,9 +44,14 @@
           transform: translateY(-3px);
           box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1);
         }
-        img {
+        .thumb{
           width: 186px;
-          height: 160px;
+          height: 160px; 
+          margin:20px 0;
+        }
+        img {
+          max-width: 186px;
+          max-height: 160px;
         }
       }
       .inpro-title {

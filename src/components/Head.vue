@@ -5,10 +5,10 @@
       <div class="commonweb">
         <div class="country">
           <!-- todo: list 按国家切换语言 -->
-          <span>{{$t('time.welcome')}}</span>
+          <span>中文</span>
         </div>
         <p>
-          <span>{{profile.user_info&&profile.user_info.user_name||''}} 欢迎来到万合优采</span>
+          <span class="mr3">{{profile.user_info&&profile.user_info.user_name||''}} <span @click="loginOut" class="loginout" v-if="(profile.user_info&&profile.user_info.user_id*1>0)">退出</span>欢迎来到万合优采</span>
           <router-link to="/ucenter/login" v-if="!(profile.user_info&&profile.user_info.user_id*1>0)">请登录</router-link>
           <router-link to="/ucenter/register" v-if="!(profile.user_info&&profile.user_info.user_id*1>0)">免费注册</router-link>
         </p>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import {delToken} from "@utils/common";
 export default {
   name:'Head',
   data(){
@@ -82,11 +83,37 @@ export default {
 
        return profile;
     }
+  },
+  methods:{
+    loginOut(){
+
+       this.$confirm('此操作是退出登录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delToken();
+      this.$store.commit('profile/updateProfile',{});
+      this.$router.push('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        });
+
+     
+    }
+  },
+  mounted:function(){
+
   }
+  
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+.loginout{cursor: pointer;margin-right:3px;}
+.mr3{margin-right:3px;}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="module-loginWrap">
     <div class="commonweb clearfix">
-      <a href class="login-logo pt60">
+      <a href="/" class="login-logo pt60">
         <img src="@assets/images/logo.png" alt />
       </a>
       <div class="login-title-info">
@@ -33,7 +33,7 @@
 
                     <div class="other-link">
                       <router-link class="fr" to="/ucenter/register">免费注册</router-link>
-                      <a href='javascript:;'>忘记密码？</a>
+                      <!-- <a href='javascript:;'>忘记密码？</a> -->
                     </div>
                 </div>
                 <!--密码登录 end-->
@@ -93,7 +93,7 @@
 
         </div>
       </div>
-      <div class="close-order">
+      <div class="close-order" v-if="false">
         <h3 class="news-order-title">最新成交订单</h3>
         <div class="scroll-height">
           <div
@@ -441,12 +441,12 @@ export default {
     }
   }
 }
-
-html,
-body {
-  min-height: 100%;
-}
+html,body{height:100%;}
 .module-loginWrap {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
   min-height: 100%;
   background: url(~@assets/images/loginbg.jpg) center 0 no-repeat;
   background-size: cover;

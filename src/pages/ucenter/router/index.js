@@ -7,7 +7,7 @@ import Member from "../views/Admin/Member";
 import Account from "../views/Admin/Account";
 import Authentication from "../views/Admin/Authentication";
 import Company from "../views/Admin/Company";
-
+import Myquote from "../views/Admin/Myquote";
 import QuotedPrice from "../views/Purchase/QuotedPrice";
 import Buyorder from "../views/Purchase/Buyorder";
 import Sellorder from "../views/Purchase/Sellorder";
@@ -102,14 +102,22 @@ const routes = [
   },
 
   {
-    path: "/ucenter/company",//我要销售-销售管理
+    path: "/ucenter/company",//我要销售-主页管理
     name: "Company",
     component: Company,
     meta: {
       title: '主业管理'
     }
   },
-
+  {
+    path: "/ucenter/myquote",
+    name: "Myquote",
+    component: Myquote,
+    meta: {
+      title: '我的报价'
+    }
+  },
+ 
  
   { 
     path: '/ucenter/*', 

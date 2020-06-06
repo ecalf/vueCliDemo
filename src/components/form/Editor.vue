@@ -120,7 +120,7 @@
                             "imagecenter",
                             "|",
                             // "simpleupload",
-                            "insertimage",
+                            //"insertimage",
                             //"emotion",
                             //"scrawl",
                             //"insertvideo",

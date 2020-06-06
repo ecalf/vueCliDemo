@@ -34,10 +34,11 @@
         <div class="footer-logo">
           <img src="@assets/images/footerlogo.png" alt />
           <div class="footer-company">
-            <h2>深圳迈万和优采股份有限公司</h2>
-            <h3>Shenzhen maiwanhe Youcai Co., Ltd</h3>
+            <h2>万合国际供应链投资(深圳)有限公司</h2>
+            <h3>Wanhe International Supply Chain Investment (Shenzhen) Co., Ltd.</h3>
           </div>
         </div>
+        <!--
         <div class="footer-share">
           <a href>
             <img src="@assets/images/inicon5.png" alt />
@@ -58,20 +59,21 @@
             <img src="@assets/images/inicon9.png" alt />
           </a>
         </div>
+      -->
       </div>
     </div>
     <div class="footer-midddle">
       <div class="commonweb">
-        <span>联系我们</span>
-        <span>电话：0755-5555 555</span>
+        <!-- <span>联系我们</span> -->
+        <span>电话：400-010-1118</span>
         <span>地址：深圳市福田区杭钢富春大厦909</span>
-        <span class="friend">友情链接</span>
-        <a href>交易大厅</a>
-        <a href>我要采购</a>
-        <a href>委托采购</a>
-        <a href>供应商中心</a>
-        <a href>资讯中心</a>
-        <a href>个人中心</a>
+        <!-- <span class="friend">友情链接</span> -->
+        <a href="/tradhall">交易大厅</a>
+        <a href="/publish/buy">我要采购</a>
+        <a href="/entrust">委托采购</a>
+        <a href="/supplier">供应商中心</a>
+        <a href="/news">资讯中心</a>
+        <a href="/ucenter/member">个人中心</a>
       </div>
     </div>
     <div class="commonweb">
@@ -119,7 +121,7 @@ footer {
   padding-right: 40px;
   display: inline-block;
   vertical-align: middle;
-  border-right: solid 1px #a6acb1;
+  /* border-right: solid 1px #a6acb1; */
   img {
     height: 35px;
     margin-right: 20px;

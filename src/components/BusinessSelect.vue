@@ -17,41 +17,14 @@
                         </a>
                     </div>
                     <ul class="pro-right-item fl">
-                        <li>
-                            <a href="">
+                        <li v-for="item in kindMask" :key="item.id">
+                              <router-link :to="'/product/'+item.id">
                                 <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
+                                     <img :src="item.images[0]" alt />
                                 </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200,000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
+                                <h2 class="fs14"> {{item.title}}</h2>
+                                <p class="price"><i>￥</i> {{item.price}}</p>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -71,41 +44,14 @@
                         </a>
                     </div>
                     <ul class="pro-right-item fl">
-                        <li>
-                            <a href="">
+                        <li v-for="item in kindRespirator" :key="item.id">
+                              <router-link :to="'/product/'+item.id">
                                 <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
+                                     <img :src="item.images[0]" alt />
                                 </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <p class="thumb">
-                                    <img src="@assets/images/productimg4.jpg" alt="">
-                                </p>
-                                <h2 class="fs14">这款呼吸机 卖疯了</h2>
-                                <p class="price"><i>￥</i>200，000</p>
-                            </a>
+                                <h2 class="fs14"> {{item.title}}</h2>
+                                <p class="price"><i>￥</i> {{item.price}}</p>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -115,7 +61,14 @@
 
 <script>
 export default {
-
+ props:{
+    kindMask:{
+      type:Array
+    },
+     kindRespirator:{
+      type:Array
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -224,6 +177,7 @@ padding-top:18px;
 .pro-right-item{
   width:(340%/5.9);
   background-color: #fff;
+  height:350px;
 }
 
 .pro-item-content{
@@ -286,9 +240,13 @@ border-bottom:0;
     a{
       display: block;
     }
+  .thumb{
+    height:109-20px;
+   margin:10px 0;
+  }
     img{
       width:126px;
-      height:109px;
+      height:109px-20px;
     }
     h2{
       height: 20px;

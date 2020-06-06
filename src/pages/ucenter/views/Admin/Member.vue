@@ -17,16 +17,16 @@
             <img class="personalimg" src="@assets/images/personnel.png" alt />
             <div class="personal-msg">
               <p class="company-msg">
-                <strong>{{company(profile.type)}}</strong>
+                <strong>{{company(profile.user_info.type)}}</strong>
                 <span>
                   <img src="@assets/images/VIP.png" alt />
                 </span>
-                <span v-if="profile.type==3">
+                <span v-if="profile.user_info.type==3">
                   <img src="@assets/images/qiyerenzheng.png" alt />
                 </span>
               </p>
               <span class="person-name">
-                <span class="person-name-text">{{contact_name(profile.type)}}</span>
+                <span class="person-name-text">{{contact_name(profile.user_info.type)}}</span>
                 <i class="iconfont iconrenyuanxinxi"></i>
               </span>
             </div>
@@ -133,8 +133,14 @@ export default {
   },
   computed:{
     profile(){
-      return this.$store.state.profile;
+      // return this.$store.state.profile;
+      // console.log(137,this.$store.state.profile);
+      let profile = this.$store.state.profile;
+       //console.log('profile',profile);
+       return profile;
+       //console.log(profile.type)
     },
+     
     company(){
       return (type)=>{
         //type '注册类型：1个人 2 机构 3企业'
@@ -157,7 +163,6 @@ export default {
         let user_company = this.profile.user_company||{};
         let user_info = this.profile.user_info||{};
         let user_organization = this.profile.organization||{};
-
           if(type==1){
             return user_info.user_name||'';
           }else if(type==2){
@@ -165,6 +170,7 @@ export default {
           }else if(type==3){
             return user_company.contact_name||'';
           }
+         
       }
 
     }
@@ -173,7 +179,7 @@ export default {
 
   },
   created(){
-  
+   
   }
 };
 </script>

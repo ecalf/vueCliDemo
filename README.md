@@ -1,4 +1,4 @@
-# vueCliDemo
+# whscmfront
 
 ## Project setup
 ```
@@ -43,3 +43,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Vue 从 utils/enhanceVue 内导出,不要直接使用框架提供的 Vue
 ## VueRouter 从 utils/enhanceRouter 内导出,不要直接使用框架提供的 VueRouter
+
+
+
+## 未解決問題
+-- build 之後 css 背景圖片問題： css/pages/ 下的css 背景图 相对路劲错误，css 下的正确，似乎build打包无法设置背景图的结对路劲，导致差了一级，暂时解决办法是吧 img 拷贝一份到 css 文件夹下
+-- seo 问题： 在 seo 分之未完成 vue 的 ssr 打包
+  
