@@ -29,6 +29,8 @@ const routes = [
 ];
 
 
-const router = RouterCreator.create(routes);
 
-export default router;
+
+export default function createRouter(){
+  return RouterCreator.create(routes);
+}

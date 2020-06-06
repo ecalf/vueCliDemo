@@ -12,7 +12,6 @@ import createRouter from "./router";
 import createStore from "./store";
 import profileMixin from "@utils/mixin";
 
-
 const router = createRouter();
 const store = createStore();
 
@@ -33,13 +32,20 @@ const i18n = new VueI18n({ 
 });
 
 
-new Vue({
-  mixins:[profileMixin],
-    i18n,
-  router,
-  store,
-  render: h => h(App),
-  mounted(){
-    console.log('index mounted');
-  }
-}).$mount("#app");
+
+
+
+export function createApp(context) {
+    const app = new Vue({
+      mixins:[profileMixin],
+        i18n,
+      router,
+      store,
+      render: h => h(App),
+      mounted(){
+        console.log('index mounted');
+      }
+    })
+
+    return {app, router, store};
+}

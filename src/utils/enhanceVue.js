@@ -10,7 +10,7 @@ import NotFoundComponent from "@components/NotFoundComponent";
 
 
 const plugins =  {
-    globalComponents(){
+    globalComponents(Vue){
         Vue.component('NotFoundComponent', NotFoundComponent);
     },
     usePlugin(Vue){
@@ -20,6 +20,7 @@ const plugins =  {
 
     },
     install (Vue,options){
+        this.globalComponents(Vue);
         this.usePlugin(Vue);
 
         Vue.config.productionTip = false;
