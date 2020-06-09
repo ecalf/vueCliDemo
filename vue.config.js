@@ -86,7 +86,7 @@ module.exports = {
     publicPath: isPro ? '/' : 'http://127.0.0.1:8080/',
     outputDir: 'dist',
     pages: {
-        index: {
+        test: {
             entry: `src/pages/test/test-${entryType}.js`,
             template: 'public/index.html',
             filename: `test.html`,
@@ -129,10 +129,8 @@ module.exports = {
             });
     },
     configureWebpack: config => {
-    
         config.entry = pageConfig.entry;
-
-    }
+    },
 
     configureWebpack: {
         entry: pageConfig.entry,//form backup
