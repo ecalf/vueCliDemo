@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:server": "export WEBPACK_TARGET=node && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "inspect":"vue-cli-service inspect >> vue.config.detail.js",
     "ssr": "./build.sh"

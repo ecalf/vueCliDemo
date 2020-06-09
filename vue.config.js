@@ -4,6 +4,8 @@ const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 //const merge = require('lodash.merge');
+//process.env.WEBPACK_TARGET = 'node';
+console.log('process.env.WEBPACK_TARGET>>>',process.env.WEBPACK_TARGET);
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node';
 const isPro = process.env.NODE_ENV !== 'development';
 const debug = process.env.NODE_ENV !== "production";
@@ -129,9 +131,18 @@ module.exports = {
             });
     },
     configureWebpack: config => {
+        config.target = TARGET_NODE ? 'node' : 'web';
+        config.node = TARGET_NODE ? undefined : false;
         config.entry = pageConfig.entry;
-    },
+        config.output.libraryTarget = TARGET_NODE ? 'commonjs2' : undefined;
+        config.externals =  TARGET_NODE ? nodeExternals({
+            whitelist: [/\.css$/],
+        }) : undefined;
 
+        config.plugins = config.plugins.concat(TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin());
+
+    },
+/*
     configureWebpack: {
         entry: pageConfig.entry,//form backup
 
@@ -155,5 +166,5 @@ module.exports = {
             // 根据之前配置的环境变量判断打包为客户端/服务器端Bundle
             TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin(),
         ],
-    },
+    },*/
 };
